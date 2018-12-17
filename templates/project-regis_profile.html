@@ -1,0 +1,100 @@
+?
+
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block head_title %}Project Registration || {{ wizard.form.media }}{{ block.super }}{% endblock head_title %}
+
+
+{# Load the tag library #}
+
+
+{# Display a form #}
+
+
+{% block content2 %}
+<div class="container">
+  <div class="row">
+
+      <div class="col-5 mr-auto">
+<table class="table">
+  <caption></caption>
+  <thead>
+    <tr>
+      <th scope="col">Experiment - Header Information</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Experiment_ID </td>
+      <td>{{ user.profile.Issue }}</td>
+    </tr>
+    <tr>
+      <td>Name</td>
+      <td>{{ user.profile.Name }}</td>
+    <tr>
+      <td>Email</td>
+      <td>{{ user.email }}</td>
+    </tr>
+        <tr>
+      <td>Group Leader</td>
+      <td>{{ user.profile.Group_Leader }}</td>
+    </tr>
+    <tr>
+      <td>Analysis Type</td>
+      <td>{{ user.profile.Analysis_Type }}</td>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+</div>
+               <div class="col-12">
+                    <div class="alert" style='min-height: 10px;'>
+          </div>
+         </div>
+ <div class='container'>
+<div class="row">
+     <div class="col-1">
+     	  <div class="alert" style='min-height: 800px;'>
+        </div>
+      </div>
+
+<div class="col-8 col-md-8 col-lg-6 mr-auto">
+<form action="" method="post">{% csrf_token %}
+{{ wizard.management_form }}
+{% load crispy_forms_tags %}
+{% if wizard.form.forms %}
+    {{ wizard.form.management_form }}
+    {% for form in wizard.form.forms %}
+    	{{ wizard.form|crispy }}
+
+    {% endfor %}
+{% else %}
+    {{ wizard.form|crispy }}
+{% endif %}
+
+{% if wizard.steps.prev %}
+<button name="wizard_goto_step" type="submit" class="btn btn-sm" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
+<button name="wizard_goto_step" type="submit" class="btn btn-sm" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
+{% endif %}
+{% if wizard.steps.last %}
+<input type="submit" class="btn btn-sm" value="submit"/>
+{% else %}
+<button name="wizard_goto_step" type="submit" class="btn btn-sm" value="{{ wizard.steps.next }}">{% trans "next step" %}</button>
+{% endif %}
+</form>
+<p><i><font size="2.8">Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </font></i></p>
+  </div>
+           <div class="col-3">
+           	        <div class="alert" style='min-height: 800px;'>
+          </div>
+         </div>
+  </div>
+  </div>	
+{% endblock %}
+
+
+

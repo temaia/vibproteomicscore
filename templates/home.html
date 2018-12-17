@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block head_title %}Welcome || {{ block.super }}{% endblock head_title %}
+
+{% block content2 %}
+<div class='container'>
+<div class="row">
+  <div class="col-12 ml-auto">
+
+
+		<h5 class="frb">Welcome to the VIB Proteomics Core portal!</h5>
+
+    <p class="fr">This website is a an extension of our facility's<a href="https://corefacilities.vib.be/pec"> main page</a> and serves 2 goals:</p>
+    <ul class="ab">
+      <li>As a registration platform for your proteomics project</li>
+      <li>As an access point to follow the progress of your experiment</li>
+    </ul>
+    
+    <br/>
+    <p class="fr">If you want your samples to be analyzed by the VIB Proteomics core, please use the workflow below.</p>
+
+
+    <div class="container">
+      <div id="accordion">
+        <div class="card">
+          <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#collapseOne">
+              1. Contact the facility at an early stage and announce delivery
+            </a>
+          </div>
+          <div id="collapseOne" class="collapse show" data-parent="#accordion">
+            <div class="card-body">
+              <p class = "indent">
+              Before sending samples to the Facility, <a href="{% url 'contact' %}">contact us</a> in an early stage so your specific question can be discussed.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+              2. Register your project
+            </a>
+          </div>
+          <div id="collapseTwo" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+              <p class = "indent">
+                When the project is accepted, you will receive a login to access <a href="{% url 'projectregistration' %}">the sample registration tab </a>. 
+              </p>
+              <p class = "indent">
+                There you have to complete the form with all the information about the experiment you’re about to send. 
+              </p>
+              <p class = "text-secondary">
+                <span class = "font-weight-bold">Note:</span> Please try to fill in all the fields. That way, we can understand the goals and expectations of your experiment. </p>
+            </div> 
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+              3. Send your sample according to the sample delivery guidelines
+            </a>
+          </div>
+          <div id="collapseThree" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+              <p class = "indent">
+              After project registration, arrangements on delivery date can be made with the Proteomics Core. All instructions can be found <a href="{% url 'sample_delivery' %}">here</a>. </p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour">
+              4. Follow your project
+            </a>
+          </div>
+          <div id="collapseFour" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+              <p class = "indent">
+              During sample processing we will update the status of your project. This can be followed in the project status tab. </p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <a class="collapsed card-link" data-toggle="collapse" href="#collapseFive">
+              5. Check the results
+            </a>
+          </div>
+          <div id="collapseFive" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+              <p class = "indent">
+              The results of the analysis will be send to you from the moment the data-analysis is finished. If you have quenstions, you can always check our <a href="{% url 'questions' %}"> frequentlty asked questions</a> tab. Don't hesitate to <a href="{% url 'contact' %}">contact us</a> if your questions are not solved.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+       <div class="col-4">
+                    <div class="alert" style='min-height: 400px;'>
+          </div>
+         </div>
+  {% endblock %}	
+         
+
+from home show templateview()

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block head_title %}Project Registration || {{ block.super }}{% endblock head_title %}
+
+{% block content %}
+
+{% endblock %}
+{# Load the tag library #}
+{% load bootstrap4 %} 
+
+{# Display a form #}
+{% block content2 %}
+	<h3>Project Registration</h3>
+	{{ errors }}
+<form method = "post" novalidate action= ""> {% csrf_token %}
+	<div class="form-group row">
+	<label for="example-text-input" class="col-2 col-form-label">Text</label>
+	<div class="col-10">
+		<input class="form-control" type="text">
+	<table>
+		{{ formset}}
+	</table>
+	<button type='submit'>Submit</button>
+</div>
+</div>
+</div>
+</form>
+{% endblock %}

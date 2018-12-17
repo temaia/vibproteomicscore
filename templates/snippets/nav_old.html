@@ -1,0 +1,56 @@
+
+<!-- Just an image -->
+{% load static %}
+{% block content %}
+
+<div class="navbar-inner bg-grey">
+ <div class='container'>
+  <nav class="navbar navbar-expand-lg navbar-light bg-grey ">
+     <div class='row'>
+     <div class='col-md-12 ml-12 '>
+  <a class="navbar-brand" href="{{ home_url }}">
+    <img src='{% static "./proteomics.png" %}' width="20" height="20" class="d-inline-block align-center" alt="">
+  {% if brand_name %} {{brand_name}} {% else %}VIB Proteomics Core{% endif %}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavSupportedContent" aria-controls="navbarNavSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <!-- <a class="navbar-brand" href="#">PRC Portal</a>
+
+ --> 
+
+  <div class="collapse navbar-collapse " id="navbarNav">
+    <ul class="navbar-nav bg-grey">
+      <li {% if "/" == request.path %}class="nav-item" class="active"{% endif %}>
+        <a class="nav-link navgar" href="{% url 'home' %}">Home</a>
+      </li>  
+      <li {% if "/project-registration" == request.path %}class="nav-item active"{% endif %}>
+        <a class="nav-link navgar" href="{% url 'project-registration' %}">Project Registration</a>
+      </li>
+      <li {% if "#" == request.path %}class="nav-item active"{% endif %}>
+        <a class="nav-link navgar disabled" href="{% url 'home' %}">Project Info</a>
+      </li>
+      <li {% if "/about" == request.path %}class="nav-item active"{% endif %}>
+        <a class="nav-link navgar" href="{% url 'about' %}">About</a>
+      </li>
+      <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+           <li {% if "/login" == request.path %}class="nav-item active"{% endif %}>
+          <a class="nav-link" href="{% url 'login' %}">Log In </a>
+          </li>
+          <li {% if "/logout" == request.path %}class="nav-item active"{% endif %}>
+            <a class="nav-link" href="{% url 'logout' %}">Log Out </a>
+          </li>
+          </ul>
+      </li>
+    <ul class="nav navbar-nav navbar-right bg-grey">
+
+        <li >
+             <img src='{% static "./proteomics_core.png" %}' width="106" height="41" class="d-inline-block align-right" alt="">
+        </li>
+      </ul>
+</nav>
+</div>
+    </div>
+
+{% endblock %}

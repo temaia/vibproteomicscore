@@ -1,0 +1,65 @@
+{% extends 'base.html'%}
+
+{% block head %}
+
+<title>Profile</title>
+
+{% endblock %}
+
+
+{% block content2 %}
+<div class="container">
+	<div class="row">
+
+    	<div class="col-5 mr-auto">
+<table class="table">
+  <caption></caption>
+  <thead>
+    <tr>
+      <th scope="col">Project header</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Project_ID </td>
+      <td>{{ user.profile.Issue }}</td>
+    </tr>
+    <tr>
+      <td>Name</td>
+      <td>{{ user.profile.Name }}</td>
+    <tr>
+      <td>Email</td>
+      <td>{{ user.email }}</td>
+    </tr>
+        <tr>
+      <td>Group Leader</td>
+      <td>{{ user.profile.Group_Leader }}</td>
+    </tr>
+    <tr>
+      <td>Analysis Type</td>
+      <td>{{ user.profile.getAnalysisType}}</td>
+  </tbody>
+</table>
+
+
+
+ <div class="row">
+  <div class="col-sm-4"></div>
+
+<div class="col-sm-4"> </div>
+<div class="col-sm-4"> </div>
+</div>
+		</div>
+		<div class="col-7">
+          <div class="alert" role="alert" style='min-height: 200px;'>
+
+          </div>
+        </div>
+	</div>
+</div>
+               <div class="col-12">
+           	        <div class="alert" style='min-height: 600px;'>
+          </div>
+         </div>
+{% endblock %}

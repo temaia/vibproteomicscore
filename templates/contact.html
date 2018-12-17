@@ -1,0 +1,42 @@
+<!-- contact-->
+{% extends "base.html" %}
+
+{% block head_title %}Contact || {{ block.super }}{% endblock head_title %}
+
+{% block content2 %}
+
+{# Load the tag library #}
+
+{% load bootstrap4 %}
+{# Display a form #}
+
+<div class='container'>
+<div class="row">
+    <div class="col-12 ml-auto">
+
+      <h5 class="frb">Contact</h5>
+
+      <br>
+      <a href="https://corefacilities.vib.be/pec" class="indent">Website</a>
+
+      <ul class="cn">
+        <li>Email: pec@vib-ugent.be</li>
+        <li>Phone: +32 9 264 93 60</li>
+        <li>Shipping Address:
+        	<div class ="ab">VIB Center for Medical Biotechnology</div>
+        	<div class = "ab">Albert Baertsoenkaai 3</div>
+        	<div class = "ab">9000 Ghent - Belgium</div>
+
+        </li>
+        <li>When delivering the samples in person: <div class="ab"> Use the entrance at the Apotheekstraat. And go to the glass building in front of you. </div></li>
+          <br>
+          <img src='Entrance.png' alt="Entrance image">
+          <br>
+      </ul>
+    
+      <img src="">
+      <div class="alert" style='min-height: 800px;'>
+      </div>
+</div>
+
+{% endblock %}

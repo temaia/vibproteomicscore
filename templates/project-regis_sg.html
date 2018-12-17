@@ -1,0 +1,40 @@
+?
+
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block head_title %}Project Registration {% endblock head_title %}
+
+
+{# Load the tag library #}
+
+
+{# Display a form #}
+
+
+{% block content2 %}
+
+ <div class='container'>
+<div class="row">
+
+<div class="col-8 col-md-8 col-lg-6 mr-auto">
+<form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+
+{% load crispy_forms_tags %}
+    	{% crispy form %}
+
+
+</form>
+<p><i><font size="2.8">yrt </font></i></p>
+  </div>
+           <div class="col-3">
+           	        <div class="alert" style='min-height: 800px;'>
+          </div>
+         </div>
+  </div>
+  </div>	
+{% endblock %}
+
+
+

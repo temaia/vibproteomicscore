@@ -1,0 +1,71 @@
+{% extends 'base.html'%}
+
+{% block head %}
+
+<title>Profile</title>
+
+{% endblock %}
+
+
+{% block content2 %}
+<div class="container">
+	<div class="row">
+
+    	<div class="col-5 mr-auto">
+<table class="table">
+  <caption></caption>
+  <thead>
+    <tr>
+      <th scope="col">Experiment - Header Information</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Experiment_ID </td>
+      <td>{{ user.profile.Issue }}</td>
+    </tr>
+    <tr>
+      <td>Name</td>
+      <td>{{ user.profile.Name }}</td>
+    <tr>
+      <td>Email</td>
+      <td>{{ user.email }}</td>
+    </tr>
+        <tr>
+      <td>Group Leader</td>
+      <td>{{ user.profile.Group_Leader }}</td>
+    </tr>
+    <tr>
+      <td>Analysis Type</td>
+      <td>{{ user.profile.Analysis_Type }}</td>
+  </tbody>
+</table>
+ <div class="btn-group">
+<a name="profile_goto" type="button" class="btn btn-sm btn-link" href="{% url 'project-registration' %}">Project Registration</a>
+</div>
+ <div class="btn-group">
+<a name="profile_goto" type="button" class="btn btn-sm btn-link" href="{% url 'home' %}">Project Information</a>
+</div>
+		</div>
+		<div class="col-7">
+          <div class="alert" role="alert" style='min-height: 200px;'>
+
+          </div>
+        </div>
+	</div>
+</div>
+               <div class="col-12">
+           	        <div class="alert" style='min-height: 600px;'>
+          </div>
+         </div>
+{% endblock %}
+
+<input type="button" class="btn btn-info" value="Input Button" onclick=" relocate_home()">
+
+<script>
+function relocate_home()
+{
+     location.href = "www.yoursite.com";
+} 
+</script>

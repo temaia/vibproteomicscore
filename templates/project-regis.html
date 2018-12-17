@@ -1,0 +1,65 @@
+
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block head_title %}Project Registration || {{ wizard.form.media }}{{ block.super }}{% endblock head_title %}
+
+
+{# Load the tag library #}
+
+
+{# Display a form #}
+
+
+{% block content2 %}
+
+ <div class='container'>
+<div class="row">
+
+<div class="col-8 col-md-8 col-lg-6 mr-auto">
+<form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+{{ wizard.management_form }}
+{% load crispy_forms_tags %}
+{% if wizard.form.forms %}
+{% for field in form.visible_fields %}
+    <div class="form-group">
+      {{ field.label_tag }}
+      {{ field }}
+      {% if field.help_text %}
+        <small class="form-text text-muted">{{ field.help_text }}</small>
+      {% endif %}
+    </div>
+  {% endfor %}
+    {{ wizard.form.management_form }}
+        {{ wizard.form|crispy }}
+        <div class="input-group"> <input type="number" name="Volume" step="any" required="" class="numberinput form-control" id="id_Volume"> <span class="input-group-addon">μl</span> </div>
+{% else %}
+       {{ wizard.form|crispy }}
+
+{% endif %}
+
+
+
+{% if wizard.steps.prev %}
+<button name="wizard_goto_step" type="submit" class="btn btn-sm" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
+<button name="wizard_goto_step" type="submit" class="btn btn-sm" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
+{% endif %}
+{% if wizard.steps.last %}
+<input type="submit" class="btn btn-sm" value="submit"/>
+{% else %}
+<button name="wizard_goto_step" type="submit" class="btn btn-sm" value="{{ wizard.steps.next }}">{% trans "next step" %}</button>
+{% endif %}
+</form>
+<p><i><font size="2.8">Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </font></i></p>
+  </div>
+           <div class="col-3">
+           	        <div class="alert" style='min-height: 800px;'>
+          </div>
+         </div>
+  </div>
+  </div>	
+{% endblock %}
+
+
+

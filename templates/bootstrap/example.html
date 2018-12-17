@@ -1,0 +1,83 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Bootstrap example</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  </head>
+  <body>
+
+
+    <!-- Image and text -->
+  <div class='container'>
+    <div class="row">
+      <div class="col-12">
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+          <img src='{% static "./proteomics.png" %}' width="30" height="30" class="d-inline-block align-top" alt="" />
+          Bootstrap
+        </a>
+      </nav>
+      </div>
+    </div>
+  </div>
+    <div class='container'>
+        <div class="row">
+        <div class="col-12  col-md-6 col-lg-3 ml-auto">
+          <input type="text" class="form-control" placeholder="search">
+          
+          </input>
+        </div>
+        </div>
+      <div class="row">
+        <div class="col-8">
+          <div class="alert alert-primary" role="alert" style='min-height: 200px;'>
+          This is a primary alert—check it out!
+          </div>
+        </div>
+         <div class="col-2 order-2">
+          <div class="alert alert-primary" role="alert" style='min-height: 200px;'>
+          This is a primary alert—check it out!
+          </div>
+        </div>
+        <div class="col-2">  
+          <div class="alert alert-secondary" role="alert" style='min-height: 200px;'>
+          This is a secondary alert—check it out!
+          </div>
+        </div>
+      </div>
+    </div>
+     <div class="row">
+        <div class="col-8 mr-auto ml-auto">
+          <div class="alert alert-primary" role="alert" style='min-height: 200px;'>
+          This is a primary alert—check it out!
+          </div>
+        </div>
+      </div>
+  
+    <div class='container-fluid bg-light px-5'>
+      <h1>Bootstrap example</h1>
+      <div class="alert alert-secondary" role="alert">
+        This is a secondary alert—check it out!
+      </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+<!-- Image and text -->
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+    Bootstrap
+  </a>
+</nav>

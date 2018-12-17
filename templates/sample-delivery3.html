@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block head_title %}Sample delivery || {{ block.super }}{% endblock head_title %}
+
+{% block content2 %}
+
+{# Load the tag library #}
+
+{% load bootstrap4 %}
+{# Display a form #}
+<div class='container'>
+<div class="row">
+     <div class="col-12 ml-auto">
+
+      <h5 class="frb">Sample Delivery Instructions</h5>
+
+     <!-- <h6 class = "frb">1. Set a delivery date </h6>
+    
+      <p class = "indent">
+        Make arrangements with the Proteomics Core to make sure your package will be received on its intended delivery date.</p>
+      <p class = "indent">
+        Delivery can be done by <span class = "fond-weight-bold">using a delivery service company</span> or <span class = "fond-weight-bold">in person.</span> </p>
+      <p class = "indent">
+        When using a delivery service company, use the “Same day” or “Next day” delivery option to prevent samples to arrive thawed. Take into account weekends, local holidays or closings that might delay package receipt. </p>
+      <p class="text-secondary">
+        <span class = "fond-weight-bold">Note:</span> In general, it is not recommended to ship frozen or refrigerated samples on Thursdays or Fridays.</p>
+      <br>
+
+      <h6 class = "frb">2. Use enough (dry) ice and use a good container for shipping </h6>
+
+        <p class = "subtitle">Refrigerated samples:</p> 
+
+
+          <p class="dubble-indent">
+            Use <span class = "fond-weight-bold"> <q>gel packs</q></span> or regular ice for samples to be refrigerated and when you are able to <span class = "fond-weight-bold">deliver</span> the samples <span class = "fond-weight-bold">in person</span>.</p>
+
+        <p class = "subtitle">Frozen samples:</p>
+          <p class = "dubble-indent">
+            Use <span class = "fond-weight-bold">dry ice</span> for shipping frozen samples. </p>
+          <p class="dubble-indent">
+            Shipments are generally recommended to contain 2.5 – 5 kg of dry ice per 24 hours. Refer to your package manufacturer’s recommendations.</p> 
+          <p class = "dubble-indent">
+            A thick poly styrene box or special insulated box will reduce the amount of dry ice needed and allow extended shipping times.</p>
+          <p class = "dubble-indent">
+            Minimize the volume of air to which the dry ice is exposed in order to slow the rate of sublimation. If there is any air space after you fill your package with dry ice, fill it with packing peanuts or other material to reduce the volume of air space.</p>
+          <p class = "dubble-indent">
+            Make sure the box is not closed hermetically. During transport, dry ice will sublimate and the gas should be able to escape from the box to prevent explosion.</p>
+
+        <p class = "subtitle">Eco-tip: Reuse a dry ice box</p> 
+          <p class="dubble-indent">
+            If you choose to reuse a box, completely obliterate all unnecessary marking such as hazard labels, addresses, FedEx (or other courier) labels and barcodes. </p>
+      
+          <p class="dubble-indent">
+            Only reuse a box if you can personally verify it is not contaminated and its integrity is intact. (A box should not be reused if it is torn, cut, stained, or if the insulation is cracked or broken.)</p>
+      <br>
+        
+      <h6 class = "frb">3. Put samples in tubes and label them well</h6>
+
+        <p class = "indent">
+          <span class = "fond-weight-bold">Samples</span> should be delivered <span class = "fond-weight-bold">in tubes</span> (Eppendorf, 15 ml, 50 ml,...). Samples in plates will only be accepted when delivered in person and if they were not mixed/spilled during the delivery process.</p>
+        <p class = "indent">
+          <span class = "fond-weight-bold">Label</span> your samples well, preferably with short names on stickers. Also <span class = "fond-weight-bold">provide a list</span> of all samples to the VIB Proteomics Core.Place all samples in a <span class = "fond-weight-bold">sealable plastic (ziplock) bag or box</span> before putting them in the dry ice and shipping container.</p>
+      <br>
+
+      <h6 class ="frb">4. Label the shipping container and add extra info </h6>
+    
+        <p class = "indent">
+          <span class = "fond-weight-bold">Label</span> the shipping container with:
+          <ul class = "ab">
+            <li>The name of the lab</li>
+            <li>The name of the person sending the samples</li>
+            <li>the PRC number</li>
+          </ul>
+        </p>
+      <br>
+    -->
+    
+    <div class="container">
+
+</div>
+
+
+<div class="container">
+      <div id="accordion">
+        <div class="card">
+          <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#collapseOne">
+              1. Set a delivery date
+            </a>
+          </div>
+          <div id="collapseOne" class="collapse show" data-parent="#accordion">
+            <div class="card-body">
+              <p class = "indent">
+                Make arrangements with the Proteomics Core to make sure your package will be received on its intended delivery date.</p>
+              <p class = "indent">
+                Delivery can be done by <span class = "fond-weight-bold">using a delivery service company</span> or <span class = "fond-weight-bold">in person.</span> </p>
+              <p class = "indent">
+                When using a delivery service company, use the “Same day” or “Next day” delivery option to prevent samples to arrive thawed. Take into account weekends, local holidays or closings that might delay package receipt. </p>
+              <p class="text-secondary">
+                <span class = "fond-weight-bold">Note:</span> In general, it is not recommended to ship frozen or refrigerated samples on Thursdays or Fridays.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+              2. Use enough (dry) ice and use a good container for shipping
+            </a>
+          </div>
+          <div id="collapseTwo" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+              <p class = "subtitle">Refrigerated samples:</p> 
+                <p class="dubble-indent">
+                  Use <span class = "fond-weight-bold"> <q>gel packs</q></span> or regular ice for samples to be refrigerated and when you are able to <span class = "fond-weight-bold">deliver</span> the samples <span class = "fond-weight-bold">in person</span>.</p>
+
+              <p class = "subtitle">Frozen samples:</p>
+                <p class = "dubble-indent">
+                  Use <span class = "fond-weight-bold">dry ice</span> for shipping frozen samples. </p>
+                <p class="dubble-indent">
+                  Shipments are generally recommended to contain <span class = "fond-weight-bold">2.5 – 5 kg of dry ice per 24 hours</span>. Refer to your package manufacturer’s recommendations.</p> 
+                <p class = "dubble-indent">
+                  A <span class = "fond-weight-bold">thick poly styrene box</span> or special insulated box will reduce the amount of dry ice needed and allow extended shipping times.</p>
+                <p class = "dubble-indent">
+                  <span class = "fond-weight-bold">Minimize the volume of air</span> to which the dry ice is exposed in order to <span class = "fond-weight-bold">slow the rate of sublimation</span>. If there is any air space after you fill your package with dry ice, fill it with packing peanuts or other material to reduce the volume of air space.</p>
+                <p class = "dubble-indent">
+                  Make sure the box is <span class = "fond-weight-bold">not closed hermetically</span>. During transport, dry ice will sublimate and the gas should be able to escape from the box to prevent explosion.</p>
+
+              <p class = "subtitle">Eco-tip: Reuse a dry ice box</p> 
+                <p class="dubble-indent">
+                  If you choose to reuse a box, completely <span class = "fond-weight-bold">obliterate all unnecessary marking</span> such as hazard labels, addresses, FedEx (or other courier) labels and barcodes. </p>
+      
+                <p class="dubble-indent">
+                  Only reuse a box if you can personally <span class = "fond-weight-bold">verify it is not contaminated</span> and its <span class = "fond-weight-bold">integrity is intact</span>. (A box should not be reused if it is torn, cut, stained, or if the insulation is cracked or broken.)</p>
+
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+              3. Put samples in tubes and label them well
+            </a>
+          </div>
+          <div id="collapseThree" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+             <p class = "indent">
+              <span class = "fond-weight-bold">Samples</span> should be delivered <span class = "fond-weight-bold">in tubes</span> (Eppendorf, 15 ml, 50 ml,...). Samples in plates will only be accepted when delivered in person and if they were not mixed/spilled during the delivery process.</p>
+              <p class = "indent">
+                <span class = "fond-weight-bold">Label</span> your samples well, preferably with short names on stickers. Also <span class = "fond-weight-bold">provide a list</span> of all samples to the VIB Proteomics Core.Place all samples in a <span class = "fond-weight-bold">sealable plastic (ziplock) bag or box</span> before putting them in the dry ice and shipping container.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour">
+              4. Label the shipping container and add extra info
+            </a>
+          </div>
+          <div id="collapseFour" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+              <p class = "indent">
+                <span class = "fond-weight-bold">Label</span> the shipping container with:
+                <ul class = "ab">
+                  <li>The name of the lab</li>
+                  <li>The name of the person sending the samples</li>
+                  <li>the PRC number</li>
+                </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+      
+     <div class="alert" style='min-height: 800px;'>
+  </div>
+</div>
+
+{% endblock %}
+
+
+
