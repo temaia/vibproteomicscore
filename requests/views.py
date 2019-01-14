@@ -118,9 +118,9 @@ FORMSSG = [("0", AnalysisForm),
 #         ("3", EDForm)]
 
 
-TEMPLATESSG = {"0": "project-regis_1.html",
-             "1": "project-regis_2.html",
-             "2": "project-regis_3.html"}#,
+TEMPLATESSG = {"0": "project-regis.html",
+             "1": "project-regis.html",
+             "2": "project-regis.html"}#,
 #             "3": "project-regis.html"}
 
 
@@ -482,6 +482,8 @@ class ContactWizardGB(SessionWizardView):
     # }
     # return render(request, template_name, context)
 
+# User profile
+# =============================
 def get_user_profile(request):
 	#user = request.user.get(username)
 	args={"user":request.user}
@@ -498,9 +500,17 @@ def get_user_profile(request):
 #	return render(request,'projectinfo.html', args)
 	#return render(request, 'profile.html',{"user":user})
 
+class ProjectInfoView(TemplateView):
+    template_name = 'project-info.html'
+    def get_context_data(self,*args, **kwargs):
+        context = super(ProjectInfoView, self).get_context_data(*args, **kwargs)
+        context["today"] = datetime.datetime.now().strftime("%A, %b, %d, %Y")
+        return context 
 
 class HomeView(TemplateView):
 	template_name = 'home.html'
+
+
 	#def get_context_data(request,self, *args, **kwargs):
 	# 	#context = super(HomeView, self).get_context_data(*args, **kwargs)
 	# 	context = {}
@@ -540,16 +550,21 @@ class contactView(TemplateView):
 class questionsView(TemplateView):
     template_name = 'questions.html'
 
+import datetime
+
 # def about(request):
 #   context = {}
 #   return render(request, 'about.html', context)
 
 class AboutView(TemplateView):
-	template_name = 'about.html'
-	# def get(self, request, *args, **kargs):
-	# 	context = {}
-	#  	return render(request, 'about.html', context)
-
+    template_name = 'about.html'
+# def get(self, request, *args, **kargs):
+# context = {}
+# return render(request, 'about.html', context)
+    def get_context_data(self,*args, **kwargs):
+        context = super(AboutView, self).get_context_data(*args, **kwargs)
+        context["today"] = datetime.datetime.now().strftime("%A, %b, %d, %Y")
+        return context
 #class UserRegistrationView(TemplateView):
 #	form_class = UserForm
 #	template_name = 'project-registration.html'

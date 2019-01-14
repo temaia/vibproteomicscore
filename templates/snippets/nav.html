@@ -27,16 +27,16 @@
 
   <div class="collapse navbar-collapse w-100" id="navbarNav">
 
-    <ul class="navbar-nav bg-grey mr-auto">
+    <ul class="navbar-nav bg-grey ml-auto mr-auto">
      <li {% if "/" == request.path %}class="nav-item" class="active"{% endif %}>
         <a class="nav-link navgar" href="{% url 'home' %}">Home</a>
       </li>
 
       <li {% if "/project-registration" == request.path %}class="nav-item active"{% endif %}>
-        <a class="nav-link navgar " href="{% url 'projectregistration' %}">Project Registration</a>
+        <a class="nav-link navgar" href="{% url 'projectregistration' %}">Project Registration</a>
       </li>
       <li {% if "#" == request.path %} class="nav-item active"{% endif %}>
-        <a class="nav-link navgar disabled" >Project Status</a>
+        <a class="nav-link navgar" href="{% url 'project-info' %}">Project Status</a>
       </li>
       <li {% if "/sampledelivery" == request.path %}class="nav-item active"{% endif %}>
         <a class="nav-link navgar " href="{% url 'sample_delivery' %}">Sample delivery</a>
@@ -61,6 +61,8 @@
           </ul>
       </li>
     </ul>
+       </div>
+   </div>
 </nav>
 </div>
     </div>

@@ -45,7 +45,7 @@
 <script>
 var analysistypee= "{{ user.profile.Analysis_Type }}";
 
-function relocate_home()
+function relocate_form()
 {
   if ( analysistypee =='APMS'){
     location.href = "{% url 'projectregistrationapms' %}";
@@ -59,13 +59,22 @@ function relocate_home()
 } 
 </script>
 
+<script>
+var analysistypee= "{{ user.profile.Analysis_Type }}";
+
+function relocate_pinfo()
+{
+  location.href = "{% url 'project-info' %}";
+} 
+</script>
+
 
 
  <div class="row">
-  <div class="col-sm-4"><input type="button" class="btn btn-default btn-link" value = "Register project" onclick='relocate_home()'></div>
-
-<div class="col-sm-4"> </div>
-<div class="col-sm-4"> </div>
+  <div class="col-sm-2"><input type="button" class="btn btn-default btn-link" value = "Register project" onclick='relocate_form()'></div>
+<div class="col-sm-1"> </div>
+<div class="col-sm-2"><input type="button" class="btn btn-default btn-link" value = "Project status" onclick='relocate_pinfo()'></div>
+<div class="col-sm-7"> </div>
 </div>
 		</div>
 		<div class="col-7">

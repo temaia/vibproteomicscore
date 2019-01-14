@@ -24,7 +24,7 @@ from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from requests.forms import AnalysisForm, ProfileForm, Specimen_SGForm,Specimen_APMSForm,Specimen_PTMForm,Specimen_GBForm, EDForm
 #from requests.views import AboutView,HomeView, CustomerRegistrationView,AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
-from requests.views import AboutView,HomeView, sample_deliveryView,contactView, AnalysisRegistrationView, questionsView, AnalysisForm,ExperimentForm,Specimen_SGForm, ContactWizardSG,ContactWizardPTM,ContactWizardAPMS,ContactWizardGB, LoginView,SGView#,ProjectRegistrationView
+from requests.views import AboutView,HomeView, ProjectInfoView,sample_deliveryView,contactView, AnalysisRegistrationView, questionsView, AnalysisForm,ExperimentForm,Specimen_SGForm, ContactWizardSG,ContactWizardPTM,ContactWizardAPMS,ContactWizardGB, LoginView,SGView#,ProjectRegistrationView
 from django.views.generic import TemplateView
 #from requests.views import AboutView,HomeView, AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
 
@@ -54,6 +54,7 @@ urlpatterns = [
     #url(r'^project-registration/$', views.get_user_profile, name='projectregistration'),
     url(r'^contact/',  contactView.as_view(template_name='contact.html'),name='contact'),
     #url(r'^project-info/$', views.get_user_projectinfo, name='projectinfo'),
+    url(r'^project-info/$', login_required(ProjectInfoView.as_view(template_name='project-info.html')), name='project-info'),
     #url(r'^profile/(?P<email>\w+)/$', views.get_user_profile, name='profile'),
     url(r'^about/$', AboutView.as_view(template_name='about.html'),name='about'),
     url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html'),name='bootstrap'),
