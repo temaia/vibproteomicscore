@@ -23,7 +23,7 @@
   <tbody>
     <tr>
       <td>Project ID</td>
-      <td>{{ user.profile.Issue }}</td>
+      <td>{{ user.profile.Project_ID }}</td>
     </tr>
     <tr>
       <td>Name</td>
@@ -38,7 +38,7 @@
     </tr>
     <tr>
       <td>Analysis Type</td>
-      <td>{{ user.profile.getAnalysisType }}</td>
+      <td>{{ user.profile.Main_Analysis_Type }}</td>
   </tbody>
 </table>
 
@@ -71,8 +71,6 @@ function relocate_pinfo()
 
 
  <div class="row">
-  <div class="col-sm-2"><input type="button" class="btn btn-default btn-link" value = "Register project" onclick='relocate_form()'></div>
-<div class="col-sm-1"> </div>
 <div class="col-sm-2"><input type="button" class="btn btn-default btn-link" value = "Project status" onclick='relocate_pinfo()'></div>
 <div class="col-sm-7"> </div>
 </div>
@@ -84,6 +82,7 @@ function relocate_pinfo()
         </div>
 	</div>
 </div>
+
                <div class="col-12">
            	        <div class="alert" style='min-height: 600px;'>
           </div>

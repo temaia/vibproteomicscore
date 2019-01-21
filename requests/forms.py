@@ -26,63 +26,72 @@ from crispy_forms.layout import Submit, Layout, Div, Fieldset, Hidden , Field
 #    name= forms.CharField()
 #    products= ProductFormset()
 
-# class CustomerForm(forms.ModelForm):
-# 	class Meta:
-# 		model = Customer
-# 		fields = ['Issue', 'Name', 'Email', 'Group_Leader','Affiliation' ]
-# 		#INPUT_CLASS = 'form-control'
-# 		#def __unicode__(self):
-# 		#	return self.name
-# 		#widgets = {'name' : forms.TextInput(attrs={'class':INPUT_CLASS,
-# 		#	'placeholder':'Enter title here'})
-# 		#}
-# 		def clean(self):
-# 			cleaned_data = super(CustomerForm, self).clean()
-# 			Issue = cleaned_data.get('Issue')
-# 			Name = cleaned_data.get('Nameapp# 			Email = cleaned_data.get('Email')
-# 			Group_Leader = cleaned_data.get('Group_Leader')
-# 			Affiliation = cleaned_data.get('Affiliation')
-# 			if not Issue and not Name and not Email and not Group_Leader and not Affiliation:
-# 				raise forms.ValidationError('Please fill in the form')
-#  class 1 - form 1
+class CustomerForm(forms.ModelForm):
+	class Meta:
+		model = Profile
+		fields = ['Project_ID', 'Name', 'Email', 'Group_Leader','Affiliation', 'Address','Affiliation_Type']
+		#INPUT_CLASS = 'form-control'
+		#def __unicode__(self):
+		#	return self.name
+		widgets = {'Project_ID': forms.TextInput(),
+					'Name': forms.TextInput(attrs={'placeholder':'e.g. Anne Breituch'}),
+					'Email': forms.TextInput(),
+					'Group_Leader': forms.TextInput(attrs={'placeholder':'e.g. Claudia Berts'}),
+					'Affiliation': forms.TextInput(attrs={'placeholder':'Institution/Organization'}),
+					'Address': forms.TextInput(attrs={'placeholder':'Institutional address'}),
 
+		}
+		def clean(self):
+			cleaned_data = super(CustomerForm, self).clean()
+			Project_ID = cleaned_data.get('Project_ID')
+			Name = cleaned_data.get('Name')
+			Email = cleaned_data.get('Email')
+			Group_Leader = cleaned_data.get('Group_Leader')
+			Affiliation = cleaned_data.get('Affiliation')
+			Address = cleaned_data.get('Address')
+			if not Issue and not Name and not Email and not Group_Leader and not Affiliation:
+				raise forms.ValidationError('Please fill in the form')
+ #class 1 - form 1
+	#Project_summary = models.CharField(max_length=300)
+	#Project_keywords = models.CharField(max_length=120)
+	#Analysis_Type = models.CharField(max_length=50 , choices=ANALYSISTYPES, null=True) # pre-filled?!
+	#Study_Type = models.CharField(max_length=50, choices=STUDYTYPES, null=True)
+	#timestamp = models.DateTimeField(auto_now_add=True)
 
 class AnalysisForm(forms.ModelForm):
 	#Analysis_type = forms.CharField(choices = Analysis.ANALYSISTYPES)
 	class Meta:
 		model = Analysis
 		fields = ('Project_summary',
-			'Project_keywords', 'Address','Affiliation')
+			'Project_keywords', 'Analysis_Type')
 		widgets = {'Project_summary': forms.Textarea(attrs={'placeholder': 'Provide a 4 line summary of the project explaining the purpose of the analysis'}),
-					'Project_keywords': forms.TextInput(attrs={'placeholder': 'e.g. autophagy, sumoylation, cell cycle'}),
-					'Address': forms.TextInput(attrs={'placeholder': 'Institutional address'}),
-					'Affiliation':forms.TextInput(attrs={'placeholder':'Academic institution or Company name'})
+					'Project_keywords': forms.TextInput(attrs={'placeholder': 'e.g. autophagy, sumoylation, BRCA clinical variants'}),
 					}
 		def clean(self):
 			cleaned_data = super(AnalysisForm, self).clean()
 			Project_summary = cleaned_data.get('Project_summary')
 			Project_keywords = cleaned_data.get('Project_keywords')
-			Address = cleaned_data.get('Address')
-			Affiliation = cleaned_data.get('Affiliation')
-			if not Address and not Affiliation and not Project_summary and not Project_keywords:
+			Analysis_Type = cleaned_data.get('Analysis_Type')
+			Study_Type = cleaned_data.get('Study_Type')
+			if not Analysis_Type and not Study_Type and not Project_summary and not Project_keywords:
 				raise forms.ValidationError('Please fill in the form')
 				
 		def get_all_cleaned_data(self):
 			cleaned_data = super(AnalysisForm, self).clean()
 			Project_summary = cleaned_data.get('Project_summary')
 			Project_keywords = cleaned_data.get('Project_keywords')
-			Address = cleaned_data.get('Address')
-			Affiliation = cleaned_data.get('Affiliation')
-			if not Address and not Affiliation and not Project_summary and not Project_keywords:
+			Analysis_Type = cleaned_data.get('Analysis_Type')
+			Study_Type = cleaned_data.get('Study_Type')
+			if not Analysis_Type and not Study_Type and not Project_summary and not Project_keywords:
 				raise forms.ValidationError('Please fill in the form')
 				
 		def get_cleaned_data(self):
 			cleaned_data = super(AnalysisForm, self).clean()
 			Project_summary = cleaned_data.get('Project_summary')
 			Project_keywords = cleaned_data.get('Project_keywords')
-			Address = cleaned_data.get('Address')
-			Affiliation = cleaned_data.get('Affiliation')
-			if not Address and not Affiliation and not Project_summary and not Project_keywords:
+			Analysis_Type = cleaned_data.get('Analysis_Type')
+			Study_Type = cleaned_data.get('Study_Type')
+			if not Analysis_Type and not Study_Type and not Project_summary and not Project_keywords:
 				raise forms.ValidationError('Please fill in the form')
 
 		#labels = {'Project_summary':'Project_summary'}
@@ -247,28 +256,54 @@ class EDForm(forms.Form):
 	# 	model = Experimental_Design
 	# 	fields = ['samples','Nb_samples', 'Nb_factors']
 
+# class ProfileForm(forms.ModelForm):
+# 	class Meta:
+# 		model = Profile
+# 		fields = ('Name', 'Issue','Study_Type','Group_Leader', 'Analysis_Type')
+# 		widgets = {'Name': forms.TextInput(attrs={'placeholder': 'Your name'}),'Issue':forms.TextInput(attrs={'placeholder':'e.g. PRC-20'}),
+# 		 			'Group_Leader': forms.TextInput(attrs={'placeholder':'Name of principal investigator responsible for the study'})}
+# 		def clean(self):
+# 			cleaned_data = super(ProfileForm, self).clean()
+# 			Issue = cleaned_data.get('Issue')
+# 			Name = cleaned_data.get('Name')
+# 			Study_Type = cleaned_data.get('Study_Type')
+# 			Group_Leader = cleaned_data.get('Group_Leader')
+# 			Analysis_Type = cleaned_data.get('Analysis_Type')
+# 			#if not Issue and not Name and not Study_Type and not Group_Leader and not Analysis_Type:
+# 			#	raise forms.ValidationError('Please fill in the form')
+# 		def get_all_cleaned_data(self):
+# 			cleaned_data = super(ProfileForm, self).clean()
+# 			Issue = cleaned_data.get('Issue')
+# 			Name = cleaned_data.get('Name')
+# 			Study_Type = cleaned_data.get('Study_Type')
+# 			Group_Leader = cleaned_data.get('Group_Leader')
+# 			Analysis_Type = cleaned_data.get('Analysis_Type')
+
 class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
-		fields = ('Name', 'Issue','Study_Type','Group_Leader', 'Analysis_Type')
-		widgets = {'Name': forms.TextInput(attrs={'placeholder': 'Your name'}),'Issue':forms.TextInput(attrs={'placeholder':'e.g. PRC-20'}),
-		 			'Group_Leader': forms.TextInput(attrs={'placeholder':'Name of principal investigator responsible for the study'})}
+		fields = ['Project_ID', 'Name', 'Email', 'Group_Leader','Affiliation', 'Address','Affiliation_Type']
+		#INPUT_CLASS = 'form-control'
+		#def __unicode__(self):
+		#	return self.name
+		widgets = {'Project_ID': forms.TextInput(),
+					'Name': forms.TextInput(attrs={'placeholder':'e.g. Anne Breituch'}),
+					'Email': forms.TextInput(),
+					'Group_Leader': forms.TextInput(attrs={'placeholder':'e.g. Claudia Berts'}),
+					'Affiliation': forms.TextInput(attrs={'placeholder':'Institution/Organization'}),
+					'Address': forms.TextInput(attrs={'placeholder':'Institutional address'}),
+
+		}
 		def clean(self):
-			cleaned_data = super(ProfileForm, self).clean()
-			Issue = cleaned_data.get('Issue')
+			cleaned_data = super(CustomerForm, self).clean()
+			Project_ID = cleaned_data.get('Project_ID')
 			Name = cleaned_data.get('Name')
-			Study_Type = cleaned_data.get('Study_Type')
+			Email = cleaned_data.get('Email')
 			Group_Leader = cleaned_data.get('Group_Leader')
-			Analysis_Type = cleaned_data.get('Analysis_Type')
-			#if not Issue and not Name and not Study_Type and not Group_Leader and not Analysis_Type:
-			#	raise forms.ValidationError('Please fill in the form')
-		def get_all_cleaned_data(self):
-			cleaned_data = super(ProfileForm, self).clean()
-			Issue = cleaned_data.get('Issue')
-			Name = cleaned_data.get('Name')
-			Study_Type = cleaned_data.get('Study_Type')
-			Group_Leader = cleaned_data.get('Group_Leader')
-			Analysis_Type = cleaned_data.get('Analysis_Type')
+			Affiliation = cleaned_data.get('Affiliation')
+			Address = cleaned_data.get('Address')
+			if not Project_ID and not Name and not Email and not Group_Leader and not Affiliation:
+				raise forms.ValidationError('Please fill in the form')
 
 # examples/one_to_one
 class ExperimentForm(forms.ModelForm):

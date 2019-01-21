@@ -10,20 +10,22 @@
   <div class="card-header">
     <p class="dtitle">Project status</p> 
   </div>
-            <div class="card-content">
-              <div class="card-body">
-            <div class="row bs-wizard" style="border-bottom:0;">
+            <div class="d-inline-flex card-content">
+              <div class="d-inline-flex card-body">
+            <div class="row bs-wizard mr-auto ml-auto" style="border-bottom:0;">
                 <div class="col-xs-3 bs-wizard-step disabled" id="created">
                   <div class="text-center bs-wizard-stepnum">Created</div>
-                  <div class="progress"><div class="progress-bar"></div></div>
+                  <div class="progress">
+                    <div class="progress-bar"></div>
+                  </div>
                   <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">Lorem ipsum.,,</div>
+                  <div class="bs-wizard-info text-center">Lorem.,,</div>
                 </div>
                 <div class="col-xs-3 bs-wizard-step disabled" id="arrived"><!-- complete -->
                   <div class="text-center bs-wizard-stepnum">Arrived</div>
                   <div class="progress"><div class="progress-bar"></div></div>
                   <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">Lorem ipsum.,,</div>
+                  <div class="bs-wizard-info text-center">Lorem.,,</div>
                 </div>
                 <div class="col-xs-3 bs-wizard-step disabled" id="sample_prep"><!-- complete -->
                   <div class="text-center bs-wizard-stepnum">Sample_Prep</div>
@@ -43,14 +45,14 @@
                   <div class="text-center bs-wizard-stepnum">Data Analysis</div>
                   <div class="progress"><div class="progress-bar"></div></div>
                   <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">Lorem ipsumipsum.,,</div>
+                  <div class="bs-wizard-info text-center">Lorem ipsum.,,</div>
                 </div>
 
                 <div class="col-xs-3 bs-wizard-step disabled" id="closed"><!-- active -->
                   <div class="text-center bs-wizard-stepnum">Closed</div>
                   <div class="progress"><div class="progress-bar"></div></div>
                   <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">Lorem ipsum.,,</div>
+                  <div class="bs-wizard-info text-center">Lorem.,,</div>
                       </div>
                 </div>
               </div>
@@ -62,13 +64,12 @@
         <div class="col-10 mr-auto">
         <div class="card card-default"> 
           <div class="card-header">
-            <p class="dtitle">Expected waiting time for delivery of experiment results</p> 
+            <p class="dtitle">Expected waiting time for project report delivery</p> 
           </div>
             <div class="card-content">
               <div class="card-body"> 
-			<p>Average waiting time for delivery of experiment report: </p>
-			<p>Minimum waiting time for delivery of experiment report: </p>
-			<p> {{ user.profile.Issue }} </p>
+      <p class="report">Required processing time for this project: {{ Min_wTime }} days </p>
+			<p class="report">Average waiting time for similar projects: {{ Median_wTime }} days </p>
         </div>
         </div>
       </div> 
@@ -80,80 +81,101 @@
           <div class="card-header">
             <p class="dtitle">Current workload of the core mass spectrometers</p> 
           </div>
-            <div class="card-content">
-              <div class="card-body"> 
-                <div class="row">
-              <div class="col-lg-2">
+            <div class="d-inline-flex card-content">
+              <div class="d-inline-flex card-body"> 
+                <div class="d-flex justify-content-around row">
+              <div class="d-flex flex-column col-lg-2 special-card">
                 <div class="text-center bs-sm">
                   <p>Orbitrap Fusion Lumos</p>
                 </div>
-                <div>
-                <img src='{% static "./MassSpecs/OrbitrapFusionLumos.jpg" %}' height="70" class="center align-center" alt="">
+                <div class="cb">
+                <img src='{% static "./MassSpecs/OrbitrapFusionLumos.jpg" %}' height="50" class="center align-center" alt="">
                 </div>
-                <div>
-                  <img src='{% static "./MassSpecs/gauge1.svg" %}' height="120" class="center align-center" alt="">
+                <div class="cb">
+                  <img src='{% static "./MassSpecs/Lumosnd.png" %}' height="60" class="center align-center" alt="">
                 </div>
                 </div>
-              <div class="col-lg-2">
+              <div class="d-flex flex-column col-lg-2">
                 <div class="text-center bs-sm">
                    <p>QExactive HF</p>
                 </div>
-                <div>
-                <img src='{% static "./MassSpecs/QEHF.jpg" %}' height="70" class="center align-center" alt="">
+                <div class="cb">
+                <img src='{% static "./MassSpecs/QEHF.jpg" %}' height="50" class="center align-center" alt="">
               </div>
-                <div>
-                  <img src='{% static "./MassSpecs/gauge1.svg" %}' height="120" class="center align-center" alt="">
+                <div class="cb">
+                  <img src='{% static "./MassSpecs/QEHFnd.png" %}' height="60" class="center align-center" alt="">
                 </div>
                 </div>
-               <div class="col-lg-2">
+               <div class="d-flex flex-column col-lg-2">
                 <div class="text-center bs-sm">
                    <p>QExactive HF BioPharma</p>
                                   </div>
-                <div>
-                <img src='{% static "./MassSpecs/QEHFBioPharma.jpg" %}' height="70" class="center align-center" alt="">
+                <div class="cb">
+                <img src='{% static "./MassSpecs/QEHFBioPharma.jpg" %}' height="50" class="center align-center" alt="">
               </div>
-               <div>
-                  <img src='{% static "./MassSpecs/gauge1.svg" %}' height="120" class="center align-center" alt="">
+               <div class="cb">
+                  <img src='{% static "./MassSpecs/QEHFBioPharmand.png" %}' height="60" class="center align-center" alt="">
                 </div>
                 </div>
-               <div class="col-lg-2">
+               <div class="d-flex flex-column col-lg-2">
                 <div class="text-center bs-sm">
                    <p>QExactive</p>
                                    </div>
-                <div>
-                <img src='{% static "./MassSpecs/QExactive.jpg" %}' height="70" class="center align-center" alt="">
+                <div  class="cb">
+                <img src='{% static "./MassSpecs/QExactive.jpg" %}' height="50" class="center align-center" alt="">
                 </div>
-                  <div>
-                  <img src='{% static "./MassSpecs/gauge1.svg" %}' height="120" class="center align-center" alt="">
+                  <div class="cb">
+                  <img src='{% static "./MassSpecs/QEnd.png" %}' height="60" class="center align-center" alt="">
                 </div>
                 </div>
-              <div class="col-lg-2">
+              <div class="d-flex flex-column col-lg-2">
                 <div class="text-center bs-sm">
-                   <p>LTQ Orbitrap Elite</p>
-                                   </div>
-                <div>
-                <img src='{% static "./MassSpecs/LTQOrbitrapElite.jpg" %}' height="70" class="center align-center" alt="">
+                   <p>LTQ Orbitrap Elite</p>      
+                   </div>           
+                <div class="cb">
+                <img src='{% static "./MassSpecs/LTQOrbitrapElite.jpg" %}' height="50" class="center align-center" alt="">
+                <div class="cb">
+                <img src='{% static "./MassSpecs/Elitend.png" %}' height="60" class="center align-center" alt="">
+                </div>                
+                </div>
+                </div>
               </div>
-              <div>
-                <img src='{% static "./MassSpecs/gauge1.svg" %}' height="120" class="center align-center" alt="">
                 </div>
+
                 </div>
-                </div>
-                </div>
+                <p>   Instrument's queuing days</p>
             </div>
           </div>
-        </div> 
-       </div>        
-</div>
+       </div>   
+    <div class="row">  
+        <div class="col-10 mr-auto">
+        <div class="card card-default"> 
+          <div class="card-header">
+            <p class="dtitle">Workload at the Proteomics Core along the year</p> 
+          </div>
+            <div class="card-content">
+              <div class="card-body"> 
+                <div class="row">
 
+                <img src='{% static "./MassSpecs/CaptureClosedOpened1YearDayCumulative3.jpg" %}' height="300" class="center align-center inner" alt="">
+        </div>
+        </div>
+      </div> 
+      </div> 
+     </div>   
+
+</div>
+</div>
 
 {% endblock %}
 
 {% block extra_js %}
 
 
- <script>
-var State = 'Closed';
+<script>
+var State =  "{{ State }}"
+var SchedulingState =  "{{ Scheduling_State }}"
+// var State = 'Closed';
 function OpenSessionStatusCSS(State){
     if (State == "Created"){
       $("#created").attr("class", ".col-xs-3 bs-wizard-step complete");
@@ -165,22 +187,40 @@ function OpenSessionStatusCSS(State){
   } else if (State == "Arrived"){
     console.log("A");
     $("#created").attr("class", ".col-xs-3 bs-wizard-step complete");
+    $("#arrived").attr("class", ".col-xs-3 bs-wizard-step active");
+    $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step disabled");
+    $("#ms_run").attr("class", ".col-xs-3 bs-wizard-step disabled");
+    $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step disabled");
+    $("#closed").attr("class", ".col-xs-3 bs-wizard-step disabled");
+  } else if (State == "Sample_Prep" && SchedulingState == "NotScheduled"){
+    console.log("A");
+    $("#created").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#arrived").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#ms_run").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#closed").attr("class", ".col-xs-3 bs-wizard-step disabled");
 
-  } else if (State == "Sample_Prep"){
-    console.log("SP");
+  }  else if (State == "Sample_Prep" && SchedulingState == "Scheduled"){
+    console.log("A");
     $("#created").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#arrived").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step active");
     $("#ms_run").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#closed").attr("class", ".col-xs-3 bs-wizard-step disabled");
-    
-  } else if (State == "MS_Run"){
+
+  } else if (State == "MS_Run" && SchedulingState == "NotScheduled"){
+    console.log("A");
+    $("#created").attr("class", ".col-xs-3 bs-wizard-step complete");
+    $("#arrived").attr("class", ".col-xs-3 bs-wizard-step complete");
+    $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step complete");
+    $("#ms_run").attr("class", ".col-xs-3 bs-wizard-step disabled");
+    $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step disabled");
+    $("#closed").attr("class", ".col-xs-3 bs-wizard-step disabled");
+
+  }
+   else if (State == "MS_Run" && SchedulingState == "Scheduled"){
     $("#created").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#arrived").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step complete");
@@ -188,12 +228,12 @@ function OpenSessionStatusCSS(State){
     $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#closed").attr("class", ".col-xs-3 bs-wizard-step disabled");
     
-  } else if (State == "Data_Analysis"){
+  } else if (State == "Data_Analysis" && SchedulingState == "NotScheduled"){
     $("#created").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#arrived").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#ms_run").attr("class", ".col-xs-3 bs-wizard-step complete");
-    $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step active");
+    $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#closed").attr("class", ".col-xs-3 bs-wizard-step disabled");
     
   } else {

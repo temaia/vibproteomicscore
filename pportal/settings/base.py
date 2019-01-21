@@ -127,7 +127,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(os.path.dirname(BASE_DIR), "static-dev"),
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static-dev"),
 ]
 #os.path.join(os.path.join(os.path.dirname(BASE_DIR), "pportal3"),"templates")]
 

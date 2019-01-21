@@ -123,3 +123,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 CRISPY_TEMPLATE_PACK='bootstrap4'
+
+# vibmail.ugent.be settings
+EMAIL_HOST = 'vibmail.ugent.be'
+EMAIL_HOST_USER = 'no-reply-prc@vib-ugent.be'
+EMAIL_HOST_PASSWORD = 'n0'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = False
+
+DEFAULT_FROM_EMAIL = 'no-reply-prc@vib-ugent.be' 'noreply-prc@vib-ugent.be'
+ADMINS = (
+    (''))

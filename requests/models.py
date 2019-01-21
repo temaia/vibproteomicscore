@@ -101,21 +101,22 @@ class Profile(models.Model):
 	('proteinmass','Protein mass determination'),
 	('other','Other'),
 	)
-
-	Issue = models.CharField(max_length=200, blank=True)
 	user=models.OneToOneField(User, on_delete=models.CASCADE)
-	Name = models.CharField(max_length=120)
- 	# Emailadress = models.EmailField(max_length=120)
-	Study_Type = models.CharField(max_length=50, choices=STUDYTYPES)
-	Group_Leader = models.CharField(max_length=120)
-	Analysis_Type = models.CharField(max_length=50 , choices=ANALYSISTYPES)
+	Name = models.CharField(max_length=120, null=True)
+	Email = models.EmailField(max_length=120, null=True) # pre-filled
+	Group_Leader = models.CharField(max_length=120, null=True)
+	Affiliation = models.CharField(max_length=120 ,null=True)
+	Affiliation_Type = models.CharField(max_length=50, choices=STUDYTYPES, null=True)
+	Address = models.CharField(max_length=300, null=True)
+	Project_ID = models.CharField(max_length=200, null=True) # pre-filled displayed on form template on the corner
+	Main_Analysis_Type = models.CharField(max_length=50 , choices=ANALYSISTYPES, null=True)
 	timestamp = models.DateTimeField(auto_now_add=True)
 	def __unicode__(self):
 		return self.Name
 	def __str__(self):
 		return self.Name
 	def getAnalysisType(self):
-		return dict(Profile.ANALYSISTYPES)[self.Analysis_Type]
+		return dict(Profile.ANALYSISTYPES)[self.Main_Analysis_Type]
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender,instance,created, **kwargs):
@@ -164,15 +165,24 @@ GBCHOICES = (
 	(False,'estimate about gel band'),
 	)
 
+ANALYSISTYPES = (
+	('shotgun','Shotgun analysis'),
+	('APMS','Affinity-Purification MS (AP-MS)'), 
+	('PTMs','PTM analysis'),
+	('gelband','Protein gel band analysis'),
+	('proteinmass','Protein mass determination'),
+	('other','Other'),
+	)
+
 class Analysis(models.Model):
 	Project_summary = models.CharField(max_length=300)
 	Project_keywords = models.CharField(max_length=120)
+	Analysis_Type = models.CharField(max_length=50 , choices=ANALYSISTYPES, null=True) # pre-filled?!
+	#timestamp = models.DateTimeField(auto_now_add=True)
 	#Analysis_type = models.CharField(max_length=50,default=None , choices=ANALYSISTYPES)
 	#Data_analysis = models.BooleanField(choices=DATAANALYSIS)
 	#Data_analysis = models.BooleanField()
 #class Profile_extra(models.Model):
-	Affiliation = models.CharField(max_length=120)
-	Address = models.CharField(max_length=300)
 	#def __unicode__(self):
 	#	return self.Name
 	def __unicode__(self):
