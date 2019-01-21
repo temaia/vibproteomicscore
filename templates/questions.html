@@ -12,39 +12,6 @@
   <h5 class="frb">Frequently asked questions</h5>
   <br>
 
-  <h6 class="frb"> LC-MS/MS analysis </h6>
-
-  <div class="container">
-      <div id="accordion">
-        <div class="card">
-          <div class="card-header">
-            <a class="card-link" data-toggle="collapse" href="#collapse1">
-              What is LFQ?
-            </a>
-          </div>
-          <div id="collapse1" class="collapse" data-parent="#accordion">
-            <div class="card-body">
-              <p class = "indent">
-                LFQ (LabelFree Quantification) intensity values are the normalized MS intensity across all samples. The normalization corrects for differences in total protein amounts between the samples. This makes it possible to compare the samples. The LFQ intensity values are the values that you should use for further analysis. </p>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <a class="card-link" data-toggle="collapse" href="#collapse2">
-              What is iBAQ?
-            </a>
-          </div>
-          <div id="collapse2" class="collapse" data-parent="#accordion">
-            <div class="card-body">
-              <p class="indent">
-                The iBAQ ratio is the MS intensity corrected for the theoretical detectability of the protein. The higher the iBAQ ratio, the more abundant a protein is WITHIN a sample.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
-
 
   <br>
   <h6 class="frb"> Data analysis </h6>
@@ -79,6 +46,40 @@
         </div>
       </div>
   </div>
+
+  <h6 class="frb"> LC-MS/MS analysis </h6>
+
+  <div class="container">
+      <div id="accordion">
+        <div class="card">
+          <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#collapse5">
+              What is LFQ?
+            </a>
+          </div>
+          <div id="collapse5" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+              <p class = "indent">
+                LFQ (LabelFree Quantification) intensity values are the normalized MS intensity across all samples. The normalization corrects for differences in total protein amounts between the samples. This makes it possible to compare the samples. The LFQ intensity values are the values that you should use for further analysis. </p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#collapse6">
+              What is iBAQ?
+            </a>
+          </div>
+          <div id="collapse6" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+              <p class="indent">
+                The iBAQ ratio is the MS intensity corrected for the theoretical detectability of the protein. The higher the iBAQ ratio, the more abundant a protein is WITHIN a sample.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
 
   {% endblock %}	
          
