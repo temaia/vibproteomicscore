@@ -857,6 +857,10 @@ class TermsOfUseView(TemplateView):
 class sample_deliveryView(TemplateView):
     template_name = 'sample-delivery3.html'
 
+class infoView(TemplateView):
+    template_name = 'information.html'
+
+
 # def about(request):
 # 	context = {}
 # 	return render(request, 'about.html', context)
