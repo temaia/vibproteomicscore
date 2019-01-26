@@ -3,73 +3,122 @@
 {% block head_title %}Welcome || {{ block.super }}{% endblock head_title %}
 
 {% block content2 %}
-<div class='container'>
-<div class="row">
-  <div class="col-12 ml-auto">
 
 
-<body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
+<!--
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Page 1</a></li>
+      <li><a href="#">Page 2</a></li>
+      <li><a href="#">Page 3</a></li>
+    </ul>
+  </div>
+</nav>-->
 
-<div class="row py-3">
-    <div class="col-3 order-2" id="sticky-sidebar">
-      <div class="sticky-top">
-        <ul class="nav nav-pills flex-column">
-          <li class="nav-item"><a href="#section1" class="active nav-link" data-toggle="pill">Section 1</a></li>
-          <li class="nav-item"><a href="#section2" class="nav-link" data-toggle="pill">Section 2</a></li>
-          <li class="nav-item"><a href="#section3" class="nav-link" data-toggle="pill">Section 3</a></li>
-          <li class="nav-item"><a href="#section4" class="nav-link" data-toggle="pill">Section 4</a></li>
-        </ul>
+<div class="py-5" >
+    <div class="container">
+      <div class="row">
+        <div class="col-3.5">
+          <ul class="nav nav-pills flex-column">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">The Core
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Instruments</a></li>
+                  <li><a href="#">Protocols</a></li>
+                  <li><a href="#">Materials & Methods</a></li>
+                </ul>
+              </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">The Proces
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Registration</a></li>
+                  <li><a href="#">Sample delivery Instructions</a></li>
+                  <li><a href="#">Follow up</a></li>
+                </ul>
+              </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Frequently asked questions
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">General</a></li>
+                  <li><a href="#">Sample preperations</a></li>
+                  <li><a href="#">LC-MS/MS analysis</a></li>
+                  <li><a href="#">Data-analysis</a></li>
+                </ul>
+              </li>
+          </ul>
+        </div>
+        <div class="col-9">
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="tabcore" role="tabpanel">
+              <p class="">In my soul and absorb its power, like the form of a beloved mistress, then I often think with longing. A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
+            </div>
+            <div class="tab-pane fade" id="tabproces" role="tabpanel">
+              <p class=""> I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents.</p>
+            </div>
+            <div class="tab-pane fade" id="tabfaq" role="tabpanel">
+              <p class="">Which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite. When I hear the buzz of the little world among the stalks, and grow familiar with the countless indescribable forms.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col" id="main">
-      <div class="tab-pane fade" id="section1" role="tabpanel">
-          <h1>Section 1</h1>
-          <p>
-Wat is Lorem Ipsum?
+  </div>
 
-Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.
-Waarom gebruiken we het?
 
-Het is al geruime tijd een bekend gegeven dat een lezer, tijdens het bekijken van de layout van een pagina, afgeleid wordt door de tekstuele inhoud. Het belangrijke punt van het gebruik van Lorem Ipsum is dat het uit een min of meer normale verdeling van letters bestaat, in tegenstelling tot "Hier uw tekst, hier uw tekst" wat het tot min of meer leesbaar nederlands maakt. Veel desktop publishing pakketten en web pagina editors gebruiken tegenwoordig Lorem Ipsum als hun standaard model tekst, en een zoekopdracht naar "lorem ipsum" ontsluit veel websites die nog in aanbouw zijn. Verscheidene versies hebben zich ontwikkeld in de loop van de jaren, soms per ongeluk soms expres (ingevoegde humor en dergelijke).
 
-Waar komt het vandaan?
-
-In tegenstelling tot wat algemeen aangenomen wordt is Lorem Ipsum niet zomaar willekeurige tekst. het heeft zijn wortels in een stuk klassieke latijnse literatuur uit 45 v.Chr. en is dus meer dan 2000 jaar oud. Richard McClintock, een professor latijn aan de Hampden-Sydney College in Virginia, heeft één van de meer obscure latijnse woorden, consectetur, uit een Lorem Ipsum passage opgezocht, en heeft tijdens het zoeken naar het woord in de klassieke literatuur de onverdachte bron ontdekt. Lorem Ipsum komt uit de secties 1.10.32 en 1.10.33 van "de Finibus Bonorum et Malorum" (De uitersten van goed en kwaad) door Cicero, geschreven in 45 v.Chr. Dit boek is een verhandeling over de theorie der ethiek, erg populair tijdens de renaissance. De eerste regel van Lorem Ipsum, "Lorem ipsum dolor sit amet..", komt uit een zin in sectie 1.10.32.
-
-Het standaard stuk van Lorum Ipsum wat sinds de 16e eeuw wordt gebruikt is hieronder, voor wie er interesse in heeft, weergegeven. Secties 1.10.32 en 1.10.33 van "de Finibus Bonorum et Malorum" door Cicero zijn ook weergegeven in hun exacte originele vorm, vergezeld van engelse versies van de 1914 vertaling door H. Rackham.
-Waar kan ik het vinden?
-
-Er zijn vele variaties van passages van Lorem Ipsum beschikbaar maar het merendeel heeft te lijden gehad van wijzigingen in een of andere vorm, door ingevoegde humor of willekeurig gekozen woorden die nog niet half geloofwaardig ogen. Als u een passage uit Lorum Ipsum gaat gebruiken dient u zich ervan te verzekeren dat er niets beschamends midden in de tekst verborgen zit. Alle Lorum Ipsum generators op Internet hebben de eigenschap voorgedefinieerde stukken te herhalen waar nodig zodat dit de eerste echte generator is op internet. Het gebruikt een woordenlijst van 200 latijnse woorden gecombineerd met een handvol zinsstructuur modellen om een Lorum Ipsum te genereren die redelijk overkomt. De gegenereerde Lorum Ipsum is daardoor altijd vrij van herhaling, ingevoegde humor of ongebruikelijke woorden etc.</p>
+<div class="container">
+  <div class="row text-dark">
+    <div class="col-lg-3 p-3">
+      <div class="card text-center">
+        <div class="card-body p-4">
+          <h3>The Core</h3>
+          <a class="btn btn-link" href="Tabgeneral">GO!</a>
         </div>
-        <div id="section2">
-          <h1>Section 2</h1>
-          <p>
-Wat is Lorem Ipsum?
-
-Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.
-Waarom gebruiken we het?
-
-Het is al geruime tijd een bekend gegeven dat een lezer, tijdens het bekijken van de layout van een pagina, afgeleid wordt door de tekstuele inhoud. Het belangrijke punt van het gebruik van Lorem Ipsum is dat het uit een min of meer normale verdeling van letters bestaat, in tegenstelling tot "Hier uw tekst, hier uw tekst" wat het tot min of meer leesbaar nederlands maakt. Veel desktop publishing pakketten en web pagina editors gebruiken tegenwoordig Lorem Ipsum als hun standaard model tekst, en een zoekopdracht naar "lorem ipsum" ontsluit veel websites die nog in aanbouw zijn. Verscheidene versies hebben zich ontwikkeld in de loop van de jaren, soms per ongeluk soms expres (ingevoegde humor en dergelijke).
-
-Waar komt het vandaan?
-
-In tegenstelling tot wat algemeen aangenomen wordt is Lorem Ipsum niet zomaar willekeurige tekst. het heeft zijn wortels in een stuk klassieke latijnse literatuur uit 45 v.Chr. en is dus meer dan 2000 jaar oud. Richard McClintock, een professor latijn aan de Hampden-Sydney College in Virginia, heeft één van de meer obscure latijnse woorden, consectetur, uit een Lorem Ipsum passage opgezocht, en heeft tijdens het zoeken naar het woord in de klassieke literatuur de onverdachte bron ontdekt. Lorem Ipsum komt uit de secties 1.10.32 en 1.10.33 van "de Finibus Bonorum et Malorum" (De uitersten van goed en kwaad) door Cicero, geschreven in 45 v.Chr. Dit boek is een verhandeling over de theorie der ethiek, erg populair tijdens de renaissance. De eerste regel van Lorem Ipsum, "Lorem ipsum dolor sit amet..", komt uit een zin in sectie 1.10.32.
-
-Het standaard stuk van Lorum Ipsum wat sinds de 16e eeuw wordt gebruikt is hieronder, voor wie er interesse in heeft, weergegeven. Secties 1.10.32 en 1.10.33 van "de Finibus Bonorum et Malorum" door Cicero zijn ook weergegeven in hun exacte originele vorm, vergezeld van engelse versies van de 1914 vertaling door H. Rackham.
-Waar kan ik het vinden?
-
-Er zijn vele variaties van passages van Lorem Ipsum beschikbaar maar het merendeel heeft te lijden gehad van wijzigingen in een of andere vorm, door ingevoegde humor of willekeurig gekozen woorden die nog niet half geloofwaardig ogen. Als u een passage uit Lorum Ipsum gaat gebruiken dient u zich ervan te verzekeren dat er niets beschamends midden in de tekst verborgen zit. Alle Lorum Ipsum generators op Internet hebben de eigenschap voorgedefinieerde stukken te herhalen waar nodig zodat dit de eerste echte generator is op internet. Het gebruikt een woordenlijst van 200 latijnse woorden gecombineerd met een handvol zinsstructuur modellen om een Lorum Ipsum te genereren die redelijk overkomt. De gegenereerde Lorum Ipsum is daardoor altijd vrij van herhaling, ingevoegde humor of ongebruikelijke woorden etc.</p>
         </div>
-        <div id="section3">
-          <h1>Section 3</h1>
-          <p>Try to scroll this page and look at the navigation list while scrolling!</p>
+      </div>
+      <div class="col-lg-3 col-md-6 p-3">
+        <div class="card text-center">
+          <div class="card-body p-4" data-toggle="Tabsampleprep">
+            <h3>The proces</h3>
+            <ul><li>Sample submission</li></ul>
+              <a class="btn btn-link" href="Tabsampleprep">FAQ</a>
+          </div>
         </div>
-        <div id="section4">
-          <h1>Section 4</h1>
-          <p>Try to scroll this page and look at the navigation list while scrolling!</p>
-        </div> 
+      </div>
+      <div class="col-lg-3 col-md-6 p-3">
+        <div class="card text-center">
+          <div class="card-body p-4" data-toggle="TabLCMSMS">
+            <h3>Frequently asked questions</h3>
+              <a class="btn btn-link" href="TABLCMSMS">FAQ</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 p-3">
+        <div class="card text-center">
+          <div class="card-body p-4" data-toggle="Tabdataanalysis">
+            <h3>Data-analysis</h3>
+            <a class="btn btn-link" href="Tabdataanalysis">FAQ</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade show active" id="Tabgeneral" role="tabpanel">
+              <p class="">When I hear the buzz of the little world among the stalks, and grow familiar with the countless indescribable forms.</p>
+            </div>
+  </div>
+</div>
+
     </div>
   </div>
+</div>
 
 </body> 
 

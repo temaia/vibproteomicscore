@@ -3,9 +3,9 @@
 {% block head_title %}Welcome || {{ block.super }}{% endblock head_title %}
 
 {% block content2 %}
-<div class='container'>
+<!--<div class='container'>
 <div class="row">
-  <div class="col-12 ml-auto">
+  <div class="col-12 ml-auto">-->
 <!--
     <h5 class="frb">Welcome to the VIB Proteomics Core portal!</h5>
     <br>
@@ -110,24 +110,25 @@
         <div class="col-lg-4 p-3">
           <div class="card text-center">
             <div class="card-body p-4">
-              <h3><a href="{% url 'projectregistration' %}">Create a project</a></h3>
-              <p class="my-3 lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ...</p> <a class="btn btn-link" href="{% url 'projectregistration' %}">Read more</a>
+              <h3 style="font-weight: bold;">Register a project</h3>
+              <p class="my-3 lead">If you recieved an email with your project details, please register the project here. </p> <a class="btn btn-link" href="{% url 'projectregistration' %}">GO!</a>
             </div>
           </div>
         </div>
         <div class="col-lg-4 col-md-6 p-3">
           <div class="card text-center">
             <div class="card-body p-4">
-              <h3><a href="{% url 'project-info' %}">Check project status</a></h3>
-              <p class="my-3 lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ...</p> <a class="btn btn-link" href="{% url 'project-info' %}">Read more</a>
+              <h3 style="font-weight: bold;">Check project status</h3>
+              <p class="my-3 lead"> Follow the status of your project here.</p> 
+              <a class="btn btn-link" href="{% url 'project-info' %}">GO!</a>
             </div>
           </div>
         </div>
         <div class="col-lg-4 col-md-6 p-3">
           <div class="card text-center">
             <div class="card-body p-4" >
-              <h3><a href="{% url 'information' %}">Information</a></h3>
-              <p class="my-3 lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ...</p> <a class="btn btn-link" href="{% url 'questions' %}">Read more</a>
+              <h3 style="font-weight: bold;">Information</h3>
+              <p class="my-3 lead">If you are interested in what we do as a core facility, how a project is processed or check the frequently asked question.</p> <a class="btn btn-link" href="{% url 'information' %}">GO!</a>
             </div>
           </div>
         </div>
