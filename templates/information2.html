@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block head_title %}Welcome || {{ block.super }}{% endblock head_title %}
+
+{% block content2 %}
+<div class="col-md-12">
+  <div class="container">
+      <div class="row">
+        <div class="col-3">
+          <nav id="sidebar">
+
+            <ul class="list-unstyled components">
+              <li class="dropdown">
+                <a href="#TheCore"> The Core</a> <a href="#homeSubmenu"data-toggle="collapse" aria-expanded="false" ><span class="dropdown-toggle"> </span></a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                  <li>
+                    <a class="indent-nav" href="#Instruments">Instruments</a>
+                  </li>
+                  <li>
+                    <a class="indent-nav" href="#Protocols">Protocols</a>
+                  </li>
+                  <li>
+                    <a class="indent-nav" href="#MM">Materials & Methods</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">About</a>
+              </li>
+              <li>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                  <li>
+                     <a class="indent-nav" href="#">Page 1</a>
+                  </li>
+                  <li>
+                      <a class="indent-nav" href="#">Page 2</a>
+                  </li>
+                  <li>
+                     <a class="indent-nav" href="#">Page 3</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Portfolio</a>
+              </li>
+              <li>
+                <a href="#">Contact</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="col-8">
+          <!-- Page Content -->
+          <div id="content">
+
+            <h3>Information</h3>
+            <div id="TheCore">
+              <h4 id="TheCore">The Core</h4>
+              <div id="Instruments">
+                <h5>Instruments</h5>
+              </div>
+              <div id="Protocols">
+                <h5>Protocols</h5>
+              </div>
+              <div id="MM">
+                <h5>Material & Methods</h5>
+              </div>
+            </div>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet lacus non mauris sodales varius. Cras pellentesque, erat ut fermentum fringilla, orci enim eleifend nibh, eu posuere magna elit vel orci. Vestibulum a convallis odio, at auctor tellus. Nulla facilisi. Etiam vitae quam ac ipsum malesuada sollicitudin. Aliquam erat volutpat. Nam porttitor leo justo, vitae porta ligula lacinia ut. Etiam blandit rutrum ligula eu dapibus. Etiam pellentesque pellentesque urna a varius. In egestas sagittis est vel commodo. Fusce a magna ac magna commodo pulvinar ut et odio. Nam ligula magna, sagittis eu ornare quis, suscipit ac lectus.</p>
+            <p> Curabitur massa quam, feugiat egestas ex eget, maximus malesuada eros. Phasellus id quam risus. Vestibulum congue pellentesque risus, eu scelerisque orci eleifend dictum. Phasellus odio urna, dapibus sed scelerisque ut, euismod vel orci. Fusce ut metus a massa cursus elementum. Integer ut risus eget ex euismod semper sed in eros. Pellentesque lobortis pellentesque ligula, id tincidunt diam rutrum sed. Donec auctor ligula a vulputate luctus.</p>
+            <p>In metus lorem, accumsan viverra ultricies et, cursus nec leo. Nullam quis aliquet tortor, ac vulputate libero. Nullam id orci nec nulla imperdiet consequat. Nam condimentum erat vel nibh gravida, ac aliquet odio viverra. Suspendisse non justo quis felis tincidunt finibus ut eget nisi. In turpis metus, imperdiet vel libero at, lobortis posuere diam. Praesent lobortis augue quis libero aliquet pellentesque. Duis dictum, mi quis porttitor interdum, enim erat imperdiet diam, et tempor dolor nibh et tortor. Sed imperdiet odio vel purus egestas, sed dignissim velit accumsan. Maecenas euismod nulla id fermentum lacinia. Quisque aliquam tortor vitae maximus consequat. Sed at lorem et neque condimentum luctus quis non quam. Cras non mattis velit. Duis commodo, libero ut mattis pharetra, leo ipsum bibendum leo, at condimentum lacus nunc in enim.</p>
+            <p>Pellentesque consequat nibh lacus, ut tincidunt nisi consectetur quis. Etiam suscipit, orci vel ultricies tempus, magna tellus imperdiet risus, ut laoreet metus purus ut mi. Pellentesque eu urna aliquam, pretium diam vel, commodo felis. Donec sit amet tortor gravida, pharetra lorem nec, maximus tortor. Ut elit diam, fermentum sit amet risus ac, efficitur varius augue. Mauris fringilla justo eu augue imperdiet, vitae euismod leo elementum. In hac habitasse platea dictumst. Cras sed consequat leo. Nullam ullamcorper urna vitae quam aliquam, ac tincidunt elit porttitor. Quisque lobortis erat augue, at varius mauris dignissim nec. </p>
+            <p>Sed id imperdiet justo, ut commodo libero. Pellentesque fermentum nunc nec vulputate ultrices. Pellentesque mauris sem, mattis vitae felis ut, commodo maximus dui. Maecenas sed faucibus erat. Phasellus efficitur, urna vel porta suscipit, nunc arcu hendrerit nunc, blandit aliquet purus tortor sed mi. Vestibulum a quam bibendum, varius dolor sed, pharetra tortor. Mauris tortor mi, sodales eu tristique feugiat, porttitor in dolor. Aliquam eget iaculis nulla, non laoreet libero. Integer tristique libero id elit scelerisque hendrerit. Sed ullamcorper massa quis turpis dignissim euismod. Proin venenatis arcu elit. Nunc nec commodo orci. Sed id lacus at risus sagittis pulvinar sit amet vitae orci. Cras vulputate, lorem ut suscipit vulputate, erat erat dignissim eros, in vestibulum elit tellus non nisi. Etiam tincidunt, nunc nec ornare molestie, est nunc feugiat odio, eu bibendum magna turpis et tortor. </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}  
+         
+
+from home show templateview()

@@ -52,7 +52,7 @@ urlpatterns = [
     #url(r'^profile/$', views.get_user_profile, name='profile'),
     url(r'^profile/$', login_required(views.get_user_profile), name='profile'),
     url(r'^termsofuse/$', TermsOfUseView.as_view(template_name='TermsOfUse.html'), name='termsofuse'),
-    url(r'^information/$', infoView.as_view(template_name='information.html'), name='information'),
+    url(r'^information/$', infoView.as_view(template_name='information2.html'), name='information'),
     url(r'^requestt_page/$', views.requestt_page, name='requestt_page'),
     #url(r'^project-registration/$', views.get_user_profile, name='projectregistration'),
     url(r'^contact/',  contactView.as_view(template_name='contact.html'),name='contact'),
