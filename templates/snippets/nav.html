@@ -10,7 +10,7 @@
       <div class="navbar-inner bg-grey " >
         <nav class="navbar navbar-expand-md navbar-light bg-grey ">
   <a class="navbar" href="{% url 'home' %}">
-    <img src='{% static "./proteomics_core.png" %}' width="250" height="90" class="d-inline-block align-center" alt="">  
+    <img src='{% static "./proteomics_core.png" %}' width="250" height="100" class="d-inline-block align-center" alt="">  
  </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavSupportedContent" aria-controls="navbarNavSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -27,27 +27,17 @@
         <a class="nav-link navgar selected" href="{% url 'home' %}">Home</a>
       </li>
       <li {% if "/sampledelivery" == request.path %}class="nav-item active"{% endif %}>
-        <a class="nav-link navgar " href="{% url 'sample_delivery' %}">Sample delivery</a>
-      </li>
-      <li {% if "/questions" == request.path %}class="nav-item active"{% endif %}>
-        <a class="nav-link navgar" href="{% url 'questions' %}">FAQ</a>
+        <a class="nav-link navgar " href="{% url 'sample_delivery' %}">About the Core</a>
       </li>
       <li {% if "/contact" == request.path %}class="nav-item active"{% endif %}>
         <a class="nav-link navgar " href="{% url 'contact' %}">Contact</a>
       </li>
     </ul>  
       <ul class="nav navbar-nav align-right ml-auto bg-grey">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-           <li {% if "/login" == request.path %}class="nav-item active"{% endif %}>
-          <a class="nav-link" href="{% url 'login' %}">Log In </a>
+         <li {% if "/logout" == request.path %}class="nav-item active"{% endif %}>
+            <a class="nav-link" href="{% url 'logout' %}"><span class="fa fa-user fa-2x"></span><span class="fa fa-sign-out fa-lg"></span></a>
           </li>
-          <li {% if "/logout" == request.path %}class="nav-item active"{% endif %}>
-            <a class="nav-link" href="{% url 'logout' %}">Log Out </a>
-          </li>
-          </ul>
-      </li>
+
     </ul>
     </nav>
        </div>
@@ -64,4 +54,10 @@
 
  --> 
 
+
 {% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}
+

@@ -24,7 +24,7 @@ from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from requests.forms import CustomerForm, AnalysisForm, Specimen_SGForm,Specimen_APMSForm,Specimen_PTMForm,Specimen_GBForm, EDForm
 #from requests.views import AboutView,HomeView, CustomerRegistrationView,AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
-from requests.views import MyView,ProjectInfoGaugeView, TermsOfUseView, AboutView,HomeView, ProjectInfoView,ProjectInfoGuestView,sample_deliveryView,contactView, AnalysisRegistrationView, questionsView, AnalysisForm,ExperimentForm,Specimen_SGForm, ContactWizard, ContactWizardSG,ContactWizardPTM,ContactWizardAPMS,ContactWizardGB, LoginView,SGView#,ProjectRegistrationView
+from requests.views import MyView,ProjectInfoGaugeView, TermsOfUseView, AboutView,HomeView, ProjectInfoView,ProjectInfoGuestView,sample_deliveryView,contactView, AnalysisRegistrationView,infoView, questionsView, AnalysisForm,ExperimentForm,Specimen_SGForm, ContactWizard, ContactWizardSG,ContactWizardPTM,ContactWizardAPMS,ContactWizardGB, LoginView,SGView#,ProjectRegistrationView
 from django.views.generic import TemplateView
 #from requests.views import AboutView,HomeView, AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
 
