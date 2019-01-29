@@ -1,0 +1,49 @@
+?
+
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block head_title %}Project Registration || {{ wizard.form.media }}{{ block.super }}{% endblock head_title %}
+
+
+{# Load the tag library #}
+
+
+{# Display a form #}
+
+
+{% block content2 %}
+
+ <div class='container'>
+<div class="row">
+
+<div class="col-8 col-md-8 col-lg-6 mr-auto">
+<h7>Form Registration</h7>
+<form action="#" method = "get">
+
+	  <p>Please fill-in the experimental design file template presented below and then submit the finalized version.</p>
+  <input type="submit" class="btn btn-default btn-sm pull-right" name="excel" value="Download experimental design file"></input>
+  </form>
+<form action="#" method = "get">
+	{% load crispy_forms_tags %}
+{{ form|crispy }}
+</form>
+<form action="#" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Please indicate that you have read and agree to the Terms and Conditions'); return false; }">
+<p><b>Terms and Conditions</b></p>
+<input type="checkbox" name="checkbox" value="check" id="agree" /> I have agreed to acknowledge the VIB Protemics Core in any publications...
+<input type="submit" name="submit" value="submit" />
+
+</form>
+  </div>
+           <div class="col-3">
+           	        <div class="alert" style='min-height: 800px;'>
+          </div>
+         </div>
+  </div>
+  </div>
+
+{% endblock %}
+
+
+

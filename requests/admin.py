@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from requests.models import Analysis
 from django.contrib import admin
 from .forms import UserAdminCreationForm, UserAdminChangeForm
-from .models import User, Profile
+from .models import User, Profile, Specimen_SG
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
@@ -79,3 +79,4 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(User,CustomUserAdmin)
 admin.site.register(Analysis)
+admin.site.register(Specimen_SG)

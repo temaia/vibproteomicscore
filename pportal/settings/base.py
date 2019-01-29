@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+#BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -47,6 +48,7 @@ AUTH_USER_MODEL = 'requests.User' # changes build in user model to this one
 LOGIN_URL='login'
 LOGIN_REDIRECT_URL='home'
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -68,6 +70,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -132,5 +135,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static-dev"),
 #os.path.join(os.path.join(os.path.dirname(BASE_DIR), "pportal3"),"templates")]
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media").replace('\\','/')
 MEDIA_URL = "/media/"

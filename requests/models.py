@@ -196,7 +196,7 @@ class Specimen_SG(models.Model):
 	Sequence_Database_Public_Availability = models.BooleanField(choices=DATAANALYSIS, null=False,
 		default=True)
 	Sequence_Database_Source = models.CharField(max_length=50)
-	Sequence_Database_File = models.FileField(storage=FileSystemStorage(location=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'media')))
+	Sequence_Database_File = models.FileField(blank=True, storage=FileSystemStorage(location=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'media')))
 	##Other_Relevant_
 	##Other_Sequence_Database_File = models.FileField(upload_to='seqdbs')
 
@@ -206,9 +206,9 @@ class Specimen_SG(models.Model):
 	# if applicable exact
 	Buffer_Composition = models.CharField(max_length=300)
 	#volume or estimation in ul / ml
-	Volume = models.FloatField()
+	Volume = models.DecimalField(decimal_places=2, max_digits=6)
 	VUnit = models.BooleanField(choices=VUNITS, default='μl', null=False,)
-	Protein_Concentration = models.FloatField()
+	Protein_Concentration = models.DecimalField(decimal_places=2, max_digits=6)
 	CUnit = models.CharField(max_length=10 , choices=CUNITS,null=False,default='μg/μl', blank=False)
 	def __unicode__(self):
 		return self.Species 	

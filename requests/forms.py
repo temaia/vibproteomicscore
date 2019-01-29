@@ -103,12 +103,12 @@ class Specimen_SGForm(forms.ModelForm):
 
 		self.helper = FormHelper()
 		self.helper.form_tag = False
-		self.helper.form_method = "post"
+		#self.helper.form_method = "post"
 		self.helper.form_class = 'blueforms'
 		self.helper.id = 'sg_form'
 		self.helper.layout = Layout(
 			'Species','Taxon_id','Sequence_Database_Public_Availability',
-			'Sequence_Database_Source',#'Sequence_Database_File',
+			'Sequence_Database_Source','Sequence_Database_File',
 			'Sample_Type','Sample_Vial','Buffer_Composition',
 		AppendedText('Volume', 'μl'),
 		AppendedText('Protein_Concentration', 'mg/μl'))
@@ -122,19 +122,21 @@ class Specimen_SGForm(forms.ModelForm):
 		model = Specimen_SG
 		fields = ('Species',
 		'Taxon_id', 'Sequence_Database_Public_Availability',
-		'Sequence_Database_Source', #'Sequence_Database_File',
-		'Sample_Type','Sample_Vial','Buffer_Composition','Volume',
-		'Protein_Concentration')
+		#'Sequence_Database_Source', 'Sequence_Database_File',
+		#'Sample_Type','Sample_Vial','Buffer_Composition','Volume',
+		'Protein_Concentration',
 	#fields = ('Species',
 #		'Taxon_id', 'Sequence_Database_Public_Availability',
-#		'Sequence_Database_Source','Sequence_Database_File', 
+		'Sequence_Database_Source','Sequence_Database_File')#, 
 #		'Sample_Type','Sample_Vial')
 		widgets = {'Species': forms.TextInput(attrs={'placeholder': 'e.g. Arabidopsis thaliana, human'}),
 				'Taxon_id':forms.TextInput(attrs={'placeholder':'e.g. 3701, 9606'}),
 				'Sequence_Database_Public_Availability':forms.RadioSelect,
 	 			'Sequence_Database_Source': forms.TextInput(attrs={'placeholder': 'e.g. TAIR, UNIPROT, REFSEQ, EMBL'}),
 	 			'Sample_Vial':forms.TextInput(attrs={'placeholder':'e.g. eppendorf tube, 15-ml falcon tube'}),
-	 			'Buffer_Composition':forms.TextInput(attrs={'placeholder':'e.g. Tris-HCl 0.1M pH8.0'})}
+	 			'Buffer_Composition':forms.TextInput(attrs={'placeholder':'e.g. Tris-HCl 0.1M pH8.0'}),
+		 		'Volume':forms.TextInput(attrs={'step':'0.1'}),
+		 		'Protein_Concentration':forms.NumberInput(attrs={ 'step':'0.01','min_value':'0.00'})}
 
 
 
@@ -147,9 +149,9 @@ class Specimen_PTMForm(forms.ModelForm):
 		model = Specimen_PTM
 		fields = ('Modification_Under_Investigation','Species',
 			'Taxon_id', 'Sequence_Database_Public_Availability',
-			'Sequence_Database_Source', 
-			'Sample_Type','Sample_Vial','Buffer_Composition','Volume','VUnit',
-			'Protein_Concentration','CUnit')
+			'Sequence_Database_Source')#, 
+	#		'Sample_Type','Sample_Vial','Buffer_Composition','Volume','VUnit',
+	#		'Protein_Concentration','CUnit')
 	#		'Taxon_id', 'Sequence_Database_Public_Availability',
 	#		'Sequence_Database_Source','Sequence_Database_File', 
 	#		'Sample_Type','Sample_Vial')
@@ -180,7 +182,9 @@ class Specimen_APMSForm(forms.ModelForm):
 					'Taxon_id':forms.TextInput(attrs={'placeholder':'e.g. 3701, 9606'}),
 					'Sequence_Database_Public_Availability':forms.RadioSelect,
 		 			'Sequence_Database_Source': forms.TextInput(attrs={'placeholder': 'e.g. TAIR, UNIPROT, REFSEQ, EMBL'}),
-		 			'Sample_Vial':forms.TextInput(attrs={'placeholder':'e.g. eppendorf tube, 15-ml falcon tube'})}
+		 			'Sample_Vial':forms.TextInput(attrs={'placeholder':'e.g. eppendorf tube, 15-ml falcon tube'}),
+		 			'Volume':forms.TextInput(attrs={'placeholder':'e.g. eppendorf tube, 15-ml falcon tube'}),
+		 			'Protein_Concentration':forms.NumberInput(attrs={ 'step':'0.1'})}
 
 
 class Specimen_GBForm(forms.ModelForm):
@@ -213,13 +217,15 @@ class EDForm(forms.Form):
 	# it should have content from form1 and form2
 	###input dont know
     # file to upload with experimental design final version
-    DownloadButton = forms.CharField(widget=HiddenInput())
-    Experimental_Design_file = forms.FileField(allow_empty_file=True)
+    DownloadButton = forms.FileField(widget=HiddenInput())
+    #DownloadButton = forms.CharField()
+    # Experimental Design file
+    EDfile = forms.FileField(allow_empty_file=True)
     def __init__(self, *args, **kwargs):
          super(EDForm,self).__init__(*args, **kwargs)
-         self.helper = FormHelper()
-         self.helper.form_method = "get"
-         self.DownloadButton = Layout(Field('DownloadButton',type = 'hidden'))
+         ##self.helper = FormHelper()
+         ##self.helper.form_method = "get"
+         ##self.DownloadButton = Layout(Field('DownloadButton',type = 'hidden'))
          #self.helper.add_input(Submit('submit', 'Submitt', css_class='btn-success'))
     
 
@@ -314,7 +320,7 @@ class ExperimentForm(forms.ModelForm):
 					'Isotopic_labeling_details':forms.TextInput(attrs={'placeholder':'e.g. SILAC;heavy(Arg6,Lys4),light()'}),
 		 			'Nb_variables': forms.TextInput(attrs={'placeholder':'e.g. 1, 2'}),
 		 				'Conditions_list': forms.TextInput(attrs={'placeholder':'e.g. p53KO, drugD treatment, gender'}),
-		 					'Nb_samples': forms.TextInput(attrs={'placeholder':'e.g. 1, 2'})}#,
+		 					'Nb_samples': forms.NumberInput(attrs={'placeholder':'e.g. 1, 2'})}#,
 #		 						'Sample_Name': forms.TextInput(attrs={'placeholder': 'custom sample name (optional)'})}
 		
 		def clean(self):
@@ -324,8 +330,8 @@ class ExperimentForm(forms.ModelForm):
 			Nb_conditions = cleaned_data.get('Nb_factors')
 			#Factor_name_lst = cleaned_data.get('Factor_name_lst')
 			Nb_samples = cleaned_data.get('Nb_samples')
-			Generic_Sample_Name = cleaned_data.get('Generic_Sample_Name')
-			Sample_Name = cleaned_data.get('Sample_Name')
+			#Generic_Sample_Name = cleaned_data.get('Generic_Sample_Name')
+			#Sample_Name = cleaned_data.get('Sample_Name')
 			if not Isotopic_labeling and not Nb_conditions and not Conditions_lst and not Nb_samples:
 				raise forms.ValidationError('Please fill in the form')
 		labels = {'Nb_conditions':'No. of Experimental Conditions',
