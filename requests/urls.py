@@ -24,7 +24,7 @@ from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from requests.forms import CustomerForm, AnalysisForm, Specimen_SGForm,Specimen_APMSForm,Specimen_PTMForm,Specimen_GBForm, EDForm
 #from requests.views import AboutView,HomeView, CustomerRegistrationView,AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
-from requests.views import MyView,ProjectInfoGaugeView, TermsOfUseView, AboutView,HomeView, ProjectInfoView,ProjectInfoGuestView,sample_deliveryView,contactView, AnalysisRegistrationView,infoView, questionsView, AnalysisForm,ExperimentForm,Specimen_SGForm, ContactWizard, ContactWizardSG,ContactWizardPTM,ContactWizardAPMS,ContactWizardGB, LoginView,SGView#,ProjectRegistrationView
+from requests.views import MyView,ProjectInfoGaugeView, TermsOfUseView, AboutView,HomeView, ProjectInfoView,ProjectInfoGuestView,sample_deliveryView,contactView, AboutTheCoreView, AnalysisRegistrationView,infoView, questionsView, AnalysisForm,ExperimentForm,Specimen_SGForm, ContactWizard, ContactWizardSG,ContactWizardPTM,ContactWizardAPMS,ContactWizardGB, LoginView,SGView#,ProjectRegistrationView
 from django.views.generic import TemplateView
 #from requests.views import AboutView,HomeView, AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
 
@@ -34,6 +34,7 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = static(settings.MEDIA_URL,document_root =settings.MEDIA_ROOT) +[
     url(r'^admin/', admin.site.urls),
+    url(r'^AboutTheCore/',AboutTheCoreView.auth_view(template_name='AboutTheCore.html'), name='AboutTheCore'),
     url(r'^sampledelivery/',sample_deliveryView.as_view(template_name='sample-delivery3.html'),name='sample_delivery'),
     #url(r'^pportal/',include('pportal.urls')),
     url(r'^$', HomeView.as_view(template_name='home.html'), name='home'),
@@ -55,12 +56,13 @@ urlpatterns = static(settings.MEDIA_URL,document_root =settings.MEDIA_ROOT) +[
     #url(r'^profile/$', views.get_user_profile, name='profile'),
     url(r'^profile/$', login_required(views.get_user_profile), name='profile'),
     url(r'^termsofuse/$', TermsOfUseView.as_view(template_name='TermsOfUse.html'), name='termsofuse'),
-    url(r'^information/$', infoView.as_view(template_name='information2.html'), name='information'),
+    url(r'^information/$', infoView.as_view(template_name='information.html'), name='information'),
     #url(r'^requestt_page/$', views.requestt_page, name='requestt_page'),
     url(r'^requestt_page/$', MyView.as_view(), name='requestt_page'),
     #url(r'^project-registration/$', views.get_user_profile, name='projectregistration'),
     url(r'^contact/',  contactView.as_view(template_name='contact.html'),name='contact'),
     #url(r'^project-info/$', views.get_user_projectinfo, name='projectinfo'),
+    
     url(r'^project-info/$', login_required(ProjectInfoView.as_view(template_name='project-info.html')), name='project-info'),
     url(r'^project-info-guest/$', ProjectInfoGuestView.as_view(template_name='project-info-guest.html'), name='project-info-guest'),
     url(r'^project-info-d3gauge/$', ProjectInfoGaugeView.as_view(template_name='project-infogauge.html'), name='project-infogauge'),

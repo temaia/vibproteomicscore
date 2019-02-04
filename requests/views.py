@@ -1059,6 +1059,9 @@ class sample_deliveryView(TemplateView):
 class infoView(TemplateView):
     template_name = 'information.html'
 
+class AboutTheCoreView(TemplateView):
+    template_name = 'AboutTheCore.html'
+
 class contactView(TemplateView):
     template_name = 'contact.html'
 
@@ -1068,6 +1071,12 @@ class contactView(TemplateView):
 
 class questionsView(TemplateView):
     template_name = 'questions.html'
+
+class preperationView(TemplateView):
+    template_name = 'protocols.html'
+
+class reportsView(TemplateView):
+    template_name = 'MM.html'
 
 import datetime
 

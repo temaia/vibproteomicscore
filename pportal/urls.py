@@ -24,7 +24,7 @@ from django.contrib import auth
 from django.contrib.auth import views as auth_views
 from requests.forms import CustomerForm, AnalysisForm, Specimen_SGForm,Specimen_APMSForm,Specimen_PTMForm,Specimen_GBForm, EDForm
 #from requests.views import AboutView,HomeView, CustomerRegistrationView,AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
-from requests.views import ProjectInfoGaugeView, TermsOfUseView, AboutView,HomeView, ProjectInfoView,infoView, ProjectInfoGuestView,sample_deliveryView,contactView, AnalysisRegistrationView, questionsView, AnalysisForm,ExperimentForm,Specimen_SGForm, ContactWizard, ContactWizardSG,ContactWizardPTM,ContactWizardAPMS,ContactWizardGB, LoginView,SGView#,ProjectRegistrationView
+from requests.views import ProjectInfoGaugeView, TermsOfUseView, AboutView,HomeView, ProjectInfoView,infoView, ProjectInfoGuestView,sample_deliveryView, preperationView, reportsView, contactView, AnalysisRegistrationView, questionsView, AnalysisForm,ExperimentForm,Specimen_SGForm, ContactWizard, ContactWizardSG,ContactWizardPTM,ContactWizardAPMS,ContactWizardGB, AboutTheCoreView, LoginView,SGView#,ProjectRegistrationView
 from django.views.generic import TemplateView
 #from requests.views import AboutView,HomeView, AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
 
@@ -38,6 +38,7 @@ urlpatterns = [
     #url(r'^pportal/',include('pportal.urls')),
     url(r'^$', HomeView.as_view(template_name='home.html'), name='home'),
     url(r'^questions/', questionsView.as_view(template_name='questions.html'),name='questions'),
+    url(r'^AboutTheCore/',AboutTheCoreView.as_view(template_name='AboutTheCore.html'), name='AboutTheCore'),
     #url(r'^project-registration/$', ContactWizard.as_view([CustomerForm,AnalysisForm, Specimen_SGForm]),name='project-registration'),
     #url(r'^project-registration/$', ContactWizard.as_view([AnalysisForm, Specimen_SGForm, ExperimentForm]),name='project-registration'),
     #url(r'^project-registration/$', HomeView.as_view(template_name='home.html') ,name='project-registration'),
@@ -66,6 +67,9 @@ urlpatterns = [
     url(r'^login/$', LoginView.as_view(template_name='login.html'),name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(next_page=reverse_lazy('login')),name='logout'),
     url(r'^sgform/$', SGView.as_view(template_name='project-regis_sg.html'),name='sg_form'),
+    url(r'^preperation/$', preperationView.as_view(template_name='protocols.html'),name='preperation'),
+    url(r'^reports/$', reportsView.as_view(template_name='MM.html'),name='reports'),
+
     #url(r'^logout/$', auth_views.logout,{'next_page':'/'},name='logout'),
     #url(r'^logout/$', auth_views.logout,{template_name:'logout.html'},name='logout'),
     #url(r'^login/$', auth.auth_views.login,name='login'),
