@@ -281,7 +281,7 @@ class EDForm(forms.Form):
     # Experimental Design file
    
     EDfile = forms.FileField(label="Please upload the experimental design file.")
-    TermsOfUse = forms.BooleanField(error_messages={'required': 'You must agree with the Terms of Use'},label=mark_safe('I have read and agree with the <a href="http://127.0.0.1:8000/termsofuse" target="_blank"> Terms of Use of the VIB Proteomics Core.</a>'))
+    TermsOfUse = forms.BooleanField(error_messages={'required': 'You must agree with the Terms of Use'},label=mark_safe('I have read and agree with the <a href="http://127.0.0.1:8000/termsofuse" target="_blank">Terms of Use</a> of the VIB Proteomics Core.'))
     #def clean(self):
     #	data = self.cleaned_data()
     #	TermsOfUse = self.cleaned_data.get('TermsOfUse')

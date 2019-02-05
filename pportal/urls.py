@@ -36,7 +36,6 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = static(settings.MEDIA_URL,document_root =settings.MEDIA_ROOT) +[
     url(r'^admin/', admin.site.urls),
-    AboutTheCoreView,
     url(r'^sampledelivery/',sample_deliveryView.as_view(template_name='sample-delivery3.html'),name='sample_delivery'),
     #url(r'^pportal/',include('pportal.urls')),
     url(r'^$', HomeView.as_view(template_name='home.html'), name='home'),
