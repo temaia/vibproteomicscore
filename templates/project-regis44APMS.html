@@ -1,0 +1,93 @@
+
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block head_title %}Project Registration || {{ wizard.form.media }}{{ block.super }}{% endblock head_title %}
+
+
+{# Load the tag library #}
+
+
+{# Display a form #}
+
+
+{% block content2 %}
+
+ <div class='container'>
+<div class="form-row col-8 mb-0">
+<form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+
+  <p class="dtitle">Experimental design information</p>
+
+{% load crispy_forms_tags %}
+{{ wizard.management_form }}
+{% if wizard.form.forms %}
+    {{ wizard.form.management_form }}
+    {% for form in wizard.form.forms %}
+    
+       {{ form.Experimental_conditions|as_crispy_field }}
+
+       {{ form.Conditions_to_compare|as_crispy_field }}
+
+       {{ form.Nb_replicates_per_condition|as_crispy_field }}
+
+       {{ form.Nb_samples|as_crispy_field }}
+
+       {{ form.Sample_Name|as_crispy_field }}
+
+       {{ form.Isotopic_labeling|as_crispy_field }}
+
+       {{ form.Isotopic_labeling_details|as_crispy_field }}
+
+
+{% endfor %}
+{% else %}
+    {{ wizard.form.management_form }}
+       <div class="form-row col-12 mb-0">
+    <div class="form-group col-7 mb-0">
+       {{ form.Experimental_conditions|as_crispy_field }}
+            </div>
+            </div>
+       <div class="form-row col-12 mb-0">
+    <div class="form-group col-7 mb-0">
+       {{ form.Conditions_to_compare|as_crispy_field }}
+            </div>
+            </div>
+       <div class="form-row col-12 mb-0">
+    <div class="form-group col-7 mb-0">
+       {{ form.Nb_replicates_per_condition|as_crispy_field }}
+            </div>
+            </div>
+       <div class="form-row col-12 mb-0">
+    <div class="form-group col-7 mb-0">
+       {{ form.Nb_samples|as_crispy_field }}
+            </div>
+            </div>
+                   <div class="form-row col-12 mb-0">
+    <div class="form-group col-12 mb-0">
+       {{ form.Other_infomation|as_crispy_field }}
+            </div>
+            </div>
+
+
+
+{% endif %}
+<br/>
+<div class="form-row col-12 center">
+{% if wizard.steps.prev %}
+<button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
+<button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
+{% endif %}
+<input type="submit" name="submit" class="btn btn-sm" value="{% trans "next step" %}" />
+</div>
+<div class="form-row col-12 center">
+<p><i><font size="2.8">Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </font></i></p>
+</div>
+</form>
+  </div>
+  </div>
+{% endblock %}
+
+
+

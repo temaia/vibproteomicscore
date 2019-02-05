@@ -5,18 +5,20 @@
 <div class='container'>
 <div class="row">
      <div class="col-12 ml-auto">
-
 <h5>Your registration was successfull! Thank you.</h5>
+	<!-- {{ upload_file  }} -->
+<h5>You will receive a confirmation email, with an enclosed review of the project registration details and further information about the sample submission procedure.</h5>
+{% for formtitle,form in formdict.items %}
+	<p class="boldy">{{ formtitle }} </p>
+	{% for field in form.items %}
+		<p>{{ field.0 }} : {{ field.1 }}</p>
+		
 
-
-	{{ analysis }}
-	<br>
-	{{ upload_file  }}
-	<br>
-
-{% for form in form_data %}
-	{{ form }}
 {% endfor %}
+<hr>
+{% endfor %}
+
+
        <div class="col-4">
                     <div class="alert" style='min-height: 400px;'>
           </div>

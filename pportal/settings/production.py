@@ -122,15 +122,29 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = "/var/www/example.com/static/"
+# run python manage.py collectstatic
+
 CRISPY_TEMPLATE_PACK='bootstrap4'
 
 # vibmail.ugent.be settings
 EMAIL_HOST = 'vibmail.ugent.be'
-EMAIL_HOST_USER = 'no-reply-prc@vib-ugent.be'
+EMAIL_HOST_USER = 'noreply-prc@vib-ugent.be'
 EMAIL_HOST_PASSWORD = 'n0'
 EMAIL_PORT = 25
 EMAIL_USE_TLS = False
 
-DEFAULT_FROM_EMAIL = 'no-reply-prc@vib-ugent.be' 'noreply-prc@vib-ugent.be'
+DEFAULT_FROM_EMAIL = 'noreply-prc@vib-ugent.be' #'noreply-prc@vib-ugent.be'
 ADMINS = (
     (''))
+
+# gmail settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mtpmmaia@gmail.com'
+EMAIL_HOST_PASSWORD = 'Petchaua1'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = 'noreply VIB proteomics<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
+ADMINS = (
+    ('Te M', 'mtpmmaia@gmail.com'))

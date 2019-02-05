@@ -26,6 +26,24 @@ SECRET_KEY = 'f=zue$c!65h^ycp0byej*!rw-6%xa#3!+*7!yv&(f1ebqzgjpa'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+# gmail settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mtpmmaia@gmail.com'
+EMAIL_HOST_PASSWORD = 'Petchaua1'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = 'mtpmmaia@gmail.com>' #'noreply-prc@vib-ugent.be'
+ADMINS = (
+    ('Te M', 'mtpmmaia@gmail.com'))
+
+
+#DEFAULT_FROM_EMAIL = 'noreply VIB proteomics<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
+#DEFAULT_FROM_EMAIL = 'teresa.maia@vib-ugent.be' #'noreply-prc@vib-ugent.be'
+#ADMINS = (
+#    ('T Maia', 'teresa.maia@vib-ugent.be'))
+
 ALLOWED_HOSTS = []
 
 AUTH_PROFILE_MODULE = 'requests.Profile'
@@ -42,6 +60,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'crispy_forms',
     'formtools',
+    'multiselectfield',
 ]
 
 AUTH_USER_MODEL = 'requests.User' # changes build in user model to this one
@@ -132,8 +151,32 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static-dev"),
 ]
+#STATIC_ROOT = [os.path.join(os.path.dirnameBASE_DIR), "static-dev"),
+#]
 #os.path.join(os.path.join(os.path.dirname(BASE_DIR), "pportal3"),"templates")]
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media").replace('\\','/')
 MEDIA_URL = "/media/"
+
+# gmail settings
+# # vibmail.ugent.be settings
+# EMAIL_HOST = 'vibmail.ugent.be'
+# EMAIL_HOST_USER = 'teresa.maia@vib-ugent.be'
+# EMAIL_HOST_PASSWORD = 'Pin.tal1'
+# EMAIL_PORT = 25
+# EMAIL_USE_TLS = False
+
+
+# #DEFAULT_FROM_EMAIL = 'noreply VIB proteomics<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
+# DEFAULT_FROM_EMAIL = 'teresa.maia@vib-ugent.be' #'noreply-prc@vib-ugent.be'
+# ADMINS = (
+#     ('T Maia', 'teresa.maia@vib-ugent.be'))
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+#DEFAULT_FROM_EMAIL = 'noreply VIB proteomics<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
+#DEFAULT_FROM_EMAIL = 'mtpmmaia@gmail.com' #'noreply-prc@vib-ugent.be'
+
+#ADMINS = (
+#    ('Te M', 'mtpmmaia@gmail.com'))
+MANAGERS = ADMINS

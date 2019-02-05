@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from requests.models import Analysis
 from django.contrib import admin
 from .forms import UserAdminCreationForm, UserAdminChangeForm
-from .models import User, Profile, Specimen_SG
+from .models import User, Profile#, Specimen_SG
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
@@ -42,15 +42,15 @@ class UserAdmin(BaseUserAdmin):
 ####admin.site.unregister(Group)   
 
 
-# class UserAdmin(admin.ModelAdmin):
-# 	search_fields = ['email']
-# 	form = UserAdminChangeForm
-# 	add_form = UserAdminCreationForm
-# 	#class Meta:
-#		model=User
+class UserAdmin(admin.ModelAdmin):
+	search_fields = ['email']
+	form = UserAdminChangeForm
+	add_form = UserAdminCreationForm
+	class Meta:
+		model=User
 
-# Register your models here.
-#
+#Register your models here.
+
 #admin.site.register(Customer)
 
 #admin.site.register(Sample)
@@ -74,9 +74,9 @@ class CustomUserAdmin(UserAdmin):
             return list()
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
 
-#admin.site.register(User, UserAdmin)
+#dmin.site.register(User, UserAdmin)
 #admin.site.unregister(User)
 
 admin.site.register(User,CustomUserAdmin)
-admin.site.register(Analysis)
-admin.site.register(Specimen_SG)
+#admin.site.register(Analysis)
+#admin.site.register(Specimen_SG)

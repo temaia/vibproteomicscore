@@ -1,0 +1,67 @@
+
+{% extends "base.html" %}
+{% load i18n %}
+{% load requests_extras %}
+
+
+{% block head_title %}Project Registration || {{ wizard.form.media }}{{ block.super }}{% endblock head_title %}
+
+
+{# Load the tag library #}
+
+
+{# Display a form #}
+
+
+{% block content2 %}
+
+  <div class='container'>
+<div class="row">
+  <p class="dtitle">Experimental design details</p>  </br>
+ <div class="form-row col-12 mb-0">
+  <div class = "form-group col-12 mb-0">
+    </br>
+        <p>Please fill in the experimental design file template presented below and then submit the finalized version.</p>
+      </div></div>
+<div class="form-row col-8 mb-0">
+    <div class = "form-group col-6">
+    <a href= {{ user.profile.Project_ID|addstr }} download>Experimental design template</a>
+   </div></div>
+
+<form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+
+{% load crispy_forms_tags %}
+{{ wizard.management_form }}
+
+    <div class="form-row col-9 mb-0">
+    <div class="form-group col-7 mb-0">
+       {{ form.EDfile|as_crispy_field }}
+     </div>
+      </div>
+      </br>
+    <div class="form-row col-12 mb-0">
+    <div class="form-group col-12 mb-0">
+      {{ form.TermsOfUse|as_crispy_field }}
+     </div>
+      </div>
+
+
+<br/>
+<div class="form-row col-12 center">
+{% if wizard.steps.prev %}
+<button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
+<button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
+{% endif %}
+<input type="submit" name="submit" class="btn btn-sm" value="{% trans "submit" %}" />
+</div>
+<div class="form-row col-12 center">
+<p><i><font size="2.8">Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </font></i></p>
+</div>
+</form>
+  </div>
+   </div>
+
+{% endblock %}
+
+
+
