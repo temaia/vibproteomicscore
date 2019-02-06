@@ -4,6 +4,7 @@
 #####from django.core.urlresolvers import reverse
 from django.urls import reverse
 from django.conf import settings
+from youtrack.connection import Connection
 #from django.contrib.auth import logout
 #from django.views.generic import RedirectView
 
@@ -31,6 +32,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from .models import User,Profile
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -298,11 +300,89 @@ class ContactWizardSG(SessionWizardView):
         #     upload_file = form_list[2].cleaned_data['Sequence_Database_File']
         # else:
         #     upload_file = ['No Sequence_Database_File']
-        
+        # if form.is_valid():
+#     save_it = form.save(commit=False)
+#     save_it.save()
+#     #send_mail(subject, message, from_email, to_list, fail_silently=False)
+        #subject = '[VIB Proteomics Core, Project registration confirmation] ' + formdict.
+        #html_message = '<p>Thank you for registering your proteomics project!</p><p>Please find below a review of the project registration information, as well as a copy of our Terms of Use.</p><p>Your project reference: PRC-20</p></br><hr><h3>Sample submission procedure</h3><p>Please visit our sample shipping guidelines <a href="http://127.0.0.1:8000/sampledelivery">page</a>.</p><p>Before sending the samples, please contact <a href="mailto:delphi.vanhaver@vib-ugent.be">Delphi Van Haver</a> from our team. She will help you pick a good time for the shipment.</p></br><hr><h3>Getting notified about your project status</h3><ul><li>Once your samples arrive to our facility, you will get an email notification.</li><li>Each proteomics project gets a person responsible from our team. He/she will be your main contact point at the Core. The project responsible will get in touch to send you your proteomics results and data analysis report and, whenever needed, to discuss technical details associated with the project.</li><li>To check your project status, please visit <a href="http://127.0.0.1:8000/project-info">this page</a>.</li></ul></br></br><p>Best regards,</p><p>The VIB Proteomics Core</p>'
+        #message='<p>Thank you for registering your proteomics project!</p><p>Please find below a review of the project registration information, as well as a copy of our Terms of Use.</p><p>Your project reference: PRC-20</p></br><hr><h3>Sample submission procedure</h3><p>Please visit our sample shipping guidelines <a href="http://127.0.0.1:8000/sampledelivery">page</a>.</p><p>Before sending the samples, please contact <a href="mailto:delphi.vanhaver@vib-ugent.be">Delphi Van Haver</a> from our team. She will help you pick a good time for the shipment.</p></br><hr><h3>Getting notified about your project status</h3><ul><li>Once your samples arrive to our facility, you will get an email notification.</li><li>Each proteomics project gets a person responsible from our team. He/she will be your main contact point at the Core. The project responsible will get in touch to send you your proteomics results and data analysis report and, whenever needed, to discuss technical details associated with the project.</li><li>To check your project status, please visit <a href="http://127.0.0.1:8000/project-info">this page</a>.</li></ul></br></br><p>Best regards,</p><p>The VIB Proteomics Core</p>'
+        #{analysis[1]['Project_ID']:'Project_ID', 
+        Project_ID = analysis[0]['Project_ID']
+        Contact_Person = analysis[0]['Name'].split(',')[0]
+        subject = '[VIB Proteomics Core, Project registration confirmation] '+analysis[0]['Project_ID']
+        message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
+        html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
+        from_email=settings.EMAIL_HOST_USER
+        to_list = [settings.EMAIL_HOST_USER]
+        send_mail(subject, message, from_email, to_list, html_message=html_message, fail_silently=False)
+        #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
+        yt = Connection(url='https://youtrack.ugent.be', token='perm:cHJjc2l0ZQ==.cHdlYi10b2s=.epNpU5rPRZxq3rYGhAR3tZozc8w0am')
+        summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
+        Project_ID = "PRC-321"
+        description = "#User Details\nInstitute/Organization: " + analysis[0]['Affiliation'] + "\nAddress: " + analysis[0]['Address'] + "\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_keywords: " + analysis[1]['Project_keywords'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n#Sample information \n" \
+              + "Sample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
+              + "\nSequence_Database_Name:" + analysis[2]['Sequence_database_name']+"\nSequence_database_file:" + str(analysis[2]['Sequence_database_file']) + "\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + analysis[3]['Isotopic_labeling']+ "\nIsotopic labeling details: " + str(analysis[3]['Isotopic_labeling_details']) \
+              + "\nOther information: " #+ str(analysis[3]['Other_information'])
+        yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
+                description=description)
+        # fields and tags (structured annotations)
+        Affiliation_Type = analysis[0]['Affiliation_Type']
+        Affiliation = analysis[0]['Affiliation']
+        if Affiliation_Type=='Academic':
+            if Affiliation == 'VIB':
+                Study_Type = 'VIB'
+            else:
+                Study_Type = 'Academic'
+        else:
+            Study_Type = 'Non-Academic'
+        Analysis_type = analysis[1]['Analysis_type']
+        ats= {'shotgun':'shotgun_analysis',
+    'APMS':'affinity-purification MS (AP-MS)', 
+    'PTMs':'PTM analysis',
+    'Virotrap':'Virotrap',
+    'gelband':'protein gel band analysis',
+    'proteinmass':'protein mass determination',
+    'prm':'PRM',
+    'srm':'SRM',
+    'dia':'DIA',
+    'other':'Other'}
+        for at in Analysis_type:
+            print(ats[at])
+           # yt.execute_command(Project_ID, "Analysis_Type " + ats[at])
+        yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
+        yt.execute_command(Project_ID, "Contact_Email " + analysis[0]['Email'] )
+        yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_Leader']  ))
+        #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
+        yt.execute_command(Project_ID, "Study_Type " + Study_Type) #+ str(analysis[0]['Affiliation_Type']) )
+        yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
+        kw1= analysis[1]['Project_keywords'].replace(' ','').split(',')[0]
+        yt.execute_command(Project_ID, "Project_Title "+ kw1)
+        if not analysis[1]['Data_analysis']:
+            yt.execute_command(Project_ID, "tag nDA")
+        if analysis[3]['Isotopic_labeling']=='True':
+            yt.execute_command(Project_ID, "tag Isotopic_labelling") # can be left empty and we'll fill in
+        #send_mail(subject, message=message, html_message=html_message, from_email, to_list, fail_silently=False)
         #upload_file = form_list[4].cleaned_data['ED_file']
         #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
         #yt = connection.Connection(url='https://youtrack.ugent.be', login='prcsite', token='perm:cm9vdA==.Y29sbGE=.FfNqw1Jw4mi7UgOnAkm2Sh9DldgIbt')
         #yt.execute_command("PRC-321", "No_Samples 27", group="PRC-website")
+
+        # formdict
+        # {'User details': {'Project_ID': 'PRC-20', 'Name': 'Anne Breitusch', 'Email': 'teresa.maia@vib-ugent.be', 
+        # 'Group_Leader': 'Claudia Berts', 'Affiliation': 'VIB', 'Address': 'asaa', 'Affiliation_Type': 'Industry'}, 
+
+        # 'Analysis overview': {'Project_summary': 'weqw', 'Project_keywords': 'autophagy', 'Analysis_type': ['PTMs'],
+        #  'Analysis_type2': [], 'Data_analysis': True}, 
+        #  'Sample information': {'Species': 'asd', 'Sequence_Database_Public_Availability': 'True', 
+        #  'Sequence_database_name': 'asd', 'Sequence_database_file': None, 'Sample_Type': 'asd', 'Buffer_composition': 'asd'},
+        #   'Experimental Design information':
+        #    {'Experimental_conditions': 'asd, asda', 'Conditions_to_compare': 'adadasd', 
+        #    'Nb_replicates_per_condition': 3, 'Nb_samples': 6, 'Sample_Name': '', 'Isotopic_labeling': 'False',
+        #     'Isotopic_labeling_details': 'qewq', 'Other_infomation': 'qew'}, 
+        #     'Experimental Design sheet': {'EDfile': <UploadedFile: requirements502.txt (text/plain)>,
+        #      'TermsOfUse': True}}
+
         return render(self.request,'done.html',{
             'formdict': formdict,
             #'analysisd':form_dict,
@@ -379,11 +459,60 @@ class ContactWizardPTM(SessionWizardView):
         #fieldvalues = [value for value in form_dict.values()]
         #print(fieldvalues)
         # is an odict structure with attributes fields and  
-        # dict maxi
-        #dictforms = 
-
-        #form_list=
-        # if form_list[2].cleaned_data['Sequence_Database_File']:
+        Project_ID = analysis[0]['Project_ID']
+        Contact_Person = analysis[0]['Name'].split(',')[0]
+        subject = '[VIB Proteomics Core, Project registration confirmation] '+analysis[0]['Project_ID']
+        message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
+        html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
+        from_email=settings.EMAIL_HOST_USER
+        to_list = [settings.EMAIL_HOST_USER]
+        send_mail(subject, message, from_email, to_list, html_message=html_message, fail_silently=False)
+        #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
+        yt = Connection(url='https://youtrack.ugent.be', token='perm:cHJjc2l0ZQ==.cHdlYi10b2s=.epNpU5rPRZxq3rYGhAR3tZozc8w0am')
+        summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
+        Project_ID = "PRC-321"
+        description = "#User Details\nInstitute/Organization: " + analysis[0]['Affiliation'] + "\nAddress: " + analysis[0]['Address'] + "\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_keywords: " + analysis[1]['Project_keywords'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n#Sample information \n" \
+              + "Sample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
+              + "\nSequence_Database_Name:" + analysis[2]['Sequence_database_name']+"\nSequence_database_file:" + str(analysis[2]['Sequence_database_file']) + "\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + analysis[3]['Isotopic_labeling']+ "\nIsotopic labeling details: " + str(analysis[3]['Isotopic_labeling_details']) \
+              + "\nOther information: " #+ str(analysis[3]['Other_information'])
+        yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
+                description=description)
+        # fields and tags (structured annotations)
+        Affiliation_Type = analysis[0]['Affiliation_Type']
+        Affiliation = analysis[0]['Affiliation']
+        if Affiliation_Type=='Academic':
+            if Affiliation == 'VIB':
+                Study_Type = 'VIB'
+            else:
+                Study_Type = 'Academic'
+        else:
+            Study_Type = 'Non-Academic'
+        Analysis_type = analysis[1]['Analysis_type']
+        ats= {'shotgun':'shotgun_analysis',
+    'APMS':'affinity-purification MS (AP-MS)', 
+    'PTMs':'PTM analysis',
+    'Virotrap':'Virotrap',
+    'gelband':'protein gel band analysis',
+    'proteinmass':'protein mass determination',
+    'prm':'PRM',
+    'srm':'SRM',
+    'dia':'DIA',
+    'other':'Other'}
+        for at in Analysis_type:
+            print(ats[at])
+           # yt.execute_command(Project_ID, "Analysis_Type " + ats[at])
+        yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
+        yt.execute_command(Project_ID, "Contact_Email " + analysis[0]['Email'] )
+        yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_Leader']  ))
+        #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
+        yt.execute_command(Project_ID, "Study_Type " + Study_Type) #+ str(analysis[0]['Affiliation_Type']) )
+        yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
+        kw1= analysis[1]['Project_keywords'].replace(' ','').split(',')[0]
+        yt.execute_command(Project_ID, "Project_Title "+ kw1)
+        if not analysis[1]['Data_analysis']:
+            yt.execute_command(Project_ID, "tag nDA")
+        if analysis[3]['Isotopic_labeling']=='True':
+            yt.execute_command(Project_ID, "tag Isotopic_labelling") # can be left empty and we'll fill in
         #     upload_file = form_list[2].cleaned_data['Sequence_Database_File']
         # else:
         #     upload_file = ['No Sequence_Database_File']
@@ -476,9 +605,60 @@ class ContactWizardAPMS(SessionWizardView):
         # is an odict structure with attributes fields and  
         # dict maxi
         #dictforms = 
-
-        #form_list=
-        # if form_list[2].cleaned_data['Sequence_Database_File']:
+        Project_ID = analysis[0]['Project_ID']
+        Contact_Person = analysis[0]['Name'].split(',')[0]
+        subject = '[VIB Proteomics Core, Project registration confirmation] '+analysis[0]['Project_ID']
+        message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
+        html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
+        from_email=settings.EMAIL_HOST_USER
+        to_list = [settings.EMAIL_HOST_USER]
+        send_mail(subject, message, from_email, to_list, html_message=html_message, fail_silently=False)
+        #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
+        yt = Connection(url='https://youtrack.ugent.be', token='perm:cHJjc2l0ZQ==.cHdlYi10b2s=.epNpU5rPRZxq3rYGhAR3tZozc8w0am')
+        summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
+        Project_ID = "PRC-321"
+        description = "#User Details\nInstitute/Organization: " + analysis[0]['Affiliation'] + "\nAddress: " + analysis[0]['Address'] + "\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_keywords: " + analysis[1]['Project_keywords'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n#Sample information \n" \
+              + "Sample_Species: "+ analysis[2]['Species'] \
+              + "\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] \
+              + "\nOther information: " #+ str(analysis[3]['Other_information'])
+        yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
+                description=description)
+        # fields and tags (structured annotations)
+        Affiliation_Type = analysis[0]['Affiliation_Type']
+        Affiliation = analysis[0]['Affiliation']
+        if Affiliation_Type=='Academic':
+            if Affiliation == 'VIB':
+                Study_Type = 'VIB'
+            else:
+                Study_Type = 'Academic'
+        else:
+            Study_Type = 'Non-Academic'
+        Analysis_type = analysis[1]['Analysis_type']
+        ats= {'shotgun':'shotgun_analysis',
+    'APMS':'affinity-purification MS (AP-MS)', 
+    'PTMs':'PTM analysis',
+    'Virotrap':'Virotrap',
+    'gelband':'protein gel band analysis',
+    'proteinmass':'protein mass determination',
+    'prm':'PRM',
+    'srm':'SRM',
+    'dia':'DIA',
+    'other':'Other'}
+        for at in Analysis_type:
+            print(ats[at])
+           # yt.execute_command(Project_ID, "Analysis_Type " + ats[at])
+        yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
+        yt.execute_command(Project_ID, "Contact_Email " + analysis[0]['Email'] )
+        yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_Leader']  ))
+        #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
+        yt.execute_command(Project_ID, "Study_Type " + Study_Type) #+ str(analysis[0]['Affiliation_Type']) )
+        yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
+        kw1= analysis[1]['Project_keywords'].replace(' ','').split(',')[0]
+        yt.execute_command(Project_ID, "Project_Title "+ kw1)
+        if not analysis[1]['Data_analysis']:
+            yt.execute_command(Project_ID, "tag nDA")
+        #if analysis[3]['Isotopic_labeling']=='True':
+         #   yt.execute_command(Project_ID, "tag Isotopic_labelling") # can be left empty and we'll fill in        # if form_list[2].cleaned_data['Sequence_Database_File']:
         #     upload_file = form_list[2].cleaned_data['Sequence_Database_File']
         # else:
         #     upload_file = ['No Sequence_Database_File']
@@ -649,6 +829,12 @@ def get_user_profile(request):
 #	args={"user":request.user}#
 #	return render(request,'projectinfo.html', args)
 	#return render(request, 'profile.html',{"user":user})
+
+#class preparationView(ListView):
+ #   template_name = 'protocols.html'
+
+#class preparationView(ListView):
+#    template_name = 'protocols.html'
 
 class ProjectInfoView(ListView):
     template_name = 'project-info.html'

@@ -92,8 +92,6 @@
 
 $(document).ready(function(){
   var analysistypee= "{{ user.profile.Main_Analysis_Type }}";
-  alert(analysistypee =='PTMs' );
-  console.log("zero " );
   if ( analysistypee =='APMS'){
   window.location.href="{% url 'projectregistrationapms' %}";
 }  else if ( analysistypee =='gelband') {

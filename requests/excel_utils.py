@@ -36,6 +36,15 @@ def WriteToExcel(arguments_dict):
         'text_wrap': True,
         'border': 1
     })
+    cellnedit = workbook.add_format({
+        'align': 'center',
+        'valign': 'top',
+        'text_wrap': True,
+        'border': 1,
+        #'italic':True,
+        #'font_color':"FF6600"
+        #'bg_color':"cee7f4"
+    })
     celledit = workbook.add_format({
         'align': 'center',
         'valign': 'top',
@@ -156,7 +165,10 @@ def WriteToExcel(arguments_dict):
             # observations_rows = compute_rows(observations, observations_col_width)
             # worksheet_s.set_row(row, 15 * observations_rows)
             #idx+=1
-
+        idx += 7
+        span = 'B'+str(idx)+':C'+str(idx)
+        worksheet_s.merge_range(span,"- please edit and review the fields in orange", celledit)
+         
         # change column widths
         worksheet_s.set_column('A:A', 14.3)  # Sample Name
         worksheet_s.set_column('B:B', 20.8)  # Experimental Condition
@@ -418,7 +430,9 @@ def WriteToExcel(arguments_dict):
             # observations_rows = compute_rows(observations, observations_col_width)
             # worksheet_s.set_row(row, 15 * observations_rows)
             #idx+=1
-
+        idx += 7
+        span = 'B'+str(idx)+':C'+str(idx)
+        worksheet_s.merge_range(span,"- please edit and review the fields in orange", celledit)
         # change column widths
         worksheet_s.set_column('A:A', 14.3)  # Sample Name
         worksheet_s.set_column('B:B', 20.8)  # Experimental Condition
@@ -428,7 +442,7 @@ def WriteToExcel(arguments_dict):
         worksheet_s.set_column('F:F', 16.0)  # Buffer composition
         worksheet_s.set_column('G:G', 30.0)  # Protein mass
         worksheet_s.set_column('H:H', 25.0)  # Volume
-    
+
     # close workbook
     workbook.close()
     #xlsx_data = output

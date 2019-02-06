@@ -187,7 +187,7 @@ class Specimen_APMSForm(forms.Form):
 	#Sequence_database_file = forms.FileField(blank=True, storage=FileSystemStorage(location=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'media')))
 	Sample_Type = forms.ChoiceField(choices=SAMPLETYPESAPMS, label="Sample_type_delivered",widget=forms.Select())
 	Buffer_composition = forms.CharField(max_length=300, widget=forms.Textarea(attrs={'placeholder':'e.g. 20 mM Tris-HCl pH8.0, 2 mM CaCl2', 'rows':3, 'cols':1}),
-	 label="Please provide the exact buffer composition", required=False)
+	 label="Please provide the exact buffer composition of the samples", required=False)
 	#Buffer_composition_El = forms.CharField(max_length=300, widget=forms.Textarea(attrs={'placeholder':'e.g. 50 mM Tris-HCl pH8.0, 2mM CaCl2, 20 μg 3X FLAG peptide', 'rows':3, 'cols':1}),
 	 #label="Eluate, buffer composition", required=False)
 

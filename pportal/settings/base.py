@@ -83,7 +83,9 @@ ROOT_URLCONF = 'pportal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [
+                '/home/pportal/dev2Sep18/myenv3/pportal3/templates',],
+                #os.path.join(BASE_DIR, 'templates'),
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

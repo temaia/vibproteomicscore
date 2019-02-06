@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)http://127.0.0.1:8000/project-registration2/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<style class="cp-pen-styles">.chart-gauge {
+  width: 400px;
+  margin: 10px auto;
+}
+
+.chart-color1 {
+  fill: #69b41f;
+}
+
+.chart-color2 {
+  fill: #b5e61d;
+}
+
+.chart-color3 {
+  fill: #DEA82C;
+}
+
+.chart-color4 {
+  fill: #E9621A;
+}
+
+.chart-color5 {
+  fill: #e92213;
+}
+
+.needle,
+.needle-center {
+  fill: #464A4F;
+}
+
+.prose {
+  text-align: center;
+  font-family: sans-serif;
+  color: #ababab;
+}
+</style>
+    
+
+  
+    <title>
+VIB Proteomics Core 
+</title>
+<link href="./VIB Proteomics Core_files/font-awesome.min.css" rel="stylesheet">
+
+<link href="./VIB Proteomics Core_files/font-awesome.min(1).css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="./VIB Proteomics Core_files/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+
+
+<!-- custom css -->
+<!-- <link href='/static/css/custom.css' rel='stylesheet'> -->
+<style> 
+
+.bs-wizard {margin-top: 40px;}
+
+/*Form Wizard*/
+.bs-wizard {border-bottom: solid 1px #e0e0e0; padding: 0 0 10px 0;}
+.bs-wizard > .bs-wizard-step {padding: 0; position: relative;}
+.bs-wizard > .bs-wizard-step + .bs-wizard-step {}
+.bs-wizard > .bs-wizard-step .bs-wizard-stepnum {color: #595959; font-size: 16px; margin-bottom: 5px;}
+.bs-wizard > .bs-wizard-step .bs-wizard-info {color: #fff; font-size: 16px;}
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot {position: absolute; width: 30px; height: 30px; display: block; background: #fbe8aa; top: 45px; left: 50%; margin-top: -15px; margin-left: -15px; border-radius: 50%;} 
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot:after {content: ' '; width: 14px; height: 14px; background: #fbbd19; border-radius: 50px; position: absolute; top: 8px; left: 8px; } 
+.bs-wizard > .bs-wizard-step > .progress {position: relative; border-radius: 0px; height: 8px; box-shadow: none; margin: 20px 0;}
+.bs-wizard > .bs-wizard-step > .progress > .progress-bar {width:0px; box-shadow: none; background: #fbe8aa;}
+.bs-wizard > .bs-wizard-step.complete > .progress > .progress-bar {width:100%;}
+.bs-wizard > .bs-wizard-step.active > .progress > .progress-bar {width:50%;}
+.bs-wizard > .bs-wizard-step:first-child.active > .progress > .progress-bar {width:0%;}
+.bs-wizard > .bs-wizard-step:last-child.active > .progress > .progress-bar {width: 100%;}
+.bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot {background-color: #f5f5f5;}
+.bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot:after {opacity: 0;}
+.bs-wizard > .bs-wizard-step:first-child  > .progress {left: 50%; width: 50%;}
+.bs-wizard > .bs-wizard-step:last-child  > .progress {width: 50%;}
+.bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; }
+/*END Form Wizard*/
+
+/* panel-default */
+.panel-default {
+        border-color: #ddd;
+        
+      }
+
+body {
+  color: rgba(27,41,68,1);
+  font-family: "OpS";
+    margin: 0;
+      font-size: 16px;
+    font-weight: 300;
+    line-height: 1.3;
+    text-align: left;
+    background-color: #fff;
+}
+
+.bg-grey {
+    background-color: rgba(247,244,249,1);*/
+    /*background-color: #ff5500;*/
+}
+
+a.navbar-brand {
+    height: 44.18px;
+    color: rgba(27,41,68,1) !important;
+    font-size: 1.4rem;
+    padding-top: 0px 0px;
+    /*background-color: #ff5500;*/
+    background-color: rgba(247,244,249,1);*/
+}
+
+.navbar-brand>img {
+    vertical-align: bottom;
+    width: 37px;
+    height: 37px;
+}  
+
+#nav a[href].selected, a.selected:active {
+    font-color: rgba(255,41,68,1) ;
+
+}  
+
+  
+
+table thead th {
+  font-size: 1.5rem;
+  font-family: "Dense" !important;
+;
+}
+
+p.dtitle {
+  font-size: 1.5rem;
+  font-family: "Dense" !important;
+  font-weight: bold;
+  margin-bottom: 0rem;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+a.navgar {
+    display: block;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+a {
+
+    color: rgba(58,187,186,1);
+
+}
+
+a.indent {
+
+    margin: 40px
+}
+
+label {
+    display: inline-block;
+    margin-bottom: .25rem;
+}
+
+.form-group {
+    margin-bottom: 0.5rem;
+}
+
+p.fr {
+  text-indent: 25px;
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+
+p.fri {
+  text-indent: 25px;
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+
+    font-style: italic;
+}
+
+p.frb {
+  text-indent: 25px;
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+
+    font-weight: bold;
+}
+
+p.boldy {
+    font-size: 1.2rem;
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+
+    font-weight: bold;
+}
+
+p.text-secondary {
+  margin: 25px
+}
+p.subtitle {
+  font-style: italic;
+  font-size: 1rem;
+  margin-left: 25px;
+  text-decoration: underline
+}
+
+div.row {
+  margin-left: 0px;
+}
+
+div.ab {
+    list-style-type:square;
+    margin-left:25px;
+    padding: 1;
+    background-color: white;
+    color: rgba(27,41,68,1) ;
+    font-weight: normal; 
+    line-height: 1.5
+    
+}
+
+h6 {
+  text-indent: 25px;
+      -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+
+h6.frb {
+  text-indent: 25px;
+      -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-style: italic;
+
+}
+
+
+
+
+h5.frb {
+  text-indent: 25px;
+      -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+
+    font-style: italic;
+}
+
+li.dropdown{
+    display: block;
+        color: rgba(0,0,0,.5);
+    text-decoration: none;
+    font-size: 1.1rem;
+
+}
+
+
+h5 {
+  text-indent: 0px;
+      -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+h4 {
+  text-indent: 0px;
+      -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+p.p2 {
+      display: block;
+    -webkit-margin-before: 0.7em;
+    -webkit-margin-after: 0.5em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+  color: rgba(27,41,68,1);
+font-family: "Dense"; 
+font-size: 1.5rem;
+
+}
+/* Change the link color on hover */
+.btn {
+  background-color: rgba(27,41,68,1);
+  color: rgba(255,255,255,1);
+}
+
+/*.asteriskField {
+  display: none;
+}
+*/
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    margin-: 0;
+    padding: 0;
+    background-color: white;
+    color: rgba(27,41,68,1) ;
+
+}
+
+ul.ab {
+    list-style-type:square;
+    margin-left:60px;
+    padding: 1;
+    background-color: white;
+    color: rgba(27,41,68,1) ;
+    line-height: 2.0
+    
+}
+
+ul.cn {
+    list-style-type:none;
+    margin-left:40px;
+    padding: 1;
+    background-color: white;
+    color: rgba(27,41,68,1) ;
+    font-weight: bold; 
+    line-height: 1.5
+    
+}
+
+span.fond-weight-bold {
+    font-weight: bold;
+}
+
+p.indent {
+    margin-left:25px;
+
+}
+
+p.dubble-indent {
+  margin-left: 40px;
+
+
+}
+
+ol.indent {
+    margin-left:25px;
+
+}
+
+p.extra-box {
+    margin-left: 50px;
+    color: rgba(5,5,4,0.3);
+    font-style: italic
+
+}
+
+a.nav-link.navgar {
+    color: rgba(0,0,0,.1) ;
+}
+
+li a {
+    display: block;
+    color: rgba(27,41,68,1) ;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color on hover */
+/*li a:hover {
+    background-color: rgba(255,104,30,1);
+    color: white;
+}
+
+*/
+.form-control:focus {
+        border-color: rgba(58,187,186,1);
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(58,187,186,0.5);
+      }
+
+
+select.form-control {
+  font-size: 0.8rem; 
+}
+
+input.form-control {
+    display: block;
+    width: 100%;
+    padding-top: 0.375rem;
+    padding-right: 0.375rem;
+    padding-bottom: 0.175rem;
+    padding-left: 0.375rem;
+    font-size: 0.8rem;
+    line-height: 1.3;
+/*    color: #495057;*/
+    color: #232323;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+input.textinput.textInput.form-control{
+      color: #232323;
+}
+
+
+
+ul.nav.navbar-nav.navbar-right.bg-grey {
+ padding-left: 4rem;
+}
+@media (max-width: 991px) {
+.bd-navbar {
+    padding-right: .5rem;
+    padding-left: .5rem;
+  }
+  .bd-navbar .navbar-nav-scroll {
+    max-width: 100%;
+    height: 2.5rem;
+    margin-top: .25rem;
+    overflow: hidden;
+    font-size: .875rem;
+  }
+  .bd-navbar .navbar-nav-scroll .navbar-nav {
+    padding-bottom: 2rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+
+  }
+
+}
+@font-face {
+  font-family: 'Dense'; 
+  src: url('../../../static/fonts/Dense-Bold.otf') format("opentype");
+  src: local('../../../static-dev/fonts/Dense-Bold.otf') format("opentype");
+  font-weight: bold;
+  font-style: normal;
+  }
+
+
+@font-face {
+  font-family: 'Dense'; 
+  src: url('../../../static/fonts/Dense-Regular.otf') format("opentype");
+  src: local('../../../static-dev/fonts/Dense-Regular.otf') format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  }
+  @font-face {
+  font-family: 'Dense'; 
+  src: url('../../../static/fonts/Dense-Thin.otf') format("opentype");
+  src: local('../../../static-dev/fonts/Dense-Thin.otf') format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Dense'; 
+  src: url('../../../static/fonts/Dense-Thin.otf') format("opentype");
+  src: local('../../../static-dev/fonts/Dense-Thin.otf') format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  }
+ @font-face { 
+  font-family: 'OpS'; 
+    src: url('../../../static/fonts/OpenSans-Regular.ttf') format("truetype");
+    src: local('../../../static-dev/fonts/OpenSans-Regular.ttf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  } 
+ @font-face { 
+  font-family: 'OpS'; 
+    src: url('../../../static/fonts/OpenSans-Light.ttf') format("truetype");
+    src: local('../../../static-dev/fonts/OpenSans-Light.ttf') format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  } 
+ @font-face { 
+  font-family: 'OpS'; 
+    src: url('../../../static/fonts/OpenSans-Italic.ttf') format("truetype");
+    src: local('../../../static-dev/fonts/OpenSans-Italic.ttf') format("truetype");
+  font-weight: normal;
+  font-style: italic;
+  } 
+ @font-face { 
+  font-family: 'OpS'; 
+    src: url('../../../static/fonts/OpenSans-SemiBoldItalic.ttf') format("truetype");
+    src: local('../../../static-dev/fontsOpenSans-SemiBoldItalic.ttf') format("truetype");
+  font-weight: bold;
+  font-style: italic;
+  } 
+   @font-face { 
+  font-family: 'OpS'; 
+    src: url('../../../static/fonts/OpenSans-Semibold.ttf') format("truetype");
+    src: local('../../../static-dev/fonts/OpenSans-SemiBold.ttf') format("truetype");
+      font-weight: bold;
+  font-style: normal;
+}
+
+.card-home{
+    height: 150px;
+}
+.special-card {
+    opacity: 0.3;
+}
+.card-header {
+    background-color: white;
+}
+.card-body {
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+}
+
+div.cb {
+    box-sizing: border-box;
+
+    padding-top: 1rem;
+    padding-bottom: .25rem;
+}
+
+.row-gauge {
+    margin-top: 0rem;
+}
+.row {
+    margin-top: 1rem;
+
+}
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.inner {
+    overflow: hidden;
+}
+
+.bs-sm {
+    height: 40px;
+}
+
+p.report {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+/*.nav .navbar-expand-lg .navbar-light .bg-light {
+  padding-top: 1rem;
+}*/
+
+
+div.card.btn.btn-link{
+     bottom: 0;
+}
+
+a.indent-nav {
+
+    margin-left: 20px
+}
+
+#sidebar {
+  position:fixed;
+}
+
+.navbar-global {
+  background-color: indigo;
+}
+
+.navbar-global .navbar-brand {
+  color: white;
+}
+
+.navbar-global .navbar-user > li > a
+{
+  color: white;
+}
+
+.navbar-primary {
+  background-color: #333;
+  bottom: 0px;
+  left: 0px;
+  position: absolute;
+  top: 51px;
+  width: 200px;
+  z-index: 8;
+  overflow: hidden;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+
+.navbar-primary.collapsed {
+  width: 60px;
+}
+
+.navbar-primary.collapsed .glyphicon {
+  font-size: 22px;
+}
+
+.navbar-primary.collapsed .nav-label {
+  display: none;
+}
+
+.btn-expand-collapse {
+    position: absolute;
+    display: block;
+    left: 0px;
+    bottom:0;
+    width: 100%;
+    padding: 8px 0;
+    border-top:solid 1px #666;
+    color: grey;
+    font-size: 20px;
+    text-align: center;
+}
+
+.btn-expand-collapse:hover,
+.btn-expand-collapse:focus {
+    background-color: #222;
+    color: white;
+}
+
+.btn-expand-collapse:active {
+    background-color: #111;
+}
+
+.navbar-primary-menu,
+.navbar-primary-menu li {
+  margin:0; padding:0;
+  list-style: none;
+}
+
+.navbar-primary-menu li a {
+  display: block;
+  padding: 10px 18px;
+  text-align: left;
+  border-bottom:solid 1px #444;
+  color: #ccc;
+}
+
+.navbar-primary-menu li a:hover {
+  background-color: #000;
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-primary-menu li a .glyphicon {
+  margin-right: 6px;
+}
+
+.navbar-primary-menu li a:hover .glyphicon {
+  color: orchid;
+}
+
+.main-content {
+  margin-top: 60px;
+  margin-left: 200px;
+  padding: 20px;
+}
+
+.collapsed + .main-content {
+  margin-left: 60px;
+}
+
+ol {
+  margin: 0 0 1.5em;
+  padding: 0;
+  counter-reset: item;
+}
+
+ol > li {
+  margin: 0;
+
+  list-style-type: none;
+  counter-increment: item;
+}
+
+ol > li:before {
+  display: inline-block;
+  width: 1em;
+  padding-right: 0.5em;
+  font-weight: bold;
+  text-align: right;
+  content: counter(item) ".";
+}
+
+.fa {
+    padding-right: .1rem;
+    padding-left: .1rem;
+  }
+
+
+form {
+  width:100%;
+}
+
+.form-row.formsub {
+
+    margin-left:2rem;
+}
+
+.form-row {
+
+    margin-left: 0px;
+}
+
+.submit{
+    padding: 1;
+}
+.numberinput.form-control {
+  width:20%;
+}
+
+hr{
+  display:block;
+  webkit-margin-before:0.5em;
+  webkit-margin-after:0.5em;
+  margin-start:auto;
+  margin-end:auto;
+  overflow:hidden;
+  border-style:inset;
+  border-width: 1px;
+  width:100%;
+
+}
+</style>
+
+
+
+</head>
+
+<body font-family:"ops"="">
+
+<!-- Just an image -->
+
+
+
+
+ <div class="container">
+     <div class="row">
+     <div class="col-md-12 ml-12 ">
+      <div class="navbar-inner bg-grey ">
+        <nav class="navbar navbar-expand-md navbar-light bg-grey ">
+  <a class="navbar" href="http://127.0.0.1:8000/">
+    <img src="./VIB Proteomics Core_files/proteomics_core.png" width="250" height="100" class="d-inline-block align-center" alt="">  
+ </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavSupportedContent" aria-controls="navbarNavSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- <a class="navbar-brand" href="#">PRC Portal</a>
+
+ --> 
+
+  <div class="collapse navbar-collapse w-100" id="navbarNav">
+
+    <ul class="selected navbar-nav bg-grey ml-auto mr-auto" id="nava">
+     <li>
+        <a class="nav-link navgar selected" href="http://127.0.0.1:8000/">Home</a>
+      </li>
+      <li>
+        <a class="nav-link navgar " href="http://127.0.0.1:8000/AboutTheCore/">About the Core</a>
+      </li>
+      <li>
+        <a class="nav-link navgar " href="http://127.0.0.1:8000/contact/">Contact</a>
+      </li>
+    </ul>  
+      <ul class="nav navbar-nav align-right ml-auto bg-grey">
+         <li>
+            <a class="nav-link" href="http://127.0.0.1:8000/logout/"><span class="fa fa-user fa-2x"></span><span class="fa fa-sign-out fa-lg"></span></a>
+          </li>
+
+    </ul>
+    </div></nav>
+       </div>
+   </div>
+</div>
+    </div>
+
+
+  <!-- <a class="navbar-brand" href="#">PRC Portal</a>
+
+ -->
+
+  <!-- <a class="navbar-brand" href="#">PRC Portal</a>
+
+ --> 
+
+
+
+
+
+
+
+
+
+
+     	  
+
+ 
+
+
+
+
+<div class="container">
+<div class="row">
+     <div class="col-12 ml-auto">
+<h5>Your registration was successfull! Thank you.</h5>
+	<!--  -->
+<h5>You will receive a confirmation email, with an enclosed review of the project registration details and further information about the sample submission procedure.</h5>
+
+	<p class="boldy">User details </p>
+	
+		<p>Project_ID : PRC-20</p>
+		
+
+
+		<p>Name : Anne Breitusch</p>
+		
+
+
+		<p>Email : teresa.maia@vib-ugent.be</p>
+		
+
+
+		<p>Group_Leader : Claudia Berts</p>
+		
+
+
+		<p>Affiliation : VIB</p>
+		
+
+
+		<p>Address : ass</p>
+		
+
+
+		<p>Affiliation_Type : Industry</p>
+		
+
+
+<hr>
+
+	<p class="boldy">Analysis overview </p>
+	
+		<p>Project_summary : adsa</p>
+		
+
+
+		<p>Project_keywords : autophagy</p>
+		
+
+
+		<p>Analysis_type : ['PTMs']</p>
+		
+
+
+		<p>Analysis_type2 : []</p>
+		
+
+
+		<p>Data_analysis : True</p>
+		
+
+
+<hr>
+
+	<p class="boldy">Sample information </p>
+	
+		<p>Bait_Molecule : True</p>
+		
+
+
+		<p>Bait_Molecule_Protein : ASDASD</p>
+		
+
+
+		<p>Bait_sequence_file : requirements502.txt</p>
+		
+
+
+		<p>Bait_Molecule_other : QEWQWE</p>
+		
+
+
+		<p>Antibodies : QEQWE</p>
+		
+
+
+		<p>AbSource : QEWQ</p>
+		
+
+
+		<p>AbAmount : QEW</p>
+		
+
+
+		<p>Beads : QEW</p>
+		
+
+
+		<p>BeadsSource : QWEQEW</p>
+		
+
+
+		<p>BeadsAmount : QWEQW</p>
+		
+
+
+		<p>Species : QEW</p>
+		
+
+
+		<p>Sample_Type : eluate</p>
+		
+
+
+		<p>Buffer_composition : QEWQE</p>
+		
+
+
+<hr>
+
+	<p class="boldy">Experimental Design information </p>
+	
+		<p>Experimental_conditions : QEW, QEQWE</p>
+		
+
+
+		<p>Conditions_to_compare : QEWQWE</p>
+		
+
+
+		<p>Nb_replicates_per_condition : 3</p>
+		
+
+
+		<p>Nb_samples : 6</p>
+		
+
+
+		<p>Sample_Name : </p>
+		
+
+
+		<p>Other_infomation : TETER</p>
+		
+
+
+<hr>
+
+	<p class="boldy">Experimental Design sheet </p>
+	
+		<p>EDfile : requirements502.txt</p>
+		
+
+
+		<p>TermsOfUse : True</p>
+		
+
+
+<hr>
+
+
+
+       <div class="col-4">
+                    <div class="alert" style="min-height: 400px;">
+          </div>
+         </div>
+
+
+<!-- jQuery -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="./VIB Proteomics Core_files/jquery-3.3.1.min.js"></script>
+
+<!-- popper.js -->
+<script src="./VIB Proteomics Core_files/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+
+<!-- js -->
+<script src="./VIB Proteomics Core_files/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+<br>
+
+ 
+<!-- Just an image -->
+
+
+
+
+<!-- Just an image -->
+ <div class="container">
+  <footer class="footer">
+    <nav class="navbar navbar-expand-lg navbar-light bg-grey">
+     <div class="row">
+     <div class="col-12">    
+      <a class="navbar-brand" href="http://127.0.0.1:8000/project-registration2/#"></a>
+      <span class="text-muted"></span>
+    </div>
+    </div></nav>
+  </footer> 
+
+</div>
+
+<footer class="bd-footer text-muted">
+  <div class="container">
+  
+  </div>
+</footer>
+
+
+
+
+ 
+ 
+
+
+
+
+
+</div></div></div></body></html>

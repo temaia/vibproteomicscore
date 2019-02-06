@@ -155,7 +155,9 @@ def WriteToExcel2(arguments_dict):
         # observations_rows = compute_rows(observations, observations_col_width)
         # worksheet_s.set_row(row, 15 * observations_rows)
         #idx+=1
-
+    idx += 7
+    span = 'B'+str(idx)+':D'+str(idx)
+    worksheet_s.merge_range(span,"- please edit and review the fields in orange", celledit)
     # change column widths
     worksheet_s.set_column('A:A', 14.3)  # Sample Name
     worksheet_s.set_column('B:B', 20.8)  # Experimental Condition
