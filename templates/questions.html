@@ -5,7 +5,7 @@
 {% block content2 %}
 <div class='container'>
 <div class="row">
-	<!--<nav class="navbar navbar-expand-md navbar-light bg-grey ">-->
+  <!--<nav class="navbar navbar-expand-md navbar-light bg-grey ">-->
   <div class='col-md-12 ml-12 '>
 
 <!--
@@ -80,59 +80,21 @@
       </div>
   </div>
 -->
-
-<div class="py-5" >
+<div class="col-md-12">
   <div class="container">
-    <div class="row text-dark">
-      <div class="col-lg-3 p-3">
-        <div class="card text-center">
-          <div class="card-body p-4" data-toggle="Tabgeneral">
-          <h3>General</h3>
-              <a class="btn btn-link" href="Tabgeneral">FAQ</a>
-          </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+          <h1 class="text-dark mb-4">Frequently asked questions</h1> </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 p-3">
-        <div class="card text-center">
-          <div class="card-body p-4" data-toggle="Tabsampleprep">
-            <h3>Sample Preperation</h3>
-              <a class="btn btn-link" href="Tabsampleprep">FAQ</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 p-3">
-        <div class="card text-center">
-          <div class="card-body p-4" data-toggle="TabLCMSMS">
-            <h3>LC-MS/MS analysis</h3>
-              <a class="btn btn-link" href="TABLCMSMS">FAQ</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 p-3">
-        <div class="card text-center">
-          <div class="card-body p-4" data-toggle="Tabdataanalysis">
-            <h3>Data-analysis</h3>
-            <a class="btn btn-link" href="Tabdataanalysis">FAQ</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="tab-pane fade show active" id="Tabgeneral" role="tabpanel">
-              <p class="">When I hear the buzz of the little world among the stalks, and grow familiar with the countless indescribable forms.</p>
-            </div>
-  </div>
-</div>
-<br>
-<br>
-
-
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <ul class="nav nav-tabs">
-            <li class="nav-item"> <a href="" class="active nav-link" data-toggle="tab" data-target="#tabone">Tab 1</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="" data-toggle="tab" data-target="#tabtwo">Tab 2</a> </li>
-            <li class="nav-item"> <a href="" class="nav-link" data-toggle="tab" data-target="#tabthree">Tab 3</a> </li>
+            <li class="nav-item"> <a href="" class="active nav-link" data-toggle="tab" data-target="#tabone">General</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="" data-toggle="tab" data-target="#tabtwo">Sample Preperation</a> </li>
+            <li class="nav-item"> <a href="" class="nav-link" data-toggle="tab" data-target="#tabthree">LC-MS/MS analysis</a> </li>
+            <li class="nav-item"> <a href="" class="nav-link" data-toggle="tab" data-target="#tabfour">Data-analysis</a> </li>
           </ul>
           <div class="tab-content mt-2">
             <div class="tab-pane fade show active" id="tabone" role="tabpanel">
@@ -142,6 +104,9 @@
               <p class="">Who formed us in his own image, and the breath of that universal love which bears and sustains us. And then, my friend.</p>
             </div>
             <div class="tab-pane fade" id="tabthree" role="tabpanel">
+              <p class="">In my soul and absorb its power, like the form of a beloved mistress, then I often think with longing.</p>
+            </div>
+            <div class="tab-pane fade" id="tabfour" role="tabpanel">
               <p class="">In my soul and absorb its power, like the form of a beloved mistress, then I often think with longing.</p>
             </div>
           </div>
@@ -159,7 +124,7 @@
 <div class="container">
   <div id="general">This is a test for general information FAQ</div> 
 </div>
-  {% endblock %}	
+  {% endblock %}  
          
 
 from home show templateview()

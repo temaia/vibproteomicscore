@@ -32,7 +32,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.template.loader import render_to_string
+#from django.template.loader import render_to_string
 from .models import User,Profile
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -61,7 +61,7 @@ import os
 from django.core.mail import send_mail
 
 import sys
-sys.path.insert(0, '/home/pportal/dev2/src/lib/python2.7/site-packages/youtrack/')
+#sys.path.insert(0, '/home/pportal/dev2/src/lib/python2.7/site-packages/youtrack/')
 # authenticating
 import http.client, urllib.request, urllib.error
 
@@ -830,11 +830,8 @@ def get_user_profile(request):
 #	return render(request,'projectinfo.html', args)
 	#return render(request, 'profile.html',{"user":user})
 
-#class preparationView(ListView):
- #   template_name = 'protocols.html'
 
-#class preparationView(ListView):
-#    template_name = 'protocols.html'
+
 
 class ProjectInfoView(ListView):
     template_name = 'project-info.html'
@@ -969,6 +966,8 @@ class ProjectInfoGaugeView(ListView):
 class HomeView(TemplateView):
  	template_name = 'home.html'
 
+class PreparationView(TemplateView):
+   template_name = 'protocols.html'
 
 	#def get_context_data(request,self, *args, **kwargs):
 	# 	#context = super(HomeView, self).get_context_data(*args, **kwargs)
@@ -994,34 +993,32 @@ class HomeView(TemplateView):
 class TermsOfUseView(TemplateView):
     template_name = 'TermsOfUse.html'
 
-class sample_deliveryView(TemplateView):
+class ShippingInstructionsView(TemplateView):
     template_name = 'sample-delivery3.html'
 
 # def about(request):
 # 	context = {}
 # 	return render(request, 'about.html', context)
 
-class infoView(TemplateView):
+class InfoView(TemplateView):
     template_name = 'information.html'
     
 class AboutTheCoreView(TemplateView):
     template_name = 'AboutTheCore.html'
 
-class preperationView(TemplateView):
-    template_name = 'protocols.html'
 
-class reportsView(TemplateView):
+class ReportsView(TemplateView):
     template_name = 'MM.html'
 
 
-class contactView(TemplateView):
+class ContactView(TemplateView):
     template_name = 'contact.html'
 
 # def about(request):
 #   context = {}
 #   return render(request, 'about.html', context)
 
-class questionsView(TemplateView):
+class QuestionsView(TemplateView):
     template_name = 'questions.html'
 
 import datetime
