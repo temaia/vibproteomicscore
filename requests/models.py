@@ -79,6 +79,36 @@ class User(AbstractBaseUser):
 	def is_admin(self):
 		return self.admin
 
+# class User(AbstractBaseUser):
+# 	email = models.EmailField(unique=True, max_length=120)
+# 	active = models.BooleanField(default=True)
+# 	staff = models.BooleanField(default=False)
+# 	admin = models.BooleanField(default=False)
+# 	timestamp = models.DateTimeField(auto_now_add=True)
+# 	USERNAME_FIELD='email'
+# 	REQUIRED_FIELD=[]
+# 	objects= UserManager()
+# 	def __str__(self):
+# 		return self.email
+# 	def get_full_name(self):
+# 		return self.email
+# 	def get_short_name(self):
+# 		return self.email
+# 	def get_username(self):
+# 		return self.email
+# 	def get_last_name(self):
+# 		return self.email
+# 	def has_perm(self, perm,obj=None):
+# 		return True
+# 	def has_module_perms(self, app_label):
+# 		return True
+# 	@property
+# 	def is_staff(self):
+# 		return self.staff
+# 	@property
+# 	def is_admin(self):
+# 		return self.admin
+
 STUDYTYPES = (
 	('Academic','Academic'), 
 	('Industry','Industry'),
@@ -119,14 +149,16 @@ ANALYSISTYPES2= (
 	(9,'Other'),
 	)
 
+# list of custom fields
+
 class Profile(models.Model):
 	user=models.OneToOneField(User, on_delete=models.CASCADE)
-	Name = models.CharField(max_length=120, null=True)
+	Name = models.CharField(max_length=120, null=True, blank=True)
 	Email = models.EmailField(max_length=120, null=True) # pre-filled
-	Group_Leader = models.CharField(max_length=120, null=True)
-	Affiliation = models.CharField(max_length=120 ,null=True)
-	Affiliation_Type = models.CharField(max_length=50, choices=STUDYTYPES, null=True)
-	Address = models.CharField(max_length=300, null=True)
+	Group_Leader = models.CharField(max_length=120, null=True, blank=True)
+	Affiliation = models.CharField(max_length=120 ,null=True, blank=True)
+	Affiliation_Type = models.CharField(max_length=50, choices=STUDYTYPES, null=True, blank=True)
+	Address = models.CharField(max_length=300, null=True, blank=True)
 	Project_ID = models.CharField(max_length=200, null=True) # pre-filled displayed on form template on the corner
 	Main_Analysis_Type = models.CharField(max_length=50 , choices=ANALYSISTYPES, null=True)
 	timestamp = models.DateTimeField(auto_now_add=True)
@@ -145,6 +177,33 @@ def create_user_profile(sender,instance,created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender,instance, **kwargs):
 	instance.profile.save()
+
+# class Profile(models.Model):
+# 	user=models.OneToOneField(User, on_delete=models.CASCADE)
+# 	Name = models.CharField(max_length=120, null=True)
+# 	Email = models.EmailField(max_length=120, null=True) # pre-filled
+# 	Group_Leader = models.CharField(max_length=120, null=True)
+# 	Affiliation = models.CharField(max_length=120 ,null=True)
+# 	Affiliation_Type = models.CharField(max_length=50, choices=STUDYTYPES, null=True)
+# 	Address = models.CharField(max_length=300, null=True)
+# 	Project_ID = models.CharField(max_length=200, null=True) # pre-filled displayed on form template on the corner
+# 	Main_Analysis_Type = models.CharField(max_length=50 , choices=ANALYSISTYPES, null=True)
+# 	timestamp = models.DateTimeField(auto_now_add=True)
+# 	def __unicode__(self):
+# 		return self.Name
+# 	def __str__(self):
+# 		return self.Name
+# 	def getAnalysisType(self):
+# 		return dict(Profile.ANALYSISTYPES)[self.Main_Analysis_Type]
+
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender,instance,created, **kwargs):
+# 	if created:
+# 		Profile.objects.create(user=instance)
+
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender,instance, **kwargs):
+# 	instance.profile.save()
 
 
 DATAANALYSIS = (
@@ -186,12 +245,13 @@ GBCHOICES = (
 
 
 class Analysis(models.Model):
+	Project_title = models.CharField(max_length=50)
 	Project_summary = models.CharField(max_length=300)
-	Project_keywords = models.CharField(max_length=120)
-	Analysis_type = MultiSelectField(choices=ANALYSISTYPES) # pre-filled?!
-	Analysis_type2 = MultiSelectField(choices=ANALYSISTYPES2,
-									max_choices=3,
-                                 	max_length=3, blank=True, null=True) # pre-filled?!
+	#Project_keywords = models.CharField(max_length=120)
+	#Analysis_type = MultiSelectField(choices=ANALYSISTYPES) # pre-filled?!
+	#Analysis_type2 = MultiSelectField(choices=ANALYSISTYPES2,
+	#								max_choices=3,
+     #                            	max_length=3, blank=True, null=True) # pre-filled?!
 	timestamp = models.DateTimeField(auto_now_add=True)
 	#Analysis_type = models.CharField(max_length=50,default=None , choices=ANALYSISTYPES)
 	Data_analysis = models.BooleanField()#choices=DATAANALYSIS)

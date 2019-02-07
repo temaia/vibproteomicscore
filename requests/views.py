@@ -32,7 +32,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import send_mail
-#from django.template.loader import render_to_string
+from django.template.loader import render_to_string
 from .models import User,Profile
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -76,8 +76,15 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
 
-def index(request):
-    return render(request, 'ss.html')
+# def index(request):
+#     return render(request, 'ss.html')
+
+
+# class CWizard(SessionWizardView):
+#     def done(self, form_list, **kwargs):
+#       return render(self.request, 'donee.html', {
+#       'form_data': [form.cleaned_data for form in form_list],
+#       })
 
 class LoginView(FormView):
     form_class=LoginForm
@@ -349,7 +356,7 @@ class ContactWizardSG(SessionWizardView):
     'other':'Other'}
         for at in Analysis_type:
             print(ats[at])
-           # yt.execute_command(Project_ID, "Analysis_Type " + ats[at])
+            yt.execute_command(Project_ID, "Analysis_Type " + ats[at])
         yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
         yt.execute_command(Project_ID, "Contact_Email " + analysis[0]['Email'] )
         yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_Leader']  ))

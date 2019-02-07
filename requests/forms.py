@@ -28,6 +28,14 @@ from crispy_forms.layout import Submit, Layout, Div, Fieldset, Hidden , Field
 #    name= forms.CharField()
 #    products= ProductFormset()
 
+#from django import forms
+# class ContactForm1(forms.Form):
+# 	subject = forms.CharField(max_length=100)
+# 	sender = forms.EmailField()
+
+# class ContactForm2(forms.Form):
+# 	message = forms.CharField(widget=forms.Textarea)
+
 class CustomerForm(forms.ModelForm):
 	class Meta:
 		model = Profile

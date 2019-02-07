@@ -27,17 +27,6 @@ SECRET_KEY = 'f=zue$c!65h^ycp0byej*!rw-6%xa#3!+*7!yv&(f1ebqzgjpa'
 DEBUG = True
 
 
-# gmail settings
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'mtpmmaia@gmail.com'
-EMAIL_HOST_PASSWORD = 'Petchaua1'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
-DEFAULT_FROM_EMAIL = 'mtpmmaia@gmail.com>' #'noreply-prc@vib-ugent.be'
-ADMINS = (
-    ('Te M', 'mtpmmaia@gmail.com'))
-
 
 #DEFAULT_FROM_EMAIL = 'noreply VIB proteomics<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
 #DEFAULT_FROM_EMAIL = 'teresa.maia@vib-ugent.be' #'noreply-prc@vib-ugent.be'
@@ -148,6 +137,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
+from .acessorio import * 
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
@@ -182,4 +172,14 @@ MEDIA_URL = "/media/"
 
 #ADMINS = (
 #    ('Te M', 'mtpmmaia@gmail.com'))
+# gmail settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mtpmmaia@gmail.com'
+EMAIL_HOST_PASSWORD = mtppmaia
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = 'mtpmmaia@gmail.com>' #'noreply-prc@vib-ugent.be'
+ADMINS = (
+    ('Te M', 'mtpmmaia@gmail.com'))
 MANAGERS = ADMINS
