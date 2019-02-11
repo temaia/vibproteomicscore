@@ -3,105 +3,129 @@
 {% block head_title %}Welcome || {{ block.super }}{% endblock head_title %}
 
 {% block content2 %}
-<div class='container'>
-<div class="row">
-  <!--<nav class="navbar navbar-expand-md navbar-light bg-grey ">-->
-  <div class='col-md-12 ml-12 '>
 
-<!--
-  <h5 class="frb">Frequently asked questions</h5>
-  <br>
-
-
-  <br>
-  <h6 class="frb"> Data analysis </h6>
-
-  <div class="container">
-      <div id="accordion">
-        <div class="card">
-          <div class="card-header">
-            <a class="card-link" data-toggle="collapse" href="#collapse3">
-              What is LFQ?
-            </a>
-          </div>
-          <div id="collapse3" class="collapse" data-parent="#accordion">
-            <div class="card-body">
-              <p class = "indent">
-                LFQ (LabelFree Quantification) intensity values are the normalized MS intensity across all samples. The normalization corrects for differences in total protein amounts between the samples. This makes it possible to compare the samples. The LFQ intensity values are the values that you should use for further analysis. </p>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <a class="card-link" data-toggle="collapse" href="#collapse4">
-              What is iBAQ?
-            </a>
-          </div>
-          <div id="collapse4" class="collapse" data-parent="#accordion">
-            <div class="card-body">
-              <p class="indent">
-                The iBAQ ratio is the MS intensity corrected for the theoretical detectability of the protein. The higher the iBAQ ratio, the more abundant a protein is WITHIN a sample.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
-
-  <h6 class="frb"> LC-MS/MS analysis </h6>
-
-  <div class="container">
-      <div id="accordion">
-        <div class="card">
-          <div class="card-header">
-            <a class="card-link" data-toggle="collapse" href="#collapse5">
-              What is LFQ?
-            </a>
-          </div>
-          <div id="collapse5" class="collapse" data-parent="#accordion">
-            <div class="card-body">
-              <p class = "indent">
-                LFQ (LabelFree Quantification) intensity values are the normalized MS intensity across all samples. The normalization corrects for differences in total protein amounts between the samples. This makes it possible to compare the samples. The LFQ intensity values are the values that you should use for further analysis. </p>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <a class="card-link" data-toggle="collapse" href="#collapse6">
-              What is iBAQ?
-            </a>
-          </div>
-          <div id="collapse6" class="collapse" data-parent="#accordion">
-            <div class="card-body">
-              <p class="indent">
-                The iBAQ ratio is the MS intensity corrected for the theoretical detectability of the protein. The higher the iBAQ ratio, the more abundant a protein is WITHIN a sample.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
--->
 <div class="col-md-12">
   <div class="container">
     <div class="row">
         <div class="col-md-12 text-center">
-          <h1 class="text-dark mb-4">Frequently asked questions</h1> </div>
+          <h2 class="text-dark mb-4">Frequently asked questions</h2> </div>
         </div>
       </div>
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <ul class="nav nav-tabs">
-            <li class="nav-item"> <a href="" class="active nav-link" data-toggle="tab" data-target="#tabone">General</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="" data-toggle="tab" data-target="#tabtwo">Sample Preperation</a> </li>
-            <li class="nav-item"> <a href="" class="nav-link" data-toggle="tab" data-target="#tabthree">LC-MS/MS analysis</a> </li>
-            <li class="nav-item"> <a href="" class="nav-link" data-toggle="tab" data-target="#tabfour">Data-analysis</a> </li>
+            <li class="nav-item"> <a href="" class="active nav-link" data-toggle="tab" data-target="#tabgeneral"><h5>General</h5></a> </li>
+            <li class="nav-item"> <a class="nav-link" href="" data-toggle="tab" data-target="#tabtwo"><h5>Sample Preperation</h5></a> </li>
+            <li class="nav-item"> <a href="" class="nav-link" data-toggle="tab" data-target="#tabthree"><h5>LC-MS/MS analysis</h5></a> </li>
+            <li class="nav-item"> <a href="" class="nav-link" data-toggle="tab" data-target="#tabfour"><h5>Data-analysis</h5></a> </li>
           </ul>
-          <div class="tab-content mt-2">
-            <div class="tab-pane fade show active" id="tabone" role="tabpanel">
-              <p class="">When I hear the buzz of the little world among the stalks, and grow familiar with the countless indescribable forms.</p>
+        </div>
+        <div class="col-md-10 offset-md-1">
+          <div class="tab-content mt-5">
+            <div class="tab-pane fade show active" id="tabgeneral" role="tabpanel">
+              <div id="accordion" class="text-justify">
+                <div class="card">
+                  <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#FAQgeneraleOne">
+                      Question1
+                    </a>
+                  </div>
+                  <div id="FAQgeneraleOne" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      Answer 1
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#FAQgeneraleTwo">
+                      Question2
+                    </a>
+                  </div>
+                  <div id="FAQgeneraleTwo" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      Answer 2
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#FAQgeneraleThree">
+                      Question3
+                    </a>
+                  </div>
+                  <div id="FAQgeneraleThree" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      Answer 3
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#FAQgeneraleFour">
+                      Question4
+                    </a>
+                  </div>
+                  <div id="FAQgeneraleFour" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      Answer 4
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="tab-pane fade" id="tabtwo" role="tabpanel">
-              <p class="">Who formed us in his own image, and the breath of that universal love which bears and sustains us. And then, my friend.</p>
+              <div id="accordion" class="text-justify">
+                <div class="card">
+                  <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#FAQSPOne">
+                      Question1
+                    </a>
+                  </div>
+                  <div id="FAQSPOne" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      Answer 1
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#FAQSPTwo">
+                      Question2
+                    </a>
+                  </div>
+                  <div id="FAQSPTwo" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      Answer 2
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#FAQSPThree">
+                      Question3
+                    </a>
+                  </div>
+                  <div id="FAQSPThree" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      Answer 3
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#FAQSPFour">
+                      Question4
+                    </a>
+                  </div>
+                  <div id="FAQSPFour" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      Answer 4
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="tab-pane fade" id="tabthree" role="tabpanel">
               <p class="">In my soul and absorb its power, like the form of a beloved mistress, then I often think with longing.</p>
@@ -115,15 +139,6 @@
     </div>
   </div>
 
-
-
-
-
-
-
-<div class="container">
-  <div id="general">This is a test for general information FAQ</div> 
-</div>
   {% endblock %}  
          
 

@@ -3,112 +3,25 @@
 {% block head_title %}Welcome || {{ block.super }}{% endblock head_title %}
 
 {% block content2 %}
-<!--<div class='container'>
-<div class="row">
-  <div class="col-12 ml-auto">-->
-<!--
-    <h5 class="frb">Welcome to the VIB Proteomics Core portal!</h5>
-    <br>
--->
-    <!--
-  <div class="py-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="card text-white bg-secondary mb-3">
-                <div class="card-header"><a href="{% url 'projectregistration' %}">Create a project</a></div>
-                <div class="card-body">
-                  <p class="card-text" style="">To create a project, you have to contact the facility.&nbsp;</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card text-white bg-primary mb-3">
-                <div class="card-header"><a href="{% url 'project-info' %}">Check project status</a></div>
-                <div class="card-body">
-                  <p class="card-text">If you sent your samples, you can find the status of your project here.&nbsp;</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card text-white bg-info mb-3">
-                <div class="card-header">Information</div>
-                <div class="card-body">
-                  <p class="card-text">here you can find information about the facility, our services, and frequently asked questions.&nbsp;</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<div class="py-5 text-center filter-dark" style="background-image: url('http://www.vib.be/VIBMediaLibrary/Science%20and%20Technologies/Core-Facilities_PEC_275.jpg');background-size:cover;background-position:center center;" >
-    <div class="container py-5">
-      <div class="row">
-        <div class="col-md-12">
-           <h1> Proteomics Core Facility </h1>
-        </div>
-      </div>
-    </div>
-</div>
-
--->
-<!--
-  <div class="py-3 text-center">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-4 p-4">
-          <h4> <b><a href="{% url 'projectregistration' %}">Create a project</a></b> </h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-        <div class="col-md-4 col-6 p-4" >
-          <h4> <b><a href="{% url 'project-info' %}">Check project status</a></b> </h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-        <div class="col-md-4 col-6 p-4">
-          <h4> <b><a href="{% url 'questions' %}">Information</a></b></h4>
-          <p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-      </div>
-    </div>
-  </div>
--->
-<!--
-<div class="py-5 text-center filter-dark" style="background-image: url('http://www.vib.be/VIBMediaLibrary/Science%20and%20Technologies/Core-Facilities_PEC_275.jpg');background-size:cover;background-position:center center;" >
-    <div class="container py-5">
-      <div class="row">
-        <div class="col-md-12">
-           <h1> Proteomics Core Facility </h1>
-        </div>
-      </div>
-    </div>
-</div>
--->
-
-
-  <div class="py-5 text-white">
     <div class="container">
       <div class="row">
         <div class="col-md-12 text-center">
           <h1 class="text-dark mb-4">Welcome to the VIB Proteomics Core portal!</h1>
         </div>
       </div>
-        <div class="py-5 text-center filter-dark" style="background-image: url('https://corefacilities.vib.be/images/headers/PEC/PEC_large.jpg');background-size:cover;background-position:center center;" >
-    <div class="container py-5">
       <div class="row">
-        <div class="col-md-12">
-           <!--<h1> Proteomics Core Facility </h1>-->
+        <div class="col-md-12 ml-12">
+          <div class="py-5 text-center filter-dark" style="background-image: url('https://corefacilities.vib.be/images/headers/PEC/PEC_large.jpg');background-size:cover;background-position:center center;" >
+            <div class="container py-5">
+              <div class="row">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-</div>
       <div class="row text-dark">
         <div class="col-lg-4 p-3">
-          <div class="card text-center">
+          <div class="card text-center bg-grey">
             <div class="card-body p-4 card-home">
               <h3 style="font-weight: bold;">Register new project</h3>
               <br>
@@ -117,7 +30,7 @@
           </div>
         </div>
         <div class="col-lg-4 col-md-6 p-3">
-          <div class="card text-center">
+          <div class="card text-center bg-grey">
             <div class="card-body p-4 card-home">
               <h3 style="font-weight: bold;">Check project status</h3>
               <br>
@@ -126,7 +39,7 @@
           </div>
         </div>
         <div class="col-lg-4 col-md-6 p-3">
-          <div class="card text-center">
+          <div class="card text-center bg-grey">
             <div class="card-body p-4 card-home" >
               <h3 style="font-weight: bold;">Information for users</h3>
               <br>
@@ -136,15 +49,8 @@
         </div>
       </div>
     </div>
-  </div>
 
-
-
-       <div class="col-4">
-                    <div class="alert" style='min-height: 400px;'>
-          </div>
-         </div>
-  {% endblock %}	
+  {% endblock %}  
          
 
 from home show templateview()
