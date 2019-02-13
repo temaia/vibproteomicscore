@@ -1,44 +1,49 @@
 {% extends "base.html" %}
 
 {% block head_title %}Welcome || {{ block.super }}{% endblock head_title %}
-
+{% load static %}
 {% block content2 %}
 
-<div class="col-md-12">
-  <div class="container">
+<div class="container">
+<div class="col-md-12 ml-12">
     <div class="row">
-        <div class="col-md-12 text-center">
-          <h1 class="text-dark mb-4">How to work with us</h1> </div>
-          <div><p>If you are interested in performing proteomics analysis at our core, <a href="{% url 'contact' %}">contact us</a> in an early stage so your specific question can be discussed. </p>When the project is accepted, you will receive a login to <a href="{% url 'projectregistration' %}">register a new project </a>. There you have to complete the form with all the information about the experiment you are about to send.</div>
+        <div class="col-md-12 ml-12 text-center">
+          <h2 class="text-dark mb-4">How to work with us</h2> </div>
+          <ol>
+            <li class="indented-list">If you are interested in performing proteomics analysis at our core, <a href="{% url 'contact' %}">contact us</a> in an early stage so your specific question can be discussed.</li>
+            <li class="indented-list">When the project is accepted, you will receive a login to <a href="{% url 'projectregistration' %}">register a new project </a>.</li>
+          </ol>
         </div>
       <div class="row">
-        <div class="col-lg-2 col-md-9 col-3"> <img class="img-fluid d-block" src="https://static.thenounproject.com/png/2162566-200.png" width="100"> </div>
+        <div class="col-lg-2 col-md-9 col-3"> <i class="fa fa-flask fa-5x"></i> </div>
         <div class="col-md-9 offset-lg-1 d-flex flex-column justify-content-center">
-          <h2><a href="{% url 'ShippingInstructions' %}">Shipping instructions</a></h2>
+          <h4><a href="{% url 'protocols' %}">Sample preparation instructions</a></h4>
         </div>
       </div>
       <hr>
       <div class="row">
-        <div class="col-lg-2 col-md-9 col-3"> <img class="img-fluid d-block" src="https://static.thenounproject.com/png/7552-200.png" width="100"> </div>
+        <div class="col-lg-2 col-md-9 col-3"> <i class="fa fa-truck fa-5x"></i> </div>
         <div class="col-md-9 offset-lg-1 d-flex flex-column justify-content-center">
-          <h2><a href="{% url 'protocols' %}">Our sample preparation protocols</a></h2>
+          <h4><a href="{% url 'ShippingInstructions' %}">Shipping instructions</a></h4>
         </div>
       </div>
       <hr>
+
       <div class="row">
-        <div class="col-lg-2 col-md-9 col-3"> <img class="img-fluid d-block" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAilBMVEX///8dHRsAAAAbGxkUFBHx8fGioqLJycgLCwQZGRcWFhQQEA36+vr39/cGBgDg4OBubm3t7e0yMjDX19eRkZA+Pj1HR0Zzc3K1tbWurq4lJSPm5ubOzs5UVFNgYF9bW1q/v759fXyIiIcuLiyVlZU7Ozqjo6JLS0mxsbFnZ2YiIh95eXiDg4NwcG9MCRT0AAAHE0lEQVR4nO2d6XbaPBCGg2THi7xgKGFxAYctzdL7v73PJpDShJYZrZ5+en71nP6wXjSa0Yw0yt2dx+PxeDwejzayvKrrctxSlnUV5q7Ho5FxNNu9LveLxSAJRMEYi0XKXxbb/fJ1N4vGmevxqZB/PzyOWIcIkoS3DN7p/pmkgTj+38vwPgoJ6qyit4dOWjK4RdIJHQ0PpeshYxgf1gMWpzfF/S5z8hiFrkcOotot2rnjt1V9Jo1ZvG5cD/8WWbNi7LZl/gkesHgzdi3iL9TfRkxIyzuJLNhy3tNYEm4Chem7IGDbe9dirhBuWCGx+K6TMHbfswCS7wqmS94Rzl4OfdIY7Zm2+TuTsP1317rO5K8ME/vApOyxH9M4SwsT+jpY2rhW10bAqR4Hep2ETV1HjvpBr4f5ApvUTgVGQjXC3yRgkUOB9yYt9AxnO2cCXw1b6Bk2dCRwaElgK3HtRODamsBW4tJ+ZMxWFgV2Em1HjczmDHYUT5YlPlsW2Em0KnBjXWBrqD8tCpw7ENhK/GZNYKQ/V4JJnFsSWNrYyVyXaCljnASOBA6SFysVVRde5kxhw9tEDgW2djozLjBcGKlYQOHMeLo4NVaygCFMB/6xtI3yoGAXFIFkxGGNWYVyfrQ7WkqW3+bNuKzysC7HzXy3HIAO376QjoymGTOZKRRs+zy7cjxYz6YjiVMqdjAoMBvhf3TBVrM/RrEsGjLswjYaFO/RUyjY8Ibzqx+x51UG96f5FjmFCVsBnHu1wm0DOTO2ErGrMF4A4/MsQU2juR34Ay7YsxV4wdQTzI+XTgwJ/I6aQlyZE1f2MZVjrDCmxLGm9BMhUZjZgFeYvJfjt8iIWUwWRgIGys9IOIPsAW4jZswUY6RSIavm4KBRbLTLa410ADfSeCX1CbiVGPGmjYVlsgabiYk0cYpYJY3kN+C5mYGgj9h0x/K+/Bn6MxpYiBX451UpNICLQMFSo7Z34MtQZeuf7YEbQ870STuxgyrkTOWQ6DGG/o7aY/4SWr5Qy97ApqI/5oOnMKhUPlOC57DRJOxMDlUopkrfCRdAl629NAyOVKrWMwG6Gu31KKgbV95OQbNs7ZdsoFtG5Q9DPVr8pkXXL6BVNqZ6Dx06h4rr/SuvMB/HueqH9kBPI151yLoAGPCVt4vggqV2K83Wx+MUkfw9SVSOUjX0wKbQXxbOx818s9ofT5AKkV6XqrRj64DvacydXlTjaL55fhoNjkqD34wqVT7cg+9LGw1a/kpel9FhM12e2u/S45Qy5awNXHS2d682D+tovvv5cGwmLFRrC/BLAuZPu79SRo1yRgOv5+nPD61Qwottdu/xaQNeazNSMDXPD3jB0rwrNUEFr3mrB14XZEt4RdZAqc0CmBNE1scWzFug7lW7iIaK5Kib8QSNNF+iTtDZD9cDxhLuUdeGeNCPzks4JcfdGVLf4FsmEsgrq/or+maZYy/GU5vCHba1gcdK5wa2yTDXaE5TSCrah/g2YsM3aDUz3uLbiEllFTOJlwoKVx2zMqB9TEu6oJM2SfiYgc0SmzKV1FMFFhv0VBlLPUZUPLseN5hGqsEv2JIJFAcpgemATN77JtWDmog+vwJ2SSbXB85tNZAqU+HS+Q/I7GVqiY3aUaCtLmdVSibXRGy0nUsn5UCuA5VMpC9fJGeQSlZfYwsyZ4HuHhnCUcoKJLMG5brA0e1Fzqjk1iCnU9+eSMXBhEygR7WmXQokk/HiO4g7UkFlLyr5oo1IqGQT7V5NRmAxIVPczkYycYKtyWT0bcYrI/DR9bDhyLxo4/I5SDQyNppaeGlHHxKBInghEyXuum4btB+NR2SKah1v6EeJ2BMdJ9pSpdgpZLo7KQwD7lv8EEilYHEiR77ZQycbPIPoce9IYzK5xBlwc/YRsSWz1T4Dbsw8CSQVJY6gjFRsyeQSvxgijFTQSZYuQLzGRlMg4g3CdEDsOt478PaCpCD1N7s+AC9DTqem9jvwTjQqhftPhNCWVyH3JpF7oE9AcEbRjXZAXSmtG6OXAJ9u5wmd23if2MDSe+2PB9gDGCzoHC994Ql0YsgXVP3MXQZ7iSV9cD1QaYAVDEHnSuVn8gUos6BUv/9ECCskUt2StoSwcKj8pI07oApp5k0dwIcIyW5KoS8k8ML1OOUBKgxcj1OeGqQw2boepzxAhSPX45QH5mmSvetxygOLFum/r9DUI/kW8ApPCukmT/8Dhdkk5rchcw//GuMnFt9CDMkW2jwej8fj8bwT3YOYkQ36bwwI0ac670LwfSGqRWFgRXhAt7DvFXqF/ccr9Ar7j1foFfYfr9Ar7D9eoVfYf7xCr7D/eIVeYf/xCr3C/uMVeoX9xyv0CvuPV+gV9h+v0CvsP/++wmxSAG5BtwTU/pDaB+VSBADEvnE9Uo/H4/F4PB6PY/4Db/pxYTIszl0AAAAASUVORK5CYII=" width="100"> </div>
+        <div class="col-lg-2 col-md-9 col-3 ml-auto mr-auto"> <i class="fa fa-question fa-5x"></i> </div>
         <div class="col-md-9 offset-lg-1 d-flex flex-column justify-content-center">
-          <h2><a href="{% url 'questions' %}">FAQ</a></h2>
+          <h4><a href="{% url 'questions' %}">FAQ</a></h4>
         </div>
       </div>
       <hr>
+      <!--
       <div class="row">
-        <div class="col-lg-2 col-md-9 col-3"> <img class="img-fluid d-block" src="https://static.thenounproject.com/png/2176491-200.png" width="100"> </div>
+        <div class="col-lg-2 col-md-9 col-3"> <i class="fa fa-line-chart fa-5x"></i> </div>
         <div class="col-md-9 offset-lg-1 d-flex flex-column justify-content-center">
-          <h2><a href="{% url 'reports' %}">Material & methods, reporting</a></h2>
+          <h4><a href="{% url 'reports' %}">Material & methods, reporting</a></h4>
         </div>
       </div>
-      <hr>
+      <hr>-->
 
   </div>
 </div>
