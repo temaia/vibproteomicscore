@@ -19,7 +19,7 @@ def WriteToExcel2(arguments_dict):
     # excel styles
     title = workbook.add_format({
         'bold': True,
-        'font_size': 14,
+        'font_size': 12,
         'align': 'center',
         'valign': 'vcenter'
     })
@@ -35,6 +35,24 @@ def WriteToExcel2(arguments_dict):
         'valign': 'top',
         'text_wrap': True,
         'border': 1
+    })
+    cellneditleft = workbook.add_format({
+        'align': 'left',
+        'valign': 'top',
+        'text_wrap': True,
+        'border': 1,
+        #'italic':True,
+        #'font_color':"FF6600"
+        #'bg_color':"cee7f4"
+    })
+    cellnedit = workbook.add_format({
+        'align': 'center',
+        'valign': 'top',
+        'text_wrap': True,
+        'border': 1,
+        #'italic':True,
+        #'font_color':"FF6600"
+        #'bg_color':"cee7f4"
     })
     celledit = workbook.add_format({
         'align': 'center',
@@ -157,7 +175,10 @@ def WriteToExcel2(arguments_dict):
         #idx+=1
     idx += 7
     span = 'B'+str(idx)+':D'+str(idx)
-    worksheet_s.merge_range(span,"- please edit and review the fields in orange", celledit)
+    span2 = 'B'+str(idx+1)+':D'+str(idx+1)
+    worksheet_s.merge_range(span,"- please edit and review the fields in orange", cellneditleft)
+    worksheet_s.merge_range(span2,"- *according to if the sample is protein extract or cell pellet, respectively", celledit)
+
     # change column widths
     worksheet_s.set_column('A:A', 14.3)  # Sample Name
     worksheet_s.set_column('B:B', 20.8)  # Experimental Condition

@@ -8,11 +8,13 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 #from django.forms.models import modelformset_factory
 #from .models import Customer, Analysis, Specimen_SG, Specimen_GB, Specimen_APMS, Specimen_PTM
 #from .models import Analysis,Profile,Specimen_SG, Specimen_GB, Specimen_APMS, Specimen_PTM, User, Experiment
-from .models import Analysis,Profile,User#,Specimen_SG#, Specimen_GB, Specimen_APMS, Specimen_PTM, Experiment
+from .models import User, Analysis,Profile#,Specimen_SG#, Specimen_GB, Specimen_APMS, Specimen_PTM, Experiment
+#from .models import Analysis,User,Profile#,Specimen_SG#, Specimen_GB, Specimen_APMS, Specimen_PTM, Experiment
 from crispy_forms.helper import FormHelper
 #from crispy_forms.bootstrap import Field, InlineRadios, TabHolder, Tab
 from crispy_forms.bootstrap import FormActions, AppendedText
 from crispy_forms.layout import Submit, Layout, Div, Fieldset, Hidden , Field
+
 
 #from .models import User, Analysis,Experiment
 
@@ -36,79 +38,145 @@ from crispy_forms.layout import Submit, Layout, Div, Fieldset, Hidden , Field
 # class ContactForm2(forms.Form):
 # 	message = forms.CharField(widget=forms.Textarea)
 
+# class Profile(models.Model):
+# 	user=models.OneToOneField(User, null=True, blank=True)
+# 	#user=models.OneToOneField(User, on_delete=models.CASCADE)
+# 	Name = models.CharField(max_length=120, null=True, blank=True)
+# 	#Email = models.EmailField(max_length=120, null=True) # pre-filled
+# 	Group_Leader = models.CharField(max_length=120, null=True, blank=True)
+# 	Affiliation_Type = models.CharField(max_length=50, choices=AFFILIATIONTYPES, null=True, blank=True)
+# 	Affiliation = models.CharField(max_length=60, null=True, blank=True)
+# 	Address = models.CharField(max_length=300, null=True, blank=True)
+# 	Project_ID = models.CharField(max_length=200, null=True) # pre-filled displayed on form template on the corner
+# 	Main_Analysis_Type = models.CharField(max_length=50 , choices=ANALYSISTYPES, null=True)
 class CustomerForm(forms.ModelForm):
 	class Meta:
 		model = Profile
-		fields = ['Project_ID', 'Name', 'Email', 'Group_Leader','Affiliation', 'Address','Affiliation_Type']
-		#INPUT_CLASS = 'form-control'
-		#def __unicode__(self):
-		#	return self.name
-		labels={'Group_Leader':'Name of group leader'
+		#user = User.objects.filter(pk=request.user)
+		Project_ID=None
+		Email = None
+		fields = ['Project_ID','Name','Email', 'Group_leader','Affiliation','Other_institution', 'Address']
+		labels={'Group_leader':'Name of group leader',
 		}
 		widgets = {'Project_ID': forms.TextInput(),
 					'Name': forms.TextInput(attrs={'placeholder':'e.g. Anne Breituch'}),
 					'Email': forms.TextInput(),
-					'Group_Leader': forms.TextInput(attrs={'placeholder':'e.g. Claudia Berts'}),
-					'Affiliation': forms.TextInput(attrs={'placeholder':'Institution/Organization'}),
-					'Address': forms.Textarea(attrs={'placeholder':'Institutional address','rows':3, 'cols':1}),
+					'Group_leader': forms.TextInput(attrs={'placeholder':'e.g. Claudia Berts'}),
+					#'Affiliation': forms.TextInput(attrs={'placeholder':'Institution/Organization'}),
+					'Address': forms.Textarea(attrs={'placeholder':'Institutional address','rows':3, 'cols':1}),}
+	def __init__(self, *args, **kwargs):
+		super(CustomerForm, self).__init__(*args, **kwargs)
 
-		}
-		def clean(self):
-			cleaned_data = super(CustomerForm, self).clean()
-			Project_ID = cleaned_data.get('Project_ID')
-			Name = cleaned_data.get('Name')
-			Email = cleaned_data.get('Email')
-			Group_Leader = cleaned_data.get('Group_Leader')
-			Affiliation = cleaned_data.get('Affiliation')
-			Address = cleaned_data.get('Address')
-			if not Issue and not Name and not Email and not Group_Leader and not Affiliation:
-				raise forms.ValidationError('Please fill in the form')
- #class 1 - form 1
-	#Project_summary = models.CharField(max_length=300)
-	#Project_keywords = models.CharField(max_length=120)
-	#Analysis_Type = models.CharField(max_length=50 , choices=ANALYSISTYPES, null=True) # pre-filled?!
-	#Study_Type = models.CharField(max_length=50, choices=STUDYTYPES, null=True)
-	#timestamp = models.DateTimeField(auto_now_add=True)
+		#self.Project_ID = Profile().getProjectID()
+		#self.Email = Profile().getEmail()
+		print("bu")
+						        	
+		#self.helper = FormHelper()
+		#self.helper.layout= Layout(
+			# Fieldset(
+			# 'Project_ID',
+			# 'Name',
+			# 'Email',
+			# 'Group_leader',
+			# 'Affiliation',
+			# 'Other_institution',
+			# 'Address'
+			# ),
+		#	Field('Other_institution', id='ifother')
+		#)
+
+						        	
+	
+		
+		#Project_ID=user.profile.getProjectID()
+		#Email=user.email
+		#Main_analysis_type=getAnalysisType()
+		#fields = ['Project_ID','Main_analysis_type','Name','Email', 'Group_leader','Affiliation','Other_institution', 'Address']
+		#fields = ['Project_ID', 'Name', 'Email', 'Group_Leader','Affiliation','Other_Institution', 'Address']
+		#INPUT_CLASS = 'form-control'
+		#def __unicode__(self):
+		#	return self.name
+		# widgets = {'Project_ID': forms.TextInput(),
+		# 			'Name': forms.TextInput(attrs={'placeholder':'e.g. Anne Breituch'}),
+		# 			'Email': forms.TextInput(),
+		# 			'Group_Leader': forms.TextInput(attrs={'placeholder':'e.g. Claudia Berts'}),
+		# 			#'Affiliation': forms.TextInput(attrs={'placeholder':'Institution/Organization'}),
+		# 			'Address': forms.Textarea(attrs={'placeholder':'Institutional address','rows':3, 'cols':1}),
+
+		#}
+# 		def clean(self):
+# 			cleaned_data = super(CustomerForm, self).clean()
+# 			Project_id = cleaned_data.get('Project_id')
+# 			Name = cleaned_data.get('Name')
+# 			Email = cleaned_data.get('Email')
+# 			Group_leader = cleaned_data.get('Group_leader')
+# 			Affiliation = cleaned_data.get('Affiliation')
+# 			Address = cleaned_data.get('Address')
+# 			if not Issue and not Name and not Email and not Group_leader and not Affiliation:
+# 				raise forms.ValidationError('Please fill in the form')
+ # class 1 - form 1
+	# Project_summary = models.CharField(max_length=300)
+	# Project_keywords = models.CharField(max_length=120)
+	# Analysis_Type = models.CharField(max_length=50 , choices=ANALYSISTYPES, null=True) # pre-filled?!
+	# Study_Type = models.CharField(max_length=50, choices=STUDYTYPES, null=True)
+	# timestamp = models.DateTimeField(auto_now_add=True)
 
 class AnalysisForm(forms.ModelForm):
-	#Analysis_type = forms.CharField(choices = Analysis.ANALYSISTYPES)
+#	Main_analysis_type = forms.ModelChoiceField(queryset=None)
+	#Field('password', id="password-field", css_class="passwordfields", title="Explanation")
+	#self.fields['Main_analysis_type'].queryset = {choice:user.Main_analysis_type.choices[choice] for choice in user.Main_analysis_type.choices}
+	#choices = user.Main_analysis_type.choices
+	#Main_analysis_type = forms.ModelChoiceField(queryset=None)
+	Main_analysis_type = forms.CharField()
+
 	class Meta:
 		model = Analysis
-		fields = ('Project_summary',
-			'Project_keywords', 'Analysis_type','Analysis_type2',"Data_analysis")
+		#Analysis.objects.get_or_create(user=user.username)
+
+		fields = ("Project_title",'Project_summary', "Main_analysis_type","Data_analysis",
+			'Main_analysis_type')
 		widgets = {'Project_summary': forms.Textarea(attrs={'placeholder': 'Provide a 4 line summary of the project explaining the purpose of the analysis',
-			'cols':1,'rows':6}),
-					'Project_keywords': forms.TextInput(attrs={'placeholder': 'e.g. autophagy, sumoylation, BRCA clinical variants'},),
-					}
-		labels = {'Data_analysis':'Check this box if you wish to receive a data analysis report.'}			
-		def clean(self):
-			cleaned_data = super(AnalysisForm, self).clean()
-			Project_summary = cleaned_data.get('Project_summary')
-			Project_keywords = cleaned_data.get('Project_keywords')
-			Analysis_type = cleaned_data.get('Analysis_type')
-			Analysis_type2 = cleaned_data.get('Analysis_type2')
-			if not Analysis_type and not Project_summary and not Project_keywords:
-				raise forms.ValidationError('Please fill in the form')
-				
-		def get_all_cleaned_data(self):
-			cleaned_data = super(AnalysisForm, self).clean()
-			Project_summary = cleaned_data.get('Project_summary')
-			Project_keywords = cleaned_data.get('Project_keywords')
-			Analysis_type = cleaned_data.get('Analysis_type')
-			Analysis_type2 = cleaned_data.get('Analysis_type2')
+			'cols':1,'rows':6}),}
+					#}
+		labels = {'Data_analysis':'Check this box if you only need to receive raw data.'}	
+
+	def __init__(self,  *args, **kwargs):
+		#self.user = kwargs.pop('user', None)
+		super().__init__(*args, **kwargs)
+		#choices = self.user.Main_analysis_type.choices
+		#print("choices"+str(choices))
+		#self.Main_analysis_type.choices = {choice:user.Main_analysis_type.choice[choice] for choice in user.Main_analysis_type}
+		#self.fields['Main_analysis_type'].queryset = {choice:user.Main_analysis_type.choices[choice] for choice in user.Main_analysis_type}
+	
+		
+		#def clean(self):
+		#	cleaned_data = super(AnalysisForm, self).clean()
+		#	Project_summary = cleaned_data.get('Project_summary')
+			#Project_keywords = cleaned_data.get('Project_keywords')
+			#Analysis_type = cleaned_data.get('Analysis_type')
+			#Analysis_type2 = cleaned_data.get('Analysis_type2')
+			#if not Project_summary and not Project_keywords:
+			#	raise forms.ValidationError('Please fill in the form')
+	
+		#def get_all_cleaned_data(self):
+		#	cleaned_data = super(AnalysisForm, self).clean()
+		#	Project_summary = cleaned_data.get('Project_summary')
+			#Project_keywords = cleaned_data.get('Project_keywords')
+			#Analysis_type = cleaned_data.get('Analysis_type')
+			#Analysis_type2 = cleaned_data.get('Analysis_type2')
 			#Study_Type = cleaned_data.get('Study_type')
-			if not Analysis_type and not Project_summary and not Project_keywords:
-				raise forms.ValidationError('Please fill in the form')
+			#if not Analysis_type and not Project_summary and not Project_keywords:
+			#	raise forms.ValidationError('Please fill in the form')
 				
-		def get_cleaned_data(self):
-			cleaned_data = super(AnalysisForm, self).clean()
-			Project_summary = cleaned_data.get('Project_summary')
-			Project_keywords = cleaned_data.get('Project_keywords')
-			Analysis_type = cleaned_data.get('Analysis_type')
-			Analysis_type2 = cleaned_data.get('Analysis_type2')
+		#def get_cleaned_data(self):
+		#	cleaned_data = super(AnalysisForm, self).clean()
+		#	Project_summary = cleaned_data.get('Project_summary')
+			#Project_keywords = cleaned_data.get('Project_keywords')
+			#Analysis_type = cleaned_data.get('Analysis_type')
+			#Analysis_type2 = cleaned_data.get('Analysis_type2')
 			#Study_Type = cleaned_data.get('Study_type')
-			if not Analysis_type and not Project_summary and not Project_keywords:
-				raise forms.ValidationError('Please fill in the form')
+			#if not Analysis_type and not Project_summary and not Project_keywords:
+			#	raise forms.ValidationError('Please fill in the form')
 
 		#labels = {'Project_summary':'Project_summary'}
 		#help_texts = {'Project_summary':'Provide a 4 line summary'}
@@ -138,10 +206,10 @@ class Specimen_SGForm(forms.Form):
 	#Taxon_id = forms.CharField(max_length=120, required=True)
 	Sequence_Database_Public_Availability = forms.ChoiceField(choices=DATAANALYSIS,
 		 label="Protein sequence database publically available?", widget=forms.RadioSelect)
-	Sequence_database_name = forms.CharField(max_length=50, required=False, label="If 'Yes', sequence database name:",
-		widget=forms.TextInput(attrs={'placeholder': 'e.g. TAIR, UNIPROT, SWISSPROT, REFSEQ, EMBL'}))
+	Sequence_database_name = forms.CharField(max_length=50, required=False, label="If 'Yes', sequence database source and/or name:",
+		widget=forms.TextInput(attrs={'placeholder': 'e.g. UNIPROT, "UNIPROT UP000005640 reference proteome"'}))
 	#Sequence_database_file = forms.FileField(blank=True, storage=FileSystemStorage(location=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'media')))
-	Sequence_database_file = forms.FileField( required=False,label="If 'No', please provide a document with protein sequences and corresponding species necessary for database searching, preferentially in FASTA format.")
+	Sequence_database_file = forms.FileField( required=False,label="If 'No', please provide a document with protein sequences necessary for database searching, preferentially in FASTA format.")
 	Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet/tissue/protein extract in eppendorf/15 ml tube'}))
 	#Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
 	#Sample_Vial = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
@@ -155,10 +223,10 @@ class Specimen_PTMForm(forms.Form):
 	#Taxon_id = forms.CharField(max_length=120, required=True)
 	Sequence_Database_Public_Availability = forms.ChoiceField(choices=DATAANALYSIS,
 		 label="Protein sequence database publically available?", widget=forms.RadioSelect)
-	Sequence_database_name = forms.CharField(max_length=50, required=False, label="If 'Yes', sequence database name:",
-		widget=forms.TextInput(attrs={'placeholder': 'e.g. TAIR, UNIPROT, SWISSPROT, REFSEQ, EMBL'}))
+	Sequence_database_name = forms.CharField(max_length=50, required=False, label="If 'Yes', sequence database source and/or name:",
+		widget=forms.TextInput(attrs={'placeholder': 'e.g. UNIPROT, "UNIPROT UP000005640 reference proteome"'}))
 	#Sequence_database_file = forms.FileField(blank=True, storage=FileSystemStorage(location=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'media')))
-	Sequence_database_file = forms.FileField( required=False,label="If 'No', please provide a document with protein sequences and corresponding species necessary for database searching, preferentially in FASTA format.")
+	Sequence_database_file = forms.FileField( required=False,label="If 'No', please provide a document with protein sequences necessary for database searching, preferentially in FASTA format.")
 	Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet/tissue/protein extract in eppendorf/15 ml tube'}))
 	#Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
 	#Sample_Vial = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
@@ -360,37 +428,37 @@ class EDForm(forms.Form):
 # 			Group_Leader = cleaned_data.get('Group_Leader')
 # 			Analysis_Type = cleaned_data.get('Analysis_Type')
 
-class ProfileForm(forms.ModelForm):
-	class Meta:
-		model = Profile
-		fields = ['Project_ID', 'Name', 'Email', 'Group_Leader','Affiliation', 'Address','Affiliation_Type']
-		#INPUT_CLASS = 'form-control'
-		#def __unicode__(self):
-		#	return self.name
-		widgets = {'Project_ID': forms.TextInput(),
-					'Name': forms.TextInput(attrs={'placeholder':'e.g. Anne Breituch'}),
-					'Email': forms.TextInput(),
-					'Group_Leader': forms.TextInput(attrs={'placeholder':'e.g. Claudia Berts'}),
-					'Affiliation': forms.TextInput(attrs={'placeholder':'Institution/Organization'}),
-					'Address': forms.Textarea(attrs={'placeholder':'Institutional address',
-						'rows':3, 'cols':1}),
+# class ProfileForm(forms.ModelForm):
+# 	class Meta:
+# 		model = Profile
+# 		fields = ['Project_ID', 'Name', 'Email', 'Group_Leader','Affiliation', 'Address','Affiliation_Type']
+# 		#INPUT_CLASS = 'form-control'
+# 		#def __unicode__(self):
+# 		#	return self.name
+# 		widgets = {'Project_ID': forms.TextInput(),
+# 					'Name': forms.TextInput(attrs={'placeholder':'e.g. Anne Breituch'}),
+# 					'Email': forms.TextInput(),
+# 					'Group_Leader': forms.TextInput(attrs={'placeholder':'e.g. Claudia Berts'}),
+# 					'Affiliation': forms.TextInput(attrs={'placeholder':'Institution/Organization'}),
+# 					'Address': forms.Textarea(attrs={'placeholder':'Institutional address',
+# 						'rows':3, 'cols':1}),
 
-		}
-		def clean(self):
-			cleaned_data = super(CustomerForm, self).clean()
-			Project_ID = cleaned_data.get('Project_ID')
-			Name = cleaned_data.get('Name')
-			Email = cleaned_data.get('Email')
-			Group_Leader = cleaned_data.get('Group_Leader')
-			Affiliation = cleaned_data.get('Affiliation')
-			Address = cleaned_data.get('Address')
-			if not Project_ID and not Name and not Email and not Group_Leader and not Affiliation:
-				raise forms.ValidationError('Please fill in the form')
+# 		}
+# 		def clean(self):
+# 			cleaned_data = super(CustomerForm, self).clean()
+# 			Project_ID = cleaned_data.get('Project_ID')
+# 			Name = cleaned_data.get('Name')
+# 			Email = cleaned_data.get('Email')
+# 			Group_Leader = cleaned_data.get('Group_Leader')
+# 			Affiliation = cleaned_data.get('Affiliation')
+# 			Address = cleaned_data.get('Address')
+# 			if not Project_ID and not Name and not Email and not Group_Leader and not Affiliation:
+# 				raise forms.ValidationError('Please fill in the form')
 
 #examples/one_to_one
 class ExperimentForm(forms.Form):
 
-	Experimental_conditions = forms.CharField(label = "Experimental conditions", widget=forms.Textarea(attrs={'placeholder':'e.g. p53KO, p53WT, p53OE',
+	Experimental_conditions = forms.CharField(label = "Experimental conditions (separated with commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. p53KO, p53WT, p53OE',
 		'rows':2, 'cols':1}))
 	Conditions_to_compare = forms.CharField(label = "Experimental conditions to compare", widget=forms.Textarea(attrs={'placeholder':'e.g. p53KO vs p53WT, p53OE vs p53WT, p53KO vs p53OE',
 		 'rows':3, 'cols':1}))
@@ -410,7 +478,7 @@ class ExperimentForm(forms.Form):
 
 class ExperimentPTMForm(forms.Form):
 
-	Experimental_conditions = forms.CharField(label = "Experimental conditions", widget=forms.Textarea(attrs={'placeholder':'e.g. kinase inhibitor treatment, control',
+	Experimental_conditions = forms.CharField(label = "Experimental conditions (separated with commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. p53KO, p53WT, p53OE',
 		'rows':2, 'cols':1}))
 	Conditions_to_compare = forms.CharField(label = "Experimental conditions to compare", widget=forms.Textarea(attrs={'placeholder':'e.g. kinase inhibitor treatment vs control',
 		 'rows':3, 'cols':1}))
@@ -472,45 +540,6 @@ class ExperimentAPMSForm(forms.Form):
 		#}
 		#help_texts = {'Project_summary':'Provide a 4 line summary'}
 
-
-def weather_history(request):
-    weather_period = Weather.objects.all()
-    town = None
-    if request.method == 'POST':
-        form = WeatherForm(data=request.POST)
-        if form.is_valid():
-            town_id = form.data['town']
-            town = Town.objects.get(pk=town_id)
-            weather_period = Weather.objects.filter(town=town_id)
-        if 'excel' in request.POST:
-            response = HttpResponse(content_type='application/vnd.ms-excel')
-            response['Content-Disposition'] = 'attachment; filename=Report.xlsx'
-            xlsx_data = WriteToExcel(weather_period, town)
-            response.write(xlsx_data)
-            return response
-        if 'pdf' in request.POST:
-            response = HttpResponse(content_type='application/pdf')
-            today = date.today()
-            filename = 'pdf_demo' + today.strftime('%Y-%m-%d')
-            response['Content-Disposition'] =\
-                'attachement; filename={0}.pdf'.format(filename)
-            buffer = BytesIO()
-            report = PdfPrint(buffer, 'A4')
-            pdf = report.report(weather_period, 'Weather statistics data')
-            response.write(pdf)
-            return response
-    else:
-        form = WeatherForm()
-
-    template_name = "exportingfiles/weather_history.html"
-    context = {
-        'form': form,
-        'town': town,
-        'weather_period': weather_period,
-    }
-    return render(request, template_name, context)
-
-
 # class Profile_extraForm(forms.ModelForm):
 # 	class Meta:
 # 		model = Profile_extra
@@ -535,10 +564,17 @@ def weather_history(request):
 class LoginForm(forms.Form):
     """A form for user log in. Includes all the required
     fields, plus a repeated password."""
-    email = forms.EmailField(label='Email', widget=forms.TextInput(attrs={'placeholder':'email address'}))
-    password = forms.CharField(label='Project ID', widget=forms.TextInput(attrs={'placeholder':'e.g. PRC-214'}))
+    #class Meta:
+    #model=User
+    #fields = ["username", "password"]
+    #email = forms.EmailField(label='Email', widget=forms.TextInput(attrs={'placeholder':'email address'}))
+    #password = forms.CharField(label='Project ID', widget=forms.TextInput(attrs={'placeholder':'e.g. PRC-214'}))
+    username = forms.CharField(label='Project_ID', widget=forms.TextInput(attrs={'placeholder':''}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':''}))
+
 
 #		 						'Sample_Name': forms.TextInput(attrs={'placeholder': 'custom sample name (optional)'})}
+
 
 
 # class RegisterForm(forms.ModelForm):
@@ -565,48 +601,48 @@ class LoginForm(forms.Form):
 #             user.save()
 #         return user
 
-class UserAdminCreationForm(forms.ModelForm):
-    """A form for creating new users. Includes all the required
-    fields, plus a repeated password."""
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+# class UserAdminCreationForm(forms.ModelForm):
+#     """A form for creating new users. Includes all the required
+#     fields, plus a repeated password."""
+#     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+#     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
 
-    class Meta:
-        model = User
-        fields = ('email',)
+#     class Meta:
+#         model = User
+#         fields = ('username',)
 
-    def clean_password2(self):
-        # Check that the two password entries match
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
-        return password2
+#     def clean_password2(self):
+#         # Check that the two password entries match
+#         password1 = self.cleaned_data.get("password1")
+#         password2 = self.cleaned_data.get("password2")
+#         if password1 and password2 and password1 != password2:
+#             raise forms.ValidationError("Passwords don't match")
+#         return password2
 
-    def save(self, commit=True):
-        # Save the provided password in hashed format
-        user = super(UserAdminCreationForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        if commit:
-            user.save()
-        return user
+#     def save(self, commit=True):
+#         # Save the provided password in hashed format
+#         user = super(UserAdminCreationForm, self).save(commit=False)
+#         user.set_password(self.cleaned_data["password1"])
+#         if commit:
+#             user.save()
+#         return user
 
 
-class UserAdminChangeForm(forms.ModelForm):
-    """A form for updating users. Includes all the fields on
-    the user, but replaces the password field with admin's
-    password hash display field.
-    """
-    password = ReadOnlyPasswordHashField()
+# class UserAdminChangeForm(forms.ModelForm):
+#     """A form for updating users. Includes all the fields on
+#     the user, but replaces the password field with admin's
+#     password hash display field.
+#     """
+#     password = ReadOnlyPasswordHashField()
 
-    class Meta:
-        model = User
-        fields = ('email', 'password', 'active', 'admin')
+#     class Meta:
+#         model = User
+#         fields = ('username', 'password', 'active', 'admin')
 
-    def clean_password(self):
-        # Regardless of what the user provides, return the initial value.
-        # This is done here, rather than on the field, because the
-        # field does not have access to the initial value
-        return self.initial["password"]
+#     def clean_password(self):
+#         # Regardless of what the user provides, return the initial value.
+#         # This is done here, rather than on the field, because the
+#         # field does not have access to the initial value
+#         return self.initial["password"]
 
 

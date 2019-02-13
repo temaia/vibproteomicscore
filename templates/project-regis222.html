@@ -21,20 +21,19 @@
   <p class="dtitle">Analysis information</p>
 {% load crispy_forms_tags %}
 {{ wizard.management_form }}
-
+    <div class="form-row col-12 ">
+    <div class="form-group col-6 mb-0">
+       {{ form.Project_title|as_crispy_field }}
+       </div>
+       </div>
     <div class="form-row col-12 ">
     <div class="form-group col-6 mb-0">
        {{ form.Project_summary|as_crispy_field }}
      </div>
    </div>
     <div class="form-row col-12 ">
-    <div class="form-group col-6 mb-0">
-       {{ form.Project_keywords|as_crispy_field }}
-       </div>
-       </div>
-    <div class="form-row col-12 ">
     <div class="form-group col-6 mb-0 formsub">
-       {{ form.Analysis_type|as_crispy_field }}
+       {{ form.Main_analysis_type|as_crispy_field }}
 </div></div><br/><br/>
     <div class="form-row col-12 ">
     <div class="form-group col-6 mb-0">

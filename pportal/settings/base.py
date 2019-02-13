@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-
+from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 #BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -35,7 +35,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_PROFILE_MODULE = 'requests.Profile'
 # Application definition
 
 INSTALLED_APPS = [
@@ -52,7 +51,10 @@ INSTALLED_APPS = [
     'multiselectfield',
 ]
 
-AUTH_USER_MODEL = 'requests.User' # changes build in user model to this one
+
+#AUTH_PROFILE_MODEL = 'requests.User'
+AUTH_USER_MODEL = 'requests.User'
+#AUTH_USER_MODEL = 'requests.User' # changes build in user model to this one
 LOGIN_URL='login'
 LOGIN_REDIRECT_URL='home'
 
@@ -72,11 +74,10 @@ ROOT_URLCONF = 'pportal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-
-                #'/home/pportal/dev2Sep18/myenv3/pportal3/templates',],
-
         'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),
+        ],
+
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -137,7 +138,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-from .acessorio import * 
+#from .acessorio import * 
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
@@ -173,12 +174,29 @@ MEDIA_URL = "/media/"
 #ADMINS = (
 #    ('Te M', 'mtpmmaia@gmail.com'))
 # gmail settings
+
+def get_env_variable(name):
+    """Gets the environment variable or throuws ImproperlyConfigured exceptions
+    :rtype: object
+    """
+    try:
+        return os.environ[name]
+    except KeyError:
+        raise ImproperlyConfigured(
+            'Environment variable "%s" not found.' % name)
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'mtpmmaia@gmail.com'
-EMAIL_HOST_PASSWORD = mtppmaia
+
+#try:
+#    import acessorio
+#except ImportError:
+#    EMAIL_HOST_PASSWORD = 'mtppmaia'
+#else:
+EMAIL_HOST_PASSWORD = get_env_variable('EM_PW')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # during development only
 DEFAULT_FROM_EMAIL = 'mtpmmaia@gmail.com>' #'noreply-prc@vib-ugent.be'
 ADMINS = (
     ('Te M', 'mtpmmaia@gmail.com'))

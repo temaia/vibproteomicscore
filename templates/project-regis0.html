@@ -41,7 +41,7 @@
         </div>
       <div class="form-row col-12 ">
       <div class="form-group col-4 mb-0">
-       {{ form.Group_Leader|as_crispy_field }}
+       {{ form.Group_leader|as_crispy_field }}
            </div>
         </div>
     <div class="form-row col-12 ">
@@ -51,7 +51,7 @@
         </div>
     <div class="form-row col-12 ">
     <div class="form-group col-4 mb-0">
-       {{ form.Affiliation_Type|as_crispy_field }}
+       {{ form.Other_institution|as_crispy_field }}
     </div>
   </div>
     <div class="form-row col-12 ">
@@ -84,33 +84,37 @@
   </div>
   </div>	
 
-
+  ('shotgun analysis','shotgun analysis'),
+  ('affinity-purification MS (AP-MS)','affinity-purification MS (AP-MS)'), 
+  ('PTM analysis','PTM analysis'),('Virotrap','Virotrap'),
+  ('protein gel band analysis','protein gel band analysis'),
+  ('protein mass determination','protein mass determination'),
+  ('PRM','PRM'),
+  ('SRM','SRM'),
+  ('DIA','DIA'),
+  ('other','other'),
+  )
 {% endblock %}
 
 {% block extra_js %}
 <script>
+var analysisT = "{{ user.Main_analysis_type }}";
+console.log(analysisT+'2')
 
 $(document).ready(function(){
-  var analysistypee= "{{ user.profile.Main_Analysis_Type }}";
-  if ( analysistypee =='APMS'){
+  var analysistypee= "{{ user.Main_analysis_type }}";
+  if ( analysistypee =='affinity-purification MS (AP-MS)'){
   window.location.href="{% url 'projectregistrationapms' %}";
-}  else if ( analysistypee =='gelband') {
+}  else if ( analysistypee =='protein gel band analysis') {
   window.location.href="{% url 'projectregistrationgel' %}";
-}  else if ( analysistypee =='PTMs') {
+}  else if ( analysistypee =='PTM analysis') {
   window.location.href="{% url 'projectregistrationptm' %}";
 }  else {
   window.location.href="{% url 'projectregistrationsg' %}";
 }});
 
+
 </script>
-<script>
-var analysistypee= "{{ user.profile.Main_Analysis_Type }}";
 
-function relocate_pinfo()
-{
-  location.href = "{% url 'project-info' %}";
-} 
-
-  </script>
 {% endblock %}
 

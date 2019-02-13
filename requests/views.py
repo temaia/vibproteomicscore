@@ -29,11 +29,11 @@ from django.views.generic import TemplateView, CreateView, FormView, ListView
 from django.views.generic.detail import SingleObjectMixin 
 from django.views.generic.base import TemplateResponseMixin
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from .models import User,Profile
+from .models import User#,Profile
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
@@ -42,9 +42,8 @@ from django.utils.decorators import method_decorator
 from django.forms import formset_factory
 #from .forms import CustomerForm, AnalysisForm,Specimen_SGForm
 #from .forms import CustomerForm, AnalysisForm,Specimen_SGForm,Specimen_APMSForm,Specimen_PTMForm, Specimen_GBForm,LoginForm, ExperimentForm, EDForm
-from .forms import CustomerForm, AnalysisForm,Specimen_APMSForm, Specimen_SGForm,Specimen_PTMForm,LoginForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm, EDForm
-
-
+from .forms import AnalysisForm,LoginForm, CustomerForm
+from .forms import Specimen_APMSForm, Specimen_SGForm,Specimen_PTMForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm, EDForm
 from django.views.generic.base import RedirectView
 from formtools.wizard.views import SessionWizardView
 from django.conf import settings
@@ -109,9 +108,9 @@ class LoginView(FormView):
         next_post=request.POST.get('next')
         print(next_post)
         redirect_path = next_ or next_post or None
-        email=form.cleaned_data.get('email')
+        username=form.cleaned_data.get('username')
         password=form.cleaned_data.get('password')
-        user = authenticate(request,username=email,password=password)
+        user = authenticate(request,username=username,password=password)
         if user is not None:
             login(request, user)
             try:
@@ -173,19 +172,21 @@ class LogoutView(RedirectView):
 
 #cleaned_data = wizard.get_cleaned_data_for_step('paytype') or {'method': 'none'}
 
-TEMPLATES = {"0": "project-regis0.html",
-             "1": "project-regis0.html",
-             "2": "project-regis0.html",#}#,
-             "3": "project-regis0.html",
-             "4": "project-regis0.html"}#,
-             #"4": "project-regis0.html"}
+
 
 FORMS = [("0", CustomerForm),
             ("1", CustomerForm),
          ("2", CustomerForm),
-         ("3",CustomerForm)]#,
-         #("4", CustomerForm)]#,
-#         ("3", EDForm)]
+         ("3",CustomerForm),#,
+         ("4", EDForm)]
+
+TEMPLATES = {"0": "project-regis0.html",
+             "1": "project-regis0.html",
+             "2": "project-regis0.html",
+             "3": "project-regis0.html",
+             "4": "project-regis0.html"}#,
+             #"4": "project-regis0.html"}
+
 FORMSSG= [("0", CustomerForm),
             ("1", AnalysisForm),
          ("2", Specimen_SGForm),
@@ -195,7 +196,7 @@ FORMSSG= [("0", CustomerForm),
 TEMPLATESSG = {"0": "project-regis111.html",
              "1": "project-regis222.html",
              "2": "project-regis333.html",
-             "3": "project-regis44.html",
+             "3": "project-regis444.html",
              "4": "project-regis555.html"}
 
 # TEMPLATESSG = {"0": "project-regis11.html",
@@ -255,10 +256,10 @@ class ContactWizard(SessionWizardView):
         Set extra parameter for step2, which is from clean data of step1.
         """
         initial = self.initial_dict.get(step, {})
-        if step == '3':
-            form_class = self.form_list[step]
-            initial.update({'Sample_Name':Analysis_Type})
-            return initial
+        #if step == '3':
+         #   form_class = self.form_list[step]
+            #initial.update({'Sample_Name':Analysis_Type})
+          #  return initial
         if step == '4':
             form_class = self.form_list[step]
             prev_data = self.storage.get_step_data('1')
@@ -327,48 +328,61 @@ class ContactWizardSG(SessionWizardView):
         yt = Connection(url='https://youtrack.ugent.be', token='perm:cHJjc2l0ZQ==.cHdlYi10b2s=.epNpU5rPRZxq3rYGhAR3tZozc8w0am')
         summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
         Project_ID = "PRC-321"
-        description = "#User Details\nInstitute/Organization: " + analysis[0]['Affiliation'] + "\nAddress: " + analysis[0]['Address'] + "\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_keywords: " + analysis[1]['Project_keywords'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n#Sample information \n" \
-              + "Sample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
-              + "\nSequence_Database_Name:" + analysis[2]['Sequence_database_name']+"\nSequence_database_file:" + str(analysis[2]['Sequence_database_file']) + "\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + analysis[3]['Isotopic_labeling']+ "\nIsotopic labeling details: " + str(analysis[3]['Isotopic_labeling_details']) \
-              + "\nOther information: " #+ str(analysis[3]['Other_information'])
+        if isinstance(analysis[3]['Isotopic_labeling_details'], str):
+          Isotopic_labeling_details = analysis[3]['Isotopic_labeling_details']
+        else:
+          Isotopic_labeling_details = ''
+        #if isinstance(analysis[3]['Other_information'], str):
+        #  Other_information = analysis[3]['Other_information']
+        #else:
+        Other_information = ''
+        description = "#User Details\nInstitute/Organization: " + analysis[0]['Affiliation'] + "\nOther institution" +analysis[0]['Other_institution'] + "\nAddress: " + analysis[0]['Address'] + "\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n#Sample information \n" \
+              #+ "Sample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
+              #+ "\nSequence_Database_Name:" + analysis[2]['Sequence_database_name']+"\nSequence_database_file:" + str(analysis[2]['Sequence_database_file']) + "\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + analysis[3]['Isotopic_labeling']+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: "
+              #+ "\nOther information: " #+ Other_information
         yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
                 description=description)
         # fields and tags (structured annotations)
-        Affiliation_Type = analysis[0]['Affiliation_Type']
-        Affiliation = analysis[0]['Affiliation']
-        if Affiliation_Type=='Academic':
-            if Affiliation == 'VIB':
-                Study_Type = 'VIB'
-            else:
-                Study_Type = 'Academic'
-        else:
-            Study_Type = 'Non-Academic'
-        Analysis_type = analysis[1]['Analysis_type']
-        ats= {'shotgun':'shotgun_analysis',
-    'APMS':'affinity-purification MS (AP-MS)', 
-    'PTMs':'PTM analysis',
-    'Virotrap':'Virotrap',
-    'gelband':'protein gel band analysis',
-    'proteinmass':'protein mass determination',
-    'prm':'PRM',
-    'srm':'SRM',
-    'dia':'DIA',
-    'other':'Other'}
-        for at in Analysis_type:
-            print(ats[at])
-            yt.execute_command(Project_ID, "Analysis_Type " + ats[at])
+        # Affiliation_Type = analysis[0]['Affiliation_Type']
+        #Affiliation = analysis[0]['Affiliation']
+    #     if Affiliation_Type=='Academic':
+    #         if Affiliation == 'VIB':
+    #             Study_Type = 'VIB'
+    #         else:
+    #             Study_Type = 'Academic'
+    #     else:
+    #         Study_Type = 'Non-Academic'
+    #     Analysis_type = analysis[1]['Analysis_type']
+    #     ats= {'shotgun':'shotgun_analysis',
+    # 'APMS':'affinity-purification MS (AP-MS)', 
+    # 'PTMs':'PTM analysis',
+    # 'Virotrap':'Virotrap',
+    # 'gelband':'protein gel band analysis',
+    # 'proteinmass':'protein mass determination',
+    # 'prm':'PRM',
+    # 'srm':'SRM',
+    # 'dia':'DIA',
+    # 'other':'Other'}
+    #     for at in Analysis_type:
+    #         print(ats[at])
+    #         yt.execute_command(Project_ID, "Analysis_Type " + ats[at])
         yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
-        yt.execute_command(Project_ID, "Contact_Email " + analysis[0]['Email'] )
-        yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_Leader']  ))
+        #yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_Leader']  ))
         #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
-        yt.execute_command(Project_ID, "Study_Type " + Study_Type) #+ str(analysis[0]['Affiliation_Type']) )
+        yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
         yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
-        kw1= analysis[1]['Project_keywords'].replace(' ','').split(',')[0]
-        yt.execute_command(Project_ID, "Project_Title "+ kw1)
+
+        yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
         if not analysis[1]['Data_analysis']:
             yt.execute_command(Project_ID, "tag nDA")
-        if analysis[3]['Isotopic_labeling']=='True':
-            yt.execute_command(Project_ID, "tag Isotopic_labelling") # can be left empty and we'll fill in
+        #upload_file = form_list[2].cleaned_data['Sequence_database_file']
+        upload_file = "media/Cumulative2.png"
+        yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
+        #yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
+        ##if not analysis[1]['Data_analysis']:
+        ##    yt.execute_command(Project_ID, "tag nDA")
+        ##if analysis[3]['Isotopic_labeling']=='True':
+        ##    yt.execute_command(Project_ID, "tag Isotopic_labelling") # can be left empty and we'll fill in
         #send_mail(subject, message=message, html_message=html_message, from_email, to_list, fail_silently=False)
         #upload_file = form_list[4].cleaned_data['ED_file']
         #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
@@ -406,10 +420,16 @@ class ContactWizardSG(SessionWizardView):
         initial = self.initial_dict.get(step, {})
         if step=='0':
             form_class=self.form_list[step]
-            Project_ID = self.request.user.profile.Project_ID
+            Project_ID = self.request.user.username
             Email = self.request.user.email
             #Analysis_Type = self.request.user.profile.Main_Analysis_Type
             initial.update({'Project_ID':Project_ID, 'Email':Email})
+            return initial
+        if step=='1':
+            form_class=self.form_list[step]
+            Main_analysis_type = self.request.user.Main_analysis_type
+            #Analysis_Type = self.request.user.profile.Main_Analysis_Type
+            initial.update({'Main_analysis_type':Main_analysis_type})
             return initial
         #if step == '3':
          #   form_class = self.form_list[step]
@@ -420,12 +440,18 @@ class ContactWizardSG(SessionWizardView):
         if step == '4':
             form_class = self.form_list[step]
             #print(dir(self.storage))
+            #prev_data1 = self.storage.get_step_data('0')
+            #print(str(prev_data1))
+            #pid=prev_data1["0-Project_ID"]
+            #print("pid"+pid)
             prev_data2 = self.storage.get_step_data('2')
             #print(str(prev_data2))
             prev_data3 = self.storage.get_step_data('3')
             #print(str(prev_data3))
             prev_data = {**prev_data2, **prev_data3}
-            prev_data["PID"] = self.request.user.profile.Project_ID
+            #print("s"+str(self.request.user.username))
+            prev_data["PID"] = str(self.request.user.username)
+            #print(prev_data["PID"])
             xlsx_data = WriteToExcel(prev_data)
             #response.write(xlsx_data)
             #get_cleaned_data_for_step
@@ -509,15 +535,16 @@ class ContactWizardPTM(SessionWizardView):
             print(ats[at])
            # yt.execute_command(Project_ID, "Analysis_Type " + ats[at])
         yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
-        yt.execute_command(Project_ID, "Contact_Email " + analysis[0]['Email'] )
+        #yt.execute_command(Project_ID, "Contact_Email " + analysis[0]['Email'] )
         yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_Leader']  ))
         #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
         yt.execute_command(Project_ID, "Study_Type " + Study_Type) #+ str(analysis[0]['Affiliation_Type']) )
         yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
-        kw1= analysis[1]['Project_keywords'].replace(' ','').split(',')[0]
-        yt.execute_command(Project_ID, "Project_Title "+ kw1)
+        yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
         if not analysis[1]['Data_analysis']:
             yt.execute_command(Project_ID, "tag nDA")
+        upload_file = form_list[2].cleaned_data['Sequence_database_file']
+        yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
         if analysis[3]['Isotopic_labeling']=='True':
             yt.execute_command(Project_ID, "tag Isotopic_labelling") # can be left empty and we'll fill in
         #     upload_file = form_list[2].cleaned_data['Sequence_Database_File']
@@ -624,35 +651,35 @@ class ContactWizardAPMS(SessionWizardView):
         yt = Connection(url='https://youtrack.ugent.be', token='perm:cHJjc2l0ZQ==.cHdlYi10b2s=.epNpU5rPRZxq3rYGhAR3tZozc8w0am')
         summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
         Project_ID = "PRC-321"
-        description = "#User Details\nInstitute/Organization: " + analysis[0]['Affiliation'] + "\nAddress: " + analysis[0]['Address'] + "\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_keywords: " + analysis[1]['Project_keywords'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n#Sample information \n" \
+        description = "#User Details\nInstitute/Organization: " + analysis[0]['Affiliation'] + "\nAddress: " + analysis[0]['Address'] + "\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n#Sample information \n" \
               + "Sample_Species: "+ analysis[2]['Species'] \
               + "\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] \
               + "\nOther information: " #+ str(analysis[3]['Other_information'])
         yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
                 description=description)
         # fields and tags (structured annotations)
-        Affiliation_Type = analysis[0]['Affiliation_Type']
-        Affiliation = analysis[0]['Affiliation']
-        if Affiliation_Type=='Academic':
-            if Affiliation == 'VIB':
-                Study_Type = 'VIB'
-            else:
-                Study_Type = 'Academic'
-        else:
-            Study_Type = 'Non-Academic'
-        Analysis_type = analysis[1]['Analysis_type']
-        ats= {'shotgun':'shotgun_analysis',
-    'APMS':'affinity-purification MS (AP-MS)', 
-    'PTMs':'PTM analysis',
-    'Virotrap':'Virotrap',
-    'gelband':'protein gel band analysis',
-    'proteinmass':'protein mass determination',
-    'prm':'PRM',
-    'srm':'SRM',
-    'dia':'DIA',
-    'other':'Other'}
-        for at in Analysis_type:
-            print(ats[at])
+        #Affiliation_Type = analysis[0]['Affiliation_Type']
+        # Affiliation = analysis[0]['Affiliation']
+        # if Affiliation_Type=='Academic':
+        #     if Affiliation == 'VIB':
+        #         Study_Type = 'VIB'
+        #     else:
+        #         Study_Type = 'Academic'
+        # else:
+        #     Study_Type = 'Non-Academic'
+    #     Analysis_type = analysis[1]['MainAnalysis_type']
+    #     ats= {'shotgun':'shotgun_analysis',
+    # 'APMS':'affinity-purification MS (AP-MS)', 
+    # 'PTMs':'PTM analysis',
+    # 'Virotrap':'Virotrap',
+    # 'gelband':'protein gel band analysis',
+    # 'proteinmass':'protein mass determination',
+    # 'prm':'PRM',
+    # 'srm':'SRM',
+    # 'dia':'DIA',
+    # 'other':'Other'}
+    #     for at in Analysis_type:
+    #         print(ats[at])
            # yt.execute_command(Project_ID, "Analysis_Type " + ats[at])
         yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
         yt.execute_command(Project_ID, "Contact_Email " + analysis[0]['Email'] )
@@ -660,10 +687,12 @@ class ContactWizardAPMS(SessionWizardView):
         #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
         yt.execute_command(Project_ID, "Study_Type " + Study_Type) #+ str(analysis[0]['Affiliation_Type']) )
         yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
-        kw1= analysis[1]['Project_keywords'].replace(' ','').split(',')[0]
-        yt.execute_command(Project_ID, "Project_Title "+ kw1)
+        #kw1= analysis[1]['Project_keywords'].replace(' ','').split(',')[0]
+        yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
         if not analysis[1]['Data_analysis']:
             yt.execute_command(Project_ID, "tag nDA")
+        upload_file = form_list[2].cleaned_data['Sequence_database_file']
+        yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
         #if analysis[3]['Isotopic_labeling']=='True':
          #   yt.execute_command(Project_ID, "tag Isotopic_labelling") # can be left empty and we'll fill in        # if form_list[2].cleaned_data['Sequence_Database_File']:
         #     upload_file = form_list[2].cleaned_data['Sequence_Database_File']
@@ -725,98 +754,98 @@ class ContactWizardAPMS(SessionWizardView):
     #    return super(ContactWizardGB, self).dispatch(*args, **kwargs)
 
 
-class ContactWizardGB(SessionWizardView):
-    instance=None
-    file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT,'seqdbs'))
-    def get_template_names(self):
-        return [TEMPLATESGB[self.steps.current]]
-    #def process_form_data(form_list):
-     #   form_data = [form.get_cleaned_data for form in form_list] 
-      #  return form_data
-        #logr.debug(form_data[0])['subject']
-        #logr.debug(form_data[1])['sender']
-        #logr.debug(form_data[2])['message']
-    def done(self, form_list,form_dict, **kwargs):
-        #form_list = [CustomerForm, AnalysisForm, Specimen_SGForm]
-        #form_list = [AnalysisForm, Specimen_SGForm, ExperimentForm]
-        #form_list = [AnalysisForm, Specimen_SGForm]
-       ## form_data = process_form_data(form_list)
-        #return form_data
-       ## return render("done.html",{'form_data':form_data})
-       # list of dictionaries of results
+# class ContactWizardGB(SessionWizardView):
+#     instance=None
+#     file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT,'seqdbs'))
+#     def get_template_names(self):
+#         return [TEMPLATESGB[self.steps.current]]
+#     #def process_form_data(form_list):
+#      #   form_data = [form.get_cleaned_data for form in form_list] 
+#       #  return form_data
+#         #logr.debug(form_data[0])['subject']
+#         #logr.debug(form_data[1])['sender']
+#         #logr.debug(form_data[2])['message']
+#     def done(self, form_list,form_dict, **kwargs):
+#         #form_list = [CustomerForm, AnalysisForm, Specimen_SGForm]
+#         #form_list = [AnalysisForm, Specimen_SGForm, ExperimentForm]
+#         #form_list = [AnalysisForm, Specimen_SGForm]
+#        ## form_data = process_form_data(form_list)
+#         #return form_data
+#        ## return render("done.html",{'form_data':form_data})
+#        # list of dictionaries of results
 
-        analysis = [form.cleaned_data for form in form_list]
+#         analysis = [form.cleaned_data for form in form_list]
         
-        #formnames = form_dict.keys()
-        #print(formnames)
-        # file field
-        formtitles = ["User details", "Analysis overview", "Sample information", "Experimental Design information",
-        "Experimental Design sheet"]
-        formdict=dict()
-        for i in range(len(formtitles)):
-            formdict[formtitles[i]]=analysis[i]
-        print('formdict' + str(formdict))
-        #fieldvalues = [value for value in form_dict.values()]
-        #print(fieldvalues)
-        # is an odict structure with attributes fields and  
-        # dict maxi
-        #dictforms = 
+#         #formnames = form_dict.keys()
+#         #print(formnames)
+#         # file field
+#         formtitles = ["User details", "Analysis overview", "Sample information", "Experimental Design information",
+#         "Experimental Design sheet"]
+#         formdict=dict()
+#         for i in range(len(formtitles)):
+#             formdict[formtitles[i]]=analysis[i]
+#         print('formdict' + str(formdict))
+#         #fieldvalues = [value for value in form_dict.values()]
+#         #print(fieldvalues)
+#         # is an odict structure with attributes fields and  
+#         # dict maxi
+#         #dictforms = 
 
-        #form_list=
-        # if form_list[2].cleaned_data['Sequence_Database_File']:
-        #     upload_file = form_list[2].cleaned_data['Sequence_Database_File']
-        # else:
-        #     upload_file = ['No Sequence_Database_File']
+#         #form_list=
+#         # if form_list[2].cleaned_data['Sequence_Database_File']:
+#         #     upload_file = form_list[2].cleaned_data['Sequence_Database_File']
+#         # else:
+#         #     upload_file = ['No Sequence_Database_File']
         
-        #upload_file = form_list[4].cleaned_data['ED_file']
-        #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
-        #yt = connection.Connection(url='https://youtrack.ugent.be', login='prcsite', token='perm:cm9vdA==.Y29sbGE=.FfNqw1Jw4mi7UgOnAkm2Sh9DldgIbt')
-        #yt.execute_command("PRC-321", "No_Samples 27", group="PRC-website")
+#         #upload_file = form_list[4].cleaned_data['ED_file']
+#         #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
+#         #yt = connection.Connection(url='https://youtrack.ugent.be', login='prcsite', token='perm:cm9vdA==.Y29sbGE=.FfNqw1Jw4mi7UgOnAkm2Sh9DldgIbt')
+#         #yt.execute_command("PRC-321", "No_Samples 27", group="PRC-website")
 
-        return render(self.request,'done.html',{
-            'formdict': formdict,
-            #'analysisd':form_dict,
-            #'formnames':formnames,
-            #'formtitles':formtitles,
-            #'fieldnames':fieldvalues,
-            #'upload_file' : upload_file,
-            })
+#         return render(self.request,'done.html',{
+#             'formdict': formdict,
+#             #'analysisd':form_dict,
+#             #'formnames':formnames,
+#             #'formtitles':formtitles,
+#             #'fieldnames':fieldvalues,
+#             #'upload_file' : upload_file,
+#             })
     
-    def get_form_initial(self, step):
-        """
-        Set projet id and email for step1
-        Set extra parameter for step2, which is from clean data of step1.
-        """
-        initial = self.initial_dict.get(step, {})
-        if step=='0':
-            form_class=self.form_list[step]
-            Project_ID = self.request.user.profile.Project_ID
-            Email = self.request.user.email
-            #Analysis_Type = self.request.user.profile.Main_Analysis_Type
-            initial.update({'Project_ID':Project_ID, 'Email':Email})
-            return initial
-        #if step == '3':
-         #   form_class = self.form_list[step]
-            #Issue = self.request.user.profile.Issue + '-S' 
-            #form_class['Generic_Sample_Name'] = self.request.user.profile.Issue 
-            #initial.update({'Generic_Sample_Name':Analysis_Type})
-            return initial
-        if step == '4':
-            form_class = self.form_list[step]
-            #print(dir(self.storage))
-            prev_data2 = self.storage.get_step_data('2')
-            #print(str(prev_data2))
-            prev_data3 = self.storage.get_step_data('3')
-            #print(str(prev_data3))
-            prev_data = {**prev_data2, **prev_data3}
-            prev_data["PID"] = self.request.user.profile.Project_ID
-            xlsx_data = WriteToExcel(prev_data)
-            #response.write(xlsx_data)
-            #get_cleaned_data_for_step
-            #samplename = prev_data.get('Generic_Sample_Name','')
-            #return samplename
-            return self.initial_dict.get(step, prev_data)
-            #return self.initial_dict.get(step, {samplename:'samplename'})
+#     def get_form_initial(self, step):
+#         """
+#         Set projet id and email for step1
+#         Set extra parameter for step2, which is from clean data of step1.
+#         """
+#         initial = self.initial_dict.get(step, {})
+#         if step=='0':
+#             form_class=self.form_list[step]
+#             Project_ID = self.request.user.profile.Project_ID
+#             Email = self.request.user.email
+#             #Analysis_Type = self.request.user.profile.Main_Analysis_Type
+#             initial.update({'Project_ID':Project_ID, 'Email':Email})
+#             return initial
+#         #if step == '3':
+#          #   form_class = self.form_list[step]
+#             #Issue = self.request.user.profile.Issue + '-S' 
+#             #form_class['Generic_Sample_Name'] = self.request.user.profile.Issue 
+#             #initial.update({'Generic_Sample_Name':Analysis_Type})
+#             return initial
+#         if step == '4':
+#             form_class = self.form_list[step]
+#             #print(dir(self.storage))
+#             prev_data2 = self.storage.get_step_data('2')
+#             #print(str(prev_data2))
+#             prev_data3 = self.storage.get_step_data('3')
+#             #print(str(prev_data3))
+#             prev_data = {**prev_data2, **prev_data3}
+#             prev_data["PID"] = self.request.user.profile.Project_ID
+#             xlsx_data = WriteToExcel(prev_data)
+#             #response.write(xlsx_data)
+#             #get_cleaned_data_for_step
+#             #samplename = prev_data.get('Generic_Sample_Name','')
+#             #return samplename
+#             return self.initial_dict.get(step, prev_data)
+#             #return self.initial_dict.get(step, {samplename:'samplename'})
 
 
 # User profile
@@ -852,12 +881,15 @@ class ProjectInfoView(ListView):
     #     print(dir(qs[0]))
     #def get_queryset(self, request, *args, **kwargs):
     def get_queryset(self):
-        self.object=Profile.objects.filter(user=self.request.user.profile.user)
+        self.object=User.objects.filter(username=self.request.user.username)
+        #self.object=self.get_object(queryset=User.objects.filter(user=self.request.user))
+        return
         #return super().get(request,*args, **kwargs)
 
     #def get_object(queryset=None):
         #self.object=self.get_object(queryset=Profile.objects.filter(user=self.request.user.profile.user))
-        return 
+        #self.object=self.get_object(queryset=User.objects.filter(user=self.request.user))
+        #return 
         #Profile.objects.filter(user=self.request.user.profile.user)
     
     #def get_queryset(self):
@@ -871,7 +903,7 @@ class ProjectInfoView(ListView):
         with open("static-dev/PRC_issues_dailyreport2.csv", "r") as csvfile:
             csvfile_reader=csv.DictReader(csvfile)
             for row in csvfile_reader:
-                if row["YouTrack_id"]==self.object[0].Project_ID:
+                if row["YouTrack_id"]==self.object[0].username:
                     context["Project_ID"] = row["YouTrack_id"]
                     context["State"] = row["State"]
                     context["Scheduling_State"] = row["SchedulingState"]

@@ -4,8 +4,11 @@
 from django.db import models
 from django.core.files.storage import FileSystemStorage
 import os
-from django.contrib.auth.models import (AbstractBaseUser,
-	BaseUserManager)
+#from django.contrib.auth.models import (AbstractBaseUser,
+#	BaseUserManager)
+from django.contrib.auth.models import AbstractUser
+
+#from django.contrib.auth.models import (User)
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from multiselectfield import MultiSelectField
@@ -15,196 +18,80 @@ from multiselectfield import MultiSelectField
 
 # ...
 
-class UserManager(BaseUserManager):
-	def get_by_natural_key(self, email):
-		return self.get(email=email)
-	def create_user(self,email,password=None, is_active=True,is_staff=False,is_admin=False):
-		if not email:
-			raise ValueError("You must provide an email address")
-		if not password:
-			raise ValueError("You must provide a password")
-		user_obj = self.model(
-			email=self.normalize_email(email)
-		)
-		user_obj.set_password(password)
-		user_obj.active = is_active
-		user_obj.staff = is_staff
-		user_obj.admin = is_admin
-		user_obj.save(using=self._db)
-		return user_obj
+# class UserManager(BaseUserManager):
+# 	def get_by_natural_key(self, username):
+# 		return self.get(username=username)
+# 	def create_user(self,username,password=None, is_active=True,is_staff=False,is_admin=False):
+# 		if not username:
+# 			raise ValueError("You must provide a username")
+# 		if not password:
+# 			raise ValueError("You must provide a password")
+# 		user_obj = self.model()
+# 		user_obj.set_password(password)
+# 		user_obj.active = is_active
+# 		user_obj.staff = is_staff
+# 		user_obj.admin = is_admin
+# 		user_obj.save(using=self._db)
+# 		return user_obj
 
-	def create_staff_user(self,email,password=None):
-		user_obj = self.create_user(
-			email, password=password,
-			is_staff=True
-		)
-		return user_obj
+# 	def create_staff_user(self,username,password=None):
+# 		user_obj = self.create_user(
+# 			username, password=password,
+# 			is_staff=True
+# 		)
+# 		return user_obj
 
-	def create_superuser(self,email,password=None):
-		user_obj = self.create_user(
-			email, password=password,
-			is_staff=True,
-			is_admin=True
-		)
-		return user_obj
+# 	def create_superuser(self,username,password=None):
+# 		user_obj = self.create_user(
+# 			username, password=password,
+# 			is_staff=True,
+# 			is_admin=True
+# 		)
+# 		return user_obj
 
-
-class User(AbstractBaseUser):
-	email = models.EmailField(unique=True, max_length=120)
-	active = models.BooleanField(default=True)
-	staff = models.BooleanField(default=False)
-	admin = models.BooleanField(default=False)
-	timestamp = models.DateTimeField(auto_now_add=True)
-	USERNAME_FIELD='email'
-	REQUIRED_FIELD=[]
-	objects= UserManager()
-	def __str__(self):
-		return self.email
-	def get_full_name(self):
-		return self.email
-	def get_short_name(self):
-		return self.email
-	def get_username(self):
-		return self.email
-	def get_last_name(self):
-		return self.email
-	def has_perm(self, perm,obj=None):
-		return True
-	def has_module_perms(self, app_label):
-		return True
-	@property
-	def is_staff(self):
-		return self.staff
-	@property
-	def is_admin(self):
-		return self.admin
-
-# class User(AbstractBaseUser):
-# 	email = models.EmailField(unique=True, max_length=120)
-# 	active = models.BooleanField(default=True)
-# 	staff = models.BooleanField(default=False)
-# 	admin = models.BooleanField(default=False)
-# 	timestamp = models.DateTimeField(auto_now_add=True)
-# 	USERNAME_FIELD='email'
-# 	REQUIRED_FIELD=[]
-# 	objects= UserManager()
-# 	def __str__(self):
-# 		return self.email
-# 	def get_full_name(self):
-# 		return self.email
-# 	def get_short_name(self):
-# 		return self.email
-# 	def get_username(self):
-# 		return self.email
-# 	def get_last_name(self):
-# 		return self.email
-# 	def has_perm(self, perm,obj=None):
-# 		return True
-# 	def has_module_perms(self, app_label):
-# 		return True
-# 	@property
-# 	def is_staff(self):
-# 		return self.staff
-# 	@property
-# 	def is_admin(self):
-# 		return self.admin
-
-STUDYTYPES = (
-	('Academic','Academic'), 
-	('Industry','Industry'),
-	)
-
-#  class 1 - form 1
-# ANALYSISTYPES = (
-# 	('shotgun','Shotgun analysis'),
-# 	('APMS','Affinity-Purification MS (AP-MS)'), 
-# 	('PTMs','PTM analysis'),
-# 	('gelband','Protein gel band analysis'),
-# 	('proteinmass','Protein mass determination'),
-# 	('other','Other'),
-# 	)
-
-    # .....
 ANALYSISTYPES = (
-	('shotgun','Shotgun analysis'),
-	('APMS','Affinity-Purification MS (AP-MS)'), 
-	('PTMs','PTM analysis'),
-	('gelband','Protein gel band analysis'),
-	('proteinmass','Protein mass determination'),
-	('prm','PRM'),
-	('srm','SRM'),
-	('dia','DIA'),
-	('other','Other'),
+	('shotgun analysis','shotgun analysis'),
+	('affinity-purification MS (AP-MS)','affinity-purification MS (AP-MS)'), 
+	('PTM analysis','PTM analysis'),('Virotrap','Virotrap'),
+	('protein gel band analysis','protein gel band analysis'),
+	('protein mass determination','protein mass determination'),
+	('PRM','PRM'),
+	('SRM','SRM'),
+	('DIA','DIA'),
+	('other','other'),
 	)
 
 ANALYSISTYPES2= (
-	(1,'Shotgun analysis'),
-	(2,'Affinity-Purification MS (AP-MS)'), 
-	(3,'PTM analysis'),
-	(4,'Protein gel band analysis'),
-	(5,'Protein mass determination'),
-	(6,'PRM'),
-	(7,'SRM'),
-	(8,'DIA'),
-	(9,'Other'),
+	('shotgun analysis','shotgun analysis'),
+	('affinity-purification MS (AP-MS)','affinity-purification MS (AP-MS)'), 
+	('PTM analysis','PTM analysis'),('Virotrap','Virotrap'),
+	('protein gel band analysis','protein gel band analysis'),
+	('protein mass determination','protein mass determination'),
+	('PRM','PRM'),
+	('SRM','SRM'),
+	('DIA','DIA'),
+	('other','other'),
 	)
+# STUDYTYPES = (
+# 	('Academic','Academic'), 
+# 	('Industry','Industry'),
+# 	)
 
-# list of custom fields
 
-class Profile(models.Model):
-	user=models.OneToOneField(User, on_delete=models.CASCADE)
-	Name = models.CharField(max_length=120, null=True, blank=True)
-	Email = models.EmailField(max_length=120, null=True) # pre-filled
-	Group_Leader = models.CharField(max_length=120, null=True, blank=True)
-	Affiliation = models.CharField(max_length=120 ,null=True, blank=True)
-	Affiliation_Type = models.CharField(max_length=50, choices=STUDYTYPES, null=True, blank=True)
-	Address = models.CharField(max_length=300, null=True, blank=True)
-	Project_ID = models.CharField(max_length=200, null=True) # pre-filled displayed on form template on the corner
-	Main_Analysis_Type = models.CharField(max_length=50 , choices=ANALYSISTYPES, null=True)
-	timestamp = models.DateTimeField(auto_now_add=True)
-	def __unicode__(self):
-		return self.Name
-	def __str__(self):
-		return self.Name
-	def getAnalysisType(self):
-		return dict(Profile.ANALYSISTYPES)[self.Main_Analysis_Type]
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender,instance,created, **kwargs):
-	if created:
-		Profile.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender,instance, **kwargs):
-	instance.profile.save()
-
-# class Profile(models.Model):
-# 	user=models.OneToOneField(User, on_delete=models.CASCADE)
-# 	Name = models.CharField(max_length=120, null=True)
-# 	Email = models.EmailField(max_length=120, null=True) # pre-filled
-# 	Group_Leader = models.CharField(max_length=120, null=True)
-# 	Affiliation = models.CharField(max_length=120 ,null=True)
-# 	Affiliation_Type = models.CharField(max_length=50, choices=STUDYTYPES, null=True)
-# 	Address = models.CharField(max_length=300, null=True)
-# 	Project_ID = models.CharField(max_length=200, null=True) # pre-filled displayed on form template on the corner
-# 	Main_Analysis_Type = models.CharField(max_length=50 , choices=ANALYSISTYPES, null=True)
-# 	timestamp = models.DateTimeField(auto_now_add=True)
-# 	def __unicode__(self):
-# 		return self.Name
-# 	def __str__(self):
-# 		return self.Name
-# 	def getAnalysisType(self):
-# 		return dict(Profile.ANALYSISTYPES)[self.Main_Analysis_Type]
-
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender,instance,created, **kwargs):
-# 	if created:
-# 		Profile.objects.create(user=instance)
-
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender,instance, **kwargs):
-# 	instance.profile.save()
-
+AFFILIATIONTYPES= (
+	('UGent-VIB','UGent-VIB'),
+	('UGent-CRIG','UGent-CRIG'),
+	('UGent','UGent'),
+	('KULeuven-VIB','KULeuven-VIB'),
+	('KULeuven','KULeuven'),
+	('UAntwerpen-VIB', 'UAntwerpen-VIB'),
+	('UAntwerpen','UAntwerpen'),
+	('VUB-VIB','VUB-VIB'),
+	('VUB','VUB'),
+	('Uhasselt-VIB','UHasselt-VIB'),
+	('Uhasselt','UHasselt'),
+	('Other','Other'),
+	)
 
 DATAANALYSIS = (
 	(True,'Yes'),
@@ -243,8 +130,168 @@ GBCHOICES = (
 	(False,'estimate about gel band'),
 	)
 
+class User(AbstractUser):
+	# = models.CharField(max_length=50 , choices=ANALYSISTYPES, null=True, blank=True)
+	Main_analysis_type = MultiSelectField(choices=ANALYSISTYPES, null=True, blank=True,max_choices=4) # pre-filled?!
+	#Main_analysis_type2 = MultiSelectField(choices=ANALYSISTYPES2,
+	#								max_choices=4,
+     #                            	max_length=4, blank=True, null=True) # pre-filled?!
+	#USERNAME_FIELD = 'username'
+	#REQUIRED_FIELD=['']
+	#def __str__(self):
+	#	return self.username
+# class User(AbstractBaseUser):
+# 	username = models.CharField(max_length = 12, unique=True)
+# 	email = models.EmailField(max_length=120)
+# 	active = models.BooleanField(default=True)
+# 	staff = models.BooleanField(default=False)
+# 	admin = models.BooleanField(default=False)
+# 	update = models.DateTimeField(auto_now=True)
+# 	timestamp = models.DateTimeField(auto_now_add=True)
+# 	USERNAME_FIELD='username'
+# 	REQUIRED_FIELD=[]
+# 	objects= UserManager()
+# 	def __str__(self):
+# 		return self.username
+# 	def get_full_name(self):
+# 		return self.email
+# 	def get_short_name(self):
+# 		return self.email
+# 	def get_username(self):
+# 		return self.username
+# 	def get_last_name(self):
+# 		return self.email
+# 	def has_perm(self, perm,obj=None):
+# 		return True
+# 	def has_module_perms(self, app_label):
+# 		return True
+# 	@property
+# 	def is_staff(self):
+# 		return self.staff
+# 	@property
+# 	def is_admin(self):
+# 		return self.admin
+# 	@property
+# 	def is_active(self):
+# 		return self.active
+
+# class User(AbstractBaseUser):
+# 	email = models.EmailField(unique=True, max_length=120)
+# 	active = models.BooleanField(default=True)
+# 	staff = models.BooleanField(default=False)
+# 	admin = models.BooleanField(default=False)
+# 	timestamp = models.DateTimeField(auto_now_add=True)
+# 	USERNAME_FIELD='email'
+# 	REQUIRED_FIELD=[]
+# 	objects= UserManager()
+# 	def __str__(self):
+# 		return self.email
+# 	def get_full_name(self):
+# 		return self.email
+# 	def get_short_name(self):
+# 		return self.email
+# 	def get_username(self):
+# 		return self.email
+# 	def get_last_name(self):
+# 		return self.email
+# 	def has_perm(self, perm,obj=None):
+# 		return True
+# 	def has_module_perms(self, app_label):
+# 		return True
+# 	@property
+# 	def is_staff(self):
+# 		return self.staff
+# 	@property
+# 	def is_admin(self):
+# 		return self.admin
+
+
+#  class 1 - form 1
+# ANALYSISTYPES = (
+# 	('shotgun','Shotgun analysis'),
+# 	('APMS','Affinity-Purification MS (AP-MS)'), 
+# 	('PTMs','PTM analysis'),
+# 	('gelband','Protein gel band analysis'),
+# 	('proteinmass','Protein mass determination'),
+# 	('other','Other'),
+# 	)
+
+    # .....
+
+
+# list of custom fields
+#User = get_user_model()
+class Profile(models.Model):
+	#user=models.OneToOneField(User, null=True, blank=True)
+	#Name = models.CharField(max_length=120, null=True, blank=True)
+	#Project_ID = user.get_username()
+	#Email = user.get_full_name() # pre-filled
+	user=models.OneToOneField(User, on_delete=models.CASCADE)
+	Project_ID=models.CharField(max_length = 12, null=True, blank=True)
+	Email=models.EmailField(max_length=120, null=True, blank=True)
+# 	email = models.EmailField(max_length=120)
+	#Main_analysis_type=user.Main_analysis_type
+	Name = models.CharField(max_length=120, null=True)
+	Group_leader = models.CharField(max_length=120, null=True)
+	Affiliation = models.CharField(max_length=50, choices=AFFILIATIONTYPES, null=True)
+	Other_institution = models.CharField(max_length=60, null=True, blank=True)
+	Address = models.CharField(max_length=300, null=True)
+	#Project_ID = models.CharField(max_length=200, null=True) # pre-filled displayed on form template on the corner
+	update = models.DateTimeField(auto_now=True)
+	timestamp = models.DateTimeField(auto_now_add=True)
+	def __unicode__(self):
+		return self.user.username
+	def __str__(self):
+		return self.user.username
+	#def getAnalysisType(self):
+	#	return dict(Profile.ANALYSISTYPES)[self.Main_analysis_type]
+	def getAnalysisType(self):
+		return self.user.Main_analysis_type
+	def getProjectID(self):
+		return self.user.username
+	def getEmail(self):
+		return self.user.email
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender,instance,created, **kwargs):
+	if created:
+		Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender,instance, **kwargs):
+	instance.profile.save()
+
+# class Profile(models.Model):
+# 	user=models.OneToOneField(User, on_delete=models.CASCADE)
+# 	Name = models.CharField(max_length=120, null=True)
+# 	Email = models.EmailField(max_length=120, null=True) # pre-filled
+# 	Group_Leader = models.CharField(max_length=120, null=True)
+# 	Affiliation = models.CharField(max_length=120 ,null=True)
+# 	Affiliation_Type = models.CharField(max_length=50, choices=STUDYTYPES, null=True)
+# 	Address = models.CharField(max_length=300, null=True)
+# 	Project_ID = models.CharField(max_length=200, null=True) # pre-filled displayed on form template on the corner
+# 	Main_Analysis_Type = models.CharField(max_length=50 , choices=ANALYSISTYPES, null=True)
+# 	timestamp = models.DateTimeField(auto_now_add=True)
+# 	def __unicode__(self):
+# 		return self.Name
+# 	def __str__(self):
+# 		return self.Name
+# 	def getAnalysisType(self):
+# 		return dict(Profile.ANALYSISTYPES)[self.Main_analysis_type]
+
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender,instance,created, **kwargs):
+# 	if created:
+# 		Profile.objects.create(user=instance)
+
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender,instance, **kwargs):
+# 	instance.profile.save()
+
 
 class Analysis(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	Project_title = models.CharField(max_length=50)
 	Project_summary = models.CharField(max_length=300)
 	#Project_keywords = models.CharField(max_length=120)
@@ -252,6 +299,7 @@ class Analysis(models.Model):
 	#Analysis_type2 = MultiSelectField(choices=ANALYSISTYPES2,
 	#								max_choices=3,
      #                            	max_length=3, blank=True, null=True) # pre-filled?!
+	Main_analysis_type = MultiSelectField(choices=ANALYSISTYPES, null=True, blank=True,max_choices=4) # pre-filled?!
 	timestamp = models.DateTimeField(auto_now_add=True)
 	#Analysis_type = models.CharField(max_length=50,default=None , choices=ANALYSISTYPES)
 	Data_analysis = models.BooleanField()#choices=DATAANALYSIS)
@@ -260,7 +308,7 @@ class Analysis(models.Model):
 	#def __unicode__(self):
 	#	return self.Name
 	def __unicode__(self):
-		return self.Project_summary
+		return self.Project_title
 
 
 # shotgun Specimen

@@ -19,7 +19,7 @@ def WriteToExcel(arguments_dict):
     # excel styles
     title = workbook.add_format({
         'bold': True,
-        'font_size': 14,
+        'font_size': 12,
         'align': 'center',
         'valign': 'vcenter'
     })
@@ -35,6 +35,15 @@ def WriteToExcel(arguments_dict):
         'valign': 'top',
         'text_wrap': True,
         'border': 1
+    })
+    cellneditleft = workbook.add_format({
+        'align': 'left',
+        'valign': 'top',
+        'text_wrap': True,
+        'border': 1,
+        #'italic':True,
+        #'font_color':"FF6600"
+        #'bg_color':"cee7f4"
     })
     cellnedit = workbook.add_format({
         'align': 'center',
@@ -61,7 +70,7 @@ def WriteToExcel(arguments_dict):
     })
 
     # write title
-    title_text = "Experimental Design"# "+arguments_dict["PID"]
+    title_text = "Experimental design and sample details"# "+arguments_dict["PID"]
     print(title_text)
     
     #title_text = u"{0} {1}".format(ugettext("Experiment_ID"), user.profile.issue)
@@ -76,7 +85,8 @@ def WriteToExcel(arguments_dict):
         worksheet_s.write(3, 2, ugettext("Replicate"), header) # pre filled 123 123 if total/3 = 0 else,jjjjj
         worksheet_s.write(3, 3, ugettext("Sample type delivered"), header) #add Sample type value and leave free for editing
         worksheet_s.write(3, 4, ugettext("Buffer composition"), header) #add Buffer composition value and leave free for editing (space dows not matter)
-        worksheet_s.write(3, 5, ugettext("Protein mass (or estimation of) (μg)"), header) #format digits (2 decimals) leave for edit
+        worksheet_s.write(3, 5, ugettext("Sample amount (μg of protein) / # of cells *"), header) #format digits (2 decimals) leave for edit
+        #worksheet_s.write(3, 5, ugettext("Sample amount (protein mass (or estimation of) (μg)"), header) #format digits (2 decimals) leave for edit
         worksheet_s.write(3, 6, ugettext("Volume (if applicable) (μl)"), header) #  #format digits (2 decimals) leave for edit
         #worksheet_s.write(3, 8, ugettext("Other relevant information"), header) # leave free
 
@@ -166,8 +176,10 @@ def WriteToExcel(arguments_dict):
             # worksheet_s.set_row(row, 15 * observations_rows)
             #idx+=1
         idx += 7
-        span = 'B'+str(idx)+':C'+str(idx)
-        worksheet_s.merge_range(span,"- please edit and review the fields in orange", celledit)
+        span = 'B'+str(idx)+':D'+str(idx)
+        span2 = 'B'+str(idx+1)+':D'+str(idx+1)
+        worksheet_s.merge_range(span,"- please edit and review the fields in orange", cellneditleft)
+        worksheet_s.merge_range(span2,"- *according to if the sample is protein extract or cell pellet, respectively", celledit)
          
         # change column widths
         worksheet_s.set_column('A:A', 14.3)  # Sample Name
@@ -176,7 +188,7 @@ def WriteToExcel(arguments_dict):
         worksheet_s.set_column('C:C', 9.5)  # Replicate
         worksheet_s.set_column('D:D', 30.0)  # Sample type delivered
         worksheet_s.set_column('E:E', 16.0)  # Buffer composition
-        worksheet_s.set_column('F:F', 30.0)  # Protein mass
+        worksheet_s.set_column('F:F', 40.0)  # Protein mass
         worksheet_s.set_column('G:G', 25.0)  # Volume
         #worksheet_s.set_column('I:I', 25.0)  # Other relevant info
         #worksheet_s.set_column('J:J', 25.0)  # Observations column
@@ -431,8 +443,10 @@ def WriteToExcel(arguments_dict):
             # worksheet_s.set_row(row, 15 * observations_rows)
             #idx+=1
         idx += 7
-        span = 'B'+str(idx)+':C'+str(idx)
-        worksheet_s.merge_range(span,"- please edit and review the fields in orange", celledit)
+        span = 'B'+str(idx)+':D'+str(idx)
+        span2 = 'B'+str(idx+1)+':D'+str(idx+1)
+        worksheet_s.merge_range(span,"- please edit and review the fields in orange", cellneditleft)
+        worksheet_s.merge_range(span2,"- *according to if the sample is protein extract or cell pellet, respectively", celledit)
         # change column widths
         worksheet_s.set_column('A:A', 14.3)  # Sample Name
         worksheet_s.set_column('B:B', 20.8)  # Experimental Condition
@@ -440,7 +454,7 @@ def WriteToExcel(arguments_dict):
         worksheet_s.set_column('D:D', 9.5)  # Replicate
         worksheet_s.set_column('E:E', 30.0)  # Sample type delivered
         worksheet_s.set_column('F:F', 16.0)  # Buffer composition
-        worksheet_s.set_column('G:G', 30.0)  # Protein mass
+        worksheet_s.set_column('G:G', 40.0)  # Protein mass
         worksheet_s.set_column('H:H', 25.0)  # Volume
 
     # close workbook
