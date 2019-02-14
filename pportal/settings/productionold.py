@@ -11,29 +11,22 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-from django.core.exceptions import ImproperlyConfigured
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-#BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'lsj-n+j506!m%=7=$mf@kzp-r6iaeam&f96^*40t&^qums@2d^'
+SECRET_KEY = 'f=zue$c!65h^ycp0byej*!rw-6%xa#3!+*7!yv&(f1ebqzgjpa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
+ALLOWED_HOSTS = []
 
-
-#DEFAULT_FROM_EMAIL = 'noreply VIB proteomics<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
-#DEFAULT_FROM_EMAIL = 'teresa.maia@vib-ugent.be' #'noreply-prc@vib-ugent.be'
-#ADMINS = (
-#    ('T Maia', 'teresa.maia@vib-ugent.be'))
-
-ALLOWED_HOSTS = ['vibproteomicscore.be', 'https://prcsite.ugent.be']
 
 # Application definition
 
@@ -48,16 +41,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'crispy_forms',
     'formtools',
-    'multiselectfield',
 ]
-
-
-#AUTH_PROFILE_MODEL = 'requests.User'
-AUTH_USER_MODEL = 'requests.User'
-#AUTH_USER_MODEL = 'requests.User' # changes build in user model to this one
-LOGIN_URL='login'
-LOGIN_REDIRECT_URL='home'
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,15 +58,12 @@ ROOT_URLCONF = 'pportal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),
-        ],
-
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -111,9 +92,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    # },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
@@ -138,67 +119,32 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-#from .acessorio import * 
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_ROOT = [os.path.join(BASE_DIR, "static"),
-]
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),
-]
-
-#os.path.join(os.path.join(os.path.dirname(BASE_DIR), "pportal3"),"templates")]
+STATIC_ROOT = "/var/www/example.com/static/"
+# run python manage.py collectstatic
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media").replace('\\','/')
-MEDIA_URL = "/media/"
+
+# vibmail.ugent.be settings
+EMAIL_HOST = 'vibmail.ugent.be'
+EMAIL_HOST_USER = 'noreply-prc@vib-ugent.be'
+EMAIL_HOST_PASSWORD = 'n0'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = False
+
+DEFAULT_FROM_EMAIL = 'noreply-prc@vib-ugent.be' #'noreply-prc@vib-ugent.be'
+ADMINS = (
+    (''))
 
 # gmail settings
-# # vibmail.ugent.be settings
-# EMAIL_HOST = 'vibmail.ugent.be'
-# EMAIL_HOST_USER = 'teresa.maia@vib-ugent.be'
-# EMAIL_HOST_PASSWORD = 'Pin.tal1'
-# EMAIL_PORT = 25
-# EMAIL_USE_TLS = False
-
-
-# #DEFAULT_FROM_EMAIL = 'noreply VIB proteomics<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
-# DEFAULT_FROM_EMAIL = 'teresa.maia@vib-ugent.be' #'noreply-prc@vib-ugent.be'
-# ADMINS = (
-#     ('T Maia', 'teresa.maia@vib-ugent.be'))
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-#DEFAULT_FROM_EMAIL = 'noreply VIB proteomics<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
-#DEFAULT_FROM_EMAIL = 'mtpmmaia@gmail.com' #'noreply-prc@vib-ugent.be'
-
-#ADMINS = (
-#    ('Te M', 'mtpmmaia@gmail.com'))
-# gmail settings
-
-def get_env_variable(name):
-    """Gets the environment variable or throuws ImproperlyConfigured exceptions
-    :rtype: object
-    """
-    try:
-        return os.environ[name]
-    except KeyError:
-        raise ImproperlyConfigured(
-            'Environment variable "%s" not found.' % name)
-
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'mtpmmaia@gmail.com'
-
-#try:
-#    import acessorio
-#except ImportError:
-#    EMAIL_HOST_PASSWORD = 'mtppmaia'
-#else:
-EMAIL_HOST_PASSWORD = get_env_variable('EM_PW')
+EMAIL_HOST_PASSWORD = 'Petchaua1'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # during development only
-DEFAULT_FROM_EMAIL = 'mtpmmaia@gmail.com>' #'noreply-prc@vib-ugent.be'
+
+DEFAULT_FROM_EMAIL = 'noreply VIB proteomics<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
 ADMINS = (
     ('Te M', 'mtpmmaia@gmail.com'))
-MANAGERS = ADMINS

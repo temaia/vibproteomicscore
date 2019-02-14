@@ -328,18 +328,31 @@ class ContactWizardSG(SessionWizardView):
         yt = Connection(url='https://youtrack.ugent.be', token='perm:cHJjc2l0ZQ==.cHdlYi10b2s=.epNpU5rPRZxq3rYGhAR3tZozc8w0am')
         summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
         Project_ID = "PRC-321"
-        if isinstance(analysis[3]['Isotopic_labeling_details'], str):
+        #try:
+        if analysis[0]['Other_institution'] is not None:
+          Other_institution = analysis[0]['Other_institution']
+        else:
+          Other_institution = ''
+        if analysis[2]['Sequence_database_name'] is not None:
+          Sequence_database_name = analysis[2]['Sequence_database_name']
+        else:
+          Sequence_database_name = ''
+        if analysis[2]['Sequence_database_file'] is not None:
+          Sequence_database_file= analysis[2]['Sequence_database_file']
+        else:
+          Sequence_database_file = ''
+        if analysis[3]['Isotopic_labeling_details'] is not None:
           Isotopic_labeling_details = analysis[3]['Isotopic_labeling_details']
         else:
           Isotopic_labeling_details = ''
-        #if isinstance(analysis[3]['Other_information'], str):
+        #if analysis[3]['Other_information'] is not None:
         #  Other_information = analysis[3]['Other_information']
         #else:
-        Other_information = ''
-        description = "#User Details\nInstitute/Organization: " + analysis[0]['Affiliation'] + "\nOther institution" +analysis[0]['Other_institution'] + "\nAddress: " + analysis[0]['Address'] + "\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n#Sample information \n" \
-              #+ "Sample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
-              #+ "\nSequence_Database_Name:" + analysis[2]['Sequence_database_name']+"\nSequence_database_file:" + str(analysis[2]['Sequence_database_file']) + "\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + analysis[3]['Isotopic_labeling']+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: "
-              #+ "\nOther information: " #+ Other_information
+        #  Other_information = ''
+        description = "#User Details\n\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n#Sample information \n" \
+              + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
+              + "\nSequence_Database_Name:" + Sequence_database_name+"\nSequence_database_file:" + str(Sequence_database_file) + "\n\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
+              + "\nOther information: " #+ Other_information
         yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
                 description=description)
         # fields and tags (structured annotations)
