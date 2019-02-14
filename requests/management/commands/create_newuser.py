@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.template.loader import get_template
 
-def username.present(username):
+def username_present(username):
 	if User.objects.filter(username=username).exists():
 		return True
 
@@ -20,20 +20,20 @@ class Command(BaseCommand):
 
 	def handle(self, *args, **kwargs):
 		#usersfile = kwargs['usersfile']
-		usersfile="/home/pportal/dev2Sep18/myenv3/pportal3/static-dev/PRC_issues_creation_hourly.csv"
+		usersfile="/home/pportal/dev2Sep18/prcsite/vibproteomicscore/static-dev/PRC_issues_creation_hourly.csv"
 		with open(usersfile, "r") as csvfile:
 			userreader = csv.reader(csvfile, delimiter=',')
 			for usor in userreader:
-				if not username.present(usor[0]):
+				if not username_present(usor[0]):
 					print(usor[0])
 					password = User.objects.make_random_password(length=5, allowed_chars="ABCDEFGHIJKLMNOPQRSTUVWXZ0123456789")
-					User.objects.create_user(username="PRC-328",email=usor[1], password = password, Main_analysis_type  = usor[2])
+					User.objects.create_user(username=usor[0],email=usor[1], password = password, Main_analysis_type  = usor[2])
 					#User.objects.create_user(username=usor[0],email=usor[1], password = password, Main_analysis_type  = usor[2])
-					user = User.objects.filter(username="PRC-328").get()
+					user = User.objects.filter(username=usor[0]).get()
 					#user = User.objects.filter(email=usor[1]).get()
-					template1 = '/home/pportal/dev2Sep18/myenv3/pportal3/templates/InvitationForRegistrationEmail2.txt'
-					template2 = '/home/pportal/dev2Sep18/myenv3/pportal3/templates/InvitationForRegistrationEmail2.html'
-					subject = '[VIB Proteomics Core, New Project] '+usor[1]
+					template1 = '/home/pportal/dev2Sep18/prcsite/vibproteomicscore/templates/InvitationForRegistrationEmail2.txt'
+					template2 = '/home/pportal/dev2Sep18/prcsite/vibproteomicscore/templates/InvitationForRegistrationEmail2.html'
+					subject = "[VIB Proteomics Core New Project] " + usor[0]
 					message = render_to_string(template1, {'user': user})
 					html_message = render_to_string(template2, {'user': user,'pw': password})
 					from_email=settings.EMAIL_HOST_USER

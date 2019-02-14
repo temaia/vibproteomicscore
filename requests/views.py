@@ -25,7 +25,7 @@ from django.utils.http import is_safe_url
 ###from django.contrib.auth.forms import AuthenticationForm
 ###from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login
 
-from django.views.generic import TemplateView, CreateView, FormView, ListView
+from django.views.generic import TemplateView, CreateView, FormView, ListView,RedirectView
 from django.views.generic.detail import SingleObjectMixin 
 from django.views.generic.base import TemplateResponseMixin
 from django.contrib.auth import authenticate, login, logout
@@ -43,8 +43,7 @@ from django.forms import formset_factory
 #from .forms import CustomerForm, AnalysisForm,Specimen_SGForm
 #from .forms import CustomerForm, AnalysisForm,Specimen_SGForm,Specimen_APMSForm,Specimen_PTMForm, Specimen_GBForm,LoginForm, ExperimentForm, EDForm
 from .forms import AnalysisForm,LoginForm, CustomerForm
-from .forms import Specimen_APMSForm, Specimen_SGForm,Specimen_PTMForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm, EDForm
-from django.views.generic.base import RedirectView
+from .forms import Specimen_APMSForm, Specimen_SGForm,Specimen_PTMForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm, EDForm,TOUForm
 from formtools.wizard.views import SessionWizardView
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -178,26 +177,30 @@ FORMS = [("0", CustomerForm),
             ("1", CustomerForm),
          ("2", CustomerForm),
          ("3",CustomerForm),#,
-         ("4", EDForm)]
+          ("4",CustomerForm),#,
+         ("5", TOUForm)]
 
 TEMPLATES = {"0": "project-regis0.html",
              "1": "project-regis0.html",
              "2": "project-regis0.html",
              "3": "project-regis0.html",
-             "4": "project-regis0.html"}#,
+             "4": "project-regis0.html",
+             "5": "project-regis0.html"}#,
              #"4": "project-regis0.html"}
 
 FORMSSG= [("0", CustomerForm),
             ("1", AnalysisForm),
          ("2", Specimen_SGForm),
          ("3",ExperimentForm),
-         ("4", EDForm)]
+         ("4", EDForm),
+         ("5", TOUForm)]
 
 TEMPLATESSG = {"0": "project-regis111.html",
              "1": "project-regis222.html",
              "2": "project-regis333.html",
              "3": "project-regis444.html",
-             "4": "project-regis555.html"}
+             "4": "project-regis555.html",
+             "5": "project-regis666.html"}
 
 # TEMPLATESSG = {"0": "project-regis11.html",
 #               "1": "project-regis22.html",
@@ -209,25 +212,29 @@ FORMSPTM = [("0", CustomerForm),
             ("1", AnalysisForm),
          ("2", Specimen_PTMForm),
          ("3",ExperimentPTMForm),
-         ("4", EDForm)]
+         ("4", EDForm),
+          ("5", TOUForm)]
 
 TEMPLATESPTM = {"0": "project-regis111.html",
              "1": "project-regis222.html",
              "2": "project-regis333PTM.html",
              "3": "project-regis44PTM.html",
-             "4": "project-regis555.html"}
+             "4": "project-regis555.html",
+             "5": "project-regis666.html"}
 
 FORMSAPMS = [("0", CustomerForm),
             ("1", AnalysisForm),
          ("2", Specimen_APMSForm),
          ("3",ExperimentAPMSForm),
-         ("4", EDForm)]
+         ("4", EDForm),
+          ("5", TOUForm)]
 
 TEMPLATESAPMS = {"0": "project-regis111.html",
              "1": "project-regis222.html",
              "2": "project-regis333APMS.html",
              "3": "project-regis44APMS.html",
-             "4": "project-regis555.html"}
+             "4": "project-regis555.html",
+             "5": "project-regis666.html"}
 
           
 
@@ -349,10 +356,10 @@ class ContactWizardSG(SessionWizardView):
         #  Other_information = analysis[3]['Other_information']
         #else:
         #  Other_information = ''
-        description = "#User Details\n\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n#Sample information \n" \
+        description = "#User Details\n\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n#Sample information" \
               + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
               + "\nSequence_Database_Name:" + Sequence_database_name+"\nSequence_database_file:" + str(Sequence_database_file) + "\n\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
-              + "\nOther information: " #+ Other_information
+              + " " #+ Other_information
         yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
                 description=description)
         # fields and tags (structured annotations)
@@ -389,8 +396,8 @@ class ContactWizardSG(SessionWizardView):
         if not analysis[1]['Data_analysis']:
             yt.execute_command(Project_ID, "tag nDA")
         #upload_file = form_list[2].cleaned_data['Sequence_database_file']
-        upload_file = "media/Cumulative2.png"
-        yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
+        #upload_file = "media/Cumulative2.png"
+        #yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
         #yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
         ##if not analysis[1]['Data_analysis']:
         ##    yt.execute_command(Project_ID, "tag nDA")

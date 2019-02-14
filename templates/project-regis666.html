@@ -1,0 +1,101 @@
+
+{% extends "base.html" %}
+{% load i18n %}
+{% load requests_extras %}
+
+
+{% block head_title %}Project Registration || {{ wizard.form.media }}{{ block.super }}{% endblock head_title %}
+
+
+{# Load the tag library #}
+
+
+{# Display a form #}
+
+
+{% block content2 %}
+
+  <div class='container'>
+<div class="row">
+  <h2 class="dtitle">Terms of Use</h2>  </br>
+ <div class="form-row col-12 mb-0">
+    </br>
+</br>
+<ol>
+  <li><span class="fond-weight-bold">Delivery terms</span>
+    </br>
+    <ul>
+    <li class="unstyled text-justify">
+Adequate conditions and scheduling for shipment of samples has to be agreed with a contact person from the VIB Proteomics Core. The VIB Proteomics Core cannot be held liable for sample damage or sample loss due to delayed delivery. 
+    2. Sample storage 
+  </li></ul>
+  </br>
+  <li><span class="fond-weight-bold">Sample storage</span>
+    </br>
+    <ul>
+    <li class="unstyled text-justify">
+    Your samples and any remaining material will be stored for one year, after which all materials will be discarded without prior notification. In case an extension of this period is required, the facility manager should be informed by email well in advance. If you would like to recover any leftover samples, please arrange shipment or pickup with the facility manager well in advance. Any costs associated with returning leftover samples will be charged to the user.
+    </li>
+    </ul>
+      </br>
+  </li>
+    <li><span class="fond-weight-bold">Data protection</span>
+    </br>
+    <ul>
+    <li class="unstyled text-justify">
+    Raw MS data and associated files are stored and backed up for at least five years on the servers of the VIB Proteomics Core. The user can contact the facility manager in case access to these data is required. Data transfer over a secured file transfer system can be arranged upon request.
+    </li>
+    </ul>
+    </br>
+  </li>
+    <li><span class="fond-weight-bold">Service payment</span>
+    </br>
+    <ul>
+    <li class="unstyled text-justify">
+    By submitting samples, the user accepts to pay any service fees associated with the analysis of the samples. Information about the service costs can be obtained from the core facility manager.
+    </li>
+    </ul>
+      </br>
+  </li>
+    <li><span class="fond-weight-bold">Acknowledgements</span>
+    </br>
+    <ul>
+    <li class="unstyled text-justify">
+    By submitting samples, the user agrees to acknowledge the Proteomics Core in any publication using data generated and/or analyzed at the VIB Proteomics Core.
+    </li>
+    </ul>
+  </li>
+</ol> 
+<form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+
+{% load crispy_forms_tags %}
+{{ wizard.management_form }}
+
+    <div class="form-row col-12 mb-0">
+    <div class="form-group col-12 mb-0">
+      {{ form.TermsOfUse|as_crispy_field }}
+     </div>
+      </div>
+
+
+<br/>
+<div class="form-row col-12 center">
+{% if wizard.steps.prev %}
+<button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
+<button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
+{% endif %}
+<input type="submit" name="submit" class="btn btn-sm" value="{% trans "submit" %}" />
+</div>
+<div class="form-row col-12 center">
+<p><i><font size="2.8">Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </font></i></p>
+</div>
+</form>
+  </div>
+   </div>
+     </div>
+  
+      
+{% endblock %}
+
+
+

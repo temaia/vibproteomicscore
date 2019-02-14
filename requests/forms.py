@@ -127,7 +127,7 @@ class AnalysisForm(forms.ModelForm):
 	#self.fields['Main_analysis_type'].queryset = {choice:user.Main_analysis_type.choices[choice] for choice in user.Main_analysis_type.choices}
 	#choices = user.Main_analysis_type.choices
 	#Main_analysis_type = forms.ModelChoiceField(queryset=None)
-	Main_analysis_type = forms.CharField()
+	#Main_analysis_type = forms.CharField()
 
 	class Meta:
 		model = Analysis
@@ -345,33 +345,13 @@ from django.forms.widgets import HiddenInput
 
 
 class EDForm(forms.Form):
-	#town = forms
-    #queryset=Town.objects.all(),
-    #widget=forms.Select(attrs={'class': 'form-control'}))
-	# file to download
-	# it should have content from form1 and form2
-	###input dont know
-    # file to upload with experimental design final version
-    #DownloadButton = forms.FileField(widget=HiddenInput())
-    #DownloadButton = forms.CharField()
-    # Experimental Design file
-   
     EDfile = forms.FileField(label="Please upload the experimental design file.")
-    TermsOfUse = forms.BooleanField(error_messages={'required': 'You must agree with the Terms of Use'},label=mark_safe('I have read and agree with the <a href="http://127.0.0.1:8000/termsofuse" target="_blank">Terms of Use</a> of the VIB Proteomics Core.'))
-    #def clean(self):
-    #	data = self.cleaned_data()
-    #	TermsOfUse = self.cleaned_data.get('TermsOfUse')
-    #	print(TermsOfUse is False)
-    #	if TermsOfUse==False:
-    #		raise forms.ValidationError("You have to agree with the Terms of Use of the VIB Proteomics Core")
-    # def __init__(self, *args, **kwargs):
-    #      super(EDForm,self).__init__(*args, **kwargs)
-    #      self.helper = FormHelper()
-    #      self.helper.form_method = "post"
-    #      self.DownloadButton = Layout(Field('EDfile',type = 'hidden'))
-    #      self.helper.add_input(Submit('submit', 'Upload Experimental Design file', css_class='btn-success'))
-    
+   
 
+class TOUForm(forms.Form):
+	TermsOfUse = forms.BooleanField(error_messages={'required': 'You must agree with the Terms of Use'},label=mark_safe('I have read and agree with the <a href="http://127.0.0.1:8000/termsofuse" target="_blank">Terms of Use</a> of the VIB Proteomics Core.'))
+
+   
 # # shotgun Specimen
 # class Specimen_SG(models.Model):
 	# Species = models.CharField(max_length=120)
