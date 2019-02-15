@@ -349,7 +349,8 @@ class EDForm(forms.Form):
    
 
 class TOUForm(forms.Form):
-	TermsOfUse = forms.BooleanField(error_messages={'required': 'You must agree with the Terms of Use'},label=mark_safe('I have read and agree with the <a href="http://127.0.0.1:8000/termsofuse" target="_blank">Terms of Use</a> of the VIB Proteomics Core.'))
+	TermsOfUse = forms.BooleanField(error_messages={'required': 'You must agree with the Terms of Use'},label=mark_safe('I have read and agree with the Terms of Use of the VIB Proteomics Core.'))
+	#TermsOfUse = forms.BooleanField(error_messages={'required': 'You must agree with the Terms of Use'},label=mark_safe('I have read and agree with the <a href="http://127.0.0.1:8000/termsofuse" target="_blank">Terms of Use</a> of the VIB Proteomics Core.'))
 
    
 # # shotgun Specimen

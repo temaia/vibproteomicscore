@@ -19,13 +19,14 @@
 <div class="row">
   <h2 class="dtitle">Experimental design and sample details</h2>  </br>
  <div class="form-row col-12 mb-0">
+    <div class="col-12 mb-0">
     </br>
-        <p>Below you can find a file template with your experimental design and sample details, including pre-assigned names for your samples.</p>
-        <p>Please download this file, confirm the information entered, complete the sample amount information and submit the finalized version.</p>
+        <p>Please find below a file template with your experimental design and sample details, including pre-assigned sample names.</p>
+        <p>We kindly ask you to confirm the information entered, complete the sample amount information and submit the finalized version.</p>
       </div></div>
-<div class="form-row col-8 mb-0">
-    <div class = "form-group col-6">
-    <a href= "{{ user.username|addstr }}" download>Experimental design template</a>
+<div class="form-row col-10 mb-0">
+    <div class = "form-group col-10 mb-0">
+    <a href= "{{ user.username|addstr }}" download>Experimental design and Sample details template</a>
    </div></div>
 
 <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
@@ -33,8 +34,8 @@
 {% load crispy_forms_tags %}
 {{ wizard.management_form }}
 
-    <div class="form-row col-9 mb-0">
-    <div class="form-group col-7 mb-0">
+    <div class="form-row col-10 mb-0">
+    <div class="form-group col-10 mb-0">
        {{ form.EDfile|as_crispy_field }}
      </div>
       </div>
@@ -45,7 +46,7 @@
 <button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
 <button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
 {% endif %}
-<input type="submit" name="submit" class="btn btn-sm" value="{% trans "submit" %}" />
+<input type="submit" name="submit" class="btn btn-sm" value="{% trans "next step" %}" />
 </div>
 <div class="form-row col-12 center">
 <p><i><font size="2.8">Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </font></i></p>

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from utils import acessorio
 from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -21,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'lsj-n+j506!m%=7=$mf@kzp-r6iaeam&f96^*40t&^qums@2d^'
+SECRET_KEY = SK
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -145,36 +146,17 @@ STATIC_ROOT = [os.path.join(BASE_DIR, "static"),
 ]
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static-dev"),
 ]
+
+STATIC_URL = '/static/'
 
 #os.path.join(os.path.join(os.path.dirname(BASE_DIR), "pportal3"),"templates")]
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media").replace('\\','/')
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")#.replace('\\','/')
 MEDIA_URL = "/media/"
 
-# gmail settings
-# # vibmail.ugent.be settings
-# EMAIL_HOST = 'vibmail.ugent.be'
-# EMAIL_HOST_USER = 'teresa.maia@vib-ugent.be'
-# EMAIL_HOST_PASSWORD = 'Pin.tal1'
-# EMAIL_PORT = 25
-# EMAIL_USE_TLS = False
-
-
-# #DEFAULT_FROM_EMAIL = 'noreply VIB proteomics<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
-# DEFAULT_FROM_EMAIL = 'teresa.maia@vib-ugent.be' #'noreply-prc@vib-ugent.be'
-# ADMINS = (
-#     ('T Maia', 'teresa.maia@vib-ugent.be'))
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-#DEFAULT_FROM_EMAIL = 'noreply VIB proteomics<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
-#DEFAULT_FROM_EMAIL = 'mtpmmaia@gmail.com' #'noreply-prc@vib-ugent.be'
-
-#ADMINS = (
-#    ('Te M', 'mtpmmaia@gmail.com'))
-# gmail settings
 
 def get_env_variable(name):
     """Gets the environment variable or throuws ImproperlyConfigured exceptions
@@ -186,19 +168,27 @@ def get_env_variable(name):
         raise ImproperlyConfigured(
             'Environment variable "%s" not found.' % name)
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'mtpmmaia@gmail.com'
+# vibmail.ugent.be settings
+EMAIL_HOST = 'vibmail.ugent.be'
+DEFAULT_FROM_EMAIL = 'noreply-vib proteomics core<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = False
+
+#EMAIL_HOST_USER = 'noreply-prc@vib-ugent.be'
+#EMAIL_HOST_PASSWORD = get_env_variable('EM_PW')
+
+# DEFAULT_FROM_EMAIL = 'teresa.maia@vib-ugent.be' #'noreply-prc@vib-ugent.be'
+ADMINS = ('T Maia', 'teresa.maia@vib-ugent.be'
+     ('S Dufour', 'sara.dufour@vib-ugent.be'))
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_HOST_USER = 'mtpmmaia@gmail.com'
 
 #try:
 #    import acessorio
 #except ImportError:
 #    EMAIL_HOST_PASSWORD = 'mtppmaia'
 #else:
-EMAIL_HOST_PASSWORD = get_env_variable('EM_PW')
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # during development only
-DEFAULT_FROM_EMAIL = 'mtpmmaia@gmail.com>' #'noreply-prc@vib-ugent.be'
-ADMINS = (
-    ('Te M', 'mtpmmaia@gmail.com'))
-MANAGERS = ADMINS

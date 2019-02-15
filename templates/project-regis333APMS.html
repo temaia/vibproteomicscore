@@ -23,21 +23,38 @@
 {% load crispy_forms_tags %}
 {{ wizard.management_form }}
        <div class="form-row col-10 mb-0 ">
-    <div class="form-group col-7 mb-0">
-       {{ form.Bait_Molecule|as_crispy_field }}
+<div class="form-group col-7 mb-0">
+    <div id="div_id_2-Bait_Molecule" class="form-group">
+            <label for="id_2-Bait_Molecule_0" class="col-form-label  requiredField">
+                Bait molecule is a protein?<span class="asteriskField">*</span>
+            </label>
+<div class="">
+      <div class="form-check">
+        <label for="id_id_2-Bait_Molecule_0_1" class="form-check-label">
+            <input type="radio" class="form-check-input" name="2-Bait_Molecule" id="id_id_2-Bait_Molecule_0_1" onchange="LabelCheck(this);" value="True">
+            Yes
+        </label>
+      </div>
+    
+      <div class="form-check">
+        <label for="id_id_2-Bait_Molecule_0_2" class="form-check-label">
+            <input type="radio" class="form-check-input" name="2-Bait_Molecule" id="id_id_2-Bait_Molecule_0_2" onchange="LabelCheck(this);" value="False">
+            No
+        </label>
+      </div>
+</div>    
+    </div>
      </div>
             </div>
-    <div class="form-row col-10 mb-0 formsub">
+    <div class="form-row col-10 mb-0 formsub" id="SDBCheckT" style="display:none;">
     <div class="form-group col-8 mb-0">
        {{ form.Bait_Molecule_Protein|as_crispy_field }}
      </div>
-            </div>
-    <div class="form-row col-10 mb-0 formsub">
     <div class="form-group col-8 mb-0">
        {{ form.Bait_sequence_file|as_crispy_field }}
      </div>
             </div>
-    <div class="form-row col-10 mb-0 formsub">
+    <div class="form-row col-10 mb-0 formsub" id="SDBCheckF" style="display:none;">
     <div class="form-group col-8 mb-0">
        {{ form.Bait_Molecule_other|as_crispy_field }}
      </div>
@@ -104,4 +121,20 @@
 {% endblock %}
 
 
+{% block extra_js %}
+<script>
 
+function LabelCheck(nameLabel)
+{
+    console.log(nameLabel);
+    if(nameLabel.value=="True"){
+          document.getElementById("SDBCheckT").style.display = "block";
+          document.getElementById("SDBCheckF").style.display = "none";
+        }
+    if(nameLabel.value=="False"){
+          document.getElementById("SDBCheckT").style.display = "none";
+          document.getElementById("SDBCheckF").style.display = "block";
+        }
+}
+</script>
+{% endblock %}
