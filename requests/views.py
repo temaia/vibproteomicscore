@@ -5,7 +5,7 @@
 from django.urls import reverse
 from django.conf import settings
 from youtrack.connection import Connection
-from utils import acessorio
+from .acessorio import *
 #from django.contrib.auth import logout
 #from django.views.generic import RedirectView
 

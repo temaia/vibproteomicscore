@@ -10,12 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os
+import os,sys
+from .acessorio import *
 from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 #BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
+#
+#sys.path.append(OTHERS)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -187,13 +189,13 @@ def get_env_variable(name):
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'mtpmmaia@gmail.com'
-
+from .emacessorio import *
 #try:
 #    import acessorio
 #except ImportError:
 #    EMAIL_HOST_PASSWORD = 'mtppmaia'
 #else:
-EMAIL_HOST_PASSWORD = get_env_variable('EM_PW')
+EMAIL_HOST_PASSWORD = EM_PW
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # during development only
