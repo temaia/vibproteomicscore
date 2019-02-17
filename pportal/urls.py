@@ -109,8 +109,7 @@ urlpatterns = static(settings.MEDIA_URL,document_root =
   #   #url(r'^project-registration-3/$', AnalysisRegistrationView2.as_view(template_name='project-registration.html')),
   #   #url(r'^project-registration-5/$', views.manage_users, name='manage_users'),
   #   #url(r'^project-registration-3/$', ExperimentalDesignRegistrationView.as_view(template_name='project-registration.html')),
-     ] 
-  #   #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+     ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
   #   #+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
  # if DEBUG is on
 if settings.DEBUG:

@@ -35,7 +35,7 @@ DEBUG = False
 #ADMINS = (
 #    ('T Maia', 'teresa.maia@vib-ugent.be'))
 
-ALLOWED_HOSTS = ['vibproteomicscore.be', 'https://prcsite.ugent.be']
+ALLOWED_HOSTS = ['vibproteomicscore.be', 'https://prcsite.ugent.be', 'prcsite.ugent.be']
 
 # Application definition
 
@@ -57,7 +57,7 @@ INSTALLED_APPS = [
 
 
 #AUTH_PROFILE_MODEL = 'requests.User'
-AUTH_USER_MODEL = 'requests.User'
+AUTH_USER_MODEL = 'prcprojects.User'
 #AUTH_USER_MODEL = 'requests.User' # changes build in user model to this one
 LOGIN_URL='login'
 LOGIN_REDIRECT_URL='home'
@@ -156,7 +156,7 @@ STATIC_URL = '/static/'
 #os.path.join(os.path.join(os.path.dirname(BASE_DIR), "pportal3"),"templates")]
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")#.replace('\\','/')
+MEDIA_ROOT = os.path.join(BASE_DIR, "media").replace('\\','/')
 MEDIA_URL = "/media/"
 
 
