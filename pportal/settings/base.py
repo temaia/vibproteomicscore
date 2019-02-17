@@ -46,16 +46,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'requests',
+    'prcprojects',
     'bootstrap4',
     'crispy_forms',
     'formtools',
     'multiselectfield',
+    'xlsxwriter',
+    'requests',
 ]
 
 
 #AUTH_PROFILE_MODEL = 'requests.User'
-AUTH_USER_MODEL = 'requests.User'
+AUTH_USER_MODEL = 'prcprojects.User'
 #AUTH_USER_MODEL = 'requests.User' # changes build in user model to this one
 LOGIN_URL='login'
 LOGIN_REDIRECT_URL='home'

@@ -23,21 +23,21 @@ from django.contrib import admin
 from django.contrib import auth
 from django.contrib.auth import views as auth_views
 
-from requests.forms import AnalysisForm
-#from requests.forms import CustomerForm, Specimen_SGForm, Specimen_PTMForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm, EDForm,Specimen_APMSForm,Specimen_APMSForm,EDForm#,Specimen_GBForm, EDForm
-from requests.forms import CustomerForm, AnalysisForm, Specimen_SGForm,Specimen_APMSForm,Specimen_PTMForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm, EDForm, TOUForm#,Specimen_GBForm, EDForm
+from prcprojects.forms import AnalysisForm
+#from prcprojects.forms import CustomerForm, Specimen_SGForm, Specimen_PTMForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm, EDForm,Specimen_APMSForm,Specimen_APMSForm,EDForm#,Specimen_GBForm, EDForm
+from prcprojects.forms import CustomerForm, AnalysisForm, Specimen_SGForm,Specimen_APMSForm,Specimen_PTMForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm, EDForm, TOUForm#,Specimen_GBForm, EDForm
 
-#from requests.views import AboutView,HomeView, CustomerRegistrationView,AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
-from requests.views import ProjectInfoGaugeView, PreparationView, ReportsView, TermsOfUseView, AboutTheCoreView, AboutView, HomeView, ProjectInfoView, ProjectInfoGuestView, ShippingInstructionsView, ContactView, AnalysisRegistrationView,InfoView, QuestionsView, AnalysisForm, ExperimentForm, Specimen_SGForm, LoginView, ContactWizard, ContactWizardSG, ContactWizardPTM, ContactWizardAPMS#,ContactWizardGB#,SGView#,ProjectRegistrationView
+#from prcprojects.views import AboutView,HomeView, CustomerRegistrationView,AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
+from prcprojects.views import ProjectInfoGaugeView, PreparationView, ReportsView, TermsOfUseView, AboutTheCoreView, AboutView, HomeView, ProjectInfoView, ProjectInfoGuestView, ShippingInstructionsView, ContactView, AnalysisRegistrationView,InfoView, QuestionsView, AnalysisForm, ExperimentForm, Specimen_SGForm, LoginView, ContactWizard, ContactWizardSG, ContactWizardPTM, ContactWizardAPMS#,ContactWizardGB#,SGView#,ProjectRegistrationView
 from django.views.generic import TemplateView
-#from requests.views import AboutView,HomeView, AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
+#from prcprojects.views import AboutView,HomeView, AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
 
-from requests import views
-#from requests.views import HomeView, AboutView, UserRegistrationView,AnalysisRegistrationView,SampleRegistrationView
+from prcprojects import views
+#from prcprojects.views import HomeView, AboutView, UserRegistrationView,AnalysisRegistrationView,SampleRegistrationView
 from django.contrib.auth.decorators import login_required
 
-# from requests.forms import ContactForm1, ContactForm2
-# from requests.views import CWizard
+# from prcprojects.forms import ContactForm1, ContactForm2
+# from prcprojects.views import CWizard
 
 urlpatterns = static(settings.MEDIA_URL,document_root =
   settings.MEDIA_ROOT) +[

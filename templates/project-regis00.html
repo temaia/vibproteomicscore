@@ -94,18 +94,16 @@
 
 {% block extra_js %}
 <script>
-var analysisT = profile.getAnalysisType()
-var analysisT2 = user.Main_analysis_type
-var analysistypee= 'shotgun analysis'
-console.log()
+
 
 $(document).ready(function(){
   var analysistypee= "{{ user.Main_analysis_type }}";
-  if ( analysistypee =='APMS'){
+  if ( analysistypee.includes('affinity-purification MS (AP-MS)')){
   window.location.href="{% url 'projectregistrationapms' %}";
-}  else if ( analysistypee =='gelband') {
+}  else if ( analysistypee.includes('protein gel band analysis')) {
   window.location.href="{% url 'projectregistrationgel' %}";
-}  else if ( analysistypee =='PTMs') {
+}  else if ( analysistypee.includes('PTM analysis')) {
+  console.log("PTM" + analysistypee);
   window.location.href="{% url 'projectregistrationptm' %}";
 }  else {
   window.location.href="{% url 'projectregistrationsg' %}";

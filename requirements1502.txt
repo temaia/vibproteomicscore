@@ -1,0 +1,11 @@
+Django==2.1.7
+django-bootstrap4==0.0.7
+django-crispy-forms==1.7.2
+django-formtools==2.1
+django-generate-secret-key==1.0.2
+django-multiselectfield==0.1.8
+dohq-youtrack==0.2.1.60
+httplib2==0.12.0
+pkg-resources==0.0.0
+pytz==2018.9
+XlsxWriter==1.1.2

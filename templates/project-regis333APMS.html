@@ -46,7 +46,7 @@
     </div>
      </div>
             </div>
-    <div class="form-row col-10 mb-0 formsub" id="SDBCheckT" style="display:none;">
+    <div class="form-row col-11 mb-0 formsub" id="SDBCheckT" style="display:none;">
     <div class="form-group col-8 mb-0">
        {{ form.Bait_Molecule_Protein|as_crispy_field }}
      </div>
@@ -59,12 +59,12 @@
        {{ form.Bait_Molecule_other|as_crispy_field }}
      </div>
             </div>
-   <div class="form-row col-10 mb-0 ">
+   <div class="form-row col-11 mb-0 ">
     <div class="form-group col-8 mb-0">
        {{ form.Antibodies|as_crispy_field }}
      </div>
             </div>
-  <div class="form-row col-12 mb-0 formsub">
+  <div class="form-row col-8 mb-0 formsub">
     <div class="form-group col-4 mb-0">
        {{ form.AbSource|as_crispy_field }}
      </div>
@@ -72,12 +72,12 @@
        {{ form.AbAmount|as_crispy_field }}
      </div>
     </div>
-       <div class="form-row col-10 mb-0 ">
-    <div class="form-group col-7 mb-0">
+       <div class="form-row col-11 mb-0 ">
+    <div class="form-group col-8 mb-0">
        {{ form.Beads|as_crispy_field }}
      </div>
             </div>
-  <div class="form-row col-12 mb-0 formsub">
+  <div class="form-row col-8 mb-0 formsub">
     <div class="form-group col-4 mb-0">
        {{ form.BeadsSource|as_crispy_field }}
      </div>
@@ -85,19 +85,29 @@
        {{ form.BeadsAmount|as_crispy_field }}
      </div>
     </div>
-       <div class="form-row col-10 mb-0 ">
-    <div class="form-group col-7 mb-0">
+       <div class="form-row col-11 mb-0 ">
+    <div class="form-group col-8 mb-0">
        {{ form.Species|as_crispy_field }}
      </div>
     </div>
 
-     <div class="form-row col-10 mb-0 ">
-    <div class="form-group col-7 mb-0">
-       {{ form.Sample_Type|as_crispy_field }}
+     <div class="form-row col-11 mb-0 ">
+    <div class="form-group col-8 mb-0">
+    <div id="div_id_2-Sample_Type" class="form-group">
+            <label for="id_2-Sample_Type" class="col-form-label  requiredField">
+                Sample_type_delivered<span class="asteriskField">*</span>
+            </label>
+                <div class="">
+                    <select name="2-Sample_Type" class="select form-control" id="id_2-Sample_Type"onchange="DDSelectCheck(this);">
+  <option value="washed_beads">Washed beads</option>
+  <option id="DDOption" value="eluate">Eluate</option>
+</select>
+                </div>
+    </div>
     </div>
         </div>
     <div class="form-row col-9 mb-0 formsub">
-    <div class="form-group col-7 mb-0 ">
+    <div class="form-group col-8 mb-0 " id="OIDivCheck" style="display:none;">
        {{ form.Buffer_composition|as_crispy_field }}
        </div>
     </div>
@@ -137,4 +147,23 @@ function LabelCheck(nameLabel)
         }
 }
 </script>
+<script>
+function DDSelectCheck(nameSelect)
+{
+    console.log(nameSelect);
+    if(nameSelect){
+        DDOptionValue = document.getElementById("DDOption").value;
+        if(DDOptionValue == nameSelect.value){
+            document.getElementById("OIDivCheck").style.display = "block";
+        }
+        else{
+            document.getElementById("OIDivCheck").style.display = "none";
+        }
+    }
+    else{
+        document.getElementById("OIDivCheck").style.display = "none";
+    }
+}
+</script>
 {% endblock %}
+

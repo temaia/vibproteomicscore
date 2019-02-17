@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
-from acessorio import *
+from .acessorio import *
 from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -46,11 +46,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'requests',
+    'prcprojects',
     'bootstrap4',
     'crispy_forms',
     'formtools',
     'multiselectfield',
+    'xlsxwriter',
+    'requests',
 ]
 
 
@@ -143,8 +145,7 @@ USE_TZ = True
 #from .acessorio import * 
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_ROOT = [os.path.join(BASE_DIR, "static"),
-]
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static-dev"),
@@ -179,8 +180,8 @@ EMAIL_USE_TLS = False
 #EMAIL_HOST_PASSWORD = get_env_variable('EM_PW')
 
 # DEFAULT_FROM_EMAIL = 'teresa.maia@vib-ugent.be' #'noreply-prc@vib-ugent.be'
-ADMINS = ('T Maia', 'teresa.maia@vib-ugent.be'
-     ('S Dufour', 'sara.dufour@vib-ugent.be'))
+ADMINS = [('T Maia', 'teresa.maia@vib-ugent.be'),
+     ('S Dufour', 'sara.dufour@vib-ugent.be')]
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
