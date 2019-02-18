@@ -1,5 +1,7 @@
 import csv
-from requests.models import User
+import os
+
+from prcprojects.models import User
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from django.conf import settings
@@ -20,7 +22,7 @@ class Command(BaseCommand):
 
 	def handle(self, *args, **kwargs):
 		#usersfile = kwargs['usersfile']
-		usersfile="/home/pportal/dev2Sep18/prcsite/vibproteomicscore/static-dev/PRC_issue_creation.csv"
+		usersfile=os.path.join(settings.STATIC_ROOT,"PRC_issue_creation.csv")
 		with open(usersfile, "r") as csvfile:
 			userreader = csv.reader(csvfile, delimiter=',')
 			for usor in userreader:
@@ -31,13 +33,13 @@ class Command(BaseCommand):
 					#User.objects.create_user(username=usor[0],email=usor[1], password = password, Main_analysis_type  = usor[2])
 					user = User.objects.filter(username=usor[0]).get()
 					#user = User.objects.filter(email=usor[1]).get()
-					template1 = '/home/pportal/dev2Sep18/prcsite/vibproteomicscore/templates/InvitationForRegistrationEmail2.txt'
-					template2 = '/home/pportal/dev2Sep18/prcsite/vibproteomicscore/templates/InvitationForRegistrationEmail2.html'
+					template1 = os.path.join(settings.BASE_DIR , 'templates/InvitationForRegistrationEmail2.txt')
+					template2 = os.path.join(settings.BASE_DIR, 'templates/InvitationForRegistrationEmail2.html')
 					subject = "[VIB Proteomics Core New Project] " + usor[0]
 					message = render_to_string(template1, {'user': user})
 					html_message = render_to_string(template2, {'user': user,'pw': password})
 					from_email=settings.EMAIL_HOST_USER
-					to_list = [settings.EMAIL_HOST_USER]
+					to_list = ['mtpmmaia@gmail.com',user.email]
 					send_mail(subject, message, from_email, to_list, html_message=html_message, fail_silently=False)
 
 				#User.objects.create_user(username="PRC-21", password=password, email="mariana@gmail.com", Main_analysis_type = "PRM")

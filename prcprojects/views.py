@@ -357,7 +357,7 @@ class ContactWizardSG(SessionWizardView):
         #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
         yt = Connection(url='https://youtrack.ugent.be', token='perm:cm9vdA==.Y29sbGE=.FfNqw1Jw4mi7UgOnAkm2Sh9DldgIbt') #@
         summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
-        Project_ID = "PRC-321" #@
+        #Project_ID = "PRC-321" #@
         #try:
         if analysis[0]['Other_institution'] is not None:
           Other_institution = analysis[0]['Other_institution']
