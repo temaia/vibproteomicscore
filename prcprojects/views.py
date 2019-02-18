@@ -408,8 +408,8 @@ class ContactWizardSG(SessionWizardView):
         #    yt.create_attachment("PRC-321",name=Sequence_database_file,content='../media/ED/'+upload_file,author_login ="prcsite")
         #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
         if sdbf:
-            yt.create_attachment("PRC-321",name="Sequence_database_file.fasta",content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
-        yt.create_attachment("PRC-321",name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
+            yt.create_attachment(Project_ID,name="Sequence_database_file.fasta",content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
+        yt.create_attachment(Project_ID,name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
         #yt.create_attachment("PRC-321",name='ed.xlsx',content=os.path.join(settings.MEDIA_ROOT, 'ED/Experimental_design_PRC-20.xlsx'),author_login ="prcsite")    
         #yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
         return render(self.request,'done.html',{
@@ -420,6 +420,17 @@ class ContactWizardSG(SessionWizardView):
             #'fieldnames':fieldvalues,
             #'upload_file' : upload_file,
             })
+    def get_context_data(self, form ,**kwargs):
+        """
+        Set projet id and email for step1
+        Set extra parameter for step2, which is from clean data of step1.
+        """
+        context = super(ContactWizardSG, self).get_context_data(form=AnalysisForm, **kwargs)
+        if self.steps.current=='1':
+            Main_analysis_type = self.request.user.Main_analysis_type
+            #Analysis_Type = self.request.user.profile.Main_Analysis_Type
+            context.update({'Main_analysis_type':Main_analysis_type})
+            return context
     def get_form_initial(self, step):
         """
         Set projet id and email for step1
@@ -602,6 +613,18 @@ class ContactWizardPTM(SessionWizardView):
             #'fieldnames':fieldvalues,
             #'upload_file' : upload_file,
             })
+    #def get_context_data(self, form ,**kwargs):
+     #   """
+      #  Set projet id and email for step1
+       # Set extra parameter for step2, which is from clean data of step1.
+ #       """
+        # context = super(ContactWizardPTM, self).get_context_data(form=AnalysisForm, **kwargs)
+        # #context = 
+        # #if self.steps.current=='1':
+        # Mainanalysistype = self.request.user.Main_analysis_type
+        # #Analysis_Type = self.request.user.profile.Main_Analysis_Type
+        # context.update({'Mainanalysistype':Mainanalysistype})
+        # return context
     def get_form_initial(self, step):
         """
         Set projet id and email for step1
@@ -615,13 +638,13 @@ class ContactWizardPTM(SessionWizardView):
             #Analysis_Type = self.request.user.profile.Main_Analysis_Type
             initial.update({'Project_ID':Project_ID, 'Email':Email})
             return initial
-        if step=='1':
-            form_class=self.form_list[step]
-            Main_analysis_type = self.request.user.Main_analysis_type
-            #Analysis_Type = self.request.user.profile.Main_Analysis_Type
-            initial.update({'Main_analysis_type':Main_analysis_type})
-            return initial
-        #if step == '3':
+        # if step=='1':
+        #     form_class=self.form_list[step]
+        #     Main_analysis_type = self.request.user.Main_analysis_type
+        #     #Analysis_Type = self.request.user.profile.Main_Analysis_Type
+        #     initial.update({'Main_analysis_type':Main_analysis_type})
+        #     return initial
+        # #if step == '3':
          #   form_class = self.form_list[step]
             #Issue = self.request.user.profile.Issue + '-S' 
             #form_class['Generic_Sample_Name'] = self.request.user.profile.Issue 
