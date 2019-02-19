@@ -12,7 +12,7 @@ from django.db.models import Avg, Sum, Max, Min
 
 def WriteToExcel(arguments_dict):
     #output = io.BytesIO()
-    output = os.path.join(settings.MEDIA_ROOT, 'ED/Experimental_design_PRC-20.xlsx')
+    output = os.path.join(settings.MEDIA_ROOT, os.path.join("ED","Experimental_design_"+arguments_dict["PID"]+".xlsx"))
     #output = "media/ED/Experimental_design_"+arguments_dict["PID"]+".xlsx"
     workbook = xlsxwriter.Workbook(output)
     worksheet_s = workbook.add_worksheet("main")

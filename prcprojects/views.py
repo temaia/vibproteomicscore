@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.conf import settings
 from youtrack.connection import Connection
 from .acessorio import *
+
 #import requests
 #from django.contrib.auth import logout
 #from django.views.generic import RedirectView
@@ -1095,7 +1096,8 @@ class ProjectInfoView(ListView):
         #url = static("PRC_issues_dailyreport2.csv")
         #print(url)
         context=super().get_context_data(**kwargs)
-        with open("../../../PRC_issues_dailyreport.csv", "r") as csvfile:
+        filepath = os.path.join(settings.BASE_DIR,"static/PRC_issues_dailyreport.csv")
+        with open(filepath, "r") as csvfile: 
             csvfile_reader=csv.DictReader(csvfile)
             for row in csvfile_reader:
                 if row["YouTrack_id"]==self.object.username:
@@ -1109,6 +1111,7 @@ class ProjectInfoView(ListView):
                     pass
         print(context)
         return context
+
 
 class ProjectInfoGuestView(ListView):
     template_name = 'project-info-guest.html'
@@ -1138,7 +1141,8 @@ class ProjectInfoGuestView(ListView):
         #url = static("PRC_issues_dailyreport2.csv")
         #print(url)
         context=super().get_context_data(**kwargs)
-        with open("../../../PRC_issues_dailyreport.csv", "r") as csvfile:
+        filepath = os.path.join(settings.BASE_DIR,"static/PRC_issues_dailyreport.csv")
+        with open(filepath, "r") as csvfile:   
             csvfile_reader=csv.DictReader(csvfile)
             for row in csvfile_reader:
                 if row["YouTrack_id"]==self.object.username:
@@ -1181,7 +1185,8 @@ class ProjectInfoGaugeView(ListView):
         #url = static("PRC_issues_dailyreport2.csv")
         #print(url)
         context=super().get_context_data(**kwargs)
-        with open("../../../PRC_issues_dailyreport.csv", "r") as csvfile:
+        filepath = os.path.join(settings.BASE_DIR,"static/PRC_issues_dailyreport.csv")
+        with open(filepath, "r") as csvfile:
             csvfile_reader=csv.DictReader(csvfile)
             for row in csvfile_reader:
                 if row["YouTrack_id"]==self.object[0].Issue:
