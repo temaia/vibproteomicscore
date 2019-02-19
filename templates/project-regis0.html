@@ -98,23 +98,22 @@
 
 {% block extra_js %}
 <script>
-var analysisT = "{{ user.Main_analysis_type }}";
-console.log(analysisT+'2')
+
 
 $(document).ready(function(){
   var analysistypee= "{{ user.Main_analysis_type }}";
-  if ( analysistypee =='affinity-purification MS (AP-MS)'){
+  if ( analysistypee.includes('affinity-purification MS (AP-MS)')){
   window.location.href="{% url 'projectregistrationapms' %}";
-}  else if ( analysistypee =='protein gel band analysis') {
+}  else if ( analysistypee.includes('protein gel band analysis')) {
   window.location.href="{% url 'projectregistrationgel' %}";
-}  else if ( analysistypee =='PTM analysis') {
+}  else if ( analysistypee.includes('PTM analysis')) {
+  console.log("PTM" + analysistypee);
   window.location.href="{% url 'projectregistrationptm' %}";
 }  else {
   window.location.href="{% url 'projectregistrationsg' %}";
 }});
 
-
-</script>
+  </script>
 
 {% endblock %}
 

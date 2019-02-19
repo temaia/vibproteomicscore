@@ -2,17 +2,18 @@
 # -*- coding: utf-8 -*-
 import io
 import os
+from django.conf import settings
 import xlsxwriter
 from django.utils.translation import ugettext
 from django.db.models import Avg, Sum, Max, Min
-from django.conf import settings
 
 #from .models import Town, Weather
 
 
 def WriteToExcel(arguments_dict):
     #output = io.BytesIO()
-    output = settings.MEDIA_ROOT +"/ED/Experimental_design_"+arguments_dict["PID"]+".xlsx"
+    output = os.path.join(settings.MEDIA_ROOT, 'ED/Experimental_design_PRC-20.xlsx')
+    #output = "media/ED/Experimental_design_"+arguments_dict["PID"]+".xlsx"
     workbook = xlsxwriter.Workbook(output)
     worksheet_s = workbook.add_worksheet("main")
     # add more Sheets
@@ -30,13 +31,13 @@ def WriteToExcel(arguments_dict):
         'color': 'black',
         'align': 'center',
         'valign': 'top',
-        'border': 1
+        'border': 1,
     })
     cell = workbook.add_format({
         'align': 'center',
         'valign': 'top',
         'text_wrap': True,
-        'border': 1
+        'border': 1,
     })
     cellneditleft = workbook.add_format({
         'align': 'left',

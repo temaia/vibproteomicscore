@@ -99,14 +99,14 @@
 $(document).ready(function(){
   var analysistypee= "{{ user.Main_analysis_type }}";
   if ( analysistypee.includes('affinity-purification MS (AP-MS)')){
-  window.location.href="{% url 'projectregistrationapms' %}";
+  console.log("apms");
 }  else if ( analysistypee.includes('protein gel band analysis')) {
-  window.location.href="{% url 'projectregistrationgel' %}";
+  console.log("pgba");
 }  else if ( analysistypee.includes('PTM analysis')) {
   console.log("PTM" + analysistypee);
-  window.location.href="{% url 'projectregistrationptm' %}";
+  console.log("PTM");
 }  else {
-  window.location.href="{% url 'projectregistrationsg' %}";
+  console.log("other");
 }});
 
 </script>

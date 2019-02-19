@@ -1,18 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import io
-import os
 import xlsxwriter
 from django.utils.translation import ugettext
 from django.db.models import Avg, Sum, Max, Min
 from django.conf import settings
-
 #from .models import Town, Weather
 
 
 def WriteToExcel2(arguments_dict):
     #output = io.BytesIO()
-    output = settings.MEDIA_ROOT+"ED/Experimental_design_"+arguments_dict["PID"]+".xlsx"
+    output = "media/ED/Experimental_design_"+arguments_dict["PID"]+".xlsx"
     workbook = xlsxwriter.Workbook(output)
     worksheet_s = workbook.add_worksheet("main")
     # add more Sheets

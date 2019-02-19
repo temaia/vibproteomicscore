@@ -19,13 +19,13 @@
                     <div class="progress-bar"></div>
                   </div>
                   <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">Lorem.,,</div>
+                  <div class="bs-wizard-info text-center">Lorem ipsum.,,</div>
                 </div>
                 <div class="col-xs-3 bs-wizard-step disabled" id="arrived"><!-- complete -->
                   <div class="text-center bs-wizard-stepnum">Arrived</div>
                   <div class="progress"><div class="progress-bar"></div></div>
                   <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">Lorem.,,</div>
+                  <div class="bs-wizard-info text-center">Lorem ipsum.,,</div>
                 </div>
                 <div class="col-xs-3 bs-wizard-step disabled" id="sample_prep"><!-- complete -->
                   <div class="text-center bs-wizard-stepnum">Sample_Prep</div>
@@ -52,7 +52,7 @@
                   <div class="text-center bs-wizard-stepnum">Closed</div>
                   <div class="progress"><div class="progress-bar"></div></div>
                   <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">Lorem.,,</div>
+                  <div class="bs-wizard-info text-center">Lorem ipsum.,,</div>
                       </div>
                 </div>
               </div>
@@ -68,8 +68,9 @@
           </div>
             <div class="card-content">
               <div class="card-body"> 
+      <p class="report">Usual waiting time for similar projects: {{ Median_wTime }} days </p>
       <p class="report">Required processing time for this project: {{ Min_wTime }} days </p>
-			<p class="report">Average waiting time for similar projects: {{ Median_wTime }} days </p>
+
         </div>
         </div>
       </div> 
@@ -236,13 +237,22 @@ function OpenSessionStatusCSS(State){
     $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#closed").attr("class", ".col-xs-3 bs-wizard-step disabled");
     
-  } else {
+  } else if (State == "Closed"){
     $("#created").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#arrived").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#ms_run").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#closed").attr("class", ".col-xs-3 bs-wizard-step complete");
+    
+  }
+    else {
+      $("#created").attr("class", ".col-xs-3 bs-wizard-step disabled");
+      $("#arrived").attr("class", ".col-xs-3 bs-wizard-step disabled");
+    $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step disabled");
+    $("#ms_run").attr("class", ".col-xs-3 bs-wizard-step disabled");
+    $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step disabled");
+    $("#closed").attr("class", ".col-xs-3 bs-wizard-step disabled");
     
   }
 }

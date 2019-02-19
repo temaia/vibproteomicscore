@@ -148,7 +148,7 @@ class LoginView(FormView):
 	# 	return super(LoginView, self).form_invalid(form)  
 
 
-class LogoutView(RedirectView):
+class LogoutView(TemplateView):
     """
     A view that logout user and redirect to homepage.
     """
@@ -160,8 +160,10 @@ class LogoutView(RedirectView):
         """
         Logout user and redirect to target url.
         """
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
+            print("logged in")
             logout(self.request)
+        #else:
         return super(LogoutView, self).get_redirect_url(*args, **kwargs)
 # def login_page(request):
 # 	if user is not None:
@@ -420,17 +422,6 @@ class ContactWizardSG(SessionWizardView):
             #'fieldnames':fieldvalues,
             #'upload_file' : upload_file,
             })
-    def get_context_data(self, form ,**kwargs):
-        """
-        Set projet id and email for step1
-        Set extra parameter for step2, which is from clean data of step1.
-        """
-        context = super(ContactWizardSG, self).get_context_data(form=AnalysisForm, **kwargs)
-        if self.steps.current=='1':
-            Main_analysis_type = self.request.user.Main_analysis_type
-            #Analysis_Type = self.request.user.profile.Main_Analysis_Type
-            context.update({'Main_analysis_type':Main_analysis_type})
-            return context
     def get_form_initial(self, step):
         """
         Set projet id and email for step1
@@ -597,14 +588,15 @@ class ContactWizardPTM(SessionWizardView):
         yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
         if analysis[1]['Data_analysis']:
              yt.execute_command(Project_ID, "tag nDA")
+        yt.execute_command(Project_ID, "tag PTM")
         #upload_file = form_list[2].cleaned_data['Sequence_database_file']
         #upload_file = "media/Cumulative2.png"
         #if sdbf:
         #    yt.create_attachment("PRC-321",name=Sequence_database_file,content='../media/ED/'+upload_file,author_login ="prcsite")
         #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
         if sdbf:
-            yt.create_attachment("PRC-321",name="Sequence_database_file.fasta",content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
-        yt.create_attachment("PRC-321",name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
+            yt.create_attachment(Project_ID,name="Sequence_database_file.fasta",content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
+        yt.create_attachment(Project_ID,name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
         return render(self.request,'done.html',{
             'formdict': formdict,
             #'analysisd':form_dict,
@@ -811,8 +803,8 @@ class ContactWizardAPMS(SessionWizardView):
         if analysis[1]['Data_analysis']:
              yt.execute_command(Project_ID, "tag nDA")
         if sdbf:
-            yt.create_attachment("PRC-321",name="Bait_sequence_file.fasta",content=analysis[2]['Bait_sequence_file'],author_login ="prcsite") 
-        yt.create_attachment("PRC-321",name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
+            yt.create_attachment(Project_ID,name="Bait_sequence_file.fasta",content=analysis[2]['Bait_sequence_file'],author_login ="prcsite") 
+        yt.create_attachment(Project_ID,name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
         return render(self.request,'done.html',{
             'formdict': formdict,
             #'analysisd':form_dict,
@@ -951,7 +943,7 @@ class ContactWizardGB(SessionWizardView):
         #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
         yt = Connection(url='https://youtrack.ugent.be', token='perm:cHJjc2l0ZQ==.cHdlYi10b2s=.epNpU5rPRZxq3rYGhAR3tZozc8w0am') #@
         summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
-        Project_ID = "PRC-321" #@
+        #Project_ID = "PRC-321" #@
         #try:
         if analysis[0]['Other_institution'] is not None:
           Other_institution = analysis[0]['Other_institution']
@@ -1084,7 +1076,7 @@ class ProjectInfoView(ListView):
     #     print(dir(qs[0]))
     #def get_queryset(self, request, *args, **kwargs):
     def get_queryset(self):
-        self.object=User.objects.filter(username=self.request.user.username)
+        self.object=User.objects.filter(username=self.request.user.username).get()
         #self.object=self.get_object(queryset=User.objects.filter(user=self.request.user))
         return
         #return super().get(request,*args, **kwargs)
@@ -1103,10 +1095,10 @@ class ProjectInfoView(ListView):
         #url = static("PRC_issues_dailyreport2.csv")
         #print(url)
         context=super().get_context_data(**kwargs)
-        with open("static-dev/PRC_issues_dailyreport2.csv", "r") as csvfile:
+        with open("../../../PRC_issues_dailyreport.csv", "r") as csvfile:
             csvfile_reader=csv.DictReader(csvfile)
             for row in csvfile_reader:
-                if row["YouTrack_id"]==self.object[0].username:
+                if row["YouTrack_id"]==self.object.username:
                     context["Project_ID"] = row["YouTrack_id"]
                     context["State"] = row["State"]
                     context["Scheduling_State"] = row["SchedulingState"]
@@ -1130,7 +1122,7 @@ class ProjectInfoGuestView(ListView):
     #     print(dir(qs[0]))
     #def get_queryset(self, request, *args, **kwargs):
     def get_queryset(self):
-        self.object=Profile.objects.filter(user=self.request.user.profile.user)
+        self.object=User.objects.filter(username=self.request.user.username).get()
         #return super().get(request,*args, **kwargs)
 
     #def get_object(queryset=None):
@@ -1146,10 +1138,10 @@ class ProjectInfoGuestView(ListView):
         #url = static("PRC_issues_dailyreport2.csv")
         #print(url)
         context=super().get_context_data(**kwargs)
-        with open("static-dev/PRC_issues_dailyreport2.csv", "r") as csvfile:
+        with open("../../../PRC_issues_dailyreport.csv", "r") as csvfile:
             csvfile_reader=csv.DictReader(csvfile)
             for row in csvfile_reader:
-                if row["YouTrack_id"]==self.object[0].Issue:
+                if row["YouTrack_id"]==self.object.username:
                     context["Issue"] = row["YouTrack_id"]
                     context["State"] = row["State"]
                     context["Scheduling_State"] = row["SchedulingState"]
@@ -1189,7 +1181,7 @@ class ProjectInfoGaugeView(ListView):
         #url = static("PRC_issues_dailyreport2.csv")
         #print(url)
         context=super().get_context_data(**kwargs)
-        with open("static-dev/PRC_issues_dailyreport2.csv", "r") as csvfile:
+        with open("../../../PRC_issues_dailyreport.csv", "r") as csvfile:
             csvfile_reader=csv.DictReader(csvfile)
             for row in csvfile_reader:
                 if row["YouTrack_id"]==self.object[0].Issue:
