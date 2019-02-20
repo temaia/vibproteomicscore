@@ -1,6 +1,7 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8
 
-# -*- coding: utf-8 -*-
 #####from django.core.urlresolvers import reverse
 from django.urls import reverse
 from django.conf import settings

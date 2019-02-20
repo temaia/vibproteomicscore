@@ -10,7 +10,7 @@ from django.conf import settings
 
 def WriteToExcel2(arguments_dict):
     #output = io.BytesIO()
-    output = "media/ED/Experimental_design_"+arguments_dict["PID"]+".xlsx"
+    output = os.path.join(settings.MEDIA_ROOT, os.path.join("ED","Experimental_design_"+arguments_dict["PID"]+".xlsx"))
     workbook = xlsxwriter.Workbook(output)
     worksheet_s = workbook.add_worksheet("main")
     # add more Sheets

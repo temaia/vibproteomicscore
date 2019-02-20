@@ -29,7 +29,6 @@ SECRET_KEY = 'f=zue$c!65h^ycp0byej*!rw-6%xa#3!+*7!yv&(f1ebqzgjpa'
 DEBUG = True
 
 
-
 #DEFAULT_FROM_EMAIL = 'noreply VIB proteomics<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
 #DEFAULT_FROM_EMAIL = 'teresa.maia@vib-ugent.be' #'noreply-prc@vib-ugent.be'
 #ADMINS = (
@@ -144,13 +143,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 #from .acessorio import * 
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
+STATIC_ROOT = ''
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static-dev"),
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),
 ]
-#STATIC_ROOT = [os.path.join(os.path.dirnameBASE_DIR), "static-dev"),
+#STATIC_ROOT = [os.path.join(os.path.dirname(BASE_DIR), "static-dev"),
 #]
+#STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
 #os.path.join(os.path.join(os.path.dirname(BASE_DIR), "pportal3"),"templates")]
 
 CRISPY_TEMPLATE_PACK='bootstrap4'

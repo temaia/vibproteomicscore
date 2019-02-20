@@ -5,10 +5,10 @@
 {% block content2 %}
 <div class='container'>
 <div class="row">
-   <div class="col-10 mr-auto">
+   <div class="col-12 mr-auto">
 <div class="card card-default"> 
   <div class="card-header">
-    <p class="dtitle">Project status</p> 
+    <h6 class="ttitle">Project status</h6> 
   </div>
             <div class="d-inline-flex card-content">
               <div class="d-inline-flex card-body">
@@ -61,10 +61,10 @@
     </div> 
      </div> 
     <div class="row">  
-        <div class="col-10 mr-auto">
+        <div class="col-12 mr-auto">
         <div class="card card-default"> 
           <div class="card-header">
-            <p class="dtitle">Expected waiting time for project report delivery</p> 
+            <h6 class="ttitle">Expected waiting time for project report delivery</h6> 
           </div>
             <div class="card-content">
               <div class="card-body"> 
@@ -76,11 +76,34 @@
       </div> 
       </div> 
      </div>  
-      <div class="row">   
-      <div class="col-10 mr-auto">
+    <div class="row">  
+        <div class="col-12 mr-auto">
         <div class="card card-default"> 
           <div class="card-header">
-            <p class="dtitle">Current workload of the core mass spectrometers</p> 
+            <h6 class="ttitle">Current workload of the core mass spectrometers</h6> 
+          </div>
+            <div class="card-content">
+              <div class="card-body"> 
+                <div class="row">
+
+                <img src='{% static "./MassSpecs/NbExpPerMScustom.PNG" %}' height="300" class="center align-center inner" alt="">
+        </div>
+        </div>
+      </div> 
+                    <div class="col-lg-12 col-md-12">
+                <div class="bs-sm">
+                        <p class='status'>Number of active projects per instrument. </p>
+                </div>
+                </div>
+      </div> 
+     </div>   
+
+</div>
+      <div class="row">   
+      <div class="col-12 mr-auto">
+        <div class="card card-default"> 
+          <div class="card-header">
+            <h6 class="ttitle">Current workload of the core mass spectrometers</h6> 
           </div>
             <div class="d-inline-flex card-content">
               <div class="d-inline-flex card-body"> 
@@ -93,7 +116,7 @@
                 <img src='{% static "./MassSpecs/OrbitrapFusionLumos.jpg" %}' height="50" class="center align-center" alt="">
                 </div>
                 <div class="cb">
-                  <img src='{% static "./MassSpecs/Lumosnd.png" %}' height="60" class="center align-center" alt="">
+                  <img src='{% static "./MassSpecs/Lumosed.png" %}' height="60" class="center align-center" alt="">
                 </div>
                 </div>
               <div class="d-flex flex-column col-lg-2">
@@ -104,7 +127,7 @@
                 <img src='{% static "./MassSpecs/QEHF.jpg" %}' height="50" class="center align-center" alt="">
               </div>
                 <div class="cb">
-                  <img src='{% static "./MassSpecs/QEHFnd.png" %}' height="60" class="center align-center" alt="">
+                  <img src='{% static "./MassSpecs/QEHFed.png" %}' height="60" class="center align-center" alt="">
                 </div>
                 </div>
                <div class="d-flex flex-column col-lg-2">
@@ -115,7 +138,7 @@
                 <img src='{% static "./MassSpecs/QEHFBioPharma.jpg" %}' height="50" class="center align-center" alt="">
               </div>
                <div class="cb">
-                  <img src='{% static "./MassSpecs/QEHFBioPharmand.png" %}' height="60" class="center align-center" alt="">
+                  <img src='{% static "./MassSpecs/QEHFBioPharmaed.png" %}' height="60" class="center align-center" alt="">
                 </div>
                 </div>
                <div class="d-flex flex-column col-lg-2">
@@ -126,7 +149,7 @@
                 <img src='{% static "./MassSpecs/QExactive.jpg" %}' height="50" class="center align-center" alt="">
                 </div>
                   <div class="cb">
-                  <img src='{% static "./MassSpecs/QEnd.png" %}' height="60" class="center align-center" alt="">
+                  <img src='{% static "./MassSpecs/QEed.png" %}' height="60" class="center align-center" alt="">
                 </div>
                 </div>
               <div class="d-flex flex-column col-lg-2">
@@ -136,29 +159,33 @@
                 <div class="cb">
                 <img src='{% static "./MassSpecs/LTQOrbitrapElite.jpg" %}' height="50" class="center align-center" alt="">
                 <div class="cb">
-                <img src='{% static "./MassSpecs/Elitend.png" %}' height="60" class="center align-center" alt="">
+                <img src='{% static "./MassSpecs/Eliteed.png" %}' height="60" class="center align-center" alt="">
                 </div>                
                 </div>
                 </div>
               </div>
                 </div>
-
                 </div>
-                <p>   Instrument's queuing days</p>
-            </div>
+
+              <div class="col-lg-12 col-md-12">
+                <div class="bs-sm">
+                        <p class='status'> Queueing periods for the instruments, i.e. timespan in weeks until new batches of samples can be processed. </p>
+                </div>
+                </div>
+                </div>
           </div>
        </div>   
     <div class="row">  
-        <div class="col-10 mr-auto">
+        <div class="col-12 mr-auto">
         <div class="card card-default"> 
           <div class="card-header">
-            <p class="dtitle">Workload at the Proteomics Core along the year</p> 
+            <h6 class="ttitle">Workload at the core along the year</h6> 
           </div>
             <div class="card-content">
               <div class="card-body"> 
                 <div class="row">
 
-                <img src='{% static "./MassSpecs/CaptureClosedOpened1YearDayCumulative3.jpg" %}' height="300" class="center align-center inner" alt="">
+                <img src='{% static "./MassSpecs/CumFlowC1902_nodate.PNG" %}' height="500" class="center align-center inner" alt="">
         </div>
         </div>
       </div> 
