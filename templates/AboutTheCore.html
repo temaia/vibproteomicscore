@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "base.html" %}
 {% load static %}
 {% block head_title %}Welcome || {{ block.super }}{% endblock head_title %}
@@ -189,3 +190,196 @@
          
 
 from home show templateview()
+=======
+{% extends "base.html" %}
+{% load static %}
+{% block head_title %}Welcome || {{ block.super }}{% endblock head_title %}
+
+{% block content2 %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 ml-12 text-center">
+      <h2>About the VIB Proteomics Core (PRC)</h2>
+    </div>
+  </div>
+</div>
+<div class="container">
+    <div class="row">
+      <div class="col-md-12 ml-12 text-justify ">
+        <h4 class="font-weight-bold" id="general">In General </h4>
+        <div>
+          <p>The VIB Proteomics Core (PRC), located at the VIB-UGent Center for Medical Biotechnology in Ghent, Belgium, provides contemporary mass spectrometry (MS)-based proteomics services to academic and non-academic users. </p>
+          <p>The PRC started in 2005 as a spin-off service unit of the proteomics laboratory of Prof. Dr. Kris Gevaert. Today, it has evolved from a research-oriented facility to a service-oriented platform and has become a reference center for proteome research in Belgium and beyond.</p>
+        </div>
+        <br>
+        <h4 class="font-weight-bold" id="instruments">Instruments</h4>
+        <div>
+          <p>Seven state-of-the-art orbitrap mass spectrometers coupled with nano-LC chromatography systems are available to perform LC-MS/MS analyses at the PRC. These instruments run 24/7 and can process several hundred samples/month. In addition, the PRC has a triple quadrupole mass spectrometer for targeted proteomics, as well as a MALDI-TOF MS/MS instrument.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 p-3">
+        <div class="card">
+          <div class="card-body p-3 ">
+            <img class="center align-center" src='{% static "./MassSpecs/QEHF.jpg" %}' height="80" alt="">
+            <div class="text-center font-weight-bold">Q exactive instruments</div>
+            <div class="text-center">
+              <ul>
+                <li>Q Exactive Classic</li>
+                <li>Q Exactive HF</li>
+                <li>Q Exactive Biopharma</li>
+              </ul>
+            </div>
+             <br>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 p-3">
+        <div class="card">
+          <div class="card-body p-3">
+            <img class="center align-center" src='{% static "./MassSpecs/LTQOrbitrapElite.jpg" %}' height="80" alt="">
+            <div class="text-center font-weight-bold">LTQ Orbitrap instruments</div>
+            <div class="text-center">
+              <ul>
+                <li>LTQ Orbitrap Elite</li>
+                <li>LTQ Orbitrap XL</li>
+                <li>LTQ Orbitrap XL ETD</li>
+              </ul>
+            </div>
+            <br>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 p-3">
+        <div class="card">
+          <div class="card-body p-3" >
+            <img class="center align-center" src='{% static "./MassSpecs/OrbitrapFusionLumos.jpg" %}' height="80" alt="">
+            <div class="text-center font-weight-bold">Orbitrap Fusion Lumos instrument</div>
+            <br>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2"> </div>
+      <div class="col-lg-4 p-3">
+        <div class="card">
+          <div class="card-body p-3">
+            <img class="center align-center" src='{% static "./MassSpecs/TSQ.jpg" %}' height="80" alt="">
+            <div class="text-center font-weight-bold">Triple Quadrupole</div>
+            <div class="text-center">
+              <ul>
+                <li>TSQ-vantage</li>
+              </ul>
+            </div>
+            <br>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 p-3">
+        <div class="card">
+          <div class="card-body p-3">
+            <img class="center align-center" src='{% static "./MassSpecs/MALDI.jpg" %}' height="80" alt="">
+            <div class="text-center font-weight-bold">MALDI</div>
+            <div class="text-center">
+              <ul>
+                <li>MALDI-TOF-TOF</li>
+              </ul>
+            </div>
+            <br>
+          </div>
+          </div>
+        </div>
+      </div>
+    <div class="row">
+      <div class="col-md-12 ml-12 text-justify ">
+        <h4 class="font-weight-bold" id="services">Services</h4>
+        <div>As part of its routine services portfolio, the PRC offers three main types of proteomics applications in modern life sciences: </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"> <img class="img-fluid" width="100" src='{% static "./Shotgun.PNG" %}'> </div>
+      <div class="col-md-10 text-justify">
+        <span class="font-weight-bold font-italic">1. Shotgun proteomics</span>
+        <p>which generates comprehensive proteomic profiles that reveal differences in protein levels associated with a particular cellular state or experimental condition. Samples can be isotopically labelled (e.g. by SILAC or TMT labelling) for optimal quantitation accuracy or sample multiplexing, in addition to the standard label-free approach.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10 text-justify">
+        <span class="font-weight-bold font-italic">2. PTM analysis</span>
+        <p>Mapping of common protein post-translational modifications such as acetylation, phosphorylation, ubiquitination and protein processing by proteases for which the PRC has extensive experience</p>
+      </div>
+      <div class="col-md-2"> <img class=" img-fluid float-right" width="100"src='{% static "./PTManalysis.PNG" %}'> </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"> <img class="img-fluid" width="100" src='{% static "./AP-MS.PNG" %}'> </div>
+      <div class="col-md-10 text-justify">
+        <span class="font-weight-bold font-italic">3. Affinity Purification MS (AP-MS)</span>
+        <p>Affinity purification mass spectrometry (AP-MS) experiments, which allow the characterization of protein complexes and the discovery of novel protein interactions.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-justify">
+        <br>
+        <p>In addition to these routine applications, customized services are provided including the identification of proteolytic processing sites, the development of targeted proteomics assays (e.g. by SRM/PRM) and mass determination of intact proteins. </p>
+        <p>Significant advances in the development of LC-MS/MS instrumentation and data analysis software over recent years have set the stage for clinical proteomics. In order to keep pace with these developments and to take an active role in biomarker discovery, the PRC recently implemented a novel analysis pipeline based on Data Independent Acquisition (DIA). This pipeline ensures improved detectability and quantitation of proteins, and is ideally suited for high throughput screening of patient samples. </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-justify">
+        <h4 class="font-weight-bold" id="tools">Bio-IT support</h4>
+        <div>
+          <p>The facility is able to deliver high quality services at all times, encompassing every step of a proteomics experiment. Users are guided from sample collection to data analysis and receive assistance from the PRC team to formulate biological conclusions that are easy to interpret for the non-proteomics expert. Software packages used at PRC include:</p>
+          <ul class="cna">
+            <li><img class="img-fluid my-2" width="50" src='{% static "./IT-tools/MaxQuant.png" %}'>  MaxQuant</li>
+            <li><img class="img-fluid my-2" width="50" src='{% static "./IT-tools/mascot.PNG" %}'>  Mascot</li>
+            <li><img class="img-fluid my-2" width="50" src='{% static "./IT-tools/skyline.jpg" %}'>  Skyline</li>
+            <li><img class="img-fluid my-2" width="50" src='{% static "./IT-tools/spectronaut.png" %}'>  Spectronaut</li>
+            <li><img class="img-fluid my-2" width="50" src='{% static "./IT-tools/Perseus.png" %}'>  Perseus</li>
+            <li><img class="img-fluid my-2" width="50" src='{% static "./IT-tools/peaksstudio.png" %}'>  PEAKS  Studio</li>
+          </ul>
+          <br>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-justify"> 
+      <h4 class=" font-weight-bold" id="team">The Team</h4>
+        <div>
+          <p>The PRC is operated by an experienced, international team composed of MS engineers, biochemists and data analysts, and applies constant monitoring procedures including daily MS quality control and continuous benchmarking of implemented protocols. </p>
+          <!--Group picture -->
+        </div>
+      <div class="row"> 
+        <div class="col-md-6 text-justify">
+          <u>Head</u>
+          <ul class="ab">
+            <li>Prof. Dr. Francis Impens</li>
+          </ul>
+          <u>MS operators & technicians</u>
+          <ul class="ab">
+            <li>An Staes</li>
+            <li>Evy Timmerman</li>
+            <li>Jarne Pauwels</li>
+            <li>Delphi Van Haver</li>
+            <li>Katie Boucher</li>
+            <li>Hans Demol</li>
+          </ul>
+          <u>Data Analysts</u>
+          <ul class="ab">
+            <li>Dr. Teresa Maia</li>
+            <li>Sara Dufour</li>
+          </ul>
+        </div>
+        <div class="col-md-6 text-justify">
+          <img class="center align-left" src='{% static "/Core.jpg" %}' height="300" alt="">
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}  
+         
+
+from home show templateview()
+>>>>>>> 32d9b8ad72d61a1652d2b68f60f37a51daf8d1a9
