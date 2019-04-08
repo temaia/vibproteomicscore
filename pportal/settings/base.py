@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os,sys
-from .acessorio import *
+import json
+
 from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -23,7 +24,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'f=zue$c!65h^ycp0byej*!rw-6%xa#3!+*7!yv&(f1ebqzgjpa'
+
+configfile=os.path.join(BASE_DIR, "static/acessorio.json")
+with open(configfile) as config_file:
+    config = json.load(config_file)
+
+SECRET_KEY = config['SK']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

@@ -19,11 +19,12 @@
 <div class="row">
   <h2 class="dtitle">Experimental design and sample details</h2>  </br>
  <div class="form-row col-12 mb-0">
-    <div class="col-12 mb-0">
+    <div class="form-group col-12 mb-0">
     </br>
-        <p>Please find below a file template with your experimental design and sample details, including pre-assigned sample names.</p>
-        <p>We kindly ask you to confirm the information entered, complete the sample amount information and submit the finalized version.</p>
-      </div></div>
+        <p >Please find below a file template with your experimental design and sample details, including pre-assigned sample names.</p>
+
+        <p >We kindly ask you to confirm the information entered, complete the sample amount information and submit the finalized version.</p>
+   </div></div>
 <div class="form-row col-10 mb-0">
     <div class = "form-group col-10 mb-0">
     <a href= "{{ user.username|addstr }}" download>Experimental design and Sample details template</a>
@@ -41,19 +42,25 @@
       </div>
 
 <br/>
-<div class="form-row col-12 center">
+<div class="container medind">
+
 {% if wizard.steps.prev %}
+
 <button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
 <button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
 {% endif %}
 <input type="submit" name="submit" class="btn btn-sm" value="{% trans "next step" %}" />
 </div>
+</div>
 <div class="form-row col-12 center">
+    <div class="meddind">
 <p><i><font size="2.8">Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </font></i></p>
 </div>
+</div>
+
 </form>
   </div>
-   </div>
+  </div>
 
 {% endblock %}
 

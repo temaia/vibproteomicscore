@@ -18,9 +18,10 @@
   <div class='container'>
 <div class="row">
   <h2 class="dtitle">Terms of Use</h2>  </br>
- <div class="form-row col-12 mb-0">
-
-    <div class="col-11 mb-0">
+   <div class="form-row col-12 mb-0">
+    <div class="col-12 mb-0">
+       <div class="form-group col-12 mb-0"></br>
+        <p >Before submitting the form, please read carefully our Terms of Use.</p>
       </br>
 <ol>
   <li><span class="fond-weight-bold">Delivery terms</span>
@@ -68,34 +69,41 @@ Adequate conditions and scheduling for shipment of samples has to be agreed with
   </li>
 </ol> 
 </div>
+</div>
+</div>
+ <div class="form-row col-12 mb-0">
 <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
 
 {% load crispy_forms_tags %}
 {{ wizard.management_form }}
 
-    <div class="form-row col-12 mb-0">
+
     <div class="form-group col-12 mb-0">
       {{ form.TermsOfUse|as_crispy_field }}
      </div>
       </div>
 
 
-<br/>
-<div class="form-row col-12 center">
+</br>
+<div class="container medind">
+
 {% if wizard.steps.prev %}
+</br>
 <button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
 <button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
 {% endif %}
 <input type="submit" name="submit" class="btn btn-sm" value="{% trans "submit" %}" />
 </div>
+</div>
 <div class="form-row col-12 center">
+    <div class="medind">
 <p><i><font size="2.8">Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </font></i></p>
 </div>
+</div>
+
 </form>
   </div>
-   </div>
-     </div>
-  
+  </div>
       
 {% endblock %}
 

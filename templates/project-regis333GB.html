@@ -22,22 +22,33 @@
 
 {% load crispy_forms_tags %}
 {{ wizard.management_form }}
-       <div class="form-row col-10 mb-0 ">
+       <div class="form-row col-9 mb-0 ">
+    <div class="form-group col-8 mb-0">
+       {{ form.Setup|as_crispy_field }}
+     </div>
+            </div>
+    <div class="form-row col-9 mb-0 formsub" id="SDBCheckF" style="display:none;">
     <div class="form-group col-7 mb-0">
+       {{ form.Gel_file|as_crispy_field }}
+     </div>
+            </div>
+       <div class="form-row col-9 mb-0 ">
+    <div class="form-group col-8 mb-0">
        {{ form.Species|as_crispy_field }}
      </div>
             </div>
-     <div class="form-row col-10 mb-0 ">
-      <div class="form-group col-7 mb-0">
+     <div class="form-row col-9 mb-0 ">
+          <div class="form-group col-8 mb-0">
     <div id="div_id_2-Sequence_Database_Public_Availability" class="form-group"> 
        <label for="id_2-Sequence_Database_Public_Availability_0" class="col-form-label  requiredField">
                 Protein sequence database publically available?<span class="asteriskField">*</span>
             </label>
+
     <div class="">
       <div class="form-check">
         <label for="id_id_2-Sequence_Database_Public_Availability_0_1" class="form-check-label">
-            <input type="radio" class="form-check-input" name="2-Sequence_Database_Public_Availability" id="id_id_2-Sequence_Database_Public_Availability_0_1" onchange="LabelCheck(this);" value="True">
-            Yes
+            <input type="radio" class="form-check-input" name="2-Sequence_Database_Public_Availability" id="id_id_2-Sequence_Database_Public_Availability_0_1" onchange="LabelCheck(this);" value="True">Yes
+      
         </label>
       </div>
     
@@ -50,7 +61,7 @@
     </div>  
     </div>
          </div>
-          </div>
+                  </div>
      <div class="form-row col-9 mb-0 formsub" id="SDBCheckT" style="display:none;">
     <div class="form-group col-7 mb-0">
        {{ form.Sequence_database_name|as_crispy_field }}
@@ -61,16 +72,24 @@
        {{ form.Sequence_database_file|as_crispy_field }}
      </div>
             </div>
-     <div class="form-row col-10 mb-0 ">
-    <div class="form-group col-7 mb-0">
-       {{ form.Sample_Type|as_crispy_field }}
+ <div class="form-row col-9 mb-0 ">
+    <div class="form-group col-8 mb-0">
+       {{ form.PAGEInfo|as_crispy_field }}
+     </div>
+            </div>
+  <div class="form-row col-8 mb-0">
+    <div class="form-group col-4 mb-0">
+       {{ form.PolyAcrylPercentage|as_crispy_field }}
+     </div></div>
+    <div class="form-row col-8 mb-0"> 
+    <div class="form-group col-4 mb-0">
+       {{ form.StainingMethod|as_crispy_field }}
+     </div>
     </div>
-        </div>
-    <div class="form-row col-9 mb-0 formsub">
-    <div class="form-group col-7 mb-0 ">
-       {{ form.Buffer_composition|as_crispy_field }}
-       </div>
-    </div>
+        <div class="form-row col-8 mb-0"> 
+    <div class="form-group col-4 mb-0">
+       {{ form.PAGEType|as_crispy_field }}
+     </div></div>
 
 <br/>
 <div class="container medind">
@@ -92,6 +111,7 @@
   </div>
   </div>
 {% endblock %}
+
 
 {% block extra_js %}
 <script>

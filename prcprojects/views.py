@@ -3,32 +3,18 @@
 # vim: set fileencoding=utf-8
 
 #####from django.core.urlresolvers import reverse
+import json
 from django.urls import reverse
 from django.conf import settings
 from youtrack.connection import Connection
 from .acessorio import *
 
-#import requests
-#from django.contrib.auth import logout
-#from django.views.generic import RedirectView
-
-# if form.is_valid():
-#     save_it = form.save(commit=False)
-#     save_it.save()
-#     #send_mail(subject, message, from_email, to_list, fail_silently=False)
-#     subject = 'Thank you for your'
-#     message = 'Welcome to ,,, we very much appeiate. we wil be in touch soon'
-#     from_email=settings.EMAIL_HOST_USER
-#     to_list = [settings.EMAIL_HOST_USER]
-#     send_mail(subject, message, from_email, to_list, fail_silently=False)
 from django.contrib.auth import get_user
+from django.contrib.auth.views import PasswordContextMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.http import is_safe_url
-####from django.utils.http import is_safe_url
-###from django.contrib.auth.forms import AuthenticationForm
-###from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login
-
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, FormView, ListView,RedirectView
 from django.views.generic.detail import SingleObjectMixin 
 from django.views.generic.base import TemplateResponseMixin
@@ -40,54 +26,40 @@ from django.template.loader import render_to_string
 from .models import User,Profile, Analysis
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
-#from .forms import CustomerForm, AnalysisForm,ExpDesignForm
-#from .forms import UserForm, AnalysisForm, ExperimentalDesignForm
-#from django.forms import formset_factory
+from django.contrib.auth.forms import (
+    AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm,
+)
 from django.forms.models import construct_instance 
-#from .forms import CustomerForm, AnalysisForm,Specimen_SGForm
-#from .forms import CustomerForm, AnalysisForm,Specimen_SGForm,Specimen_APMSForm,Specimen_PTMForm, Specimen_GBForm,LoginForm, ExperimentForm, EDForm
-from .forms import AnalysisForm,LoginForm, CustomerForm
-from .forms import Specimen_APMSForm, Specimen_SGForm,Specimen_PTMForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm, EDForm,TOUForm
+
+from .forms import AnalysisForm,LoginForm, CustomerForm#,PasswordResetForm
+from .forms import Specimen_APMSForm, Specimen_SGForm,Specimen_PTMForm,Specimen_GBForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm,ExperimentGBForm, EDForm,TOUForm
 from formtools.wizard.views import SessionWizardView
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
 from .excel_utils import WriteToExcel
 from .excel_utilsapms import WriteToExcel2
+from .excel_utilsgb import WriteToExcel3
 from django.contrib.staticfiles.templatetags.staticfiles import static
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 #import logging
 #logr=logging.getlogger(__name__)
-
+from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.tokens import default_token_generator
 import os
-from django.core.mail import send_mail
-
 import sys
 #sys.path.insert(0, '/home/pportal/dev2/src/lib/python2.7/site-packages/youtrack/')
 # authenticating
 import http.client, urllib.request, urllib.error
 
-#import socks
 from youtrack import connection
 import csv
 #import logging
 ##logr=logging.getlogger(__name__)
-#from django.contrib.formtools.wizard.views import SessionWizardView
 
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
-
-# def index(request):
-#     return render(request, 'ss.html')
-
-
-# class CWizard(SessionWizardView):
-#     def done(self, form_list, **kwargs):
-#       return render(self.request, 'donee.html', {
-#       'form_data': [form.cleaned_data for form in form_list],
-#       })
 
 class LoginView(FormView):
     form_class=LoginForm
@@ -176,8 +148,48 @@ class LogoutView(TemplateView):
 #@login_required
 #@transaction.atomic
 
-#cleaned_data = wizard.get_cleaned_data_for_step('paytype') or {'method': 'none'}
 
+# class PasswordResetView(PasswordContextMixin, FormView):
+#     email_template_name = 'registration/password_reset_email.html'
+#     extra_email_context = None
+#     form_class = PasswordResetForm
+#     from_email = None
+#     html_email_template_name = None
+#     subject_template_name = 'registration/password_reset_subject.txt'
+#     success_url = reverse_lazy('password_reset_done')
+#     template_name = 'registration/password_reset_form.html'
+#     title = ('Password reset')
+#     token_generator = default_token_generator
+
+#     @method_decorator(csrf_protect)
+#     def dispatch(self, *args, **kwargs):
+#         return super().dispatch(*args, **kwargs)
+
+#     def form_valid(self, form):
+#         opts = {
+#             'use_https': self.request.is_secure(),
+#             'token_generator': self.token_generator,
+#             'from_email': self.from_email,
+#             'email_template_name': self.email_template_name,
+#             'subject_template_name': self.subject_template_name,
+#             'request': self.request,
+#             'html_email_template_name': self.html_email_template_name,
+#             'extra_email_context': self.extra_email_context,
+#         }
+#         form.save(**opts)
+#         return super().form_valid(form)
+
+
+# INTERNAL_RESET_URL_TOKEN = 'set-password'
+# INTERNAL_RESET_SESSION_TOKEN = '_password_reset_token'
+
+
+
+#cleaned_data = wizard.get_cleaned_data_for_step('paytype') or {'method': 'none'}
+def youtrack_get():
+    with open(os.path.join(settings.BASE_DIR, "static/acessorio.json")) as config_file:
+        config = json.load(config_file)
+        return(config["YTTOKR"])
 
 
 FORMS = [("0", CustomerForm),
@@ -208,6 +220,12 @@ TEMPLATESSG = {"0": "project-regis111.html",
              "3": "project-regis444.html",
              "4": "project-regis555.html",
              "5": "project-regis666.html"}
+# TEMPLATESSG = {"0": "project-regis111.html",
+#              "1": "project-regis222.html",
+#              "2": "project-regis333.html",
+#              "3": "project-regis444.html",
+#              "4": "project-regis555.html",
+#              "5": "project-regis666.html"}
 
 # TEMPLATESSG = {"0": "project-regis11.html",
 #               "1": "project-regis22.html",
@@ -240,6 +258,20 @@ TEMPLATESAPMS = {"0": "project-regis111.html",
              "1": "project-regis222.html",
              "2": "project-regis333APMS.html",
              "3": "project-regis44APMS.html",
+             "4": "project-regis555.html",
+             "5": "project-regis666.html"}
+
+FORMSGB= [("0", CustomerForm),
+            ("1", AnalysisForm),
+         ("2", Specimen_GBForm),
+         ("3",ExperimentGBForm),
+         ("4", EDForm),
+          ("5", TOUForm)]
+
+TEMPLATESGB = {"0": "project-regis111.html",
+             "1": "project-regis222.html",
+             "2": "project-regis333GB.html",
+             "3": "project-regis444.html",
              "4": "project-regis555.html",
              "5": "project-regis666.html"}
 
@@ -286,6 +318,7 @@ class ContactWizardSG(SessionWizardView):
     instance=None
     file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT,'seqdbs'))
     def get_template_names(self):
+        #return [TEMPLATESSG[self.steps.current]]
         return [TEMPLATESSG[self.steps.current]]
     #def process_form_data(form_list):
      #   form_data = [form.get_cleaned_data for form in form_list] 
@@ -353,13 +386,19 @@ class ContactWizardSG(SessionWizardView):
         Project_ID = analysis[0]['Project_ID']
         Contact_Person = analysis[0]['Name'].split(',')[0]
         subject = '[VIB Proteomics Core, Project registration confirmation] '+analysis[0]['Project_ID']
-        message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
+        #message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
         html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
-        from_email=settings.DEFAULT_FROM_EMAIL
+        from_email=settings.EMAIL_HOST_USER
         to_list = [self.request.user.email]
-        send_mail(subject, message, from_email, to_list, html_message=html_message, fail_silently=False)
+        #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
+        #message = render_to_string(template1, {'user': user})
+        bcc = [settings.ADMINS[0][1]]
+        msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
+        msg.content_subtype = "html"
+        msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
+        msg.send()
         #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
-        yt = Connection(url='https://youtrack.ugent.be', token='perm:cm9vdA==.Y29sbGE=.FfNqw1Jw4mi7UgOnAkm2Sh9DldgIbt') #@
+        yt = Connection(url='https://youtrack.ugent.be', token=youtrack_get()) #@
         summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
         #Project_ID = "PRC-321" #@
         #try:
@@ -373,28 +412,27 @@ class ContactWizardSG(SessionWizardView):
           Sequence_database_name = ''
         sdbf = False
         if analysis[2]['Sequence_database_file'] is not None:
+          sdbf = True
           Sequence_database_file= analysis[2]['Sequence_database_file']
-          sdbf=True
         else:
           Sequence_database_file = ''
+        if analysis[2]['Buffer_composition'] is not None:
+          Buffer_composition= analysis[2]['Buffer_composition']
+        else:
+          Buffer_composition = ''
         if analysis[3]['Isotopic_labeling_details'] is not None:
           Isotopic_labeling_details = analysis[3]['Isotopic_labeling_details']
         else:
           Isotopic_labeling_details = ''
-        #if analysis[2]['Sequence_database_file'] is not None:
-        #  Sequence_database_file= analysis[2]['Sequence_database_file']
-        #  sdbf=True
-        #else:
-        #  Sequence_database_file = ''
 
-        #if analysis[3]['Other_information'] is not None:
-        #  Other_information = analysis[3]['Other_information']
-        #else:
-        #  Other_information = ''
+        if analysis[3]['Other_information'] is not None:
+          Other_information = analysis[3]['Other_information']
+        else:
+          Other_information = ''
         description = "#User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n#Sample information" \
               + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
-              + "\nSequence_Database_Name: " + Sequence_database_name+"\nSequence_database_file: " + str(Sequence_database_file) + "\n\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
-              + " " #+ Other_information
+              + "\nSequence_Database_Name: " + Sequence_database_name+"\nSequence_database_file: " + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
+              + Other_information
         yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
                 description=description)
 
@@ -496,7 +534,7 @@ class ContactWizardPTM(SessionWizardView):
         #analysisM=form_dict['1'].save()
         #print(form_dict.keys())
         #customer = Profile()
-        print("A0"+ str(analysis[0]))
+        #print("A0"+ str(analysis[0]))
         userid = get_user(self.request)
         #print("F0" + str(form_dict['0']))
         customer,created = Profile.objects.update_or_create(user_id=self.request.user, defaults=analysis[0])
@@ -543,13 +581,19 @@ class ContactWizardPTM(SessionWizardView):
         Project_ID = analysis[0]['Project_ID']
         Contact_Person = analysis[0]['Name'].split(',')[0]
         subject = '[VIB Proteomics Core, Project registration confirmation] '+analysis[0]['Project_ID']
-        message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
+        #message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
         html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
         from_email=settings.EMAIL_HOST_USER
         to_list = [self.request.user.email]
-        send_mail(subject, message, from_email, to_list, html_message=html_message, fail_silently=False)
+        #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
+        #message = render_to_string(template1, {'user': user})
+        bcc = [settings.ADMINS[0][1]]
+        msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
+        msg.content_subtype = "html"
+        msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
+        msg.send()
         #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
-        yt = Connection(url='https://youtrack.ugent.be', token='perm:cm9vdA==.Y29sbGE=.FfNqw1Jw4mi7UgOnAkm2Sh9DldgIbt') #@
+        yt = Connection(url='https://youtrack.ugent.be', token=youtrack_get()) #@
         summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
         #Project_ID = "PRC-321" #@
         #try:
@@ -567,18 +611,22 @@ class ContactWizardPTM(SessionWizardView):
           sdbf=True
         else:
           Sequence_database_file = ''
+        if analysis[2]['Buffer_composition'] is not None:
+          Buffer_composition= analysis[2]['Buffer_composition']
+        else:
+          Buffer_composition = ''
         if analysis[3]['Isotopic_labeling_details'] is not None:
           Isotopic_labeling_details = analysis[3]['Isotopic_labeling_details']
         else:
           Isotopic_labeling_details = ''
-        #if analysis[3]['Other_information'] is not None:
-        #  Other_information = analysis[3]['Other_information']
-        #else:
-        #  Other_information = ''
+        if analysis[3]['Other_information'] is not None:
+          Other_information = analysis[3]['Other_information']
+        else:
+          Other_information = ''
         description = "#User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n#Sample information" \
               +  "\nPTM(s) under study: "+ analysis[2]['PTM'] + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
-              + "\nSequence_Database_Name:" + Sequence_database_name+"\nSequence_database_file:" + str(Sequence_database_file) + "\n\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
-              + " " #+ Other_information
+              + "\nSequence_Database_Name:" + Sequence_database_name+"\nSequence_database_file:" + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
+              + Other_information
         yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
                 description=description)
 
@@ -632,12 +680,12 @@ class ContactWizardPTM(SessionWizardView):
             #Analysis_Type = self.request.user.profile.Main_Analysis_Type
             initial.update({'Project_ID':Project_ID, 'Email':Email})
             return initial
-        # if step=='1':
-        #     form_class=self.form_list[step]
-        #     Main_analysis_type = self.request.user.Main_analysis_type
-        #     #Analysis_Type = self.request.user.profile.Main_Analysis_Type
-        #     initial.update({'Main_analysis_type':Main_analysis_type})
-        #     return initial
+        if step=='1':
+            form_class=self.form_list[step]
+            Main_analysis_type = self.request.user.Main_analysis_type
+            #Analysis_Type = self.request.user.profile.Main_Analysis_Type
+            initial.update({'Main_analysis_type':Main_analysis_type})
+            return initial
         # #if step == '3':
          #   form_class = self.form_list[step]
             #Issue = self.request.user.profile.Issue + '-S' 
@@ -696,7 +744,7 @@ class ContactWizardAPMS(SessionWizardView):
         #analysisM=form_dict['1'].save()
         #print(form_dict.keys())
         #customer = Profile()
-        print("A0"+ str(analysis[0]))
+        #print("A0"+ str(analysis[0]))
         userid = get_user(self.request)
         #print("F0" + str(form_dict['0']))
         customer,created = Profile.objects.update_or_create(user_id=self.request.user, defaults=analysis[0])
@@ -743,13 +791,19 @@ class ContactWizardAPMS(SessionWizardView):
         Project_ID = analysis[0]['Project_ID']
         Contact_Person = analysis[0]['Name'].split(',')[0]
         subject = '[VIB Proteomics Core, Project registration confirmation] '+analysis[0]['Project_ID']
-        message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
+        #message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
         html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
         from_email=settings.EMAIL_HOST_USER
         to_list = [self.request.user.email]
-        send_mail(subject, message, from_email, to_list, html_message=html_message, fail_silently=False)
+        #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
+        #message = render_to_string(template1, {'user': user})
+        bcc = [settings.ADMINS[0][1]]
+        msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
+        msg.content_subtype = "html"
+        msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
+        msg.send()
         #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
-        yt = Connection(url='https://youtrack.ugent.be', token='perm:cm9vdA==.Y29sbGE=.FfNqw1Jw4mi7UgOnAkm2Sh9DldgIbt') #@
+        yt = Connection(url='https://youtrack.ugent.be', token=youtrack_get()) #@
         summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
         #Project_ID = "PRC-321" #@
         #try:
@@ -757,10 +811,18 @@ class ContactWizardAPMS(SessionWizardView):
           Other_institution = analysis[0]['Other_institution']
         else:
           Other_institution = ''
-        if analysis[2]['Bait_Molecule_Protein'] is not None:
-         Bait_Molecule_Protein = analysis[2]['Bait_Molecule_Protein']
+        if analysis[2]['Buffer_composition'] is not None:
+          Buffer_composition= analysis[2]['Buffer_composition']
         else:
-         Bait_Molecule_Protein = ''
+          Buffer_composition = ''
+        if analysis[2]['Bait_Molecule_Protein'] is not None:
+          Bait_Molecule_Protein = analysis[2]['Bait_Molecule_Protein']
+        else:
+          Bait_Molecule_Protein = ''
+        if analysis[2]['Bait_Molecule']=='True':
+          Bait_Molecule = 'Protein'
+        else:
+          Bait_Molecule = 'Other type of bait'
         sdbf = False
         if analysis[2]['Bait_sequence_file'] is not None:
          Bait_sequence_file= str(analysis[2]['Bait_sequence_file'])
@@ -783,16 +845,16 @@ class ContactWizardAPMS(SessionWizardView):
          AbAmount= analysis[2]['AbAmount']
         else:
          AbAmount = ''  
-        #if analysis[3]['Other_information'] is not None:
-        # Other_information = analysis[3]['Other_information']
-        #else:
-        # Other_information = ''
+        if analysis[3]['Other_information'] is not None:
+          Other_information = analysis[3]['Other_information']
+        else:
+          Other_information = ''
         description = "#User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n#Sample information" \
-              + "\nSample_Species: "+ analysis[2]['Species']  + "\nBait_Molecule: "+ analysis[2]['Bait_Molecule'] + "\nBait_Molecule_Protein: "+ Bait_Molecule_Protein + "\nBait_sequence_file: "+ Bait_sequence_file + "\nBait_Molecule_other: "+ Bait_Molecule_other \
+              + "\nSample_Species: "+ analysis[2]['Species'] + "\nSample_Type: " + analysis[2]['Sample_Type'] + "\nBuffer_composition: " + Buffer_composition + "\nBait_Molecule: "+ Bait_Molecule + "\nBait_Molecule_Protein: "+ Bait_Molecule_Protein + "\nBait_sequence_file: "+ Bait_sequence_file + "\nBait_Molecule_other: "+ Bait_Molecule_other \
               + "\nAntibodies: "+Antibodies + "\nAbSource: "+ AbSource + "\nAbAmount: "+ AbAmount \
               + "\nBeads: "+ analysis[2]['Beads'] + "\nBeadsSource: "+ analysis[2]['BeadsSource'] + "\nBeadsAmount: "+ analysis[2]['BeadsAmount'] \
               + "\n\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] + "\nOther information: " \
-              + " " #+ Other_information
+              + Other_information
         yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
                 description=description)
 
@@ -834,12 +896,6 @@ class ContactWizardAPMS(SessionWizardView):
             #Analysis_Type = self.request.user.profile.Main_Analysis_Type
             initial.update({'Main_analysis_type':Main_analysis_type})
             return initial
-        #if step == '3':
-         #   form_class = self.form_list[step]
-            #Issue = self.request.user.profile.Issue + '-S' 
-            #form_class['Generic_Sample_Name'] = self.request.user.profile.Issue 
-            #initial.update({'Generic_Sample_Name':Analysis_Type})
-            #return initial
         if step == '4':
             form_class = self.form_list[step]
             #print(dir(self.storage))
@@ -859,7 +915,7 @@ class ContactWizardAPMS(SessionWizardView):
             #get_cleaned_data_for_step
             #samplename = prev_data.get('Generic_Sample_Name','')
             #return samplename
-            return self.initial_dict.get(step, prev_data)
+            return self.initial_dict.get(step, prev_data) 
             #return self.initial_dict.get(step, {samplename:'samplename'})
     #@method_decorator(login_required)
     #def dispatch(self, *args, **kwargs):
@@ -890,7 +946,7 @@ class ContactWizardGB(SessionWizardView):
         #analysisM=form_dict['1'].save()
         #print(form_dict.keys())
         #customer = Profile()
-        print("A0"+ str(analysis[0]))
+        #print("A0"+ str(analysis[0]))
         userid = get_user(self.request)
         #print("F0" + str(form_dict['0']))
         customer,created = Profile.objects.update_or_create(user_id=self.request.user, defaults=analysis[0])
@@ -937,13 +993,19 @@ class ContactWizardGB(SessionWizardView):
         Project_ID = analysis[0]['Project_ID']
         Contact_Person = analysis[0]['Name'].split(',')[0]
         subject = '[VIB Proteomics Core, Project registration confirmation] '+analysis[0]['Project_ID']
-        message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
+        #message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
         html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
         from_email=settings.EMAIL_HOST_USER
-        to_list = [settings.EMAIL_HOST_USER]
-        send_mail(subject, message, from_email, to_list, html_message=html_message, fail_silently=False)
+        to_list = [self.request.user.email]
+        #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
+        #message = render_to_string(template1, {'user': user})
+        bcc = [settings.ADMINS[0][1]]
+        msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
+        msg.content_subtype = "html"
+        msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
+        msg.send()
         #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
-        yt = Connection(url='https://youtrack.ugent.be', token='perm:cHJjc2l0ZQ==.cHdlYi10b2s=.epNpU5rPRZxq3rYGhAR3tZozc8w0am') #@
+        yt = Connection(url='https://youtrack.ugent.be', token=youtrack_get()) #@
         summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
         #Project_ID = "PRC-321" #@
         #try:
@@ -955,6 +1017,7 @@ class ContactWizardGB(SessionWizardView):
           Sequence_database_name = analysis[2]['Sequence_database_name']
         else:
           Sequence_database_name = ''
+        sdbf = False
         if analysis[2]['Sequence_database_file'] is not None:
           Sequence_database_file= analysis[2]['Sequence_database_file']
           sdbf=True
@@ -964,28 +1027,41 @@ class ContactWizardGB(SessionWizardView):
           Isotopic_labeling_details = analysis[3]['Isotopic_labeling_details']
         else:
           Isotopic_labeling_details = ''
-        #if analysis[3]['Other_information'] is not None:
-        #  Other_information = analysis[3]['Other_information']
-        #else:
-        #  Other_information = ''
+        if analysis[3]['Other_information'] is not None:
+          Other_information = analysis[3]['Other_information']
+        else:
+          Other_information = ''
+
+
         description = "#User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n#Sample information" \
+              + "\nSetup: "+ analysis[2]['Setup'] + '\nGel_file: ' + str(analysis[2]['Gel_file']) \
               + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
-              + "\nSequence_Database_Name:" + Sequence_database_name+"\nSequence_database_file:" + str(Sequence_database_file) + "\n\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
-              + " " #+ Other_information
+              + "\nSequence_Database_Name: " + Sequence_database_name+"\nSequence_database_file: " + str(Sequence_database_file) \
+              + "\nPAGE Info: "+ analysis[2]['PAGEInfo'] + '\nPA-Percentage: ' + str(analysis[2]['PolyAcrylPercentage']) \
+              + "\nStaining Method: "+ analysis[2]['StainingMethod'] + '\nPAGEType: ' + str(analysis[2]['PAGEType']) \
+              + "\n\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
+              + Other_information
+
         yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
                 description=description)
 
         yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
-        # #yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_Leader']  ))
+        yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
         # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
-        # yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
-        # yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
-        # yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
-        # if not analysis[1]['Data_analysis']:
-        #     yt.execute_command(Project_ID, "tag nDA")
+        yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
+        yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
+        yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
+        if analysis[1]['Data_analysis']:
+             yt.execute_command(Project_ID, "tag nDA")
         #upload_file = form_list[2].cleaned_data['Sequence_database_file']
         #upload_file = "media/Cumulative2.png"
-        #yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
+        #if sdbf:
+        #    yt.create_attachment("PRC-321",name=Sequence_database_file,content='../media/ED/'+upload_file,author_login ="prcsite")
+        #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
+        if sdbf:
+            yt.create_attachment(Project_ID,name="Sequence_database_file.fasta",content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
+        yt.create_attachment(Project_ID,name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
+        #yt.create_attachment("PRC-321",name='ed.xlsx',content=os.path.join(settings.MEDIA_ROOT, 'ED/Experimental_design_PRC-20.xlsx'),author_login ="prcsite")    
         #yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
         return render(self.request,'done.html',{
             'formdict': formdict,
@@ -995,7 +1071,6 @@ class ContactWizardGB(SessionWizardView):
             #'fieldnames':fieldvalues,
             #'upload_file' : upload_file,
             })
-    
     def get_form_initial(self, step):
         """
         Set projet id and email for step1
@@ -1036,14 +1111,12 @@ class ContactWizardGB(SessionWizardView):
             #print("s"+str(self.request.user.username))
             prev_data["PID"] = str(self.request.user.username)
             #print(prev_data["PID"])
-            xlsx_data = WriteToExcel(prev_data)
+            xlsx_data = WriteToExcel3(prev_data)
             #response.write(xlsx_data)
             #get_cleaned_data_for_step
             #samplename = prev_data.get('Generic_Sample_Name','')
             #return samplename
             return self.initial_dict.get(step, prev_data)
-            #return self.initial_dict.get(step, {samplename:'samplename'})
-
 
 # User profile
 # =============================
@@ -1066,7 +1139,8 @@ def get_user_profile(request):
 
 
 
-class ProjectInfoView(ListView):
+#class ProjectInfoView(ListView):
+class ProjectInfoView(TemplateView):
     template_name = 'project-info.html'
     # @method_decorator(login_required)
     # def dispatch(self, *args, **kwargs):
@@ -1077,10 +1151,10 @@ class ProjectInfoView(ListView):
     #     print(qs)
     #     print(dir(qs[0]))
     #def get_queryset(self, request, *args, **kwargs):
-    def get_queryset(self):
-        self.object=User.objects.filter(username=self.request.user.username).get()
+    #def get_queryset(self):
+     #   self.object=User.objects.filter(username=self.request.user.username).get()
         #self.object=self.get_object(queryset=User.objects.filter(user=self.request.user))
-        return
+      #  return
         #return super().get(request,*args, **kwargs)
 
     #def get_object(queryset=None):
@@ -1093,24 +1167,38 @@ class ProjectInfoView(ListView):
      #   return self.object.
       #  Profile.objects.filter(user=self.request.user.profile.user)
 
-    def get_context_data(self,**kwargs):
+    def get_context_data(self,*args,**kwargs):
         #url = static("PRC_issues_dailyreport2.csv")
         #print(url)
-        context=super().get_context_data(**kwargs)
-        filepath = os.path.join(settings.BASE_DIR,"static/PRC_issues_dailyreport.csv")
-        with open(filepath, "r") as csvfile: 
+        context=super(ProjectInfoView,self).get_context_data(*args,**kwargs)
+        filepath = os.path.join(settings.BASE_DIR,"static/PRC_issues_dailyreport2all.csv")
+        with open(filepath, "r", encoding='utf-8') as csvfile:
             csvfile_reader=csv.DictReader(csvfile)
             for row in csvfile_reader:
-                if row["YouTrack_id"]==self.object.username:
+                #print(row["YouTrack_id"])
+                #print(row["Median_wTime"])
+                print(self.request.user.username)
+                if row["YouTrack_id"]==self.request.user.username:
+                #if row["YouTrack_id"]=="PRC-4495":
                     context["Project_ID"] = row["YouTrack_id"]
                     context["State"] = row["State"]
-                    context["Scheduling_State"] = row["SchedulingState"]
+                    context["Scheduling_State"] = row["Scheduling_State"]
+                    if row["Scheduling_State"]=='NotScheduled':
+                        context["Scheduling_StateName"] = ', waiting to be processed.'
+                    else:
+                        context["Scheduling_StateName"] = ', currently being processed.'
                     context["Median_wTime"] = row["Median_wTime"]
-                    context["Min_wTime"] = row["Min_wTime"]
+                    #context["Min_wTime"] = row["Min_wTime"]
                     context["today"] = datetime.datetime.now().strftime("%A, %b, %d, %Y")
                     #today = context["today"]
                     pass
-        print(context)
+        statesoutfile =os.path.join(settings.BASE_DIR,"static/PRCCMBPSB_States.json")
+        with open(statesoutfile) as data_file:
+            data_loaded = json.load(data_file)
+            context.update(data_loaded)
+            #print(type(data_loaded["Waiting"]))
+            #return render(request, 'chartjs.html',data_loaded)
+        #print(context["Project_ID"])
         return context
 
 
@@ -1143,7 +1231,7 @@ class ProjectInfoGuestView(ListView):
         #print(url)
         context=super().get_context_data(**kwargs)
         filepath = os.path.join(settings.BASE_DIR,"static/PRC_issues_dailyreport.csv")
-        with open(filepath, "r") as csvfile:   
+        with open(filepath, "r", encoding='utf-8') as csvfile:   
             csvfile_reader=csv.DictReader(csvfile)
             for row in csvfile_reader:
                 if row["YouTrack_id"]==self.object.username:
@@ -1155,7 +1243,7 @@ class ProjectInfoGuestView(ListView):
                     context["today"] = datetime.datetime.now().strftime("%A, %b, %d, %Y")
                     #today = context["today"]
                     pass
-        print(context)
+        #print(context)
         return context
 
 class ProjectInfoGaugeView(ListView):
@@ -1454,179 +1542,26 @@ def manage_users(request):
 # 	template_name = 'project-registration.html'
 # 	success_url = "/"
 
-
-
-class SGView(CreateView):
-    form_class = Specimen_SGForm
-    template_name = 'project-regis_sg.html'
-    #def get(self, request, *args, **kargs):
-     #  context = {}
-      # return render(request, 'project-regis_sg.html', context)
-
-
-class SGView(CreateView):
-    form_class = Specimen_SGForm
-    template_name = 'project-regis_sg.html'
-    #def get(self, request, *args, **kargs):
-     #  context = {}
-      # return render(request, 'project-regis_sg.html', context)
-      
-
 #
-import io
-from django.http import StreamingHttpResponse
+#import io
+#from django.http import StreamingHttpResponse
 from django.views.generic import View
-import xlsxwriter
+#import xlsxwriter
+from django.http import JsonResponse
+class StatesView(View):
+    def get(self, request, *args, **kwargs):
+        statesoutfile ="/home/pportal/dev2Sep18/prcsite/vibproteomicscore/static/PRCCMBPSB_States.json" 
+        with open(statesoutfile) as data_file:
+            data_loaded = json.load(data_file)
+            print(type(data_loaded["Waiting"]))
+            return render(request, 'chartjs.html',data_loaded)
+            # return render(request, 'chartjs.html',{'Waiting':data_loaded['Waiting'],
+            #                                         'Processed':data_loaded['Processed']})
 
+def get_data(request, *args, **kwargs):
+    data = {
+        "Sample Preparation":40,
+        "LC-MS/MS":32,
 
-# def requestt_page(request):
-#     weather_period = 's'
-#     if request.method =='GET':
-#         form = EDForm()
-#         if "excel" in request.GET:
-#             response = HttpResponse(content_type='application/vnd.ms-excel')
-#             response['Content-Disposition'] = 'attachment; filename=ExperimentalDesign.xlsx'
-#             xlsx_data = WriteToExcel()
-#             response.write(xlsx_data)
-#             return response
-#     else:
-#         form = EDForm()
-#     template_name = "project-regis_oo.html"
-#     context = {
-#             'form': form,
-#       #  'town': town,
-#            # 'weather_period': weather_period,
-#     }   
-#     return render(request, template_name, context)       
-
-# def requestt_page():
-#     # Simulate a more complex table read.
-#     return [[1, 2, 3],
-#             [4, 5, 6],
-#             [7, 8, 9]]
-
-
-# class MyView(View):
-
-#     def get(self, request):
-
-#         # Create an in-memory output file for the new workbook.
-#         output = io.BytesIO()
-
-#         # Even though the final file will be in memory the module uses temp
-#         # files during assembly for efficiency. To avoid this on servers that
-#         # don't allow temp files, for example the Google APP Engine, set the
-#         # 'in_memory' Workbook() constructor option as shown in the docs.
-#         workbook = xlsxwriter.Workbook(output)
-#         worksheet = workbook.add_worksheet()
-
-#         # Get some data to write to the spreadsheet.
-#         data = requestt_page()
-
-#         # Write some test data.
-#         for row_num, columns in enumerate(data):
-#             for col_num, cell_data in enumerate(columns):
-#                 worksheet.write(row_num, col_num, cell_data)
-
-#         # Close the workbook before sending the data.
-#         workbook.close()
-
-#         # Rewind the buffer.
-#         output.seek(0)
-
-#         # Set up the Http response.
-#         filename = 'django_simple.xlsx'
-#         response = HttpResponse(
-#             output,
-#             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-#         )
-#         response['Content-Disposition'] = 'attachment; filename=%s' % filename
-
-#         return response
-
-
-# class ProjectInfoView(ListView):
-#     #model = User
-#     context=dict()
-#     template_name = 'project-info.html'
-#     @method_decorator(login_required)
-#     def dispatch(self, *args, **kwargs):
-#         return super(ProjectInfoView, self).dispatch(*args, **kwargs)
-
-#     def get_queryset(self):
-#         qs = Profile.objects.filter(user=self.request.user.profile.user)
-#         print(qs)
-#         print(dir(qs[0]))
-#         #url = static("PRC_issues_dailyreport2.csv")
-#         #print(url)
-#         context=get_context_data(qs)
-#         # with open("PRC_issues_dailyreport2.csv", "r") as csvfile:
-#         #     csvfile_reader=csv.DictReader(csvfile)
-#         #     for row in csvfile_reader:
-#         #         if row["YouTrack_id"]==qs[0].Issue:
-#         #             context["Issue"] = row["YouTrack_id"]
-#         #             context["State"] = row["State"]
-#         #             context["Scheduling_State"] = row["SchedulingState"]
-#         #             context["today"] = datetime.datetime.now().strftime("%A, %b, %d, %Y")
-#         #             today = context["today"]
-#         #             pass
-#         print(context)
-#         return context
-
-#         def get_context_data(self,**kwargs):
-#         #url = static("PRC_issues_dailyreport2.csv")
-#         #print(url)
-#         context=super(ProjectInfoView, self).get_context_data(**kwargs)
-#         with open("PRC_issues_dailyreport2.csv", "r") as csvfile:
-#             csvfile_reader=csv.DictReader(csvfile)
-#             for row in csvfile_reader:
-#                 if row["YouTrack_id"]==qs[0].Issue:
-#                     context["Issue"] = row["YouTrack_id"]
-#                     context["State"] = row["State"]
-#                     context["Scheduling_State"] = row["SchedulingState"]
-#                     context["today"] = datetime.datetime.now().strftime("%A, %b, %d, %Y")
-#                     today = context["today"]
-#                     pass
-#         print(context)
-#         return context
-
-    # def __init__(self,*args, **kwargs):
-    #     super(ProjectInfoView, self).__init__(*args,**kwargs)
-    #     self.queryset = User.objects.filter(user=self.request.user)
-    #     context = super(ProjectInfoView, self).get_context_data(*args, **kwargs)
-    #     context["today"] = datetime.datetime.now().strftime("%A, %b, %d, %Y")
-        
-    #     with open("PRC_issues_dailyreport2.csv", "r") as csvfile:
-    #         csvfile_reader=csv.DictReader(csvfile)
-    #         for row in csvfile_reader:
-    #             if row["YouTrack_id"]==profile.Issue:
-    #                 Issue = user.profile.Issue
-    #                 State = row["State"]
-    #                 Scheduling_State = row["Scheduling_State"]
-    #     context["Issue"] = Issue
-    #     context["State"] = State
-    #     context["Scheduling_State"] = Scheduling_State
-    #     return context 
-    # def get_queryset(self):
-    #     return User.objects.filter(user=self.request.user)
-
-# class ProjectInfoView(TemplateView, ListView):
-#    template_name = 'project-info.html'
-#    def get_context_data(self,*args, **kwargs):
-#        context = super(ProjectInfoView, self).get_context_data(*args, **kwargs)
-#        context["today"] = datetime.datetime.now().strftime("%A, %b, %d, %Y")
-#        user = User.objects.filter(user=self.request.user)
-#        context["Issue"] = user.Issue
-#         with open("PRC_issues_dailyreport2.csv", "r") as csvfile:
-#             csvfile_reader=csv.DictReader(csvfile)
-#             for row in csvfile_reader:
-#                 if row["YouTrack_id"]==user.Issue:
-#                    Issue = user.Issue
-#                    State = row["State"]
-#                    Scheduling_State = row["Scheduling_State"]
-#         context["Issue"] = Issue
-#         context["State"] = State
-#         context["Scheduling_State"] = Scheduling_State
-#         return context 
-#     def get_queryset(self):
-#        return User.objects.filter(user=self.request.user)
+    }
+    return JsonResponse(data)
