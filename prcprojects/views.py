@@ -429,9 +429,9 @@ class ContactWizardSG(SessionWizardView):
           Other_information = analysis[3]['Other_information']
         else:
           Other_information = ''
-        description = "#User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n#Sample information" \
+        description = "# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
               + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
-              + "\nSequence_Database_Name: " + Sequence_database_name+"\nSequence_database_file: " + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
+              + "\nSequence_Database_Name: " + Sequence_database_name+"\nSequence_database_file: " + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
               + Other_information
         yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
                 description=description)
@@ -450,8 +450,10 @@ class ContactWizardSG(SessionWizardView):
         #    yt.create_attachment("PRC-321",name=Sequence_database_file,content='../media/ED/'+upload_file,author_login ="prcsite")
         #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
         if sdbf:
-            yt.create_attachment(Project_ID,name="Sequence_database_file.fasta",content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
-        yt.create_attachment(Project_ID,name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
+            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
+        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="prcsite") 
+        #    yt.create_attachment(Project_ID,name="Sequence_database_file.fasta",content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
+        #yt.create_attachment(Project_ID,name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
         #yt.create_attachment("PRC-321",name='ed.xlsx',content=os.path.join(settings.MEDIA_ROOT, 'ED/Experimental_design_PRC-20.xlsx'),author_login ="prcsite")    
         #yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
         return render(self.request,'done.html',{
@@ -623,9 +625,9 @@ class ContactWizardPTM(SessionWizardView):
           Other_information = analysis[3]['Other_information']
         else:
           Other_information = ''
-        description = "#User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n#Sample information" \
+        description = "# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
               +  "\nPTM(s) under study: "+ analysis[2]['PTM'] + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
-              + "\nSequence_Database_Name:" + Sequence_database_name+"\nSequence_database_file:" + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
+              + "\nSequence_Database_Name:" + Sequence_database_name+"\nSequence_database_file:" + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
               + Other_information
         yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
                 description=description)
@@ -645,8 +647,8 @@ class ContactWizardPTM(SessionWizardView):
         #    yt.create_attachment("PRC-321",name=Sequence_database_file,content='../media/ED/'+upload_file,author_login ="prcsite")
         #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
         if sdbf:
-            yt.create_attachment(Project_ID,name="Sequence_database_file.fasta",content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
-        yt.create_attachment(Project_ID,name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
+            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
+        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="prcsite") 
         return render(self.request,'done.html',{
             'formdict': formdict,
             #'analysisd':form_dict,
@@ -849,11 +851,11 @@ class ContactWizardAPMS(SessionWizardView):
           Other_information = analysis[3]['Other_information']
         else:
           Other_information = ''
-        description = "#User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n#Sample information" \
+        description = "# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
               + "\nSample_Species: "+ analysis[2]['Species'] + "\nSample_Type: " + analysis[2]['Sample_Type'] + "\nBuffer_composition: " + Buffer_composition + "\nBait_Molecule: "+ Bait_Molecule + "\nBait_Molecule_Protein: "+ Bait_Molecule_Protein + "\nBait_sequence_file: "+ Bait_sequence_file + "\nBait_Molecule_other: "+ Bait_Molecule_other \
               + "\nAntibodies: "+Antibodies + "\nAbSource: "+ AbSource + "\nAbAmount: "+ AbAmount \
               + "\nBeads: "+ analysis[2]['Beads'] + "\nBeadsSource: "+ analysis[2]['BeadsSource'] + "\nBeadsAmount: "+ analysis[2]['BeadsAmount'] \
-              + "\n\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] + "\nOther information: " \
+              + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] + "\nOther information: " \
               + Other_information
         yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
                 description=description)
@@ -867,8 +869,8 @@ class ContactWizardAPMS(SessionWizardView):
         if analysis[1]['Data_analysis']:
              yt.execute_command(Project_ID, "tag nDA")
         if sdbf:
-            yt.create_attachment(Project_ID,name="Bait_sequence_file.fasta",content=analysis[2]['Bait_sequence_file'],author_login ="prcsite") 
-        yt.create_attachment(Project_ID,name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
+            yt.create_attachment(Project_ID,name=Bait_sequence_file,content=analysis[2]['Bait_sequence_file'],author_login ="prcsite") 
+        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="prcsite") 
         return render(self.request,'done.html',{
             'formdict': formdict,
             #'analysisd':form_dict,
@@ -1033,13 +1035,13 @@ class ContactWizardGB(SessionWizardView):
           Other_information = ''
 
 
-        description = "#User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n#Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n#Sample information" \
+        description = "# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
               + "\nSetup: "+ analysis[2]['Setup'] + '\nGel_file: ' + str(analysis[2]['Gel_file']) \
               + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
               + "\nSequence_Database_Name: " + Sequence_database_name+"\nSequence_database_file: " + str(Sequence_database_file) \
               + "\nPAGE Info: "+ analysis[2]['PAGEInfo'] + '\nPA-Percentage: ' + str(analysis[2]['PolyAcrylPercentage']) \
               + "\nStaining Method: "+ analysis[2]['StainingMethod'] + '\nPAGEType: ' + str(analysis[2]['PAGEType']) \
-              + "\n\n#Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
+              + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
               + Other_information
 
         yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
@@ -1059,8 +1061,8 @@ class ContactWizardGB(SessionWizardView):
         #    yt.create_attachment("PRC-321",name=Sequence_database_file,content='../media/ED/'+upload_file,author_login ="prcsite")
         #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
         if sdbf:
-            yt.create_attachment(Project_ID,name="Sequence_database_file.fasta",content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
-        yt.create_attachment(Project_ID,name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
+            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
+        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="prcsite") 
         #yt.create_attachment("PRC-321",name='ed.xlsx',content=os.path.join(settings.MEDIA_ROOT, 'ED/Experimental_design_PRC-20.xlsx'),author_login ="prcsite")    
         #yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
         return render(self.request,'done.html',{
