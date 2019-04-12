@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import json
 
-from .acessorio import *
 from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -22,8 +22,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = SK
+configfile=os.path.join(BASE_DIR, "static/acessorio.json")
+with open(configfile) as config_file:
+    config = json.load(config_file)
+
+SECRET_KEY = config['SK']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -175,15 +178,13 @@ EMAIL_HOST = 'vibmail.ugent.be'
 DEFAULT_FROM_EMAIL = 'noreply-vib proteomics core<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
 EMAIL_PORT = 25
 EMAIL_USE_TLS = False
-
-#EMAIL_HOST_USER = 'noreply-prc@vib-ugent.be'
+EMAIL_HOST_USER = 'noreply-prc@vib-ugent.be'
 #EMAIL_HOST_PASSWORD = get_env_variable('EM_PW')
 
 # DEFAULT_FROM_EMAIL = 'teresa.maia@vib-ugent.be' #'noreply-prc@vib-ugent.be'
 ADMINS = [('T Maia', 'teresa.maia@vib-ugent.be')]#,
 #     ('S Dufour', 'sara.dufour@vib-ugent.be')]
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 
 
 #EMAIL_HOST = 'smtp.gmail.com'

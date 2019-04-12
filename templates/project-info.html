@@ -5,7 +5,7 @@
 {% block content2 %}
 <div class='container'>
 <div class="row">
-   <div class="col-12 mr-auto">
+<div class="col-12 mr-auto">
 <div class="card card-default"> 
   <div class="card-header">
     <h6 class="ttitle">Project status</h6> 
@@ -19,33 +19,33 @@
                     <div class="progress-bar"></div>
                   </div>
                   <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">Lorem ipsum.,,</div>
+                 <div class="bs-wizard-info text-center">Lorem ipsum.,,</div>
                 </div>
                 <div class="col-xs-3 bs-wizard-step disabled" id="arrived"><!-- complete -->
                   <div class="text-center bs-wizard-stepnum">Arrived</div>
                   <div class="progress"><div class="progress-bar"></div></div>
                   <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">Lorem ipsum.,,</div>
+                <div class="bs-wizard-info text-center" id = "arrivedinfo">waiting for sample preparation</div>
                 </div>
                 <div class="col-xs-3 bs-wizard-step disabled" id="sample_prep"><!-- complete -->
-                  <div class="text-center bs-wizard-stepnum">Sample_Prep</div>
+                  <div class="text-center bs-wizard-stepnum">Sample Preparation</div>
                   <div class="progress"><div class="progress-bar"></div></div>
                   <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">Lorem ipsum.,,</div>
+                  <div class="bs-wizard-info text-center" id = "spinfo">waiting for LC/MS-MS</div>
                 </div>
                 
-                <div class="col-xs-3 bs-wizard-step disabled"  id="ms_run"><!-- complete -->
+                <div class="col-xs-3 bs-wizard-step disabled" id="ms_run"><!-- complete -->
                   <div class="text-center bs-wizard-stepnum">LC-MS/MS</div>
                   <div class="progress"><div class="progress-bar"></div></div>
                   <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">Lorem ipsum.,,</div>
+                  <div class="bs-wizard-info text-center" id = "msinfo">waiting for data analysis</div>
                 </div>
              
                 <div class="col-xs-3 bs-wizard-step disabled" id="data_analysis"><!-- active -->
                   <div class="text-center bs-wizard-stepnum">Data Analysis</div>
                   <div class="progress"><div class="progress-bar"></div></div>
                   <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">Lorem ipsum.,,</div>
+                  <div class="bs-wizard-info text-center" id = "dainfo">Waiting</div>
                 </div>
 
                 <div class="col-xs-3 bs-wizard-step disabled" id="closed"><!-- active -->
@@ -55,11 +55,11 @@
                   <div class="bs-wizard-info text-center">Lorem ipsum.,,</div>
                       </div>
                 </div>
-              </div>
             </div>
-        </div>
+      </div>
     </div> 
      </div> 
+   </div>
     <div class="row">  
         <div class="col-12 mr-auto">
         <div class="card card-default"> 
@@ -69,7 +69,7 @@
             <div class="card-content">
               <div class="card-body"> 
       <p class="report">Usual waiting time for similar projects: {{ Median_wTime }} days </p>
-      <p class="report">Required processing time for this project: {{ Min_wTime }} days </p>
+<!--       <p class="report">Required processing time for this project: {{ Min_wTime }} days </p> -->
 
         </div>
         </div>
@@ -80,21 +80,22 @@
         <div class="col-12 mr-auto">
         <div class="card card-default"> 
           <div class="card-header">
-            <h6 class="ttitle">Current workload of the core mass spectrometers</h6> 
+            <h6 class="ttitle">Current number of projects per state and scheduling status</h6> 
           </div>
             <div class="card-content">
               <div class="card-body"> 
                 <div class="row">
-
-                <img src='{% static "./MassSpecs/NbExpPerMScustom.PNG" %}' height="300" class="center align-center inner" alt="">
+                  <canvas class="center align-center inner" id="barchartgrouped" width="600px" height="250px"></canvas>
+     
         </div>
         </div>
       </div> 
                     <div class="col-lg-12 col-md-12">
                 <div class="bs-sm">
-                        <p class='status'>Number of active projects per instrument. </p>
+                        <p class='status'>Your project is in the '{{ State }}' state{{ Scheduling_StateName }}</p>
                 </div>
                 </div>
+
       </div> 
      </div>   
 
@@ -113,10 +114,10 @@
                   <p>Orbitrap Fusion Lumos</p>
                 </div>
                 <div class="cb">
-                <img src='{% static "./MassSpecs/OrbitrapFusionLumos.jpg" %}' height="50" class="center align-center" alt="">
+                <img src='{% static "./MassSpecs/OrbitrapFusionLumos.jpg" %}' height="60" class="center align-center" alt="">
                 </div>
                 <div class="cb">
-                  <img src='{% static "./MassSpecs/Lumosed.png" %}' height="60" class="center align-center" alt="">
+                  <img src='{% static "./MassSpecs/Lumosed.svg" %}' height="70" class="center align-center" alt="">
                 </div>
                 </div>
               <div class="d-flex flex-column col-lg-2">
@@ -124,10 +125,10 @@
                    <p>QExactive HF</p>
                 </div>
                 <div class="cb">
-                <img src='{% static "./MassSpecs/QEHF.jpg" %}' height="50" class="center align-center" alt="">
+                <img src='{% static "./MassSpecs/QEHF.jpg" %}' height="60" class="center align-center" alt="">
               </div>
                 <div class="cb">
-                  <img src='{% static "./MassSpecs/QEHFed.png" %}' height="60" class="center align-center" alt="">
+                  <img src='{% static "./MassSpecs/QEHFed.svg" %}' height="70" class="center align-center" alt="">
                 </div>
                 </div>
                <div class="d-flex flex-column col-lg-2">
@@ -135,10 +136,10 @@
                    <p>QExactive HF BioPharma</p>
                                   </div>
                 <div class="cb">
-                <img src='{% static "./MassSpecs/QEHFBioPharma.jpg" %}' height="50" class="center align-center" alt="">
+                <img src='{% static "./MassSpecs/QEHFBioPharma.jpg" %}' height="60" class="center align-center" alt="">
               </div>
                <div class="cb">
-                  <img src='{% static "./MassSpecs/QEHFBioPharmaed.png" %}' height="60" class="center align-center" alt="">
+                  <img src='{% static "./MassSpecs/QEHFBioPharmaed.svg" %}' height="70" class="center align-center" alt="">
                 </div>
                 </div>
                <div class="d-flex flex-column col-lg-2">
@@ -146,10 +147,10 @@
                    <p>QExactive</p>
                                    </div>
                 <div  class="cb">
-                <img src='{% static "./MassSpecs/QExactive.jpg" %}' height="50" class="center align-center" alt="">
+                <img src='{% static "./MassSpecs/QExactive.jpg" %}' height="60" class="center align-center" alt="">
                 </div>
                   <div class="cb">
-                  <img src='{% static "./MassSpecs/QEed.png" %}' height="60" class="center align-center" alt="">
+                  <img src='{% static "./MassSpecs/QEed.svg" %}' height="70" class="center align-center" alt="">
                 </div>
                 </div>
               <div class="d-flex flex-column col-lg-2">
@@ -157,9 +158,9 @@
                    <p>LTQ Orbitrap Elite</p>      
                    </div>           
                 <div class="cb">
-                <img src='{% static "./MassSpecs/LTQOrbitrapElite.jpg" %}' height="50" class="center align-center" alt="">
+                <img src='{% static "./MassSpecs/LTQOrbitrapElite.jpg" %}' height="60" class="center align-center" alt="">
                 <div class="cb">
-                <img src='{% static "./MassSpecs/Eliteed.png" %}' height="60" class="center align-center" alt="">
+                <img src='{% static "./MassSpecs/Eliteed.svg" %}' height="70" class="center align-center" alt="">
                 </div>                
                 </div>
                 </div>
@@ -169,28 +170,12 @@
 
               <div class="col-lg-12 col-md-12">
                 <div class="bs-sm">
-                        <p class='status'> Queueing periods for the instruments, i.e. timespan in weeks until new batches of samples can be processed. </p>
+                        <p class='status'>Graph indicates the number of weeks until all projects currently assigned to the instruments are ended. </p>
                 </div>
                 </div>
                 </div>
           </div>
-       </div>   
-    <div class="row">  
-        <div class="col-12 mr-auto">
-        <div class="card card-default"> 
-          <div class="card-header">
-            <h6 class="ttitle">Workload at the core along the year</h6> 
-          </div>
-            <div class="card-content">
-              <div class="card-body"> 
-                <div class="row">
-
-                <img src='{% static "./MassSpecs/CumFlowC1902_nodate.PNG" %}' height="500" class="center align-center inner" alt="">
-        </div>
-        </div>
-      </div> 
-      </div> 
-     </div>   
+       </div>     
 
 </div>
 </div>
@@ -206,7 +191,7 @@ var SchedulingState =  "{{ Scheduling_State }}"
 // var State = 'Closed';
 function OpenSessionStatusCSS(State){
     if (State == "Created"){
-      $("#created").attr("class", ".col-xs-3 bs-wizard-step complete");
+      $("#created").attr("class", ".col-xs-3 bs-wizard-step active");
       $("#arrived").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#ms_run").attr("class", ".col-xs-3 bs-wizard-step disabled");
@@ -224,10 +209,12 @@ function OpenSessionStatusCSS(State){
     console.log("A");
     $("#created").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#arrived").attr("class", ".col-xs-3 bs-wizard-step complete");
+    $("#arrivedinfo").attr("class", ".col-xs-3 bs-wizard-info displayed");
     $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#ms_run").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#closed").attr("class", ".col-xs-3 bs-wizard-step disabled");
+
 
   }  else if (State == "Sample_Prep" && SchedulingState == "Scheduled"){
     console.log("A");
@@ -243,6 +230,7 @@ function OpenSessionStatusCSS(State){
     $("#created").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#arrived").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step complete");
+    $("#spinfo").attr("class", ".col-xs-3 bs-wizard-info displayed");
     $("#ms_run").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#closed").attr("class", ".col-xs-3 bs-wizard-step disabled");
@@ -261,6 +249,7 @@ function OpenSessionStatusCSS(State){
     $("#arrived").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#ms_run").attr("class", ".col-xs-3 bs-wizard-step complete");
+    $("#msinfo").attr("class", ".col-xs-3 bs-wizard-info displayed");
     $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#closed").attr("class", ".col-xs-3 bs-wizard-step disabled");
     
@@ -283,7 +272,53 @@ function OpenSessionStatusCSS(State){
     
   }
 }
+
 $(document).ready(OpenSessionStatusCSS(State));
+
+var Waiting = JSON.parse("{{ Waiting }}")
+var Processed = JSON.parse("{{ Processed }}")
+console.log("{{ Waiting }}")
+var ctx = document.getElementById("barchartgrouped").getContext('2d');
+Chart.defaults.global.defaultFontFamily = "Arial"
+Chart.defaults.global.defaultFontSize = 16
+let barchartgrouped = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+      labels: ["Sample Preparation", "LC-MS/MS", "Data Analysis"],
+      datasets: [
+        {
+          label: "Waiting",
+          backgroundColor: 'rgba(194,213,238, 0.5)',
+          borderColor: 'rgba(194,213,238, 1)',
+          data: Waiting,
+        }, {
+          label: "In process",
+          backgroundColor: 'rgba(87, 153, 199, 0.5)',
+          borderColor: 'rgba(87, 153, 199, 1)',
+          data: Processed,
+        }
+      ]
+    },
+    options: {
+              responsive:false,
+              scales: {
+            xAxes: [{
+                stacked: true,
+            scaleLabel: {
+                    display:true,
+                    labelString: '# of Projects',
+                },
+            }],
+            yAxes: [{
+                stacked: true,
+            }]
+        }
+    }
+});
+
+
+console.log(barchartgrouped.data.datasets[0].data);
+
 
 </script>
 

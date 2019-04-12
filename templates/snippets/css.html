@@ -17,7 +17,9 @@
 .bs-wizard > .bs-wizard-step {padding: 0; position: relative;}
 .bs-wizard > .bs-wizard-step + .bs-wizard-step {}
 .bs-wizard > .bs-wizard-step .bs-wizard-stepnum {color: #595959; font-size: 16px; margin-bottom: 5px;}
-.bs-wizard > .bs-wizard-step .bs-wizard-info {color: #fff; font-size: 16px;}
+.bs-wizard > .bs-wizard-step .bs-wizard-info {color: #fff; font-size: 16px;width:120px;margin-top: 15px;}
+.bs-wizard > .bs-wizard-step .bs-wizard-info.displayed {color: rgba(27,41,68,0.9); font-size: 16px;width:120px; padding-top: 5px; text-align: center;font-weight: normal;font-style: italic;font-size: 0.95rem;}
+/*.bs-wizard > .bs-wizard-step .bs-wizard-info {color: #fff; font-size: 16px;width:120px;}*/
 .bs-wizard > .bs-wizard-step > .bs-wizard-dot {position: absolute; width: 30px; height: 30px; display: block; background: #fbe8aa; top: 45px; left: 50%; margin-top: -15px; margin-left: -15px; border-radius: 50%;} 
 .bs-wizard > .bs-wizard-step > .bs-wizard-dot:after {content: ' '; width: 14px; height: 14px; background: #fbbd19; border-radius: 50px; position: absolute; top: 8px; left: 8px; } 
 .bs-wizard > .bs-wizard-step > .progress {position: relative; border-radius: 0px; height: 8px; box-shadow: none; margin: 20px 0;}
@@ -32,6 +34,9 @@
 .bs-wizard > .bs-wizard-step:last-child  > .progress {width: 50%;}
 .bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; background-color: #e9ecef }
 /*END Form Wizard*/
+
+
+
 
 /* panel-default */
 .panel-default {
@@ -112,6 +117,14 @@ h5.ttitle {
     -webkit-margin-end: 0px;
 }
 
+h6.dtitle {
+
+    -webkit-margin-before: 0.1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 3px;
+    -webkit-margin-end: 0px;
+}
+
 a.navgar {
     display: block;
     color: white;
@@ -131,6 +144,12 @@ a.indent {
     margin: 40px
 }
 
+/*.padded-multi-line{
+    display:inline;
+    background:orange;
+    box-shadow:20px 0 0 pranga, -20px 0 0 orange;
+}
+*/
 label {
     display: inline-block;
     margin-bottom: .25rem;
@@ -138,7 +157,16 @@ label {
 
 .form-group {
     margin-bottom: 0.5rem;
+    margin-left:2px;
 }
+
+.medind {
+    margin-left:11px;
+}
+.meddind {
+    margin-left:2px;
+}
+
 
 p.fr {
   text-indent: 25px;
@@ -165,6 +193,17 @@ p.fri {
 
     font-style: italic;
 }
+p.report {
+    text-indent: 25px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/*p.miniind {
+    text-indent: 2px;
+
+}*/
+/*.
 
 p.frb {
   text-indent: 25px;
@@ -290,12 +329,14 @@ font-size: 1.5rem;
 .btn {
   background-color: rgba(27,41,68,1);
   color: rgba(255,255,255,1);
+
 }
 
-/*.asteriskField {
+
+.asteriskField {
   display: none;
 }
-*/
+
 
 ul {
     list-style-type: none;
@@ -494,8 +535,8 @@ ul.nav.navbar-nav.navbar-right.bg-grey {
   } 
  @font-face { 
   font-family: 'OpS'; 
-    src: url('../../../static/fonts/OpenSans-Italic.ttf') format("truetype");
-    src: local('../../../static-dev/fonts/OpenSans-Italic.ttf') format("truetype");
+    src: url('../../../static/fonts/OpenSans-LightItalic.ttf') format("truetype");
+    src: local('../../../static-dev/fonts/OpenSans-LightItalic.ttf') format("truetype");
   font-weight: normal;
   font-style: italic;
   } 
@@ -517,7 +558,7 @@ ul.nav.navbar-nav.navbar-right.bg-grey {
 .card-home{
     min-height: 150px;
     /*background-color: rgba(152,174,215,0.3);*/
-    background-color: rgba(27,41,68,0.05);
+    background-color: rgba(247,244,249,1);
 }
 .special-card {
     opacity: 0.3;
@@ -557,12 +598,7 @@ div.cb {
     height: 40px;
 }
 
-p.report {
-    text-indent: 25px;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-/*.nav .navbar-expand-lg .navbar-light .bg-light {
+nav .navbar-expand-lg .navbar-light .bg-light {
   padding-top: 1rem;
 }*/
 

@@ -30,8 +30,8 @@
        {{ form.Project_summary|as_crispy_field }}
      </div>
    </div>
-    <div class="row col-12 ">
-    <div class="col-6 mb-0">
+    <div class="form-row col-12 ">
+    <div class="form-group col-6 mb-0">
       <p>Requested analysis type(s)</p>
       {% for analysistype in user.Main_analysis_type %}
        <p>  <i class="fa fa-check-square"></i> {{ analysistype }}  </p>
@@ -43,16 +43,22 @@
 </div></div>
       
 <br/>
-<div class="form-row col-12 center">
+<div class="container medind">
+
 {% if wizard.steps.prev %}
+
 <button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
 <button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
 {% endif %}
 <input type="submit" name="submit" class="btn btn-sm" value="{% trans "next step" %}" />
 </div>
+</div>
 <div class="form-row col-12 center">
+    <div class="meddind">
 <p><i><font size="2.8">Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </font></i></p>
 </div>
+</div>
+
 </form>
   </div>
   </div>

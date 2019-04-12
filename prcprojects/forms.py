@@ -9,6 +9,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 #from .models import Customer, Analysis, Specimen_SG, Specimen_GB, Specimen_APMS, Specimen_PTM
 #from .models import Analysis,Profile,Specimen_SG, Specimen_GB, Specimen_APMS, Specimen_PTM, User, Experiment
 from .models import User, Analysis,Profile#,Specimen_SG#, Specimen_GB, Specimen_APMS, Specimen_PTM, Experiment
+from django.contrib.auth.tokens import default_token_generator
 #from .models import Analysis,User,Profile#,Specimen_SG#, Specimen_GB, Specimen_APMS, Specimen_PTM, Experiment
 from crispy_forms.helper import FormHelper
 #from crispy_forms.bootstrap import Field, InlineRadios, TabHolder, Tab
@@ -136,7 +137,7 @@ class AnalysisForm(forms.ModelForm):
 		fields = ("Project_title",'Project_summary', "Main_analysis_type","Data_analysis",
 			'Main_analysis_type')
 		widgets = {'Project_summary': forms.Textarea(attrs={'placeholder': 'Provide a 4 line summary of the project explaining the purpose of the analysis',
-			'cols':1,'rows':6}),}
+			'cols':1,'rows':6}),"Main_analysis_type":forms.HiddenInput}
 					#}
 		labels = {'Data_analysis':'Check this box if you only need to receive raw data.'}	
 
@@ -180,6 +181,80 @@ class AnalysisForm(forms.ModelForm):
 
 		#labels = {'Project_summary':'Project_summary'}
 		#help_texts = {'Project_summary':'Provide a 4 line summary'}
+
+class PasswordResetForm(forms.Form):
+    #email = forms.EmailField(label=("Email"), max_length=254)
+    username = forms.CharField(label=("Project_ID"), max_length=254)
+
+    def send_mail(self, subject_template_name, email_template_name,
+                  context, from_email, to_email, html_email_template_name=None):
+        """
+        Send a django.core.mail.EmailMultiAlternatives to `to_email`.
+        """
+        subject = loader.render_to_string(subject_template_name, context)
+        # Email subject *must not* contain newlines
+        subject = ''.join(subject.splitlines())
+        body = loader.render_to_string(email_template_name, context)
+
+        email_message = EmailMultiAlternatives(subject, body, from_email, [to_email])
+        if html_email_template_name is not None:
+            html_email = loader.render_to_string(html_email_template_name, context)
+            email_message.attach_alternative(html_email, 'text/html')
+
+        email_message.send()
+
+    def get_users(self, email):
+        """Given an email, return matching user(s) who should receive a reset.
+
+        This allows subclasses to more easily customize the default policies
+        that prevent inactive users and users with unusable passwords from
+        resetting their password.
+        """
+        print("bu")
+        active_users = UserModel._default_manager.filter(**{
+            '%s__iexact' % UserModel.get_username_field_name(): username,
+            'is_active': True,
+        })
+        print(active_users)
+        # active_users = UserModel._default_manager.filter(**{
+        #     '%s__iexact' % UserModel.get_email_field_name(): email,
+        #     'is_active': True,
+        # })
+        return (u for u in active_users if u.has_usable_password())
+
+    def save(self, domain_override=None,
+             subject_template_name='registration/password_reset_subject.txt',
+             email_template_name='registration/password_reset_email.html',
+             use_https=False, token_generator=default_token_generator,
+             from_email=None, request=None, html_email_template_name=None,
+             extra_email_context=None):
+        """
+        Generate a one-use only link for resetting password and send it to the
+        user.
+        """
+        email = self.cleaned_data["email"]
+        for user in self.get_users(email):
+            if not domain_override:
+                current_site = get_current_site(request)
+                site_name = current_site.name
+                domain = current_site.domain
+            else:
+                site_name = domain = domain_override
+            context = {
+                'email': email,
+                'domain': domain,
+                'site_name': site_name,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                'user': user,
+                'token': token_generator.make_token(user),
+                'protocol': 'https' if use_https else 'http',
+                **(extra_email_context or {}),
+            }
+            self.send_mail(
+                subject_template_name, email_template_name, context, from_email,
+                email, html_email_template_name=html_email_template_name,
+            )
+
 DATAANALYSIS = (
 	(True,'Yes'),
 	(False,'No')
@@ -269,54 +344,31 @@ class Specimen_APMSForm(forms.Form):
 
 	#Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
 	#Sample_Vial = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
-	
 
 
-# shotgun Specimen
-# class Specimen_SG(models.Model):
-# 	Species = models.CharField(max_length=120)
-# 	Taxon_id = models.CharField(max_length=120, null=True)
-# 	Protein_sequence_database_publically_available = models.BooleanField(choices=DATAANALYSIS, null=False,
-# 		default=True)
-# 	Sequence_database_name = models.CharField(max_length=50)
-# 	Sequence_database_file = models.FileField(blank=True, storage=FileSystemStorage(location=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'media')))
-# 	Sample_type_delivered = models.CharField(max_length=50, null=False)
-# 	Buffer_Composition = models.CharField(max_length=300)
-# 	Volume = models.DecimalField(decimal_places=2, max_digits=6)
-# 	VUnit = models.BooleanField(choices=VUNITS, default='μl', null=False,)
-# 	Protein_concentration = models.DecimalField(decimal_places=2, max_digits=6)
-# 	CUnit = models.CharField(max_length=10 , choices=CUNITS,null=False,default='μg/μl', blank=False)
-# 	def __unicode__(self):
-# 		return self.Species 	
-# 	def get_absolute_url(self):
-# 		return reverse('pportal:home')
+class Specimen_GBForm(forms.Form):
+	#Setup = forms.CharField(max_length=120, label="Brief description of the experimental setup & sample preparation", widget=forms.TextInput)
+	Setup = forms.CharField(max_length=300, widget=forms.Textarea(attrs={'placeholder':'', 'rows':2, 'cols':1}),
+	 label="Brief description of the experimental setup & sample preparation", required=False)
+	Gel_file = forms.FileField( required=False,label="Please submit a picture of the gel from which the bands or spots were excised")
+	Species = forms.CharField(max_length=120, label="Sample species and taxonomy ID", widget=forms.TextInput(attrs={'placeholder': 'e.g. Homo sapiens, taxid: 9606'}))
+	#Taxon_id = forms.CharField(max_length=120, required=True)
+	Sequence_Database_Public_Availability = forms.ChoiceField(choices=DATAANALYSIS,
+		 label="Protein sequence database publically available?", widget=forms.RadioSelect)
+	Sequence_database_name = forms.CharField(max_length=50, required=False, label="If 'Yes', sequence database source and/or name:",
+		widget=forms.TextInput(attrs={'placeholder': 'e.g. UNIPROT, "UNIPROT UP000005640 reference proteome"'}))
+	#Sequence_database_file = forms.FileField(blank=True, storage=FileSystemStorage(location=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'media')))
+	Sequence_database_file = forms.FileField( required=False,label="If 'No', please provide a document with protein sequences necessary for database searching, preferentially in FASTA format.")
+	PAGEInfo = forms.CharField(max_length=120, label="Company and catalog number of pre-cast gel", widget=forms.TextInput(attrs={'placeholder': 'e.g. Bio-Rad Mini-Protean, 4561084'})) 
+	PolyAcrylPercentage = forms.CharField(max_length=120, label="Percentage polyacrylamide", widget=forms.TextInput(attrs={'placeholder': 'e.g. 4-15 %'}))
+	StainingMethod = forms.CharField(max_length=120, label="Staining Method",widget=forms.TextInput(attrs={'placeholder':'e.g. Coomassie G-250, Thermo SimplyBlue SafeStain LC6060'}))
+	PAGEType = forms.CharField(max_length=120, label="PAGE type",widget=forms.TextInput(attrs={'placeholder':'e.g. SDS-PAGE or native PAGE'}))
+	#Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet/tissue/protein extract in eppendorf/15 ml tube'}))
+	#Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
+	#Sample_Vial = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
 
-			#	Field('VUnit'),
-			#	Div(PrependedText('VUnit')))
 
 
-# class Specimen_APMSForm(forms.ModelForm):
-# 	#Analysis_type = forms.CharField(choices = Analysis.ANALYSISTYPES)
-# 	class Meta:
-# 		model = Specimen_APMS
-# 		fields = ('Bait_Molecule','IPAntibodies_names',
-# 			'Species',
-# 			'Taxon_id', 'Sequence_Database_Public_Availability',
-# 			'IPAntibodies_Supplier','IPAntibodies_CatalogNumber',
-# 			'Sequence_Database_Source', 
-# 			'Sample_Type','Sample_Vial','Buffer_Composition','Volume','VUnit',
-# 			'Protein_Concentration','CUnit')
-# 		#fields = ('Species',
-# 	#		'Taxon_id', 'Sequence_Database_Public_Availability',
-# 	#		'Sequence_Database_Source','Sequence_Database_File', 
-# 	#		'Sample_Type','Sample_Vial')
-# 		widgets = {'Species': forms.TextInput(attrs={'placeholder': 'e.g. Arabidopsis thaliana, human'}),
-# 					'Taxon_id':forms.TextInput(attrs={'placeholder':'e.g. 3701, 9606'}),
-# 					'Sequence_Database_Public_Availability':forms.RadioSelect,
-# 		 			'Sequence_Database_Source': forms.TextInput(attrs={'placeholder': 'e.g. TAIR, UNIPROT, REFSEQ, EMBL'}),
-# 		 			'Sample_Vial':forms.TextInput(attrs={'placeholder':'e.g. eppendorf tube, 15-ml falcon tube'}),
-# 		 			'Volume':forms.TextInput(attrs={'placeholder':'e.g. eppendorf tube, 15-ml falcon tube'}),
-# 		 			'Protein_Concentration':forms.NumberInput(attrs={ 'step':'0.1'})}
 
 
 # class Specimen_GBForm(forms.ModelForm):
@@ -450,11 +502,11 @@ class ExperimentForm(forms.Form):
 	#Conditions_list = models.CharField(max_length=120, null=True)
 	Nb_replicates_per_condition = forms.IntegerField(label = "Number of replicate samples per condition",widget=forms.NumberInput(attrs={'placeholder':'e.g. 3'}))
 	Nb_samples = forms.IntegerField(label = "Total number of MS samples submitted", widget=forms.NumberInput(attrs={'placeholder':'e.g. 9'}))
-	Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
-	Isotopic_labeling = forms.ChoiceField(choices=DATAANALYSIS , label="Is any isotopic labeling procedure used?", required=False, widget=forms.RadioSelect)
+	#Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
+	Isotopic_labeling = forms.ChoiceField(choices=DATAANALYSIS , label="Is any isotopic labeling procedure used?", required=True, widget=forms.RadioSelect)
 	Isotopic_labeling_details = forms.CharField(label="If 'Yes', which labeling procedure was used?", required=False,
 	 widget=forms.Textarea(attrs={'placeholder':'e.g. SILAC; heavy(Arg6,Lys4), light()','rows':3, 'cols':1}))
-	Other_infomation = forms.CharField(label = "Other relevant information about the samples", required=False, widget=forms.TextInput(attrs={'placeholder':'e.g. presence of PTMs'}))
+	Other_information = forms.CharField(label = "Other relevant information about the samples", required=False, widget=forms.TextInput(attrs={'placeholder':'e.g. presence of PTMs'}))
 
 
 class ExperimentPTMForm(forms.Form):
@@ -470,15 +522,15 @@ class ExperimentPTMForm(forms.Form):
 	#Conditions_list = models.CharField(max_length=120, null=True)
 	Nb_replicates_per_condition = forms.IntegerField(label = "Number of replicate samples per condition",widget=forms.NumberInput(attrs={'placeholder':'e.g. 3'}))
 	Nb_samples = forms.IntegerField(label = "Total number of MS samples submitted", widget=forms.NumberInput(attrs={'placeholder':'e.g. 9'}))
-	Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
-	Isotopic_labeling = forms.ChoiceField(choices=DATAANALYSIS , label="Is any isotopic labeling procedure used?", required=False, widget=forms.RadioSelect)
+	#Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
+	Isotopic_labeling = forms.ChoiceField(choices=DATAANALYSIS , label="Is any isotopic labeling procedure used?", required=True, widget=forms.RadioSelect)
 	Isotopic_labeling_details = forms.CharField(label="If 'Yes', which labeling procedure was used?", required=False,
 	 widget=forms.Textarea(attrs={'placeholder':'e.g. SILAC; heavy(Arg6,Lys4), light()','rows':3, 'cols':1}))
-	Other_infomation = forms.CharField(label = "Other relevant information about the samples", required=False)
+	Other_information = forms.CharField(label = "Other relevant information about the samples", required=False)
 
 class ExperimentAPMSForm(forms.Form):
 
-	Experimental_conditions = forms.CharField(label = "Experimental conditions", widget=forms.Textarea(attrs={'placeholder':'e.g. WT IP, neg. control IP',
+	Experimental_conditions = forms.CharField(label = "Experimental conditions (separated with commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. WT IP, neg. control IP',
 		'rows':2, 'cols':1}))
 	Conditions_to_compare = forms.CharField(label = "Experimental conditions to compare", widget=forms.Textarea(attrs={'placeholder':'e.g. IP with wild type bait vs IP with deletion mutant as negative control',
 		 'rows':3, 'cols':1}))
@@ -488,12 +540,30 @@ class ExperimentAPMSForm(forms.Form):
 	#Conditions_list = models.CharField(max_length=120, null=True)
 	Nb_replicates_per_condition = forms.IntegerField(label = "Number of replicate samples per condition",widget=forms.NumberInput(attrs={'placeholder':'e.g. 3'}))
 	Nb_samples = forms.IntegerField(label = "Total number of MS samples submitted", widget=forms.NumberInput(attrs={'placeholder':'e.g. 9'}))
-	Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
+	#Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
 	#Isotopic_labeling = forms.ChoiceField(choices=DATAANALYSIS , label="Is any isotopic labeling procedure used?", required=False, widget=forms.RadioSelect)
 	#Isotopic_labeling_details = forms.CharField(label="If 'Yes', which labeling procedure was used?", required=False,
 	# widget=forms.Textarea(attrs={'placeholder':'e.g. SILAC; heavy(Arg6,Lys4), light()','rows':3, 'cols':1}))
-	Other_infomation = forms.CharField(label = "Other relevant information about the samples", required=False, widget=forms.TextInput(attrs={'placeholder':'e.g. presence of PTMs, isotopic labeling procedures'}))
+	Other_information = forms.CharField(label = "Other relevant information about the samples", required=False, widget=forms.TextInput(attrs={'placeholder':'e.g. presence of PTMs, isotopic labeling procedures'}))
 
+
+class ExperimentGBForm(forms.Form):
+
+	Experimental_conditions = forms.CharField(label = "Experimental conditions (separated with commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. WT protein, mutant protein',
+		'rows':2, 'cols':1}))
+	Conditions_to_compare = forms.CharField(label = "Experimental conditions to compare", widget=forms.Textarea(attrs={'placeholder':'e.g.WT protein vs mutant protein',
+		 'rows':3, 'cols':1}), required=False)
+	#Nb_Experimental_conditions = models.IntegerField()
+	# maybe instantiate another model called efactor (experimental factor) n times, n (Nb_factors)
+	#Factor_name_lst = models.CharField(max_length=120, null=True)
+	#Conditions_list = models.CharField(max_length=120, null=True)
+	Nb_replicates_per_condition = forms.IntegerField(label = "Number of replicate samples per condition",widget=forms.NumberInput(attrs={'placeholder':'e.g. 3'}))
+	Nb_samples = forms.IntegerField(label = "Total number of gel bands submitted", widget=forms.NumberInput(attrs={'placeholder':'e.g. 6'}))
+	#Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
+	Isotopic_labeling = forms.ChoiceField(choices=DATAANALYSIS , label="Is any isotopic labeling procedure used?", required=True, widget=forms.RadioSelect)
+	Isotopic_labeling_details = forms.CharField(label="If 'Yes', which labeling procedure was used?", required=False,
+	 widget=forms.Textarea(attrs={'placeholder':'e.g. SILAC; heavy(Arg6,Lys4), light()','rows':3, 'cols':1}))	
+	Other_information = forms.CharField(label = "Other relevant information about the samples", required=False, widget=forms.TextInput(attrs={'placeholder':'e.g. presence of PTMs, isotopic labeling procedures'}))
 
 
 	#fields = ('Isotopic_labeling', 'Isotopic_labeling_details','Nb_conditions', 'Conditions_list', 'Nb_samples')
