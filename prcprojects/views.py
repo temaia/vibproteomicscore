@@ -1174,6 +1174,7 @@ class ProjectInfoView(TemplateView):
         #print(url)
         context=super(ProjectInfoView,self).get_context_data(*args,**kwargs)
         filepath = os.path.join(settings.BASE_DIR,"static/PRC_issues_dailyreport2all.csv")
+        filepath2 = os.path.join(settings.BASE_DIR,"static/PRC_MassSpecs.csv")
         with open(filepath, "r", encoding='utf-8') as csvfile:
             csvfile_reader=csv.DictReader(csvfile)
             for row in csvfile_reader:
@@ -1201,6 +1202,18 @@ class ProjectInfoView(TemplateView):
             #print(type(data_loaded["Waiting"]))
             #return render(request, 'chartjs.html',data_loaded)
         #print(context["Project_ID"])
+        ms_lst =['lumos','qehf', 'qehfb', 'qe', 'elite']
+
+        with open(filepath2, "r", encoding='utf-8') as csvfile:
+            csvfile_reader=csv.DictReader(csvfile)
+            i = 0
+            for row in csvfile_reader:
+                temp = int(row["total_running_time_days"])
+                print(temp)
+                if temp > 5:
+                    temp=5
+                context[ms_lst[i]]="Gauge" + str(temp)
+                i+=1
         return context
 
 

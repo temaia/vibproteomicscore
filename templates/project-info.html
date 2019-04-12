@@ -109,15 +109,15 @@
             <div class="d-inline-flex card-content">
               <div class="d-inline-flex card-body"> 
                 <div class="d-flex justify-content-around row">
-              <div class="d-flex flex-column col-lg-2 special-card">
+              <div class="d-flex flex-column col-lg-2">
                 <div class="text-center bs-sm">
                   <p>Orbitrap Fusion Lumos</p>
                 </div>
                 <div class="cb">
-                <img src='{% static "./MassSpecs/OrbitrapFusionLumos.jpg" %}' height="60" class="center align-center" alt="">
+                <img src='{% static "./MassSpecs/OrbitrapFusionLumos.jpg" %}' height="65" class="center align-center" alt="">
                 </div>
                 <div class="cb">
-                  <img src='{% static "./MassSpecs/Lumosed.svg" %}' height="70" class="center align-center" alt="">
+                  <img src='{% static "./MassSpecs/"|add:lumos|add:"ed.svg" %}' height="80" class="center align-center" alt="">
                 </div>
                 </div>
               <div class="d-flex flex-column col-lg-2">
@@ -125,32 +125,32 @@
                    <p>QExactive HF</p>
                 </div>
                 <div class="cb">
-                <img src='{% static "./MassSpecs/QEHF.jpg" %}' height="60" class="center align-center" alt="">
-              </div>
+                <img src='{% static "./MassSpecs/QEHF.jpg" %}' height="65" class="center align-center" alt="">
+                </div>
                 <div class="cb">
-                  <img src='{% static "./MassSpecs/QEHFed.svg" %}' height="70" class="center align-center" alt="">
+                   <img src='{% static "./MassSpecs/"|add:qehf|add:"ed.svg" %}' height="80" class="center align-center" alt="">
                 </div>
                 </div>
                <div class="d-flex flex-column col-lg-2">
                 <div class="text-center bs-sm">
                    <p>QExactive HF BioPharma</p>
-                                  </div>
+                 </div>
                 <div class="cb">
-                <img src='{% static "./MassSpecs/QEHFBioPharma.jpg" %}' height="60" class="center align-center" alt="">
+                <img src='{% static "./MassSpecs/QEHFBioPharma.jpg" %}' height="65" class="center align-center" alt="">
               </div>
                <div class="cb">
-                  <img src='{% static "./MassSpecs/QEHFBioPharmaed.svg" %}' height="70" class="center align-center" alt="">
+                    <img src='{% static "./MassSpecs/"|add:qehfb|add:"ed.svg" %}' height="80" class="center align-center" alt="">
                 </div>
                 </div>
                <div class="d-flex flex-column col-lg-2">
                 <div class="text-center bs-sm">
                    <p>QExactive</p>
-                                   </div>
+                  </div>
                 <div  class="cb">
-                <img src='{% static "./MassSpecs/QExactive.jpg" %}' height="60" class="center align-center" alt="">
+                <img src='{% static "./MassSpecs/QExactive.jpg" %}' height="65" class="center align-center" alt="">
                 </div>
                   <div class="cb">
-                  <img src='{% static "./MassSpecs/QEed.svg" %}' height="70" class="center align-center" alt="">
+                      <img src='{% static "./MassSpecs/"|add:qe|add:"ed.svg" %}' height="80" class="center align-center" alt="">
                 </div>
                 </div>
               <div class="d-flex flex-column col-lg-2">
@@ -158,9 +158,9 @@
                    <p>LTQ Orbitrap Elite</p>      
                    </div>           
                 <div class="cb">
-                <img src='{% static "./MassSpecs/LTQOrbitrapElite.jpg" %}' height="60" class="center align-center" alt="">
+                <img src='{% static "./MassSpecs/LTQOrbitrapElite.jpg" %}' height="65" class="center align-center" alt="">
                 <div class="cb">
-                <img src='{% static "./MassSpecs/Eliteed.svg" %}' height="70" class="center align-center" alt="">
+                   <img src='{% static "./MassSpecs/"|add:elite|add:"ed.svg" %}' height="80" class="center align-center" alt="">
                 </div>                
                 </div>
                 </div>
@@ -188,6 +188,11 @@
 <script>
 var State =  "{{ State }}"
 var SchedulingState =  "{{ Scheduling_State }}"
+var lumos =  "{{ lumos }}"
+var qehf =  "{{ qehf }}"
+var qehfb =  "{{ qehfb }}"
+var qe =  "{{ qe }}"
+var elite =  "{{ elite }}"
 // var State = 'Closed';
 function OpenSessionStatusCSS(State){
     if (State == "Created"){
@@ -318,6 +323,10 @@ let barchartgrouped = new Chart(ctx, {
 
 
 console.log(barchartgrouped.data.datasets[0].data);
+
+console.log(lumos);
+
+
 
 
 </script>
