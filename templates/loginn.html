@@ -18,23 +18,26 @@
 <div class="col-4 col-md-4 col-lg-4">
 </br>
 <form action= "" method = "POST">
-  {% csrf_token %}
-  <fieldset class="module aligned">
-    <div class="form-row">
-        {{ form.email.errors }}
-        <label for="Email">Email address:</label>
-        {{ form.email }}
-    </div>
-      <div class="form-row">
-      {{ form.username.errors }}
-      <label for="Project_ID">Project_ID:</label>
-      {{ form.username }}
+	{% csrf_token %}
+	{{ form|crispy }}
+	{% buttons %}
+		<button type="submit" class="btn btn-sm">Login</button>
+   <!--  <small class='test-muted ml-2 align-right'>
+      <a href="{% url 'password_reset' %}">         Request new password</a>
+    </small> -->
+	{% endbuttons %}
+</div>
+
+</form>
   </div>
-    <input type="submit" value="Reset my password">
-</fieldset>
+  <div class="border-top pt-3">
+    <small class="text-muted">
+     <a class="ml-2" href="{% url 'password_reset' %}">
+    </small>
   </div>
+</div>
            <div class="col-7">
-                    <div class="alert" style='min-height: 800px;'>
+           	        <div class="alert" style='min-height: 800px;'>
           </div>
          </div>
   </div>

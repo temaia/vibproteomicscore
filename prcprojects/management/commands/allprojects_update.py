@@ -27,7 +27,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         configfile=os.path.join(settings.BASE_DIR, "static/acessorio.json")
-        with open(configfile) as config_file:
+        with open(configfile, encoding='utf-8') as config_file:
             config = json.load(config_file)
         yt = Connection(url='https://youtrack.ugent.be', token=config['YTTOKR']) #@
         # get CMB issues

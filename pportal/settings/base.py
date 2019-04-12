@@ -209,6 +209,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # during development only
 DEFAULT_FROM_EMAIL = 'mtpmmaia@gmail.com>' #'noreply-prc@vib-ugent.be'
-ADMINS = (
-    ('Te M', 'mtpmmaia@gmail.com'))
+ADMINS = [
+    ('Te M', 'mtpmmaia@gmail.com')]
 MANAGERS = ADMINS
