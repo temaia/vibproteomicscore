@@ -9,36 +9,41 @@
         <div class="col-md-12 ml-12 text-justify">
           <h2 class="text-dark mb-4 text-center">Sample preparation instructrions</h2>
           <div class="row">
-            <div class="col-md-2"> <img class="img-fluid" width="150" src='{% static "./Shotgun.PNG" %}'> </div>
-            <div class="col-md-10">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2"> <img class="img-fluid" width="150" src='{% static "./Shotgun.PNG" %}'> </div>
+            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 text-justify">
               <h4>1. Shotgun proteomics</h4>
               <p>Please provide frozen cell pellets or dissected tissue material, <span class="font-weight-bold">washed with PBS </span>before freezing to remove media or blood components. <br>For quantitative analysis, at least <span class="font-weight-bold">three replicate samples</span> should be provided for each condition. Cell pellets or tissue samples should contain <span class="font-weight-bold">minimum 30,000 cells</span>, or an amount sufficient to extract <span class="font-weight-bold">~3 µg </span>of protein material. If cell numbers are not limiting, 1 to 5 million cells/pellet is preferred.</p>
             </div>
           </div>
           <hr>
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2"> <img img class=" img-fluid " width="150"src='{% static "./PTManalysis.PNG" %}'> </div>            
+            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 text-justify">
               <h4>2. PTM analysis</h4>
               <p>Same instructions apply as for shotgun proteomics, but <span class="font-weight-bold">more input material </span>is required. Please provide frozen cell pellets or dissected tissue material sufficient to extract minimum <span class="font-weight-bold">2 mg</span> of protein for phosphoproteomics and <span class="font-weight-bold">10 mg</span> of protein to identify ubiquitin and lysine acetylation sites.</p>
             </div>
-            <div class="col-md-2"> <img img class=" img-fluid " width="150"src='{% static "./PTManalysis.PNG" %}'> </div>
+
           </div>
           <hr>
           <div class="row">
-            <div class="col-md-2"> <img img class="img-fluid" width="150" src='{% static "./AP-MS.PNG" %}'> </div>
-            <div class="col-md-10">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2"> <img img class="img-fluid" width="150" src='{% static "./AP-MS.PNG" %}'> </div>
+            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 text-justify">
               <h4>3. Affinity Purification MS (AP-MS)</h4>
               <p>In most cases you can use the IP protocol of choice, as long as you <span class="font-weight-bold">wash the beads three times</span> in 1 ml trypsin digestion buffer (20 mM Tris.HCl pH 8.0, 2 mM CaCl2) before sending them to us. Most people do 1 wash in the IP buffer followed by 3 washes in the trypsin digestion buffer. <br>
                 After the last wash step, re-suspend the beads in <span class="font-weight-bold">150 µl trypsin digestion buffer</span>, freeze and deliver on dry ice.</p>
-            </div>
-          </div>
-          <hr>
-          <div class="row"></div>
-          <div class="row">
               <h5 class="font-italic"><i class="fa fa-comment"></i>  Comment:</h5>
               <p><br><span class="font-weight-bold font-italic">For PTM detection</span>, make sure you add appropriate inhibitors during lysis and IP (not during the washes!), for instance phosSTOP.<br><br><span class="font-weight-bold font-italic">For labelfree analysis</span>, at least three replicate samples should be provided for each condition, e.g. IP from WT cells vs. IP from KO cells. A negative control condition (no pull down or absence of the bait molecule) is always required to distinguish specific from unspecific binders by labelfree quantitative analysis. Replicate samples are often generated after lysis, by splitting a single lysate in three aliquots for IP. True biological replicates starting from three different cell lysates/culture dishes are also possible.<br><br><span class="font-weight-bold font-italic">For each IP replicate sample</span>, we recommend to start from a 2 ml lysate at a concentration of 1.5 mg/ml total protein (3 mg total protein). These values are only an indication and are far from absolute (optimal conditions vary for each experiment), they just give an indication about the amount of material that is typically use for these kind of experiments.<br><br>Finally, it is recommended to keep the amount of beads per replicate samples as low as possible, since the antibody/streptavidin/protein A/G will also be cleaved by trypsin leading to additional peptides in the samples. Use maximum 20 microliter of settled beads for each replicate if possible.</p>
             </div>
           </div>
+          <hr>
+          <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2"> <img img class=" img-fluid " width="150"src='{% static "./Gelband.JPG" %}'> </div>            
+            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 text-justify">
+              <h4>4. Protein Gel Band Analysis</h4>
+              <p>You can run the gel using the system that you commonly use in the lab. For optimal separation, it might be worth to consider a gradient gel (e.g. 4-12%).<br>Also, <span class="font-weight-bold">commercial pre-cast gels</span> are generally recommended to avoid keratin contamination.<br> After running the gel, rince the gel with MQ water, stain with colloid coomassie (e.g. simply blue from , <a href="https://www.thermofisher.com/be/en/home/life-science/protein-biology/protein-gel-electrophoresis/protein-gel-staining-imaging/coomassie-dye-protein-gel-stains.html">Thermo</a>) and take a picture of the gel. <br>Then, cut out the gel bands using a clean scalpel (under the laminar flow to <span class="font-weight-bold"> avoid keratin contamination</span>) and indicate cuts on the picture. <br>Transfer the gel pieces (with a clean pincet) to individual Eppendorf tubes and rince the pieces once with MQ water (it is easiest to pre-fill the tubes with 500 µl of MQ water). Remove all the water and freeze the gel pieces at -20°C. Send to us on dry ice.</p>
+            </div>
+          </div>
+          <hr>
         </div>
       </div>
 
