@@ -25,10 +25,10 @@ from django.contrib.auth import views as auth_views
 
 from prcprojects.forms import AnalysisForm
 #from prcprojects.forms import CustomerForm, Specimen_SGForm, Specimen_PTMForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm, EDForm,Specimen_APMSForm,Specimen_APMSForm,EDForm#,Specimen_GBForm, EDForm
-from prcprojects.forms import CustomerForm, AnalysisForm, Specimen_SGForm,Specimen_APMSForm,Specimen_PTMForm, Specimen_GBForm,ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm,ExperimentGBForm, EDForm, TOUForm#,Specimen_GBForm, EDForm
+from prcprojects.forms import CustomerForm, AnalysisForm, Specimen_SGForm,Specimen_APMSForm,Specimen_PTMForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm, EDForm, TOUForm#,Specimen_GBForm, EDForm
 
 #from prcprojects.views import AboutView,HomeView, CustomerRegistrationView,AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
-from prcprojects.views import get_data,StatesView, ProjectInfoGaugeView, PreparationView, ReportsView, TermsOfUseView, AboutTheCoreView, AboutView, HomeView, ProjectInfoView, ProjectInfoGuestView, ShippingInstructionsView, ContactView, AnalysisRegistrationView,InfoView, QuestionsView, AnalysisForm, ExperimentForm, Specimen_SGForm, LoginView, ContactWizard, ContactWizardSG, ContactWizardPTM, ContactWizardAPMS,ContactWizardGB#,SGView#,ProjectRegistrationView
+from prcprojects.views import get_data,StatesView, ProjectInfoGaugeView, PreparationView, ReportsView, TermsOfUseView, AboutTheCoreView, AboutView, HomeView, ProjectInfoView, ProjectInfoGuestView, ShippingInstructionsView, ContactView, AnalysisRegistrationView,InfoView, QuestionsView, AnalysisForm, ExperimentForm, Specimen_SGForm, LoginView, ContactWizard, ContactWizardSG, ContactWizardPTM, ContactWizardAPMS#,ContactWizardGB#,SGView#,ProjectRegistrationView
 from django.views.generic import TemplateView
 #from prcprojects.views import AboutView,HomeView, AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
 
@@ -48,21 +48,51 @@ urlpatterns = static(settings.MEDIA_URL,document_root =
     url(r'^protocols/',PreparationView.as_view(template_name='protocols.html'), name='protocols'),
     url(r'^reports/',ReportsView.as_view(template_name='MM.html'), name='reports'),
     url(r'^information/$', InfoView.as_view(template_name='information2.html'), name='information'),
+    #url(r'^password_reset/$', auth_views.PasswordResetView.as_view(template_name='registration/password_reset_form.html'), name='password_reset'),
+    #path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html'), name='password_reset_done'),
+    # path('password-reset-confirm/<uidb64>/<token>/', 
+    #       auth_views.PasswordResetConfirmView.as_view(template_name='registration/password_reset_confirm.html'),  
+    #       name='password_reset_confirm'),
+    
+    # path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'),
+    #       name='password_reset_complete'),
+    #url(r'^chartjs/', get_data, name='data'),
+    #url(r'^datacbv/', StatesView.as_view(), name='datacbv'),
+    #url(r'^password_reset/$', auth_views.password_reset(), name='password_reset'),
+    #url(r'^passiword_reset/done/$', auth_views.password_reset_done, name='password_reset_done'),
+    #url(r'^reset/<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+    #    auth_views.password_reset_confirm, name='password_reset_confirm'),
+    #url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
+    #url(r'^pportal/',include('pportal.urls')),
     url(r'^$', HomeView.as_view(template_name='home.html'), name='home'),
     url(r'^questions/', QuestionsView.as_view(template_name='questions.html'),name='questions'),
     url(r'^AboutTheCore/',AboutTheCoreView.as_view(template_name='AboutTheCore.html'), name='AboutTheCore'),
         #url(r'^password_reset/done/$', auth_views.password_reset(), name='password_reset_done'),
+
+  #   #url(r'^reports/',reportsView.as_view(template_name='MM.html'), name='reports'),
+  #   #url(r'^project-registration/$', ContactWizard.as_view([CustomerForm,AnalysisForm, Specimen_SGForm]),name='project-registration'),
+  #   #url(r'^project-registration/$', ContactWizard.as_view([AnalysisForm, Specimen_SGForm, ExperimentForm]),name='project-registration'),
+  #   #url(r'^project-registration/$', HomeView.as_view(template_name='home.html') ,name='project-registration'),
+  #   #url(r'^project-registrationsg/$', ContactWizardSG.as_view([AnalysisForm, Specimen_SGForm, ExperimentForm]),name='projectregistrationsg'),
+  #   #url(r'^project-registrationsg/$', 'projectregistrationsg',name='projectregistrationsg'),
     url(r'^project-registration/$', login_required(ContactWizard.as_view([CustomerForm,CustomerForm,CustomerForm,CustomerForm,CustomerForm])),name='projectregistration'),
   #   #url(r'^project-registrationsg/$', ContactWizardSG.as_view([CustomerForm, Specimen_SGForm, Specimen_SGForm]),name='projectregistrationsg'),
   #   #url(r'^project-registration-1/$', ContactWizardSG.as_view([CustomerForm,AnalysisForm, Specimen_SGForm, ExperimentForm, EDForm]),name='projectregistrationsg'),
     url(r'^project-registration1/$', ContactWizardSG.as_view([CustomerForm,AnalysisForm, Specimen_SGForm, ExperimentForm, EDForm,TOUForm]),name='projectregistrationsg'),
-    #url(r'^project-registration1/$', ContactWizardSG.as_view([CustomerForm,AnalysisForm, Specimen_SGForm, EDForm,TOUForm]),name='projectregistrationsg'),
     url(r'^project-registration2/$', ContactWizardAPMS.as_view([CustomerForm,AnalysisForm, Specimen_APMSForm, ExperimentAPMSForm, EDForm,TOUForm]),name='projectregistrationapms'),
     url(r'^project-registration3/$', ContactWizardPTM.as_view([CustomerForm,AnalysisForm, Specimen_PTMForm, ExperimentPTMForm, EDForm,TOUForm]),name='projectregistrationptm'),
-    url(r'^project-registration4/$', ContactWizardGB.as_view([CustomerForm,AnalysisForm, Specimen_GBForm, ExperimentGBForm, EDForm,TOUForm]),name='projectregistrationgel'),
-
+    url(r'^project-registration4/$', ContactWizardSG.as_view([CustomerForm,AnalysisForm, Specimen_SGForm, ExperimentForm, EDForm,TOUForm]),name='projectregistrationgel'),
+  # url(r'^project-registrationsg/$', ContactWizardSG.as_view([CustomerForm,AnalysisForm, Specimen_SGForm, ExperimentForm,EDForm]),name='projectregistrationsg'),
+  # url(r'^project-registrationapms/$', ContactWizardAPMS.as_view([CustomerForm,AnalysisForm, Specimen_APMSForm, ExperimentForm,EDForm]),name='projectregistrationapms'),
+  # url(r'^project-registrationptm/$', ContactWizardPTM.as_view([CustomerForm,AnalysisForm, Specimen_PTMForm, ExperimentForm,EDForm]),name='projectregistrationptm'),
+  #  url(r'^project-registrationgb/$', ContactWizardGB.as_view([CustomerForm,AnalysisForm, Specimen_GBForm, ExperimentForm,EDForm]),name='projectregistrationgel'),
+  #   #url(r'^profile/(?P<email>[a-zA-Z0-9]+)/$', views.get_user_profile, name='profile'),
+  #   #url(r'^profile/$', views.get_user_profile, name='profile'),
+  #   url(r'^profile/$', login_required(views.get_user_profile), name='profile'),
     url(r'^termsofuse/$', TermsOfUseView.as_view(template_name='TermsOfUse.html'), name='termsofuse'),
-
+  #   #url(r'^requestt_page/$', views.requestt_page, name='requestt_page'),
+  #   #url(r'^requestt_page/$', MyView.as_view(), name='requestt_page'),
+   #url(r'^project-registration/$', views.get_user_profile, name='projectregistration'),
    url(r'^contact/',  ContactView.as_view(template_name='contact.html'),name='contact'),
    #url(r'^project-info/$', views.get_user_projectinfo, name='projectinfo'),
    url(r'^project-info/$', login_required(ProjectInfoView.as_view(template_name='project-info.html')), name='project-info'),
@@ -74,7 +104,18 @@ urlpatterns = static(settings.MEDIA_URL,document_root =
    url(r'^login/$', LoginView.as_view(template_name='login.html'),name='login'),
    #url(r'^logout/$', auth_views.LogoutView.as_view(next_page=reverse_lazy('login')),name='logout'),
    url(r'^logout/$', auth_views.LogoutView.as_view(template_name='logout.html'),name='logout'),
-
+  #   url(r'^sgform/$', SGView.as_view(template_name='project-regis_sg.html'),name='sg_form'),
+   #url(r'^logout/$', auth_views.logout,{'next_page':'/'},name='logout'),
+   #url(r'^logout/$', auth_views.logout,{template_name:'logout.html'},name='logout'),
+  #   #url(r'^login/$', auth.auth_views.login,name='login'),
+  #   #url(r'^login/$', LoginView.as_view(template_name='login.html'),name='login'),
+  #   # url(r'^project-registration/$', RegistrationView.as_view()),
+  #   #url(r'^project-registration/$', CustomerRegistrationView.as_view(template_name='project-registration_2.html')),
+  #   #url(r'^project-registration-2/$', AnalysisRegistrationView.as_view(template_name='project-registration_2.html')),
+  #   #static(settings.STATIC_URL,document_root =settings.STATIC_ROOT),
+  #   #url(r'^project-registration-3/$', AnalysisRegistrationView2.as_view(template_name='project-registration.html')),
+  #   #url(r'^project-registration-5/$', views.manage_users, name='manage_users'),
+  #   #url(r'^project-registration-3/$', ExperimentalDesignRegistrationView.as_view(template_name='project-registration.html')),
      ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
   #   #+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
  # if DEBUG is on

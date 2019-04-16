@@ -7,7 +7,7 @@ import os
 #from django.contrib.auth.models import (AbstractBaseUser,
 #	BaseUserManager)
 from django.contrib.auth.models import AbstractUser
-
+from django.contrib.auth.signals import user_logged_in
 
 #from django.contrib.auth.models import (User)
 from django.db.models.signals import post_save
@@ -240,6 +240,7 @@ class Profile(models.Model):
 	#Project_ID = models.CharField(max_length=200, null=True) # pre-filled displayed on form template on the corner
 	update = models.DateTimeField(auto_now=True)
 	timestamp = models.DateTimeField(auto_now_add=True)
+	login_count = models.PositiveIntegerField(default=0)
 	def __unicode__(self):
 		return self.user.username
 	def __str__(self):
@@ -253,6 +254,11 @@ class Profile(models.Model):
 	def getEmail(self):
 		return self.user.email
 
+def login_user(sender,request, user, **kwargs):
+	user.profile.login_count = user.profile.login_count + 1
+	user.profile.save()
+
+user_logged_in.connect(login_user)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender,instance,created, **kwargs):
