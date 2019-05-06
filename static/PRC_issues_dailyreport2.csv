@@ -1,0 +1,117 @@
+YouTrack_id,Project_Name,No_Samples,total_running_time,Mass_Spectrometer,State,Scheduling_State,Median_wTime,1
+PRCRT-12,FRIMP-PRC-PTM analysis-GlyGly optimized protocol,None,None,Q-Exactive HF Biopharma,Created,NotScheduled,34,2
+PRCRT-13,FRIMP-PRC-PTM analysis-GlyGly optimized protocol,None,None,Q-Exactive HF Biopharma,Created,NotScheduled,34,3
+PRCRT-11,FRIMP-PRC-other-Plasma acetone precipitation,33,99,Q-Exactive HF,Closed,Scheduled,34,4
+PRC-4470,Agrovsafe-Gustavo Rivera-protein mass determination,6,0,LTQ Orbitrap XL ETD,Closed,NotScheduled,34,5
+PRC-3826,Thomas Arnesen-Adrian Drazic-shotgun analysis,12,36,Q-Exactive,Data_Analysis,Scheduled,34,6
+PRC-4147,Thomas Arnesen-Adrian-shotgun analysis-HAP1 final,12,36,Q-Exactive,Data_Analysis,Scheduled,34,7
+PRC-3903,Bart De Strooper-Yessica Wouters-protein mass determination,2,0,LTQ Orbitrap XL ETD,Closed,NotScheduled,34,8
+PRC-3361,Sabrina Bousbata-Sabrina Bousbata-shotgun analysis,18,None,None,Created,NotScheduled,34,9
+PRC-4347,Peter denolf-Michel Van Thournout-SRM,30,60,TSQ Vantage,MS_Run,NotScheduled,34,10
+PRC-4277,Agrosavfe-Gustavo Rivera-protein mass determination,6,0,LTQ Orbitrap XL ETD,Closed,NotScheduled,34,11
+PRC-4506,Geert Berx-sven jonckheere-shotgun analysis,24,None,None,Created,NotScheduled,34,12
+PRC-3918,Joris Dewit-Nuno Apostolo-shotgun analysis,24,None,None,Closed,NotScheduled,34,13
+PRC-3642,Anna Sablina-Paul Njam-shotgun analysis-Retry PRC-3156,9,27,Q-Exactive HF,Closed,Scheduled,34,14
+PRC-4456,Arnesen Lab-adrian-affinity-purification MS (AP-MS)-IP HAP and MEF trypsin,4,None,None,Sample_Prep,Scheduled,34,15
+PRC-4198,Devreeze Lab-Bart Devreese-shotgun_analysis-Streptomyces scabies,12,30,Q-Exactive,Closed,Scheduled,34,16
+PRC-1013,FRIMP-An Staes-shotgun analysis,1,9,Q-Exactive HF Biopharma,Data_Analysis,Scheduled,34,17
+PRC-3908,Marie-Charlotte Huysmans-Stephanie van Leeuwen-shotgun analysis,108,None,Q-Exactive HF,Sample_Prep,NotScheduled,34,18
+PRC-4435,Eurofins-liesbeth vercruyssen-protein mass determination-C4 column waters,4,None,Q-Exactive HF Biopharma,Closed,NotScheduled,34,19
+PRC-3827,Thomas Arnesen-Adrian Drazic-shotgun analysis-MEF samples,12,0,Q-Exactive,Closed,NotScheduled,34,20
+PRC-4507,Discovery Sciences-Ruben Theuns-protein mass determination-nanobodies,12,None,LTQ Orbitrap XL ETD,Created,NotScheduled,34,21
+PRC-4455,George Leclercq-Sigrid Wahlen-shotgun analysis,2,6,Q-Exactive HF Biopharma,MS_Run,Scheduled,34,22
+PRC-4132,Anna Sablina-Paul Njam-PTM analysis-Ub test,1,3,Q-Exactive HF,Closed,Scheduled,34,23
+PRC-4133,Anna Sablina-Paul Njam-shotgun analysis-test,1,3,Q-Exactive HF,Closed,Scheduled,34,24
+PRC-3643,Anna Sablina-Paul Njam-PTM analysis-Retry PRC-3156,9,23,Q-Exactive HF,MS_Run,NotScheduled,34,25
+PRC-4496,Sabrina Bousbata-adelia mendez-protein gel band analysis-incorp test,4,8,Q-Exactive,MS_Run,Scheduled,34,26
+PRC-4392,De Smedt Stefaan-An-Katrien Minnaert-shotgun analysis-Collagenase 3,2,2,Q-Exactive,Data_Analysis,Scheduled,34,27
+PRC-3654,Savvas Savvides-Romain Merceron-other,4,4,LTQ Orbitrap Elite,Data_Analysis,Scheduled,34,28
+PRC-3585,Peter denolf-Michel Van Thournout-PRM,30,90,Q-Exactive HF,Data_Analysis,Scheduled,34,29
+PRC-3584,Peter denolf-Michel Van Thournout-PRM,30,90,Q-Exactive HF,Data_Analysis,Scheduled,34,30
+PRC-4152,Sabrina Bousbata-Sabrina Bousbata-affinity-purification MS (AP-MS)-IP test,2,5,Q-Exactive,Closed,NotScheduled,34,31
+PRC-4502,Sabrina Bousbata-Sabrina Bousbata-shotgun analysis,None,0,Q-Exactive,Created,NotScheduled,34,32
+PRC-4402,Pharmafluidics-Jeff Op De Beeck-other-TMT analysis on uPAC,5,15,Q-Exactive HF,Data_Analysis,Scheduled,34,33
+PRC-4162,Van den Bosch-Steven Boeynaems-shotgun analysis-PBS+SDS+triton,40,80,Q-Exactive HF,Sample_Prep,Scheduled,34,34
+PRC-3464,Anna Sablina-Aidana Sheryazdanova-affinity-purification MS (AP-MS),15,30,Q-Exactive,Closed,Scheduled,34,35
+PRCRT-14,FRIMP-Delphi Van Haver-PTM analysis,1,3,Q-Exactive HF,Closed,Scheduled,34,36
+PRC-3691,Bousbata Sabrina-sabrina bousbata-protein gel band analysis,2,2,Q-Exactive,Closed,Scheduled,34,37
+PRC-3586,Peter denolf-Michel Van Thournout-PRM,30,90,Q-Exactive HF,Data_Analysis,Scheduled,34,38
+PRC-4113,Anna Sablina-Aidana Sheryazdanova-PTM analysis,9,23,Q-Exactive HF,MS_Run,NotScheduled,34,39
+PRC-4320,Wim Annaert-Dennis Pedri-shotgun analysis-melanoma,20,None,None,Sample_Prep,Scheduled,34,40
+PRC-321,asd-asd-affinity-purification MS (AP-MS)-asd,6,6,None,MS_Run,NotScheduled,34,41
+PRC-4504,Francis Impens-Delphi Van Haver-shotgun analysis-Awesome project,6,None,None,Arrived,NotScheduled,34,42
+PRC-4495,Francis Impens-Delphi Van Haver-PTM analysis-Awesome project,6,None,None,Arrived,NotScheduled,34,43
+PRC-3411,Maria Carmo-Fonseca-Maria Carmo-Fonseca-shotgun_analysis,24,72,Q-Exactive HF Biopharma,Closed,Scheduled,34,44
+PRC-3645,Geert Berx-Sven Jonckheere-shotgun analysis,None,0,Q-Exactive HF,Created,NotScheduled,34,45
+PRC-3828,Bart De Strooper-Hannah Walgrave-shotgun_analysis,12,36,Q-Exactive HF Biopharma,Closed,Scheduled,34,46
+PRC-3596,Kodi Ravichandran-Adam Ceroi-shotgun_analysis,3,9,Q-Exactive HF Biopharma,Closed,Scheduled,34,47
+PRC-3362,Agrosavfe-Gustavo Rivera-protein mass determination,4,0,LTQ Orbitrap XL ETD,Closed,NotScheduled,34,48
+PRC-4207,Joris De Wit-Krist'l Vennekens-shotgun_analysis-Protocol optimalisation,4,8,Q-Exactive HF Biopharma,Closed,Scheduled,34,49
+PRC-3897,Veerle Janssens-Bob Meeusen-PTM analysis,6,18,Q-Exactive,Closed,Scheduled,34,50
+PRC-4134,Jerome Van Biervliet-Maarten Dewilde-protein mass determination-nanobodies,11,0,LTQ Orbitrap XL ETD,Closed,NotScheduled,34,51
+PRC-4304,Peter Geldof-Laurens Zwanenburg-protein gel band analysis-Co-dd-ASP,2,2,Q-Exactive,Closed,Scheduled,34,52
+PRC-4112,Anna Sablina-Aidana Sheryazdanova-shotgun analysis,9,27,Q-Exactive HF,Closed,Scheduled,34,53
+PRC-4286,Savvas Savvides-Yehudi Bloch-protein gel band analysis-Mouse preputial glands,7,7,Q-Exactive,Data_Analysis,Scheduled,34,54
+PRC-3909,Peter Carmeliet-Nadine Conchinha-shotgun analysis,3,9,Q-Exactive HF Biopharma,Data_Analysis,Scheduled,34,55
+PRC-4114,Bart De Strooper-Sara Calafate-shotgun analysis,18,54,Q-Exactive HF Biopharma,Closed,Scheduled,34,56
+PRC-3595,Rudi Beyaert-Stella Iliaki-affinity-purification MS (AP-MS),12,24,Q-Exactive,Closed,Scheduled,34,57
+PRC-3757,Thomas Arnesen-Adrian Drazic-shotgun_analysis,6,18,Q-Exactive,Closed,NotScheduled,34,58
+PRC-3172,Agrosavfe-Gustavo Rivera-protein mass determination,3,0,LTQ Orbitrap XL ETD,Closed,Scheduled,34,59
+PRC-1250,Remaut-Sander Van Der Verren-other,8,12,Q-Exactive HF Biopharma,Closed,Scheduled,34,60
+PRC-3951,Rose Goodchild-Julie Jacquemyn-affinity-purification MS (AP-MS),6,12,Q-Exactive,Closed,Scheduled,34,61
+PRC-3573,Bart De Strooper-Sara Calafate-shotgun analysis,2,4,Q-Exactive HF,Closed,Scheduled,34,62
+PRC-3892,Johan Thevelein-Fenella Steyfkens-affinity-purification MS (AP-MS),27,54,Q-Exactive,Closed,Scheduled,34,63
+PRC-4246,Savvas Savvides-Julie Andries-protein gel band analysis-IL-17RA,3,3,Q-Exactive,Data_Analysis,Scheduled,34,64
+PRC-4441,Sabrina Bousbata-adelia mendez-affinity-purification MS (AP-MS)-BioID,9,23,Q-Exactive,Sample_Prep,NotScheduled,34,65
+PRC-3214,Peter Carmeliet-Nadine Conchinha-shotgun analysis,36,108,Q-Exactive HF Biopharma,Sample_Prep,NotScheduled,34,66
+PRC-4337,Roos Vandenbroucke-Charysse Vandendriessche-shotgun analysis-CSF_EVs,3,9,Q-Exactive HF,MS_Run,Scheduled,34,67
+PRC-3789,Pieter Van Vlierberghe-Sofie Peirs-affinity-purification MS (AP-MS),12,24,Q-Exactive,Closed,Scheduled,34,68
+PRC-4193,Margarida Fardilha-Juliana Felgueiras-affinity-purification MS (AP-MS)-Prostate IP,12,24,Q-Exactive,Data_Analysis,Scheduled,34,69
+PRC-3047,Savvas Savvides-Katarzyna Skladanowska-protein gel band analysis,3,3,Q-Exactive,Closed,Scheduled,34,70
+PRC-3213,Peter Carmeliet-Nadine Conchinha-shotgun analysis,3,9,Q-Exactive HF Biopharma,Data_Analysis,Scheduled,34,71
+PRC-3788,Peter Bossier-Suvra Roy-shotgun analysis-Artemia larvae,20,0,LTQ Orbitrap Elite,Closed,Scheduled,34,72
+PRC-3367,Timothy Yahr-Timothy Yahr-shotgun_analysis,12,36,Q-Exactive HF Biopharma,Closed,Scheduled,34,73
+PRC-3291,Wim Annaert-Marine Bretou-shotgun analysis-lysosomeSPIONs,6,12,Q-Exactive HF Biopharma,Closed,Scheduled,34,74
+PRC-3692,Ben Sprangers lab-nana dang-protein gel band analysis,None,0,LTQ Orbitrap Elite,Created,NotScheduled,34,75
+PRC-4310,Andy Wullaert-Maria Giulia Doglio-affinity-purification MS (AP-MS)-Linear Ub pull-down test,4,8,Q-Exactive HF Biopharma,Data_Analysis,NotScheduled,34,76
+PRC-3879,Bart De Strooper-Yessica Wouters-protein gel band analysis,5,5,LTQ Orbitrap Elite,Closed,Scheduled,34,77
+PRC-4498,Van den Bosch lab-donya pakravan-affinity-purification MS (AP-MS),7,None,None,Sample_Prep,NotScheduled,34,78
+PRC-4461,Vanvlierberghe lab-Filip Matthijssens-affinity-purification MS (AP-MS)-RUNX2,6,15,Q-Exactive HF Biopharma,MS_Run,Scheduled,34,79
+PRC-4183,Peter Vangheluwe-Shaun Martin-shotgun analysis-Test samples,8,24,Q-Exactive HF Biopharma,Data_Analysis,Scheduled,34,80
+PRC-4299,Partner Therapeutics-Michael Carroll-shotgun analysis-Low vs. high protease,7,21,Q-Exactive HF,Data_Analysis,Scheduled,34,81
+PRC-3572,Joris Delanghe-Frederick Verbeke-affinity-purification MS (AP-MS),None,0,Q-Exactive,Closed,NotScheduled,34,82
+PRC-3896,Veerle Janssens-Bob Meeusen-shotgun_analysis,6,18,Q-Exactive,Closed,Scheduled,34,83
+PRC-3850,Cédric Blanpain-Manuel Zocco-PTM analysis-RhoJ GOF,18,54,Q-Exactive HF,Data_Analysis,Scheduled,34,84
+PRC-3849,Cédric Blanpain-Manuel Zocco-shotgun analysis-RhoJ GOF,18,54,Q-Exactive HF,Data_Analysis,Scheduled,34,85
+PRC-2852,Joris Winderickx-Marie-Anne Deprez-affinity-purification MS (AP-MS),36,72,Q-Exactive,Data_Analysis,Scheduled,34,86
+PRC-4309,Ludo Van Den Bosch-Raheem Fazal-affinity-purification MS (AP-MS)-TDP-43,None,0,Q-Exactive,Created,NotScheduled,34,87
+PRCRT-18,FRIMP-Delphi Van Haver-PTM analysis-CST Ub test,1,2,Q-Exactive HF,Data_Analysis,Scheduled,34,88
+PRC-3894,Jan Cools-Inge Lodewijckx-affinity-purification MS (AP-MS)-TLX1-STAT5 (RIME Protocol),12,24,Q-Exactive,MS_Run,NotScheduled,34,89
+PRC-4221,Claerebout Lab-Sara Roose-affinity-purification MS (AP-MS)-Ascaris antigens,6,12,Q-Exactive,Data_Analysis,Scheduled,34,90
+PRC-4508,ConfoTherapeutics-Franky Van Herreweghe-shotgun analysis-GPCRs,2,6,Q-Exactive HF,Created,NotScheduled,34,91
+PRC-2546,Van den Bosch-Steven Boeynaems-shotgun_analysis-PBS Protocol,40,80,Q-Exactive HF,Closed,Scheduled,34,92
+PRC-4135,Sabrina Bousbata-Sabrina Bousbata-shotgun_analysis-Stomach,6,15,Q-Exactive,Closed,NotScheduled,34,93
+PRC-3351,Jan Cools-Charles De Bock-affinity-purification MS (AP-MS)-Ty1-Stat5 (RIME Protocol),18,36,Q-Exactive,Closed,Scheduled,34,94
+PRC-3902,Roos Vandenbroucke-Marlies Burgelman-shotgun analysis-CSF test,1,3,Q-Exactive HF,MS_Run,Scheduled,34,95
+PRC-4216,Nick Gay-Johannes Lauenstein-protein gel band analysis-BCAP-phospho,9,9,Q-Exactive,Data_Analysis,Scheduled,34,96
+PRC-4319,Peter Carmeliet-Pauline de Zeeuw-affinity-purification MS (AP-MS)-PCK2,6,12,Q-Exactive HF Biopharma,Data_Analysis,Scheduled,34,97
+PRC-3775,Christine Van Broeckhoven-Kristof De Vos-affinity-purification MS (AP-MS),6,12,Q-Exactive,Closed,Scheduled,34,98
+PRC-3895,Marie-Charlotte Huysmans-Stephanie van Leeuwen-shotgun analysis,4,12,Q-Exactive HF,MS_Run,Scheduled,34,99
+PRC-4161,Van den Bosch-Steven Boeynaems-shotgun analysis-PBS+SDS,48,96,Q-Exactive HF,Sample_Prep,Scheduled,34,100
+PRC-4440,Ludo Van den Bosch-Thomas Moens-affinity-purification MS (AP-MS),6,12,Q-Exactive,MS_Run,NotScheduled,34,101
+PRC-3766,Devreeze Lab-Laurens Deneve-protein mass determination,4,0,Q-Exactive HF Biopharma,Closed,NotScheduled,34,102
+CMB-301,KRGEV-Sarah Saleh-other,11,50,TSQ Vantage,MS_Run,NotScheduled,34,103
+CMB-302,KRGEV-Sarah Saleh-other,11,50,TSQ Vantage,MS_Run,NotScheduled,34,104
+CMB-395,FRIMP-Rupert Mayer-other,1,3,None,MS_Run,NotScheduled,34,105
+CMB-447,NICAL-Francis Santens/Sandrine Van Marcke-shotgun_analysis,3,3,LTQ Orbitrap Elite,MS_Run,Scheduled,34,106
+CMB-453,NICAL-Wannes Weyts-shotgun analysis-Shotgun analysis Plasma membrane proteome,4,4,LTQ Orbitrap Elite,MS_Run,Scheduled,34,107
+CMB-456,KRGEV-Annelies Bogaert-shotgun analysis,26,26,LTQ Orbitrap Elite,MS_Run,Scheduled,34,108
+PSB-182,GEJAE-Dominique Eeckhout-Affinity purification MS (AP-MS),27,27,Q-Exactive,MS_Run,NotScheduled,34,109
+PSB-189,GEJAE-doeec-Affinity purification-MS (AP-MS),6,6,Q-Exactive,MS_Run,Scheduled,34,110
+PSB-190,GEJAE-doeec-Affinity purification-MS (AP-MS),6,6,Q-Exactive,MS_Run,Scheduled,34,111
+PSB-184,GEJAE-Dominique Eeckhout-Affinity purification MS (AP-MS),9,9,Q-Exactive,MS_Run,Scheduled,34,112
+PSB-185,GEJAE-Dominique Eeckhout-Affinity purification MS (AP/MS),9,9,Q-Exactive,MS_Run,Scheduled,34,113
+PSB-186,GEJAE-Dominique Eeckhout-Affinity purification MS (AP/MS),6,6,Q-Exactive,MS_Run,Scheduled,34,114
+PSB-188,IVSME_DOJON_benchmark FASP_PTM,2,5,Q-Exactive,MS_Run,Scheduled,34,115
+PSB-187,IVSME_BRCOT_Shri Ram_RICE_PTM,3,8,Q-Exactive,MS_Run,Scheduled,34,116
+PSB-183,IVSME_BRCOT_SYSTR_PTM,12,30,Q-Exactive,MS_Run,NotScheduled,34,placeholder,placeholder

@@ -174,7 +174,7 @@ def get_env_variable(name):
             'Environment variable "%s" not found.' % name)
 
 # vibmail.ugent.be settings
-EMAIL_HOST = 'vibmail.ugent.be'
+EMAIL_HOST = 'cmbmail.ugent.be'
 DEFAULT_FROM_EMAIL = 'noreply-vib proteomics core<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
 EMAIL_PORT = 25
 EMAIL_USE_TLS = False
