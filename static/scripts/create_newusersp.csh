@@ -7,4 +7,4 @@ cd ..
 # let the PATH figure out which version to run (based on what your
 # virtualenv has configured).
 
-python manage.py allprojects_update
+python manage.py create_newusers 

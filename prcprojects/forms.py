@@ -317,7 +317,7 @@ SAMPLETYPESAPMS = (
 	)
 class Specimen_APMSForm(forms.Form):
 	Bait_Molecule = forms.ChoiceField(choices=DATAANALYSIS, label="Bait molecule is a protein?", widget=forms.RadioSelect) 
-	Bait_Molecule_Protein = forms.CharField(max_length=300,
+	Bait_Molecule_Protein = forms.CharField(max_length=300, required=False,
 		 label="If 'Yes', please provide the protein name, a database accession if existing and information on bait expression level.", 
 		 widget=forms.TextInput(attrs={'placeholder': 'e.g. Actin, Uniprot P60709, overexpression of a FLAG-tagged variant from vector/promoter x'}))
 	Bait_sequence_file = forms.FileField( required=False,label="For a tagged or engineered bait protein, please provide a document with its full length sequence, preferentially in FASTA format.")

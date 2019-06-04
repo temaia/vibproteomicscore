@@ -121,10 +121,11 @@ def WriteToExcel(arguments_dict):
         for ec0 in ec:
             for rep in range(1,no_replicates+1,1):
                 eclist.append(ec0)
-        for rep in range(1,no_replicates+1,1):
-            eclist.append('')
+        eclist =eclist + [""]*(no_samples-len(eclist))
+        #for rep in range(1,no_replicates+1,1):
+        #    eclist.append('')
         # buffer
-        print(eclist)
+        #print(eclist)
         # add data to the table
         for idx in range(0,no_samples,1):
             row = idx+5
@@ -391,8 +392,9 @@ def WriteToExcel(arguments_dict):
                 eclist.append(ec0)
         for rep in range(1,no_replicates+1,1):
             eclist.append('')
+        eclist =eclist + [""]*(no_samples-len(eclist))
         # buffer
-        print(eclist)
+        #print(eclist)
         # add data to the table
         for idx in range(0,no_samples,1):
             row = idx+5

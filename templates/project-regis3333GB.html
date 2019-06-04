@@ -1,0 +1,112 @@
+
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block head_title %}Project Registration || {{ wizard.form.media }}{{ block.super }}{% endblock head_title %}
+
+
+{# Load the tag library #}
+
+
+{# Display a form #}
+
+
+{% block content2 %}
+
+ <div class='container'>
+ <div class="row">
+  <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+
+  <h2 class="dtitle">Sample information</h2>
+
+{% load crispy_forms_tags %}
+{{ wizard.management_form }}
+       <div class="form-row col-9 mb-0 ">
+    <div class="form-group col-8 mb-0">
+       {{ form.Setup|as_crispy_field }}
+     </div>
+            </div>
+    <div class="form-row col-9 mb-0 formsub">
+    <div class="form-group col-7 mb-0">
+       {{ form.Gel_file|as_crispy_field }}
+     </div>
+            </div>
+       <div class="form-row col-9 mb-0 ">
+    <div class="form-group col-8 mb-0">
+       {{ form.Species|as_crispy_field }}
+     </div>
+            </div>
+     <div class="form-row col-9 mb-0 ">
+          <div class="form-group col-8 mb-0">
+       {{ form.Sequence_Database_Public_Availability|as_crispy_field }}
+         </div>
+          </div>
+     <div class="form-row col-9 mb-0 formsub">
+    <div class="form-group col-7 mb-0">
+       {{ form.Sequence_database_name|as_crispy_field }}
+         </div>
+                  </div>
+    <div class="form-row col-9 mb-0 formsub">
+    <div class="form-group col-7 mb-0">
+       {{ form.Sequence_database_file|as_crispy_field }}
+     </div>
+            </div>
+ <div class="form-row col-9 mb-0 ">
+    <div class="form-group col-8 mb-0">
+       {{ form.PAGEInfo|as_crispy_field }}
+     </div>
+            </div>
+  <div class="form-row col-8 mb-0">
+    <div class="form-group col-4 mb-0">
+       {{ form.PolyAcrylPercentage|as_crispy_field }}
+     </div></div>
+    <div class="form-row col-8 mb-0"> 
+    <div class="form-group col-4 mb-0">
+       {{ form.StainingMethod|as_crispy_field }}
+     </div>
+    </div>
+        <div class="form-row col-8 mb-0"> 
+    <div class="form-group col-4 mb-0">
+       {{ form.PAGEType|as_crispy_field }}
+     </div></div>
+
+<br/>
+<div class="container medind">
+{% if wizard.steps.prev %}
+
+<button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
+<button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.prev }}">{% trans "prev step" %}</button>
+{% endif %}
+<input type="submit" name="submit" class="btn btn-sm" value="{% trans "next step" %}" />
+</div>
+</div>
+<div class="form-row col-12 center">
+    <div class="meddind">
+<p><i><font size="2.8">Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </font></i></p>
+</div>
+</div>
+
+</form>
+  </div>
+  </div>
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+
+function LabelCheck(nameLabel)
+{
+    console.log(nameLabel);
+    if(nameLabel.value=="True"){
+          document.getElementById("SDBCheckT").style.display = "block";
+          document.getElementById("SDBCheckF").style.display = "none";
+        }
+    if(nameLabel.value=="False"){
+          document.getElementById("SDBCheckT").style.display = "none";
+          document.getElementById("SDBCheckF").style.display = "block";
+        }
+}
+</script>
+{% endblock %}

@@ -270,7 +270,7 @@ FORMSGB= [("0", CustomerForm),
 
 TEMPLATESGB = {"0": "project-regis111.html",
              "1": "project-regis222.html",
-             "2": "project-regis333GB.html",
+             "2": "project-regis3333GB.html",
              "3": "project-regis444.html",
              "4": "project-regis555.html",
              "5": "project-regis666.html"}
@@ -385,7 +385,7 @@ class ContactWizardSG(SessionWizardView):
         #{analysis[1]['Project_ID']:'Project_ID', 
         Project_ID = analysis[0]['Project_ID']
         Contact_Person = analysis[0]['Name'].split(',')[0]
-        subject = '[VIB Proteomics Core, Project registration confirmation] '+analysis[0]['Project_ID']
+        subject = 'VIB Proteomics Core, Project registration confirmation - Read carefully'
         #message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
         html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
         from_email=settings.EMAIL_HOST_USER
@@ -450,8 +450,8 @@ class ContactWizardSG(SessionWizardView):
         #    yt.create_attachment("PRC-321",name=Sequence_database_file,content='../media/ED/'+upload_file,author_login ="prcsite")
         #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
         if sdbf:
-            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
-        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="prcsite") 
+            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="root", group="PRC-team") 
+        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team" ) 
         #    yt.create_attachment(Project_ID,name="Sequence_database_file.fasta",content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
         #yt.create_attachment(Project_ID,name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
         #yt.create_attachment("PRC-321",name='ed.xlsx',content=os.path.join(settings.MEDIA_ROOT, 'ED/Experimental_design_PRC-20.xlsx'),author_login ="prcsite")    
@@ -647,8 +647,8 @@ class ContactWizardPTM(SessionWizardView):
         #    yt.create_attachment("PRC-321",name=Sequence_database_file,content='../media/ED/'+upload_file,author_login ="prcsite")
         #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
         if sdbf:
-            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
-        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="prcsite") 
+            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="root", group="PRC-team") 
+        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team") 
         return render(self.request,'done.html',{
             'formdict': formdict,
             #'analysisd':form_dict,
@@ -869,8 +869,8 @@ class ContactWizardAPMS(SessionWizardView):
         if analysis[1]['Data_analysis']:
              yt.execute_command(Project_ID, "tag nDA")
         if sdbf:
-            yt.create_attachment(Project_ID,name=Bait_sequence_file,content=analysis[2]['Bait_sequence_file'],author_login ="prcsite") 
-        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="prcsite") 
+            yt.create_attachment(Project_ID,name=Bait_sequence_file,content=analysis[2]['Bait_sequence_file'],author_login ="root", group="PRC-team") 
+        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team") 
         return render(self.request,'done.html',{
             'formdict': formdict,
             #'analysisd':form_dict,
@@ -1015,6 +1015,12 @@ class ContactWizardGB(SessionWizardView):
           Other_institution = analysis[0]['Other_institution']
         else:
           Other_institution = ''
+        sdbfg = False
+        if analysis[2]['Gel_file'] is not None:
+          Gel_file= analysis[2]['Gel_file']
+          sdbfg=True
+        else:
+          Gel_file = ''
         if analysis[2]['Sequence_database_name'] is not None:
           Sequence_database_name = analysis[2]['Sequence_database_name']
         else:
@@ -1060,9 +1066,11 @@ class ContactWizardGB(SessionWizardView):
         #if sdbf:
         #    yt.create_attachment("PRC-321",name=Sequence_database_file,content='../media/ED/'+upload_file,author_login ="prcsite")
         #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
+        if sdbfg:
+            yt.create_attachment(Project_ID,name=Gel_file,content=analysis[2]['Gel_file'],author_login ="root", group="PRC-team") 
         if sdbf:
-            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
-        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="prcsite") 
+            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="root", group="PRC-team") 
+        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team") 
         #yt.create_attachment("PRC-321",name='ed.xlsx',content=os.path.join(settings.MEDIA_ROOT, 'ED/Experimental_design_PRC-20.xlsx'),author_login ="prcsite")    
         #yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
         return render(self.request,'done.html',{
