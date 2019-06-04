@@ -451,7 +451,7 @@ class ContactWizardSG(SessionWizardView):
         #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
         if sdbf:
             yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
-        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="prcsite") 
+        yt.create_attachment(Project_ID,name=str(analysis[3]['EDfile']),content=analysis[3]['EDfile'],author_login ="prcsite") 
         #    yt.create_attachment(Project_ID,name="Sequence_database_file.fasta",content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
         #yt.create_attachment(Project_ID,name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
         #yt.create_attachment("PRC-321",name='ed.xlsx',content=os.path.join(settings.MEDIA_ROOT, 'ED/Experimental_design_PRC-20.xlsx'),author_login ="prcsite")    
