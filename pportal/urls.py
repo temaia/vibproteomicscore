@@ -25,7 +25,7 @@ from django.contrib.auth import views as auth_views
 
 from prcprojects.forms import AnalysisForm
 #from prcprojects.forms import CustomerForm, Specimen_SGForm, Specimen_PTMForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm, EDForm,Specimen_APMSForm,Specimen_APMSForm,EDForm#,Specimen_GBForm, EDForm
-from prcprojects.forms import CustomerForm, AnalysisForm, Specimen_SGForm,Specimen_APMSForm,Specimen_PTMForm, Specimen_GBForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm,ExperimentGBForm, ExperimentPMDForm, EDForm, TOUForm#,Specimen_GBForm, EDForm
+from prcprojects.forms import CustomerForm, AnalysisForm, Specimen_SGForm,Specimen_APMSForm,Specimen_PTMForm,EDPMDForm, Specimen_GBForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm,ExperimentGBForm, ExperimentPMDForm, EDForm, TOUForm#,Specimen_GBForm, EDForm
 
 #from prcprojects.views import AboutView,HomeView, CustomerRegistrationView,AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
 from prcprojects.views import get_data,StatesView, ProjectInfoGaugeView, PreparationView, ReportsView, TermsOfUseView, AboutTheCoreView, AboutView, HomeView, ProjectInfoView, ProjectInfoGuestView, ShippingInstructionsView, ContactView, AnalysisRegistrationView,InfoView, QuestionsView, AnalysisForm, ExperimentForm, Specimen_SGForm, LoginView, ContactWizard, ContactWizardSG, ContactWizardPTM, ContactWizardAPMS,ContactWizardGB,ContactWizardPMD#,SGView#,ProjectRegistrationView
@@ -60,7 +60,7 @@ urlpatterns = static(settings.MEDIA_URL,document_root =
     url(r'^project-registration2/$', ContactWizardAPMS.as_view([CustomerForm,AnalysisForm, Specimen_APMSForm, ExperimentAPMSForm, EDForm,TOUForm]),name='projectregistrationapms'),
     url(r'^project-registration3/$', ContactWizardPTM.as_view([CustomerForm,AnalysisForm, Specimen_PTMForm, ExperimentPTMForm, EDForm,TOUForm]),name='projectregistrationptm'),
     url(r'^project-registration4/$', ContactWizardGB.as_view([CustomerForm,AnalysisForm, Specimen_GBForm, ExperimentGBForm, EDForm,TOUForm]),name='projectregistrationgel'),
-    url(r'^project-registration5/$', ContactWizardPMD.as_view([CustomerForm,AnalysisForm, ExperimentPMDForm, EDForm,TOUForm]),name='projectregistrationpmd'),
+    url(r'^project-registration5/$', ContactWizardPMD.as_view([CustomerForm,AnalysisForm, ExperimentPMDForm, EDPMDForm,TOUForm]),name='projectregistrationpmd'),
     url(r'^termsofuse/$', TermsOfUseView.as_view(template_name='TermsOfUse.html'), name='termsofuse'),
 
    url(r'^contact/',  ContactView.as_view(template_name='contact.html'),name='contact'),

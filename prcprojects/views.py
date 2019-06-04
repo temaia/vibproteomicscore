@@ -32,7 +32,7 @@ from django.contrib.auth.forms import (
 from django.forms.models import construct_instance 
 
 from .forms import AnalysisForm,LoginForm, CustomerForm#,PasswordResetForm
-from .forms import Specimen_APMSForm, Specimen_SGForm,Specimen_PTMForm,Specimen_GBForm, ExperimentForm,ExperimentPMDForm,ExperimentPTMForm,ExperimentAPMSForm,ExperimentGBForm, EDForm,TOUForm
+from .forms import Specimen_APMSForm, Specimen_SGForm,Specimen_PTMForm,EDPMDForm, Specimen_GBForm, ExperimentForm,ExperimentPMDForm,ExperimentPTMForm,ExperimentAPMSForm,ExperimentGBForm, EDForm,TOUForm
 from formtools.wizard.views import SessionWizardView
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -226,7 +226,7 @@ FORMSPMD= [("0", CustomerForm),
             ("1", AnalysisForm),
          #("2", Specimen_PMDForm),
          ("2",ExperimentPMDForm),
-         ("3", EDForm),
+         ("3", EDPMDForm),
          ("4", TOUForm)]
 
 TEMPLATESPMD = {"0": "project-regis111.html",
@@ -459,8 +459,8 @@ class ContactWizardPMD(SessionWizardView):
         customer,created = Profile.objects.update_or_create(user_id=self.request.user, defaults=analysis[0])
         analise,created = Analysis.objects.update_or_create(user_id=userid.id, defaults=analysis[1])
         # file field
-        formtitles = ["User details", "Analysis overview", "Sample information", "Experimental Design information",
-        "Experimental Design and Sample details", "Terms of Use"]
+        formtitles = ["User details", "Analysis overview", "Experiment information", 
+        "Sample details", "Terms of Use"]
         formdict=dict()
         for i in range(len(formtitles)):
             formdict[formtitles[i]]=analysis[i]

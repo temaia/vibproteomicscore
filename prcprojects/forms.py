@@ -416,8 +416,12 @@ from django.forms.widgets import HiddenInput
 
 
 class EDForm(forms.Form):
-    EDfile = forms.FileField(label="Please upload the final sample details file.")
+    EDfile = forms.FileField(label="Please upload the experimental design file.")
    
+
+class EDPMDForm(forms.Form):
+    EDfile = forms.FileField(label="Please upload the final sample details file.")
+
 
 class TOUForm(forms.Form):
 	TermsOfUse = forms.BooleanField(error_messages={'required': 'You must agree with the Terms of Use'},label=mark_safe('I have read and agree with the Terms of Use of the VIB Proteomics Core.'))

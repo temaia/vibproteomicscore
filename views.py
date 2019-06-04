@@ -32,7 +32,7 @@ from django.contrib.auth.forms import (
 from django.forms.models import construct_instance 
 
 from .forms import AnalysisForm,LoginForm, CustomerForm#,PasswordResetForm
-from .forms import Specimen_APMSForm, Specimen_SGForm,Specimen_PTMForm,Specimen_GBForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm,ExperimentGBForm, EDForm,TOUForm
+from .forms import Specimen_APMSForm, Specimen_SGForm,Specimen_PTMForm,Specimen_GBForm, ExperimentForm,ExperimentPMDForm,ExperimentPTMForm,ExperimentAPMSForm,ExperimentGBForm, EDForm,TOUForm
 from formtools.wizard.views import SessionWizardView
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -40,6 +40,7 @@ from django.core.files.storage import FileSystemStorage
 from .excel_utils import WriteToExcel
 from .excel_utilsapms import WriteToExcel2
 from .excel_utilsgb import WriteToExcel3
+from .excel_utilspmd import WriteToExcel4
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.mail import EmailMessage
 #import logging
@@ -220,18 +221,20 @@ TEMPLATESSG = {"0": "project-regis111.html",
              "3": "project-regis444.html",
              "4": "project-regis555.html",
              "5": "project-regis666.html"}
-# TEMPLATESSG = {"0": "project-regis111.html",
-#              "1": "project-regis222.html",
-#              "2": "project-regis333.html",
-#              "3": "project-regis444.html",
-#              "4": "project-regis555.html",
-#              "5": "project-regis666.html"}
 
-# TEMPLATESSG = {"0": "project-regis11.html",
-#               "1": "project-regis22.html",
-#               "2": "project-regis33.html",
-#               "3": "project-regis44.html",
-#               "4": "project-regis55.html"}
+FORMSPMD= [("0", CustomerForm),
+            ("1", AnalysisForm),
+         #("2", Specimen_SGForm),
+         ("2",ExperimentPMDForm),
+         ("3", EDPMDForm),
+         ("4", TOUForm)]
+
+TEMPLATESPMD = {"0": "project-regis111.html",
+             "1": "project-regis222.html",
+            # "2": "project-regis333.html",
+             "2": "project-regis444PMD.html",
+             "3": "project-regis555PMD.html",
+             "4": "project-regis666.html"}
 
 FORMSPTM = [("0", CustomerForm),
             ("1", AnalysisForm),
@@ -270,10 +273,18 @@ FORMSGB= [("0", CustomerForm),
 
 TEMPLATESGB = {"0": "project-regis111.html",
              "1": "project-regis222.html",
-             "2": "project-regis333GB.html",
+             "2": "project-regis3333GB.html",
              "3": "project-regis444.html",
              "4": "project-regis555.html",
              "5": "project-regis666.html"}
+
+
+# TEMPLATESGB = {"0": "project-regis111.html",
+#              "1": "project-regis222.html",
+#              "2": "project-regis333GB.html",
+#              "3": "project-regis444.html",
+#              "4": "project-regis555.html",
+#              "5": "project-regis666.html"}
 
           
 
@@ -385,7 +396,7 @@ class ContactWizardSG(SessionWizardView):
         #{analysis[1]['Project_ID']:'Project_ID', 
         Project_ID = analysis[0]['Project_ID']
         Contact_Person = analysis[0]['Name'].split(',')[0]
-        subject = '[VIB Proteomics Core, Project registration confirmation] '+analysis[0]['Project_ID']
+        subject = 'VIB Proteomics Core, Project registration confirmation - Read carefully'
         #message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
         html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
         from_email=settings.EMAIL_HOST_USER
@@ -451,7 +462,7 @@ class ContactWizardSG(SessionWizardView):
         #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
         if sdbf:
             yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
-        yt.create_attachment(Project_ID,name=str(analysis[3]['EDfile']),content=analysis[3]['EDfile'],author_login ="prcsite") 
+        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="prcsite") 
         #    yt.create_attachment(Project_ID,name="Sequence_database_file.fasta",content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
         #yt.create_attachment(Project_ID,name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
         #yt.create_attachment("PRC-321",name='ed.xlsx',content=os.path.join(settings.MEDIA_ROOT, 'ED/Experimental_design_PRC-20.xlsx'),author_login ="prcsite")    
@@ -511,6 +522,94 @@ class ContactWizardSG(SessionWizardView):
             #return samplename
             return self.initial_dict.get(step, prev_data)
             #return self.initial_dict.get(step, {samplename:'samplename'})
+
+class ContactWizardPMD(SessionWizardView):
+    instance=None
+    file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT,'seqdbs'))
+    def get_template_names(self):
+        #return [TEMPLATESSG[self.steps.current]]
+        return [TEMPLATESPMD[self.steps.current]]
+
+    def done(self, form_list,form_dict, **kwargs):
+        analysis = [form.cleaned_data for form in form_list]
+        userid = get_user(self.request)
+        customer,created = Profile.objects.update_or_create(user_id=self.request.user, defaults=analysis[0])
+        analise,created = Analysis.objects.update_or_create(user_id=userid.id, defaults=analysis[1])
+        # file field
+        formtitles = ["User details", "Analysis overview", "Experiment information",
+        "Sample details", "Terms of Use"]
+        formdict=dict()
+        for i in range(len(formtitles)):
+            formdict[formtitles[i]]=analysis[i]
+        print('formdict' + str(formdict))
+        Project_ID = analysis[0]['Project_ID']
+        Contact_Person = analysis[0]['Name'].split(',')[0]
+        subject = 'VIB Proteomics Core, Project registration confirmation - Read carefully'
+        #message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
+        html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
+        from_email=settings.EMAIL_HOST_USER
+        to_list = [self.request.user.email]
+        #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
+        #message = render_to_string(template1, {'user': user})
+        bcc = [settings.ADMINS[0][1]]
+        msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
+        msg.content_subtype = "html"
+        msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
+        msg.send()
+        #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
+        yt = Connection(url='https://youtrack.ugent.be', token=youtrack_get()) #@
+        summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
+        #Project_ID = "PRC-321" #@
+        #try:
+        if analysis[0]['Other_institution'] is not None:
+          Other_institution = analysis[0]['Other_institution']
+        else:
+          Other_institution = ''
+
+        description = "# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) 
+        yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
+                description=description)
+
+        yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
+        yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
+        # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
+        yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
+        yt.execute_command(Project_ID, "No_Samples "+ str(analysis[2]['Nb_samples']))
+        yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
+        if analysis[1]['Data_analysis']:
+              yt.execute_command(Project_ID, "tag nDA")
+        yt.create_attachment(Project_ID,name=str(analysis[3]['EDfile']),content=analysis[3]['EDfile'],author_login ="root", group="PRC-team" ) 
+        return render(self.request,'done.html',{
+            'formdict': formdict,
+
+            })
+    def get_form_initial(self, step):
+        """
+        Set projet id and email for step1
+        Set extra parameter for step2, which is from clean data of step1.
+        """
+        initial = self.initial_dict.get(step, {})
+        if step=='0':
+            form_class=self.form_list[step]
+            Project_ID = self.request.user.username
+            Email = self.request.user.email
+            #Analysis_Type = self.request.user.profile.Main_Analysis_Type
+            initial.update({'Project_ID':Project_ID, 'Email':Email})
+            return initial
+        if step=='1':
+            form_class=self.form_list[step]
+            Main_analysis_type = self.request.user.Main_analysis_type
+            #Analysis_Type = self.request.user.profile.Main_Analysis_Type
+            initial.update({'Main_analysis_type':Main_analysis_type})
+            return initial
+        if step == '3':
+            form_class = self.form_list[step]
+            prev_data2 = self.storage.get_step_data('2')
+            #prev_data3 = self.storage.get_step_data('3')
+            prev_data = {**prev_data2}
+            prev_data["PID"] = str(self.request.user.username)
+            xlsx_data = WriteToExcel4(prev_data)
+            return self.initial_dict.get(step, prev_data)
 
 class ContactWizardPTM(SessionWizardView):
     instance=None
