@@ -5,45 +5,41 @@
 
 
  <div class='container'>
-     <div class='row'>
-     <div class='col-md-12 ml-12 '>
+  <div class='row'>
+    <div class='col-md-12 ml-12 '>
       <div class="navbar-inner bg-grey " >
         <nav class="navbar navbar-expand-md navbar-light bg-grey ">
-  <a class="navbar" href="{% url 'home' %}">
-    <img src='{% static "./proteomics_core.png" %}' width="250" height="100" class="d-inline-block align-center" alt="">  
- </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavSupportedContent" aria-controls="navbarNavSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <!-- <a class="navbar-brand" href="#">PRC Portal</a>
-
- --> 
-
-  <div class="collapse navbar-collapse w-100" id="navbarNav">
-
-    <ul class="selected navbar-nav bg-grey ml-auto mr-auto" id="nava">
-     <li {% if "/" == request.path %}class="nav-item" class="active"{% endif %}>
-        <a class="nav-link navgar selected" href="{% url 'home' %}">Home</a>
-      </li>
-      <li {% if "/sampledelivery" == request.path %}class="nav-item active"{% endif %}>
-        <a class="nav-link navgar " href="{% url 'AboutTheCore' %}">About the Core</a>
-      </li>
-      <li {% if "/contact" == request.path %}class="nav-item active"{% endif %}>
-        <a class="nav-link navgar " href="{% url 'contact' %}">Contact</a>
-      </li>
-    </ul>  
-      <ul class="nav navbar-nav align-right ml-auto bg-grey">
-         <li {% if "/logout" == request.path %}class="nav-item active"{% endif %}>
-            <a class="nav-link" href="{% url 'logout' %}"><span class="fa fa-user fa-2x"></span><span class="fa fa-sign-out fa-lg"></span></a>
-          </li>
-
-    </ul>
-    </nav>
-       </div>
-   </div>
-</div>
+          <a class="navbar" href="{% url 'home' %}">
+            <img src='{% static "./proteomics_core.png" %}' width="250" height="100" class="d-inline-block align-center" alt="">  
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#">PRC Portal</a>
+          --> 
+          <div class="collapse navbar-collapse" id="#navbarNav">
+            <ul class="selected navbar-nav bg-grey ml-auto mr-auto" id="nava">
+              <li {% if "/" == request.path %}class="nav-item active"{% endif %}>
+                <a class="nav-link navgar selected" href="{% url 'home' %}">Home</a>
+              </li>
+              <li {% if "/sampledelivery" == request.path %}class="nav-item active"{% endif %}>
+                <a class="nav-link navgar " href="{% url 'AboutTheCore' %}">About the Core</a>
+              </li>
+              <li {% if "/contact" == request.path %}class="nav-item active"{% endif %}>
+                <a class="nav-link navgar " href="{% url 'contact' %}">Contact</a>
+              </li>
+            </ul>  
+            <ul class="nav navbar-nav align-right ml-auto bg-grey">
+              <li {% if "/logout" == request.path %}class="nav-item active"{% endif %}>
+                <a class="nav-link" href="{% url 'logout' %}"><span class="fa fa-user fa-2x"></span><span class="fa fa-sign-out fa-lg"></span></a>
+              </li>
+            </ul>
+          </div>
+        
+      </div>
     </div>
+  </div>
+</div>
 
 
   <!-- <a class="navbar-brand" href="#">PRC Portal</a>

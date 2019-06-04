@@ -31,7 +31,7 @@ class Command(BaseCommand):
 		with open(usersfile, "r", encoding='utf-8') as csvfile:
 			userreader = csv.reader(csvfile, delimiter=',')
 			for usor in userreader:
-				if not username_present(usor[0]):
+				if not username_present(usor[0]) and usor[3]=="Yes":
 					print(usor[0])
 					password = User.objects.make_random_password(length=5, allowed_chars="ABCDEFGHIJKLMNOPQRSTUVWXZ0123456789")
 					User.objects.create_user(username=usor[0],email=usor[1], password = password, Main_analysis_type  = usor[2])

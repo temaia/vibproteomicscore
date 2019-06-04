@@ -414,7 +414,6 @@ class ContactWizardSG(SessionWizardView):
         if sdbf:
             yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="root", group="PRC-team") 
         yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team" ) 
-
         return render(self.request,'done.html',{
             'formdict': formdict,
 
