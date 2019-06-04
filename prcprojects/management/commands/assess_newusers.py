@@ -48,14 +48,14 @@ class Command(BaseCommand):
 		Currentissuesindexes = list()
 		counter=0
 		for issue in PRCissues:
-		    if datetime.datetime.now() - datetime.datetime.fromtimestamp(int(issue["created"])/1000)<datetime.timedelta(hours=40):
+		    if datetime.datetime.now() - datetime.datetime.fromtimestamp(int(issue["created"])/1000)<datetime.timedelta(hours=10):
 		        PRCissuesIDs.append(issue["id"])
 		        Currentissuesindexes.append(counter)
 		    counter = counter+1
 		# update PRCissues (filter State Closed)
 		PRCissues = [PRCissues[index] for index in Currentissuesindexes]
 		filename=os.path.join(settings.BASE_DIR, "static/PRC_issues_creation_hourly.csv")   
-		with open(filename, 'w') as csvfile:
+		with open(filename, 'w', encoding='utf-8') as csvfile:
 		    #csvfile.write('Running start date\tLab PI\tType\tUser Name\tYouTrack\tProject Name (YouTrack)\t# samples\tMS_Injections_Per_Sample\trun length (hours)\ttotal running time (hours)\tMass_Spectrometer\tCreated_DateH\tArrival_DateH\tMS_RunStateH\tMS_RunStatesH\tMS_RunStatesnrH\tre-runs/problems\tMS_RunStartH\tMS_RunStartsH\tMS_RunStartsnrH\tresolvedH\tResolvedDateH\tCleatedDate\n')
 		    #csvfile.write('YouTrack_id,Contact_Email,Analysis_Type\n')
 		    i=0 

@@ -292,6 +292,25 @@ class Specimen_SGForm(forms.Form):
 	Buffer_composition = forms.CharField(max_length=300, widget=forms.Textarea(attrs={'placeholder':'e.g. 0.1M Tris-HCl pH8.0', 'rows':3, 'cols':1}),
 	 label="In case of liquid samples, please provide the exact buffer composition.", 	required=False)
 
+# class Specimen_PMDForm(forms.Form):
+# 	#Species = forms.CharField(max_length=120, label="Sample species and taxonomy ID", widget=forms.TextInput(attrs={'placeholder': 'e.g. Homo sapiens, taxid: 9606'}))
+# 	#Taxon_id = forms.CharField(max_length=120, required=True)
+# 	Estimated_MW = forms.CharField(max_length=120, label="Estimated MW", widget=forms.TextInput(attrs={'placeholder': 'e.g. 23 kDa'}))
+# 	#Sequence_Database_Public_Availability = forms.ChoiceField(choices=DATAANALYSIS,
+# 	#	 label="Protein sequence database publically available?", widget=forms.RadioSelect)
+# 	#Sequence_database_name = forms.CharField(max_length=50, required=False, label="If 'Yes', sequence database source and/or name:",
+# 	#	widget=forms.TextInput(attrs={'placeholder': 'e.g. UNIPROT, "UNIPROT UP000005640 reference proteome"'}))
+# 	#Sequence_database_file = forms.FileField(blank=True, storage=FileSystemStorage(location=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'media')))
+# 	#Sequence_database_file = forms.FileField( required=False,label="If 'No', please provide a document with protein sequences necessary for database searching, preferentially in FASTA format.")
+# 	#Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet/tissue/protein extract in eppendorf/15 ml tube'}))
+# 	#Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
+# 	#Sample_Vial = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
+	
+# 	Buffer_composition = forms.CharField(max_length=300, widget=forms.Textarea(attrs={'placeholder':'e.g. 0.1M Tris-HCl pH8.0', 'rows':3, 'cols':1}),
+# 	 label="Please provide the exact buffer composition.", 	required=False)
+
+
+
 class Specimen_PTMForm(forms.Form):
 	PTM = forms.CharField(max_length=120, label="Modification(s) under investigation", widget=forms.TextInput(attrs={'placeholder': 'e.g. lysine acetylation, tyrosine phosphorylation'}))
 	Species = forms.CharField(max_length=120, label="Sample species and taxonomy ID", widget=forms.TextInput(attrs={'placeholder': 'e.g. Homo sapiens, taxid: 9606'}))
@@ -317,7 +336,7 @@ SAMPLETYPESAPMS = (
 	)
 class Specimen_APMSForm(forms.Form):
 	Bait_Molecule = forms.ChoiceField(choices=DATAANALYSIS, label="Bait molecule is a protein?", widget=forms.RadioSelect) 
-	Bait_Molecule_Protein = forms.CharField(max_length=300,
+	Bait_Molecule_Protein = forms.CharField(max_length=300, required=False,
 		 label="If 'Yes', please provide the protein name, a database accession if existing and information on bait expression level.", 
 		 widget=forms.TextInput(attrs={'placeholder': 'e.g. Actin, Uniprot P60709, overexpression of a FLAG-tagged variant from vector/promoter x'}))
 	Bait_sequence_file = forms.FileField( required=False,label="For a tagged or engineered bait protein, please provide a document with its full length sequence, preferentially in FASTA format.")
@@ -358,7 +377,7 @@ class Specimen_GBForm(forms.Form):
 	Sequence_database_name = forms.CharField(max_length=50, required=False, label="If 'Yes', sequence database source and/or name:",
 		widget=forms.TextInput(attrs={'placeholder': 'e.g. UNIPROT, "UNIPROT UP000005640 reference proteome"'}))
 	#Sequence_database_file = forms.FileField(blank=True, storage=FileSystemStorage(location=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'media')))
-	Sequence_database_file = forms.FileField( required=False,label="If 'No', please provide a document with protein sequences necessary for database searching, preferentially in FASTA format.")
+	Sequence_database_file = forms.FileField( required=False,label="If working with transgenic/engineered proteins(s) please provide a document with protein sequences necessary for database searching, preferentially in FASTA format.")
 	PAGEInfo = forms.CharField(max_length=120, label="Company and catalog number of pre-cast gel", widget=forms.TextInput(attrs={'placeholder': 'e.g. Bio-Rad Mini-Protean, 4561084'})) 
 	PolyAcrylPercentage = forms.CharField(max_length=120, label="Percentage polyacrylamide", widget=forms.TextInput(attrs={'placeholder': 'e.g. 4-15 %'}))
 	StainingMethod = forms.CharField(max_length=120, label="Staining Method",widget=forms.TextInput(attrs={'placeholder':'e.g. Coomassie G-250, Thermo SimplyBlue SafeStain LC6060'}))
@@ -397,7 +416,7 @@ from django.forms.widgets import HiddenInput
 
 
 class EDForm(forms.Form):
-    EDfile = forms.FileField(label="Please upload the experimental design file.")
+    EDfile = forms.FileField(label="Please upload the final sample details file.")
    
 
 class TOUForm(forms.Form):
@@ -507,6 +526,26 @@ class ExperimentForm(forms.Form):
 	Isotopic_labeling_details = forms.CharField(label="If 'Yes', which labeling procedure was used?", required=False,
 	 widget=forms.Textarea(attrs={'placeholder':'e.g. SILAC; heavy(Arg6,Lys4), light()','rows':3, 'cols':1}))
 	Other_information = forms.CharField(label = "Other relevant information about the samples", required=False, widget=forms.TextInput(attrs={'placeholder':'e.g. presence of PTMs'}))
+
+class ExperimentPMDForm(forms.Form):
+
+	Experimental_conditions = forms.CharField(label = "Sample type (separated with commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. proteinA, proteinB, proteinC',
+		'rows':2, 'cols':1}))
+	#Conditions_to_compare = forms.CharField(label = "Experimental conditions to compare", widget=forms.Textarea(attrs={'placeholder':'e.g. p53KO vs p53WT, p53OE vs p53WT, p53KO vs p53OE',
+	#	 'rows':3, 'cols':1}))
+
+	#Nb_Experimental_conditions = models.IntegerField()
+	# maybe instantiate another model called efactor (experimental factor) n times, n (Nb_factors)
+	#Factor_name_lst = models.CharField(max_length=120, null=True)
+	#Conditions_list = models.CharField(max_length=120, null=True)
+	Nb_replicates_per_condition = forms.IntegerField(label = "Number of replicates per sample type",widget=forms.NumberInput(attrs={'placeholder':'e.g. 3'}))
+	Nb_samples = forms.IntegerField(label = "Total number of samples submitted", widget=forms.NumberInput(attrs={'placeholder':'e.g. 9'}))
+	#Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
+	#Isotopic_labeling = forms.ChoiceField(choices=DATAANALYSIS , label="Is any isotopic labeling procedure used?", required=True, widget=forms.RadioSelect)
+	#Isotopic_labeling_details = forms.CharField(label="If 'Yes', which labeling procedure was used?", required=False,
+	 #widget=forms.Textarea(attrs={'placeholder':'e.g. SILAC; heavy(Arg6,Lys4), light()','rows':3, 'cols':1}))
+	#Other_information = forms.CharField(label = "Other relevant information about the samples", required=False, widget=forms.TextInput(attrs={'placeholder':'e.g. presence of PTMs'}))
+
 
 
 class ExperimentPTMForm(forms.Form):

@@ -32,7 +32,7 @@ from django.contrib.auth.forms import (
 from django.forms.models import construct_instance 
 
 from .forms import AnalysisForm,LoginForm, CustomerForm#,PasswordResetForm
-from .forms import Specimen_APMSForm, Specimen_SGForm,Specimen_PTMForm,Specimen_GBForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm,ExperimentGBForm, EDForm,TOUForm
+from .forms import Specimen_APMSForm, Specimen_SGForm,Specimen_PTMForm,Specimen_GBForm, ExperimentForm,ExperimentPMDForm,ExperimentPTMForm,ExperimentAPMSForm,ExperimentGBForm, EDForm,TOUForm
 from formtools.wizard.views import SessionWizardView
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -40,6 +40,7 @@ from django.core.files.storage import FileSystemStorage
 from .excel_utils import WriteToExcel
 from .excel_utilsapms import WriteToExcel2
 from .excel_utilsgb import WriteToExcel3
+from .excel_utilspmd import WriteToExcel4
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.mail import EmailMessage
 #import logging
@@ -220,6 +221,21 @@ TEMPLATESSG = {"0": "project-regis111.html",
              "3": "project-regis444.html",
              "4": "project-regis555.html",
              "5": "project-regis666.html"}
+
+FORMSPMD= [("0", CustomerForm),
+            ("1", AnalysisForm),
+         #("2", Specimen_PMDForm),
+         ("2",ExperimentPMDForm),
+         ("3", EDForm),
+         ("4", TOUForm)]
+
+TEMPLATESPMD = {"0": "project-regis111.html",
+             "1": "project-regis222.html",
+            # "2": "project-regis333PMD.html",
+             "2": "project-regis444PMD.html",
+             "3": "project-regis555PMD.html",
+             "4": "project-regis666.html"}
+
 # TEMPLATESSG = {"0": "project-regis111.html",
 #              "1": "project-regis222.html",
 #              "2": "project-regis333.html",
@@ -270,7 +286,7 @@ FORMSGB= [("0", CustomerForm),
 
 TEMPLATESGB = {"0": "project-regis111.html",
              "1": "project-regis222.html",
-             "2": "project-regis333GB.html",
+             "2": "project-regis3333GB.html",
              "3": "project-regis444.html",
              "4": "project-regis555.html",
              "5": "project-regis666.html"}
@@ -320,45 +336,12 @@ class ContactWizardSG(SessionWizardView):
     def get_template_names(self):
         #return [TEMPLATESSG[self.steps.current]]
         return [TEMPLATESSG[self.steps.current]]
-    #def process_form_data(form_list):
-     #   form_data = [form.get_cleaned_data for form in form_list] 
-      #  return form_data
-        #logr.debug(form_data[0])['subject']
-        #logr.debug(form_data[1])['sender']
-        #logr.debug(form_data[2])['message']
+
     def done(self, form_list,form_dict, **kwargs):
-        #form_list = [CustomerForm, AnalysisForm, Specimen_SGForm]
-        #form_list = [AnalysisForm, Specimen_SGForm, ExperimentForm]
-        #form_list = [AnalysisForm, Specimen_SGForm]
-       ## form_data = process_form_data(form_list)
-        #return form_data
-       ## return render("done.html",{'form_data':form_data})
-       # list of dictionaries of results
         analysis = [form.cleaned_data for form in form_list]
-        #profile= form_dict['0'].save()
-        #analysisM=form_dict['1'].save()
-        #print(form_dict.keys())
-        #customer = Profile()
-        #print("A0"+ str(analysis[0]))
         userid = get_user(self.request)
-        #print("F0" + str(form_dict['0']))
         customer,created = Profile.objects.update_or_create(user_id=self.request.user, defaults=analysis[0])
         analise,created = Analysis.objects.update_or_create(user_id=userid.id, defaults=analysis[1])
-            #'Project_ID'=form_dict['0'][0],'Name'=form_dict['0'][1],'Email'=form_dict['0'][2], 'Group_leader'=form_dict['0'][3], \
-            #'Affiliation'=form_dict['0'][4],'Other_institution'=form_dict['0'][5], 'Address'=form_dict['0'][6])
-        #customer,created = Profile.objects.update_or_create(
-         #   'Project_ID'=form_dict['0'][0],'Name'=form_dict['0'][1],'Email'=form_dict['0'][2], 'Group_leader'=form_dict['0'][3], \
-          #  'Affiliation'=form_dict['0'][4],'Other_institution'=form_dict['0'][5], 'Address'=form_dict['0'][6])
-        #customer = construct_instance(form_dict['0'], customer)
-        #analysis = construct_instance(form_dict['0'], )
-        #analysis.save()
-        #customer = construct_instance(form_dict['0'], customer)
-        #customer.save()
-        #customer = construct_instance(form_dict['0'], customer,form_dict['0']._meta.fields,
-        #form_dict['0']._meta.exclude)
-        #customer.save()
-        #formnames = form_dict.keys()
-        #print(formnames)
         # file field
         formtitles = ["User details", "Analysis overview", "Sample information", "Experimental Design information",
         "Experimental Design and Sample details", "Terms of Use"]
@@ -366,26 +349,9 @@ class ContactWizardSG(SessionWizardView):
         for i in range(len(formtitles)):
             formdict[formtitles[i]]=analysis[i]
         print('formdict' + str(formdict))
-        #fieldvalues = [value for value in form_dict.values()]
-        #print(fieldvalues)
-        # is an odict structure with attributes fields and  
-        # dict maxi
-        #dictforms = 
-
-        #form_list=
-        # if form_list[2].cleaned_data['Sequence_Database_File']:
-        #     upload_file = form_list[2].cleaned_data['Sequence_Database_File']
-        # else:
-        #     upload_file = ['No Sequence_Database_File']
-        # if form.is_valid():
-        #send_mail(subject, message, from_email, to_list, fail_silently=False)
-        #subject = '[VIB Proteomics Core, Project registration confirmation] ' + formdict.
-        #html_message = '<p>Thank you for registering your proteomics project!</p><p>Please find below a review of the project registration information, as well as a copy of our Terms of Use.</p><p>Your project reference: PRC-20</p></br><hr><h3>Sample submission procedure</h3><p>Please visit our sample shipping guidelines <a href="http://127.0.0.1:8000/sampledelivery">page</a>.</p><p>Before sending the samples, please contact <a href="mailto:delphi.vanhaver@vib-ugent.be">Delphi Van Haver</a> from our team. She will help you pick a good time for the shipment.</p></br><hr><h3>Getting notified about your project status</h3><ul><li>Once your samples arrive to our facility, you will get an email notification.</li><li>Each proteomics project gets a person responsible from our team. He/she will be your main contact point at the Core. The project responsible will get in touch to send you your proteomics results and data analysis report and, whenever needed, to discuss technical details associated with the project.</li><li>To check your project status, please visit <a href="http://127.0.0.1:8000/project-info">this page</a>.</li></ul></br></br><p>Best regards,</p><p>The VIB Proteomics Core</p>'
-        #message='<p>Thank you for registering your proteomics project!</p><p>Please find below a review of the project registration information, as well as a copy of our Terms of Use.</p><p>Your project reference: PRC-20</p></br><hr><h3>Sample submission procedure</h3><p>Please visit our sample shipping guidelines <a href="http://127.0.0.1:8000/sampledelivery">page</a>.</p><p>Before sending the samples, please contact <a href="mailto:delphi.vanhaver@vib-ugent.be">Delphi Van Haver</a> from our team. She will help you pick a good time for the shipment.</p></br><hr><h3>Getting notified about your project status</h3><ul><li>Once your samples arrive to our facility, you will get an email notification.</li><li>Each proteomics project gets a person responsible from our team. He/she will be your main contact point at the Core. The project responsible will get in touch to send you your proteomics results and data analysis report and, whenever needed, to discuss technical details associated with the project.</li><li>To check your project status, please visit <a href="http://127.0.0.1:8000/project-info">this page</a>.</li></ul></br></br><p>Best regards,</p><p>The VIB Proteomics Core</p>'
-        #{analysis[1]['Project_ID']:'Project_ID', 
         Project_ID = analysis[0]['Project_ID']
         Contact_Person = analysis[0]['Name'].split(',')[0]
-        subject = '[VIB Proteomics Core, Project registration confirmation] '+analysis[0]['Project_ID']
+        subject = 'VIB Proteomics Core, Project registration confirmation - Read carefully'
         #message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
         html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
         from_email=settings.EMAIL_HOST_USER
@@ -444,25 +410,14 @@ class ContactWizardSG(SessionWizardView):
         yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
         if analysis[1]['Data_analysis']:
              yt.execute_command(Project_ID, "tag nDA")
-        #upload_file = form_list[2].cleaned_data['Sequence_database_file']
-        #upload_file = "media/Cumulative2.png"
-        #if sdbf:
-        #    yt.create_attachment("PRC-321",name=Sequence_database_file,content='../media/ED/'+upload_file,author_login ="prcsite")
-        #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
+
         if sdbf:
-            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
-        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="prcsite") 
-        #    yt.create_attachment(Project_ID,name="Sequence_database_file.fasta",content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
-        #yt.create_attachment(Project_ID,name="ExpDesignANDSamples.xlsx",content=analysis[4]['EDfile'],author_login ="prcsite") 
-        #yt.create_attachment("PRC-321",name='ed.xlsx',content=os.path.join(settings.MEDIA_ROOT, 'ED/Experimental_design_PRC-20.xlsx'),author_login ="prcsite")    
-        #yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
+            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="root", group="PRC-team") 
+        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team" ) 
+
         return render(self.request,'done.html',{
             'formdict': formdict,
-            #'analysisd':form_dict,
-            #'formnames':formnames,
-            #'formtitles':formtitles,
-            #'fieldnames':fieldvalues,
-            #'upload_file' : upload_file,
+
             })
     def get_form_initial(self, step):
         """
@@ -483,34 +438,102 @@ class ContactWizardSG(SessionWizardView):
             #Analysis_Type = self.request.user.profile.Main_Analysis_Type
             initial.update({'Main_analysis_type':Main_analysis_type})
             return initial
-        #if step == '3':
-         #   form_class = self.form_list[step]
-            #Issue = self.request.user.profile.Issue + '-S' 
-            #form_class['Generic_Sample_Name'] = self.request.user.profile.Issue 
-            #initial.update({'Generic_Sample_Name':Analysis_Type})
-            #return initial
         if step == '4':
             form_class = self.form_list[step]
-            #print(dir(self.storage))
-            #prev_data1 = self.storage.get_step_data('0')
-            #print(str(prev_data1))
-            #pid=prev_data1["0-Project_ID"]
-            #print("pid"+pid)
             prev_data2 = self.storage.get_step_data('2')
-            #print(str(prev_data2))
             prev_data3 = self.storage.get_step_data('3')
-            #print(str(prev_data3))
             prev_data = {**prev_data2, **prev_data3}
-            #print("s"+str(self.request.user.username))
             prev_data["PID"] = str(self.request.user.username)
-            #print(prev_data["PID"])
             xlsx_data = WriteToExcel(prev_data)
-            #response.write(xlsx_data)
-            #get_cleaned_data_for_step
-            #samplename = prev_data.get('Generic_Sample_Name','')
-            #return samplename
             return self.initial_dict.get(step, prev_data)
-            #return self.initial_dict.get(step, {samplename:'samplename'})
+
+class ContactWizardPMD(SessionWizardView):
+    instance=None
+    file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT,'seqdbs'))
+    def get_template_names(self):
+        #return [TEMPLATESSG[self.steps.current]]
+        return [TEMPLATESPMD[self.steps.current]]
+
+    def done(self, form_list,form_dict, **kwargs):
+        analysis = [form.cleaned_data for form in form_list]
+        userid = get_user(self.request)
+        customer,created = Profile.objects.update_or_create(user_id=self.request.user, defaults=analysis[0])
+        analise,created = Analysis.objects.update_or_create(user_id=userid.id, defaults=analysis[1])
+        # file field
+        formtitles = ["User details", "Analysis overview", "Sample information", "Experimental Design information",
+        "Experimental Design and Sample details", "Terms of Use"]
+        formdict=dict()
+        for i in range(len(formtitles)):
+            formdict[formtitles[i]]=analysis[i]
+        print('formdict' + str(formdict))
+        Project_ID = analysis[0]['Project_ID']
+        Contact_Person = analysis[0]['Name'].split(',')[0]
+        subject = 'VIB Proteomics Core, Project registration confirmation - Read carefully'
+        #message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
+        html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
+        from_email=settings.EMAIL_HOST_USER
+        to_list = [self.request.user.email]
+        #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
+        #message = render_to_string(template1, {'user': user})
+        bcc = [settings.ADMINS[0][1]]
+        msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
+        msg.content_subtype = "html"
+        msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
+        msg.send()
+        #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
+        yt = Connection(url='https://youtrack.ugent.be', token=youtrack_get()) #@
+        summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
+        #Project_ID = "PRC-321" #@
+        #try:
+        if analysis[0]['Other_institution'] is not None:
+          Other_institution = analysis[0]['Other_institution']
+        else:
+          Other_institution = ''
+
+        description = "# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) 
+        yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
+                description=description)
+
+        yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
+        yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
+        # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
+        yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
+        yt.execute_command(Project_ID, "No_Samples "+ str(analysis[2]['Nb_samples']))
+        yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
+        if analysis[1]['Data_analysis']:
+              yt.execute_command(Project_ID, "tag nDA")
+        yt.create_attachment(Project_ID,name=str(analysis[3]['EDfile']),content=analysis[3]['EDfile'],author_login ="root", group="PRC-team" ) 
+        return render(self.request,'done.html',{
+            'formdict': formdict,
+
+            })
+    def get_form_initial(self, step):
+        """
+        Set projet id and email for step1
+        Set extra parameter for step2, which is from clean data of step1.
+        """
+        initial = self.initial_dict.get(step, {})
+        if step=='0':
+            form_class=self.form_list[step]
+            Project_ID = self.request.user.username
+            Email = self.request.user.email
+            #Analysis_Type = self.request.user.profile.Main_Analysis_Type
+            initial.update({'Project_ID':Project_ID, 'Email':Email})
+            return initial
+        if step=='1':
+            form_class=self.form_list[step]
+            Main_analysis_type = self.request.user.Main_analysis_type
+            #Analysis_Type = self.request.user.profile.Main_Analysis_Type
+            initial.update({'Main_analysis_type':Main_analysis_type})
+            return initial
+        if step == '3':
+            form_class = self.form_list[step]
+            prev_data2 = self.storage.get_step_data('2')
+            #prev_data3 = self.storage.get_step_data('3')
+            prev_data = {**prev_data2}
+            prev_data["PID"] = str(self.request.user.username)
+            xlsx_data = WriteToExcel4(prev_data)
+            return self.initial_dict.get(step, prev_data)
 
 class ContactWizardPTM(SessionWizardView):
     instance=None
@@ -647,8 +670,8 @@ class ContactWizardPTM(SessionWizardView):
         #    yt.create_attachment("PRC-321",name=Sequence_database_file,content='../media/ED/'+upload_file,author_login ="prcsite")
         #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
         if sdbf:
-            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
-        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="prcsite") 
+            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="root", group="PRC-team") 
+        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team") 
         return render(self.request,'done.html',{
             'formdict': formdict,
             #'analysisd':form_dict,
@@ -869,8 +892,8 @@ class ContactWizardAPMS(SessionWizardView):
         if analysis[1]['Data_analysis']:
              yt.execute_command(Project_ID, "tag nDA")
         if sdbf:
-            yt.create_attachment(Project_ID,name=Bait_sequence_file,content=analysis[2]['Bait_sequence_file'],author_login ="prcsite") 
-        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="prcsite") 
+            yt.create_attachment(Project_ID,name=Bait_sequence_file,content=analysis[2]['Bait_sequence_file'],author_login ="root", group="PRC-team") 
+        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team") 
         return render(self.request,'done.html',{
             'formdict': formdict,
             #'analysisd':form_dict,
@@ -1015,6 +1038,12 @@ class ContactWizardGB(SessionWizardView):
           Other_institution = analysis[0]['Other_institution']
         else:
           Other_institution = ''
+        sdbfg = False
+        if analysis[2]['Gel_file'] is not None:
+          Gel_file= analysis[2]['Gel_file']
+          sdbfg=True
+        else:
+          Gel_file = ''
         if analysis[2]['Sequence_database_name'] is not None:
           Sequence_database_name = analysis[2]['Sequence_database_name']
         else:
@@ -1060,9 +1089,11 @@ class ContactWizardGB(SessionWizardView):
         #if sdbf:
         #    yt.create_attachment("PRC-321",name=Sequence_database_file,content='../media/ED/'+upload_file,author_login ="prcsite")
         #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
+        if sdbfg:
+            yt.create_attachment(Project_ID,name=Gel_file,content=analysis[2]['Gel_file'],author_login ="root", group="PRC-team") 
         if sdbf:
-            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="prcsite") 
-        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="prcsite") 
+            yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="root", group="PRC-team") 
+        yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team") 
         #yt.create_attachment("PRC-321",name='ed.xlsx',content=os.path.join(settings.MEDIA_ROOT, 'ED/Experimental_design_PRC-20.xlsx'),author_login ="prcsite")    
         #yt.create_attachment("PRC-321",name='Training_logo.png',content=open(upload_file, "rb"),author_login ="prcsite")
         return render(self.request,'done.html',{

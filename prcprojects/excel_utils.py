@@ -121,10 +121,11 @@ def WriteToExcel(arguments_dict):
         for ec0 in ec:
             for rep in range(1,no_replicates+1,1):
                 eclist.append(ec0)
-        for rep in range(1,no_replicates+1,1):
-            eclist.append('')
+        eclist =eclist + [""]*(no_samples-len(eclist))
+        #for rep in range(1,no_replicates+1,1):
+        #    eclist.append('')
         # buffer
-        print(eclist)
+        #print(eclist)
         # add data to the table
         for idx in range(0,no_samples,1):
             row = idx+5
@@ -182,7 +183,7 @@ def WriteToExcel(arguments_dict):
         span = 'B'+str(idx)+':D'+str(idx)
         span2 = 'B'+str(idx+1)+':D'+str(idx+1)
         worksheet_s.merge_range(span,"- please edit and review the fields in orange", cellneditleft)
-        worksheet_s.merge_range(span2,"- *according to if the sample is protein extract or cell pellet, respectively", cellneditleft)
+        worksheet_s.merge_range(span2,"- * according to if the sample is protein extract or cell pellet, respectively", cellneditleft)
          
         # change column widths
         worksheet_s.set_column('A:A', 14.3)  # Sample Name
@@ -353,11 +354,11 @@ def WriteToExcel(arguments_dict):
 # write header
         worksheet_s.write(3, 0, ugettext("Sample Name"), header) # project-ID+counter
         worksheet_s.write(3, 1, ugettext("Experimental Condition"), header) # from dropdown from parsed conditions Experimental_conditions
-        worksheet_s.write(3, 2, ugettext("Isotopic label"), header) # from dropdown from parsed conditions Isotopic_label
+        worksheet_s.write(3, 2, ugettext("Isotopic label *"), header) # from dropdown from parsed conditions Isotopic_label
         worksheet_s.write(3, 3, ugettext("Replicate"), header) # pre filled 123 123 if total/3 = 0 else,jjjjj
         worksheet_s.write(3, 4, ugettext("Sample type delivered"), header) #add Sample type value and leave free for editing
         worksheet_s.write(3, 5, ugettext("Buffer composition"), header) #add Buffer composition value and leave free for editing (space dows not matter)
-        worksheet_s.write(3, 6, ugettext("Sample amount (μg of protein) / # of cells *"), header) #format digits (2 decimals) leave for edit
+        worksheet_s.write(3, 6, ugettext("Sample amount (μg of protein) / # of cells **"), header) #format digits (2 decimals) leave for edit
         worksheet_s.write(3, 7, ugettext("Volume (if applicable) (μl)"), header) #  #format digits (2 decimals) leave for edit
         worksheet_s.write(3, 8, ugettext("Other relevant information"), header) # leave free
 
@@ -391,8 +392,9 @@ def WriteToExcel(arguments_dict):
                 eclist.append(ec0)
         for rep in range(1,no_replicates+1,1):
             eclist.append('')
+        eclist =eclist + [""]*(no_samples-len(eclist))
         # buffer
-        print(eclist)
+        #print(eclist)
         # add data to the table
         for idx in range(0,no_samples,1):
             row = idx+5
@@ -404,7 +406,7 @@ def WriteToExcel(arguments_dict):
             worksheet_s.data_validation(row, 1,row, 1, { 'validate' :'list',
                                                 'source' : ec})
             # isotopic labels
-            worksheet_s.write_string(row, 2, "labels", celledit) # make remark at the end
+            worksheet_s.write_string(row, 2, "label", celledit) # make remark at the end
             # replicate
             worksheet_s.write_string(row, 3, "rep_" + str(plist[idx]), celledit)
             # sample type delivered
@@ -447,14 +449,17 @@ def WriteToExcel(arguments_dict):
             # worksheet_s.set_row(row, 15 * observations_rows)
             #idx+=1
         idx += 7
-        span = 'B'+str(idx)+':D'+str(idx)
-        span2 = 'B'+str(idx+1)+':D'+str(idx+1)
+        span = 'B'+str(idx)+':E'+str(idx)
+        span2 = 'B'+str(idx+1)+':E'+str(idx+1)
+        span3 = 'B'+str(idx+2)+':E'+str(idx+2)
         worksheet_s.merge_range(span,"- please edit and review the fields in orange", cellneditleft)
-        worksheet_s.merge_range(span2,"- *according to if the sample is protein extract or cell pellet, respectively", cellneditleft)
+        worksheet_s.merge_range(span2,"- * if you are unsure about the labeling schema to use please leave this column empty", cellneditleft)
+        worksheet_s.merge_range(span3,"- ** according to if the sample is protein extract or cell pellet, respectively", cellneditleft)
+
         # change column widths
         worksheet_s.set_column('A:A', 14.3)  # Sample Name
         worksheet_s.set_column('B:B', 20.8)  # Experimental Condition
-        worksheet_s.set_column('C:C', 12.6)  # Isotopic label
+        worksheet_s.set_column('C:C', 15.0)  # Isotopic label
         worksheet_s.set_column('D:D', 9.5)  # Replicate
         worksheet_s.set_column('E:E', 30.0)  # Sample type delivered
         worksheet_s.set_column('F:F', 16.0)  # Buffer composition

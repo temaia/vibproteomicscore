@@ -39,7 +39,7 @@ class Command(BaseCommand):
 					#user = User.objects.filter(email=usor[1]).get()
 					#template1 = os.path.join(settings.BASE_DIR , 'templates/InvitationForRegistrationEmail2.txt')
 					template2 = os.path.join(settings.BASE_DIR, 'templates/InvitationForRegistrationEmail2.html')
-					subject = "[VIB Proteomics Core New Project] " + usor[0]
+					subject = "VIB Proteomics Core New Project"
 					#message = render_to_string(template1, {'user': user})
 					html_message = render_to_string(template2, {'user': user,'pw': password})
 					from_email=settings.EMAIL_HOST_USER

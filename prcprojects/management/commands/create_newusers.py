@@ -1,11 +1,18 @@
 import csv
-from requests.models import User
+import os
+
+from prcprojects.models import User
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.template.loader import get_template
+from django.conf.urls.static import static
+from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.core.mail import EmailMessage
+
+
 
 def username_present(username):
 	if User.objects.filter(username=username).exists():
@@ -33,17 +40,16 @@ class Command(BaseCommand):
 					#user = User.objects.filter(email=usor[1]).get()
 					#template1 = os.path.join(settings.BASE_DIR , 'templates/InvitationForRegistrationEmail2.txt')
 					template2 = os.path.join(settings.BASE_DIR, 'templates/InvitationForRegistrationEmail2.html')
-					subject = "[VIB Proteomics Core New Project] " + usor[0]
+					subject = "VIB Proteomics Core New Project" 
 					#message = render_to_string(template1, {'user': user})
 					html_message = render_to_string(template2, {'user': user,'pw': password})
 					from_email=settings.EMAIL_HOST_USER
 					to_list = [user.email]
-					bcc = [settings.ADMINS[1]]
+					bcc = [settings.ADMINS[0][1]]
 					msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
 					msg.content_subtype = "html"
 					msg.send()
 				#User.objects.create_user(username="PRC-21", password=password, email="mariana@gmail.com", Main_analysis_type = "PRM")
-			
 		# self.stdout.write("User %s created" % usor[0])
         #User.objects.create_user(username="PRC-21", password=password, email="mariana@gmail.com", Main_analysis_type = "PRM")
         #from requests.models import User

@@ -109,6 +109,9 @@ $(document).ready(function(){
 }  else if ( analysistypee.includes('PTM analysis')) {
   console.log("PTM" + analysistypee);
   window.location.href="{% url 'projectregistrationptm' %}";
+}  else if ( analysistypee.includes('protein mass determination')) {
+  console.log("PMD" + analysistypee);
+  window.location.href="{% url 'projectregistrationpmd' %}";
 }  else {
   window.location.href="{% url 'projectregistrationsg' %}";
 }});
