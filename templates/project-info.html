@@ -240,13 +240,20 @@ function OpenSessionStatusCSS(State){
     $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#closed").attr("class", ".col-xs-3 bs-wizard-step disabled");
 
-  }
-   else if (State == "MS_Run" && SchedulingState == "Scheduled"){
+  } else if (State == "MS_Run" && SchedulingState == "Scheduled"){
     $("#created").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#arrived").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step complete");
     $("#ms_run").attr("class", ".col-xs-3 bs-wizard-step active");
     $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step disabled");
+    $("#closed").attr("class", ".col-xs-3 bs-wizard-step disabled");
+    
+  } else if (State == "Data_Analysis" && SchedulingState == "Scheduled"){
+    $("#created").attr("class", ".col-xs-3 bs-wizard-step complete");
+    $("#arrived").attr("class", ".col-xs-3 bs-wizard-step complete");
+    $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step complete");
+    $("#ms_run").attr("class", ".col-xs-3 bs-wizard-step complete");
+    $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step active");
     $("#closed").attr("class", ".col-xs-3 bs-wizard-step disabled");
     
   } else if (State == "Data_Analysis" && SchedulingState == "NotScheduled"){
@@ -268,8 +275,8 @@ function OpenSessionStatusCSS(State){
     
   }
     else {
-      $("#created").attr("class", ".col-xs-3 bs-wizard-step disabled");
-      $("#arrived").attr("class", ".col-xs-3 bs-wizard-step disabled");
+    $("#created").attr("class", ".col-xs-3 bs-wizard-step disabled");
+    $("#arrived").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#sample_prep").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#ms_run").attr("class", ".col-xs-3 bs-wizard-step disabled");
     $("#data_analysis").attr("class", ".col-xs-3 bs-wizard-step disabled");
