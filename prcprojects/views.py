@@ -1216,6 +1216,7 @@ class ProjectInfoView(TemplateView):
                     context["Project_ID"] = row["YouTrack_id"]
                     context["State"] = row["State"]
                     context["Scheduling_State"] = row["Scheduling_State"]
+                    context["Mass_Spectrometer"] = row["Mass_Spectrometer"]
                     if row["Scheduling_State"]=='NotScheduled':
                         context["Scheduling_StateName"] = ', waiting to be processed.'
                     else:
