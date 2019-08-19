@@ -4,6 +4,7 @@
 {% load static %}
 
 {% block content %}
+<div class="text-justify">
 <p>Dear customer,</p>
 
 <p>You are receiving this email because you recently contacted the VIB Proteomics Core to request an analysis.</p>
@@ -14,8 +15,11 @@
 <li>Project_ID: {{ user.username }} </li>
 <li>keyword: {{ pw }} </li>
 </ul>
-
+</br>
+<p>For any question about the registration procedure, please contact <a href="mailto:teresa.maia@vib-ugent.be">Teresa Maia</a> from our team.</p>
+</br>
 <p>Thank you for choosing to work with us.</p>
 <p>Best regards,</p><p>The VIB Proteomics Core</p>
 </br>
+</div>
 {% endblock %}

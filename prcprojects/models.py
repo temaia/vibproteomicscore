@@ -300,7 +300,7 @@ def save_user_profile(sender,instance, **kwargs):
 class Analysis(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	Project_title = models.CharField(max_length=50)
-	Project_summary = models.CharField(max_length=300)
+	Project_summary = models.CharField(max_length=1000)
 	#Project_keywords = models.CharField(max_length=120)
 	#Analysis_type = MultiSelectField(choices=ANALYSISTYPES) # pre-filled?!
 	#Analysis_type2 = MultiSelectField(choices=ANALYSISTYPES2,
