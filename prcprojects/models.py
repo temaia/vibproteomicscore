@@ -309,7 +309,9 @@ class Analysis(models.Model):
 	Main_analysis_type = MultiSelectField(choices=ANALYSISTYPES, null=True, blank=True,max_choices=4) # pre-filled?!
 	timestamp = models.DateTimeField(auto_now_add=True)
 	#Analysis_type = models.CharField(max_length=50,default=None , choices=ANALYSISTYPES)
+	Sample_preparation = models.BooleanField()
 	Data_analysis = models.BooleanField()#choices=DATAANALYSIS)
+
 	#Data_analysis = models.BooleanField()
 #class Profile_extra(models.Model):
 	#def __unicode__(self):

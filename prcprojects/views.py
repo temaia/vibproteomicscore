@@ -390,7 +390,15 @@ class ContactWizardSG(SessionWizardView):
               Other_information = analysis[3]['Other_information']
             else:
               Other_information = ''
-            description = "# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
+            description = "# Sample Preparation notes\n* [x] Standard Urea\nUrea concentration: 8 M\n"\
+"Sample type: cell pellet\nSonicator: water bath\nDTT concentration: 5 mM\nAlkylating agent: IAA\n"\
+"Working IAA concentration: 10 mM\nLysC concentration (w:w): 1:100\n"\
+"Trypsin: 1:100\nPeptide purification: SampliQ 100 mg (OR 500 mg)\nOther notes:\n"\
+"\n* [ ] Mini Urea\nUrea concentration: 8 M\n"\
+"Sample type: cell pellet/dried protein extract (PR protein extract in solution)\nSonicator: water bath\nDTT concentration: 15 mM\nAlkylating agent: IAA\n"\
+"Working IAA concentration: 30 mM\nLysC concentration (w:w): 1:100\n"\
+"Trypsin: 1:100\nPeptide purification: OMIX tip\nOther notes:\n"\
+"\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
                   + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
                   + "\nSequence_Database_Name: " + Sequence_database_name+"\nSequence_database_file: " + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
                   + Other_information
@@ -403,6 +411,8 @@ class ContactWizardSG(SessionWizardView):
             yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
             yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
             yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
+            if analysis[1]['Sample_preparation']:
+                 yt.execute_command(Project_ID, "tag nSP")
             if analysis[1]['Data_analysis']:
                  yt.execute_command(Project_ID, "tag nDA")
 
@@ -498,7 +508,8 @@ class ContactWizardPMD(SessionWizardView):
             else:
               Other_institution = ''
 
-            description = "# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) 
+            description = "# Sample Preparation notes\nProtocol: \nOther notes:\n"\
+            "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) 
             yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
                     description=description)
 
@@ -508,6 +519,8 @@ class ContactWizardPMD(SessionWizardView):
             yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
             yt.execute_command(Project_ID, "No_Samples "+ str(analysis[2]['Nb_samples']))
             yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
+            if analysis[1]['Sample_preparation']:
+                 yt.execute_command(Project_ID, "tag nSP")
             if analysis[1]['Data_analysis']:
                   yt.execute_command(Project_ID, "tag nDA")
             yt.create_attachment(Project_ID,name=str(analysis[3]['EDfile']),content=analysis[3]['EDfile'],author_login ="root", group="PRC-team" ) 
@@ -627,7 +640,13 @@ class ContactWizardPTM(SessionWizardView):
               Other_information = analysis[3]['Other_information']
             else:
               Other_information = ''
-            description = "# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
+            description = "# Sample Preparation notes\nProtocol: Standard Urea with phosphopeptide enrichment\nUrea concentration: 9 M\n"\
+"Urea solution volume: 1 ml\nDTT concentration: 5 mM\nAlkylating agent: IAA\n"\
+"Working IAA concentration: 10 mM\nLysC concentration (w:w): 1:100\n"\
+"Trypsin: 1:100\nPeptide purification: SampliQ 100 mg (OR 500 mg)\n"\
+"Peptide enrichment reagent: MagReSyn Ti-IMAC beads\n"\
+"Peptide enrichment reagent volume: 100 µl\nOther notes:\n"\
+                  + "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
                   +  "\nPTM(s) under study: "+ analysis[2]['PTM'] + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
                   + "\nSequence_Database_Name:" + Sequence_database_name+"\nSequence_database_file:" + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
                   + Other_information
@@ -640,6 +659,8 @@ class ContactWizardPTM(SessionWizardView):
             yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
             yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
             yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
+            if analysis[1]['Sample_preparation']:
+                 yt.execute_command(Project_ID, "tag nSP")
             if analysis[1]['Data_analysis']:
                  yt.execute_command(Project_ID, "tag nDA")
             yt.execute_command(Project_ID, "tag PTM")
@@ -808,7 +829,9 @@ class ContactWizardAPMS(SessionWizardView):
               Other_information = analysis[3]['Other_information']
             else:
               Other_information = ''
-            description = "# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
+            description = "# Sample Preparation notes\nProtocol: OnBead Digest\n"\
+"Sample type: dry beads\nTrypsin: 1 µg \nOther notes:\n"\
+            "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
                   + "\nSample_Species: "+ analysis[2]['Species'] + "\nSample_Type: " + analysis[2]['Sample_Type'] + "\nBuffer_composition: " + Buffer_composition + "\nBait_Molecule: "+ Bait_Molecule + "\nBait_Molecule_Protein: "+ Bait_Molecule_Protein + "\nBait_sequence_file: "+ Bait_sequence_file + "\nBait_Molecule_other: "+ Bait_Molecule_other \
                   + "\nAntibodies: "+Antibodies + "\nAbSource: "+ AbSource + "\nAbAmount: "+ AbAmount \
                   + "\nBeads: "+ analysis[2]['Beads'] + "\nBeadsSource: "+ analysis[2]['BeadsSource'] + "\nBeadsAmount: "+ analysis[2]['BeadsAmount'] \
@@ -823,6 +846,8 @@ class ContactWizardAPMS(SessionWizardView):
             yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
             yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
             yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
+            if analysis[1]['Sample_preparation']:
+                 yt.execute_command(Project_ID, "tag nSP")
             if analysis[1]['Data_analysis']:
                  yt.execute_command(Project_ID, "tag nDA")
             if sdbf:
@@ -962,7 +987,9 @@ class ContactWizardGB(SessionWizardView):
             else:
               Other_information = ''
 
-            description = "# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
+            description =  "# Sample Preparation notes\nProtocol: In Gel Digestion\nACN wash: 50 %\n"\
+"Trypsin solution volume: 15 µl\nOther notes:\n"\
+            "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
                   + "\nSetup: "+ analysis[2]['Setup'] + '\nGel_file: ' + str(analysis[2]['Gel_file']) \
                   + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
                   + "\nSequence_Database_Name: " + Sequence_database_name+"\nSequence_database_file: " + str(Sequence_database_file) \
@@ -980,6 +1007,8 @@ class ContactWizardGB(SessionWizardView):
             yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
             yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
             yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
+            if analysis[1]['Sample_preparation']:
+                 yt.execute_command(Project_ID, "tag nSP")
             if analysis[1]['Data_analysis']:
                  yt.execute_command(Project_ID, "tag nDA")
             #upload_file = form_list[2].cleaned_data['Sequence_database_file']

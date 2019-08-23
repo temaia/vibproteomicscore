@@ -134,12 +134,13 @@ class AnalysisForm(forms.ModelForm):
 		model = Analysis
 		#Analysis.objects.get_or_create(user=user.username)
 
-		fields = ("Project_title",'Project_summary', "Main_analysis_type","Data_analysis",
+		fields = ("Project_title",'Project_summary', "Main_analysis_type","Sample_preparation","Data_analysis",
 			'Main_analysis_type')
 		widgets = {'Project_summary': forms.Textarea(attrs={'placeholder': 'Provide a 4 line summary of the project explaining the purpose of the analysis',
 			'cols':1,'rows':6}),"Main_analysis_type":forms.HiddenInput}
 					#}
-		labels = {'Data_analysis':'Check this box if you only need to receive raw data.'}	
+		labels = {'Sample_preparation':'Check this box if you have already processed your samples for direct LC-MS/MS injection',
+		'Data_analysis':'Check this box if you only need to receive raw data.'}	
 
 	def __init__(self,  *args, **kwargs):
 		#self.user = kwargs.pop('user', None)
