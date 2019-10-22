@@ -162,7 +162,7 @@ class Command(BaseCommand):
         with open(inputfile, 'r', encoding='UTF-8', newline='') as in_f, open(outputfileall, 'w', newline='', encoding='utf-8') as out_f:
             data = [item for item in csv.reader(in_f)]
             # to be revised
-            MedianWTime = 34
+            MedianWTime = 48
             MedianWTime_col = ["Median_wTime"]+[MedianWTime]*len(MinWaitingTimes)
             #MinWaitingTimes = ["Min_wTime"]+MinWaitingTimes
             new_data = []

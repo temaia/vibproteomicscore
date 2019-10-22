@@ -390,13 +390,14 @@ class ContactWizardSG(SessionWizardView):
               Other_information = analysis[3]['Other_information']
             else:
               Other_information = ''
-            description = "# Sample Preparation notes\n* [x] Standard Urea\nUrea concentration: 8 M\n"\
-"Sample type: cell pellet\nSonicator: water bath\nDTT concentration: 5 mM\nAlkylating agent: IAA\n"\
-"Working IAA concentration: 10 mM\nLysC concentration (w:w): 1:100\n"\
+            description = "# Sample Preparation notes\n* [x] Standard Urea\nUrea concentration: 8 M\nResuspension volume: 1 mL\n"\
+"Sample type: cell pellet\nSonicator: water bath\nProtein amount extracted: \nProtein amount used for sample prep: \nDTT concentration: 5 mM\nAlkylating agent: IAA\n"\
+"Working alkylating agent concentration: 10 mM\nLysC concentration (w:w): 1:100\n"\
 "Trypsin: 1:100\nPeptide purification: SampliQ 100 mg (OR 500 mg)\nOther notes:\n"\
 "\n* [ ] Mini Urea\nUrea concentration: 8 M\n"\
-"Sample type: cell pellet/dried protein extract (PR protein extract in solution)\nSonicator: water bath\nDTT concentration: 15 mM\nAlkylating agent: IAA\n"\
-"Working IAA concentration: 30 mM\nLysC concentration (w:w): 1:100\n"\
+"Sample type: cell pellet/dried protein extract (PR protein extract in solution)\nResuspension volume: 50 µL\n"\
+"Sonicator: water bath\nDTT concentration: 15 mM\nAlkylating agent: IAA\n"\
+"Working alkylating agent concentration: 30 mM\nLysC concentration (w:w): 1:100\n"\
 "Trypsin: 1:100\nPeptide purification: OMIX tip\nOther notes:\n"\
 "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
                   + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
@@ -408,7 +409,12 @@ class ContactWizardSG(SessionWizardView):
             yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
             yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
             # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
-            yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            if analysis[0]['Affiliation'] == 'Industry':
+                yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            elif analysis[0]['Affiliation'].find("VIB") != -1:
+                yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
+            else:
+                yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
             yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
             yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
             if analysis[1]['Sample_preparation']:
@@ -516,7 +522,12 @@ class ContactWizardPMD(SessionWizardView):
             yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
             yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
             # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
-            yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            if analysis[0]['Affiliation'] == 'Industry':
+                yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            elif analysis[0]['Affiliation'].find("VIB") != -1:
+                yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
+            else:
+                yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
             yt.execute_command(Project_ID, "No_Samples "+ str(analysis[2]['Nb_samples']))
             yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
             if analysis[1]['Sample_preparation']:
@@ -641,8 +652,8 @@ class ContactWizardPTM(SessionWizardView):
             else:
               Other_information = ''
             description = "# Sample Preparation notes\nProtocol: Standard Urea with phosphopeptide enrichment\nUrea concentration: 9 M\n"\
-"Urea solution volume: 1 ml\nDTT concentration: 5 mM\nAlkylating agent: IAA\n"\
-"Working IAA concentration: 10 mM\nLysC concentration (w:w): 1:100\n"\
+"Urea solution volume: 1 ml\nProtein amount extracted: \nProtein amount used for sample prep: \nDTT concentration: 5 mM\nAlkylating agent: IAA\n"\
+"Working alkylating agent concentration: 10 mM\nLysC concentration (w:w): 1:100\n"\
 "Trypsin: 1:100\nPeptide purification: SampliQ 100 mg (OR 500 mg)\n"\
 "Peptide enrichment reagent: MagReSyn Ti-IMAC beads\n"\
 "Peptide enrichment reagent volume: 100 µl\nOther notes:\n"\
@@ -656,7 +667,12 @@ class ContactWizardPTM(SessionWizardView):
             yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
             yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
             # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
-            yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            if analysis[0]['Affiliation'] == 'Industry':
+                yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            elif analysis[0]['Affiliation'].find("VIB") != -1:
+                yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
+            else:
+                yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
             yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
             yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
             if analysis[1]['Sample_preparation']:
@@ -843,7 +859,12 @@ class ContactWizardAPMS(SessionWizardView):
             yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
             yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
             # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
-            yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            if analysis[0]['Affiliation'] == 'Industry':
+                yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            elif analysis[0]['Affiliation'].find("VIB") != -1:
+                yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
+            else:
+                yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
             yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
             yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
             if analysis[1]['Sample_preparation']:
@@ -1004,7 +1025,12 @@ class ContactWizardGB(SessionWizardView):
             yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
             yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
             # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
-            yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            if analysis[0]['Affiliation'] == 'Industry':
+                yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            elif analysis[0]['Affiliation'].find("VIB") != -1:
+                yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
+            else:
+                yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
             yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
             yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
             if analysis[1]['Sample_preparation']:

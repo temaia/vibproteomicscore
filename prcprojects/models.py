@@ -89,8 +89,9 @@ AFFILIATIONTYPES= (
 	('UAntwerpen','UAntwerpen'),
 	('VUB-VIB','VUB-VIB'),
 	('VUB','VUB'),
-	('Uhasselt-VIB','UHasselt-VIB'),
-	('Uhasselt','UHasselt'),
+	('UHasselt-VIB','UHasselt-VIB'),
+	('UHasselt','UHasselt'),
+	('Industry','Industry'),
 	('Other','Other'),
 	)
 

@@ -37,11 +37,6 @@
        {{ form.Email|as_crispy_field }}
     </div>
         </div>
-      <div class="form-row col-12 ">
-      <div class="form-group col-4 mb-0">
-       {{ form.Group_leader|as_crispy_field }}
-           </div>
-        </div>
     <div class="form-row col-12 ">
     <div class="form-group col-4 mb-0">
        <div id="div_id_0-Affiliation" class="form-group">
@@ -60,8 +55,9 @@
   <option value="UAntwerpen">UAntwerpen</option>
   <option value="VUB-VIB">VUB-VIB</option>
   <option value="VUB">VUB</option>
-  <option value="Uhasselt-VIB">UHasselt-VIB</option>
-  <option value="Uhasselt">UHasselt</option>
+  <option value="UHasselt-VIB">UHasselt-VIB</option>
+  <option value="UHasselt">UHasselt</option>
+  <option id="IDOption" value="Industry">Industry</option>
   <option id="DDOption" value="Other">Other</option>
 </select>
                 </div>        
@@ -74,6 +70,19 @@
        {{ form.Other_institution|as_crispy_field }}
     </div>
   </div>
+
+    <div class="form-row col-12 ">
+    <div class="form-group col-4 mb-0" id="IIDivCheck" style="display:none;">
+        <div id="div_id_0-Group_leader" class="form-group">
+            <label for="id_0-Group_leader" class="col-form-label requiredField">
+                Name of group leader<span class="asteriskField">*</span>
+            </label>
+            <div class="">
+                <input type="text" name="0-Group_leader" placeholder="e.g. Claudia Berts" maxlength="120" class="textinput textInput form-control" required="" id="id_0-Group_leader">    
+            </div>
+        </div>
+    </div>
+  </div>
     <div class="form-row col-12 ">
     <div class="form-group col-4 mb-0">
        {{ form.Address|as_crispy_field }}
@@ -82,6 +91,8 @@
 
 <br/>
 <div class="container medind">
+
+
 
 {% if wizard.steps.prev %}
 
@@ -104,23 +115,37 @@
 {% endblock %}
 
 {% block extra_js %}
+
 <script>
 function DDSelectCheck(nameSelect)
 {
     console.log(nameSelect);
     if(nameSelect){
         DDOptionValue = document.getElementById("DDOption").value;
+        IDOptionValue = document.getElementById("IDOption").value;
         if(DDOptionValue == nameSelect.value){
             document.getElementById("OIDivCheck").style.display = "block";
+            document.getElementsByName("0-Group_leader")[0].placeholder = "e.g. Claudia Berts";
+            document.querySelector("label[for=id_0-Group_leader]").innerHTML = "Name of group leader";
         }
         else{
-            document.getElementById("OIDivCheck").style.display = "none";
+            if(IDOptionValue == nameSelect.value){
+                document.querySelector("label[for=id_0-Group_leader]").innerHTML = "Company name";
+                document.getElementsByName("0-Group_leader")[0].placeholder = "";
+                document.getElementById("OIDivCheck").style.display = "none";
+  
+            }
+            else {
+                document.querySelector("label[for=id_0-Group_leader]").innerHTML = "Name of group leader";
+                document.getElementsByName("0-Group_leader")[0].placeholder = "e.g. Claudia Berts";
+                document.getElementById("OIDivCheck").style.display = "none";
+            }
         }
     }
-    else{
-        document.getElementById("OIDivCheck").style.display = "none";
-    }
+                document.getElementById("IIDivCheck").style.display = "block";
+
 }
 </script>
+
 {% endblock %}
 
