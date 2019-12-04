@@ -846,7 +846,7 @@ class ContactWizardAPMS(SessionWizardView):
             else:
               Other_information = ''
             description = "# Sample Preparation notes\nProtocol: OnBead Digest\n"\
-"Sample type: dry beads\nTrypsin: 1 µg \nOther notes:\n"\
+"Sample type: washed beads\nTrypsin: 1 µg \nOther notes:\n"\
             "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
                   + "\nSample_Species: "+ analysis[2]['Species'] + "\nSample_Type: " + analysis[2]['Sample_Type'] + "\nBuffer_composition: " + Buffer_composition + "\nBait_Molecule: "+ Bait_Molecule + "\nBait_Molecule_Protein: "+ Bait_Molecule_Protein + "\nBait_sequence_file: "+ Bait_sequence_file + "\nBait_Molecule_other: "+ Bait_Molecule_other \
                   + "\nAntibodies: "+Antibodies + "\nAbSource: "+ AbSource + "\nAbAmount: "+ AbAmount \
