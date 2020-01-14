@@ -89,8 +89,9 @@ AFFILIATIONTYPES= (
 	('UAntwerpen','UAntwerpen'),
 	('VUB-VIB','VUB-VIB'),
 	('VUB','VUB'),
-	('Uhasselt-VIB','UHasselt-VIB'),
-	('Uhasselt','UHasselt'),
+	('UHasselt-VIB','UHasselt-VIB'),
+	('UHasselt','UHasselt'),
+	('Industry','Industry'),
 	('Other','Other'),
 	)
 
@@ -300,7 +301,7 @@ def save_user_profile(sender,instance, **kwargs):
 class Analysis(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	Project_title = models.CharField(max_length=50)
-	Project_summary = models.CharField(max_length=300)
+	Project_summary = models.CharField(max_length=1000)
 	#Project_keywords = models.CharField(max_length=120)
 	#Analysis_type = MultiSelectField(choices=ANALYSISTYPES) # pre-filled?!
 	#Analysis_type2 = MultiSelectField(choices=ANALYSISTYPES2,
@@ -309,7 +310,9 @@ class Analysis(models.Model):
 	Main_analysis_type = MultiSelectField(choices=ANALYSISTYPES, null=True, blank=True,max_choices=4) # pre-filled?!
 	timestamp = models.DateTimeField(auto_now_add=True)
 	#Analysis_type = models.CharField(max_length=50,default=None , choices=ANALYSISTYPES)
+	Sample_preparation = models.BooleanField()
 	Data_analysis = models.BooleanField()#choices=DATAANALYSIS)
+
 	#Data_analysis = models.BooleanField()
 #class Profile_extra(models.Model):
 	#def __unicode__(self):

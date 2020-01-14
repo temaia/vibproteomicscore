@@ -32,10 +32,24 @@ class Command(BaseCommand):
         yt = Connection(url='https://youtrack.ugent.be', token=config['YTTOKR']) #@
         # get CMB issues
         PRCissues = yt.get_all_issues("PRC",0,450)
+        PRCRTissues = yt.get_all_issues("PRCRT",0,450)
         CMBissues = yt.get_all_issues("CMB",0,450)
         PSBissues = yt.get_all_issues("PSB",0,450)
 
         # issue IDs per project
+
+
+        # open PRC issue IDs
+        PRCRTissuesIDs = []
+        PRCRTCurrentissuesindexes = list()
+        counter=0
+        for issue in PRCRTissues:
+            if issue["State"]=='Created' or issue["State"]=='Arrived' or issue["State"]=='Sample_Prep' or issue["State"]=="MS_Run" or issue["State"]=="Data_Analysis" or issue["State"]=="Closed":
+                PRCRTissuesIDs.append(issue["id"])
+                PRCRTCurrentissuesindexes.append(counter)
+            counter = counter+1
+        # update PRCissues (filter State Closed)
+        PRCRTissues = [PRCRTissues[index] for index in PRCRTCurrentissuesindexes]
 
         # open PRC issue IDs
         PRCissuesIDs = []
@@ -84,6 +98,44 @@ class Command(BaseCommand):
             #csvfile.write('Running start date\tLab PI\tType\tUser Name\tYouTrack\tProject Name (YouTrack)\t# samples\tMS_Injections_Per_Sample\trun length (hours)\ttotal running time (hours)\tMass_Spectrometer\tCreated_DateH\tArrival_DateH\tMS_RunStateH\tMS_RunStatesH\tMS_RunStatesnrH\tre-runs/problems\tMS_RunStartH\tMS_RunStartsH\tMS_RunStartsnrH\tresolvedH\tResolvedDateH\tCleatedDate\n')
             csvfile.write('YouTrack_id,Project_Name,No_Samples,total_running_time,Mass_Spectrometer,State,Scheduling_State\n')
             i=0 
+            for issue in PRCRTissues:
+                # name of fields in issue
+                indices = list()
+                for attr_name, attr_type in issue._attribute_types.items():
+                    indices.append(attr_name)
+                # YouTrack_id
+                issueid=issue['id']
+                # Project_name
+                issuesummary=issue['summary']
+                # No_Samples
+                if 'No_Samples' in indices:
+                    issueNoSamples=str(issue['No_Samples'])
+                else:
+                    issueNoSamples='None'
+                # total running time (hours)
+                if 'MS_Total_Time_h' in indices:
+                    issueMS_Total_Time_h=issue['MS_Total_Time_h']
+                else:
+                    issueMS_Total_Time_h='None'
+                # Mass_Spectrometer
+                if 'Mass_Spectrometer' in indices:
+                    issueMassSpectrometer=issue['Mass_Spectrometer']
+                else:
+                    issueMassSpectrometer='None'
+                # State
+                if 'State' in indices:
+                    issueState=issue['State']
+                else:
+                    issueState='None'
+                # Scheduling_State
+                if 'Scheduling_State' in indices:
+                    issueSchedulingState=issue['Scheduling_State']
+                else:
+                    issueSchedulingState='None'        
+                row = issueid+',' + issuesummary + ',' + issueNoSamples+ ',' + issueMS_Total_Time_h + ',' + issueMassSpectrometer + "," + issueState + "," + issueSchedulingState
+                row = row + '\n'
+                csvfile.write(row,)
+                i = i+1
             for issue in PRCissues:
                 # name of fields in issue
                 indices = list()
