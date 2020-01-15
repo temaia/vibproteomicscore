@@ -24,7 +24,7 @@
         <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 p-3">
           <div class="card text-center">
             <div class="card-body p-4 card-home">
-              <h3 style="font-weight: bold;">Register new project</h3>
+              <h3>Register new project</h3>
               <br>
               <a class="btn btn-link" href="{% url 'projectregistration' %}">GO!</a>
             </div>
@@ -33,7 +33,7 @@
         <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 p-3">
           <div class="card text-center">
             <div class="card-body p-4 card-home">
-              <h3 style="font-weight: bold;">Check project status</h3>
+              <h3>Check project status</h3>
               <br>
               <a class="btn btn-link" href="{% url 'project-info' %}">GO!</a>
             </div>
@@ -42,14 +42,24 @@
         <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 p-3">
           <div class="card text-center">
             <div class="card-body p-4 card-home" >
-              <h3 style="font-weight: bold;">Information for users</h3>
+              <h3>Information for users</h3>
               <br>
               <a class="btn btn-link" href="{% url 'information' %}">GO!</a>
             </div>
           </div>
         </div>
     </div>
+    <br>
+    <div class="row">
+      <div class="col-md-12 ml-12">
+        <div class="card-body p-2 card-move text-center">
+          <h4>Note that the VIB proteomics Core facility is moving to a new location in May/June 2020,<br> affecting regular service and turn over time.</h4>
+          <br>
+          <a class="btn btn-link" href="{% url 'move' %}">More info</a>
+        </div>
       </div>
+    </div>
+  </div>
 <div class="alert" style='min-height: 200px;'>
 </div>
 

@@ -1443,6 +1443,9 @@ class ReportsView(TemplateView):
 class ContactView(TemplateView):
     template_name = 'contact.html'
 
+class MoveView(TemplateView):
+    template_name = 'move.html'
+
 # def about(request):
 #   context = {}
 #   return render(request, 'about.html', context)

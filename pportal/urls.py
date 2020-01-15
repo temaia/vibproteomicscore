@@ -28,7 +28,7 @@ from prcprojects.forms import AnalysisForm
 from prcprojects.forms import CustomerForm, AnalysisForm, Specimen_SGForm,Specimen_APMSForm,Specimen_PTMForm,EDPMDForm, Specimen_GBForm, ExperimentForm,ExperimentPTMForm,ExperimentAPMSForm,ExperimentGBForm, ExperimentPMDForm, EDForm, TOUForm#,Specimen_GBForm, EDForm
 
 #from prcprojects.views import AboutView,HomeView, CustomerRegistrationView,AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
-from prcprojects.views import get_data,StatesView, ProjectInfoGaugeView, PreparationView, ReportsView, TermsOfUseView, AboutTheCoreView, AboutView, HomeView, ProjectInfoView, ProjectInfoGuestView, ShippingInstructionsView, ContactView, AnalysisRegistrationView,InfoView, QuestionsView, AnalysisForm, ExperimentForm, Specimen_SGForm, LoginView, ContactWizard, ContactWizardSG, ContactWizardPTM, ContactWizardAPMS,ContactWizardGB,ContactWizardPMD#,SGView#,ProjectRegistrationView
+from prcprojects.views import get_data,StatesView, ProjectInfoGaugeView, PreparationView, ReportsView, TermsOfUseView, AboutTheCoreView, AboutView, HomeView, ProjectInfoView, ProjectInfoGuestView, ShippingInstructionsView, ContactView, AnalysisRegistrationView,InfoView, QuestionsView, MoveView, AnalysisForm, ExperimentForm, Specimen_SGForm, LoginView, ContactWizard, ContactWizardSG, ContactWizardPTM, ContactWizardAPMS,ContactWizardGB,ContactWizardPMD#,SGView#,ProjectRegistrationView
 from django.views.generic import TemplateView
 #from prcprojects.views import AboutView,HomeView, AnalysisRegistrationView, AnalysisForm, CustomerForm, Specimen_SGForm, ContactWizard
 
@@ -50,6 +50,7 @@ urlpatterns = static(settings.MEDIA_URL,document_root =
     url(r'^information/$', InfoView.as_view(template_name='information2.html'), name='information'),
     url(r'^$', HomeView.as_view(template_name='home.html'), name='home'),
     url(r'^questions/', QuestionsView.as_view(template_name='questions.html'),name='questions'),
+    url(r'^move/', MoveView.as_view(template_name='move.html'),name='move'),
     url(r'^AboutTheCore/',AboutTheCoreView.as_view(template_name='AboutTheCore.html'), name='AboutTheCore'),
         #url(r'^password_reset/done/$', auth_views.password_reset(), name='password_reset_done'),
     url(r'^project-registration/$', login_required(ContactWizard.as_view([CustomerForm,CustomerForm,CustomerForm,CustomerForm,CustomerForm])),name='projectregistration'),

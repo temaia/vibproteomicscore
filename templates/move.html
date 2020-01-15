@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load static %}
+{% block head_title %}Welcome || {{ block.super }}{% endblock head_title %}
+
+{% block content2 %}
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center"><h1>The VIB Proteomics Core is moving to the new VIB-UGent FSVM II building in Zwijnaarde</h1>
+        </div>
+      </div>
+      <div class="row"> 
+        <div class="col-md-6 text-justify">
+          <p>Along with the VIB Center for Medical Biotechnology (CMB), the Proteomics Core is moving soon to the brand new FSVM II building on the Tech Lane Ghent Science Park.</p>
+          <p>We will be located on the second floor of this building where a state-of-the-art proteomics suite will house our team and mass spectrometry equipment.</p>
+          <p>Located in the center of the Tech Lane campus and physically connected to the FSVM I building, this new accommodation will foster interactions with other VIB centers and industrial partners located in the Science Park.</p>
+          <p>Moving of the facility is foreseen beginning of June 2020. Of course, this operation will affect our routine services. Please be aware that samples received between April 1st and July 1st will have extended turnover times and a sample submission stop will be announced mostly likely between mid-May may and mid-June. </p>
+          <p>We will update the information on this webpage as the moving date comes closer.</p>
+        </div>
+        <div class="col-md-6 text-justify">
+          <img class="center align-left" src='{% static "/FSVMII.jpg" %}' height="300" alt="">
+        </div>
+      </div>
+    </div>
+<div class="alert" style='min-height: 200px;'>
+</div>
+
+  {% endblock %}  

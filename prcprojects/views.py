@@ -1367,6 +1367,9 @@ class ContactView(TemplateView):
 class QuestionsView(TemplateView):
     template_name = 'questions.html'
 
+class MoveView(TemplateView):
+    template_name = 'move.html'
+
 import datetime
 
 # def about(request):
