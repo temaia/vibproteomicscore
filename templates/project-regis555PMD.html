@@ -21,13 +21,22 @@
  <div class="form-row col-12 mb-0">
     <div class="form-group col-12 mb-0">
     </br>
-        <p >Please find below a file template for download, where to enter your samples details.</p>
-
-        <p >We kindly ask you to complete it and submit the finalized version.</p>
+    <div>
+      <p>Please find below a file template <u>for download</u>, where to enter your samples details.</p>
+    </div> 
+        <div>
+        <p>We kindly ask you to complete it and submit the finalized version.</p>
+    </div>
+    <div>   
+    You will notice the column <i>"Sample Name"</i> will already contain suggested sample names to use for labeling your tubes. 
+    </div>
+    <div> 
+      <p>In case you prefer to use your own sample names, please take care to provide them in this template as an additional <i>"Custom Sample Name"</i> column.</p>
+    </div>  
    </div></div>
 <div class="form-row col-10 mb-0">
-    <div class = "form-group col-10 mb-0">
-    <a href= "{{ user.username|addstr }}" download>Sample details template</a>
+    <div class = "form-group col-10 mb-0"><b>
+    <a href= "{{ user.username|addstr }}" download>Sample details template</a></b>
    </div></div>
 
 <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
