@@ -1182,7 +1182,8 @@ class ProjectInfoView(TemplateView):
             for row in csvfile_reader:
                 #print(row["YouTrack_id"])
                 #print(row["Median_wTime"])
-                print(self.request.user.username)
+                #print(self.request.user.username)
+                #print(row["YouTrack_id"])
                 if row["YouTrack_id"]==self.request.user.username:
                 #if row["YouTrack_id"]=="PRC-4495":
                     context["Project_ID"] = row["YouTrack_id"]
@@ -1198,6 +1199,8 @@ class ProjectInfoView(TemplateView):
                     context["today"] = datetime.datetime.now().strftime("%A, %b, %d, %Y")
                     #today = context["today"]
                     pass
+
+       # print(context["Project_ID"])
         statesoutfile =os.path.join(settings.BASE_DIR,"static/PRCCMBPSB_States.json")
         with open(statesoutfile) as data_file:
             data_loaded = json.load(data_file)
@@ -1208,15 +1211,30 @@ class ProjectInfoView(TemplateView):
         ms_lst =['lumos','qehf', 'qehfb', 'qe', 'elite']
 
         with open(filepath2, "r", encoding='utf-8') as csvfile:
-            csvfile_reader=csv.DictReader(csvfile)
+            #csvfile_reader=csv.DictReader(csvfile)
+            csvfile_reader=csv.reader(csvfile)
+            next(csvfile_reader)
             i = 0
             for row in csvfile_reader:
-                temp = int(row["total_running_time_days"])
-                print(temp)
-                if temp > 5:
-                    temp=5
-                context[ms_lst[i]]="Gauge" + str(temp)
+                #temp = int(row["total_running_time_days"])
+                temp = row
+                #status = int(row["status"])
+                #status_description = int(row["status_description"])
+                #print("temp")
+                #print(temp)
+                if int(temp[1]) > 5:
+                    temp[1]=5
+                print(context["Mass_Spectrometer"])
+                print(temp[0])
+                if temp[0]==context["Mass_Spectrometer"]:
+                    print("yes")
+                    context["projectmsstatusdescription"] = temp[3]
+                temp[1] = "Gauge" + str(temp[1])
+                #print(temp[2])
+                #print(len(temp))
+                context[ms_lst[i]]=temp[0:4]
                 i+=1
+        print(context)
         return context
 
 

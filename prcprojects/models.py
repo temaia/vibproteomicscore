@@ -237,6 +237,7 @@ class Profile(models.Model):
 	Group_leader = models.CharField(max_length=120, null=True)
 	Affiliation = models.CharField(max_length=50, choices=AFFILIATIONTYPES, null=True)
 	Other_institution = models.CharField(max_length=60, null=True, blank=True)
+	Phone = models.CharField(max_length=30, null=True)
 	Address = models.CharField(max_length=300, null=True)
 	#Project_ID = models.CharField(max_length=200, null=True) # pre-filled displayed on form template on the corner
 	update = models.DateTimeField(auto_now=True)

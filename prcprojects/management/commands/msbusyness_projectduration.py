@@ -24,8 +24,9 @@ class Command(BaseCommand):
         #outputfile ="/usr/local/www/apache24/data/PRCsite/vibproteomicscore/static/PRC_issues_dailyreport2.csv"
         # check session user status
         outputfileall =os.path.join(settings.BASE_DIR, "static/PRC_issues_dailyreport2all.csv")
+        outputfileMS =os.path.join(settings.BASE_DIR, "static/MSSissues_issues_dailyreport.csv")
         msoutfile =os.path.join(settings.BASE_DIR, "static/PRC_MassSpecs.csv")
-        with open(inputfile, 'r', encoding='UTF-8', newline='') as csvfile:
+        with open(inputfile, 'r', encoding='utf-8') as csvfile:
             csvfile_reader = csv.DictReader(csvfile)
             line_count = 0
             MS1Busyness=int()
@@ -85,19 +86,35 @@ class Command(BaseCommand):
                 i+=1
                 #print(str(i)+"_"+str(MinWaitingTime))
                 MinWaitingTimes.append(i)
+
+        # read file with status per instrument
+        with open(outputfileMS, 'r', encoding='utf-8') as csvfile:
+            lines = csvfile.readlines()
+            print(lines)
+            Status_lst = []
+            Status_description_lst = []
+            for line in lines[1:6]:
+                #print(line.split(","))
+                Status_lst.append(line.split(",")[1])
+                Status_description_lst.append(line.split(",")[2])
+                
+
+
                     
         # write file with busyness per instrument
-        with open(msoutfile, 'w', encoding='UTF-8', newline='') as csvfile:
+        with open(msoutfile, 'w', encoding='utf-8') as csvfile:
             #csvfile.write('Running start date\tLab PI\tType\tUser Name\tYouTrack\tProject Name (YouTrack)\t# samples\tMS_Injections_Per_Sample\trun length (hours)\ttotal running time (hours)\tMass_Spectrometer\tCreated_DateH\tArrival_DateH\tMS_RunStateH\tMS_RunStatesH\tMS_RunStatesnrH\tre-runs/problems\tMS_RunStartH\tMS_RunStartsH\tMS_RunStartsnrH\tresolvedH\tResolvedDateH\tCleatedDate\n')
-            csvfile.write('Mass_Spectrometer,total_running_time_days\n')
-            csvfile.write('Orbitrap Fusion Lumos,' + str(round(MS1Busyness/(24*5)))+'\n')
-            csvfile.write('Q-Exactive HF,' + str(round(MS2Busyness/(24*5)))+'\n')
-            csvfile.write('Q-Exactive HF Biopharma,' + str(round(MS3Busyness/(24*5)))+'\n')
-            csvfile.write('Q-Exactive,' + str(round(MS4Busyness/(24*5)))+'\n')
-            csvfile.write('LTQ Orbitrap Elite,' + str(round(MS5Busyness/(24*5)))+'\n')
+            #print(len(Status_lst))
+            #print(len(Status_description_lst))
+            csvfile.write('Mass_Spectrometer,total_running_time_days,Status,Status_description\n')
+            csvfile.write('Orbitrap Fusion Lumos,' + str(round(MS1Busyness/(24*5)))+','+Status_lst[2]+','+Status_description_lst[2])
+            csvfile.write('Q-Exactive HF,' + str(round(MS2Busyness/(24*5)))+','+Status_lst[4]+','+Status_description_lst[4])
+            csvfile.write('Q-Exactive HF Biopharma,' + str(round(MS3Busyness/(24*5)))+','+Status_lst[1]+','+Status_description_lst[1])
+            csvfile.write('Q-Exactive,' + str(round(MS4Busyness/(24*5)))+','+Status_lst[0]+','+Status_description_lst[0])
+            csvfile.write('LTQ Orbitrap Elite,' + str(round(MS5Busyness/(24*5)))+','+Status_lst[3]+','+Status_description_lst[3])
             csvfile.close() 
 
-        with open(inputfile, 'r', encoding='UTF-8', newline='') as csvfile:
+        with open(inputfile, 'r', encoding='utf-8') as csvfile:
             csvfile_reader = csv.DictReader(csvfile)
             line_count = 0
             MS1Busyness=int()
@@ -159,9 +176,10 @@ class Command(BaseCommand):
                 #print(str(i)+"_"+str(MinWaitingTime))
                 MinWaitingTimes.append(i)
         # add expected duration to issue (to be refined)
-        with open(inputfile, 'r', encoding='UTF-8', newline='') as in_f, open(outputfileall, 'w', newline='', encoding='utf-8') as out_f:
+        with open(inputfile, 'r', encoding='utf-8') as in_f, open(outputfileall, 'w', newline='', encoding='utf-8') as out_f:
             data = [item for item in csv.reader(in_f)]
             # to be revised
+            #MedianWTime = 34
             MedianWTime = 48
             MedianWTime_col = ["Median_wTime"]+[MedianWTime]*len(MinWaitingTimes)
             #MinWaitingTimes = ["Min_wTime"]+MinWaitingTimes

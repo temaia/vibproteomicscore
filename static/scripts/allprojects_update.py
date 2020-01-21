@@ -34,6 +34,7 @@ class Command(BaseCommand):
         PRCissues = yt.get_all_issues("PRC",0,450)
         CMBissues = yt.get_all_issues("CMB",0,450)
         PSBissues = yt.get_all_issues("PSB",0,450)
+        MSSissues = yt.get_all_issues("MSStatus-",0,45)
 
         # issue IDs per project
 
@@ -198,5 +199,31 @@ class Command(BaseCommand):
                 row = row + '\n'
                 csvfile.write(row,)
                 i = i+1
-            csvfile.close()            
-                
+            csvfile.close()
+
+             
+        filename =os.path.join(settings.BASE_DIR, "static/MSSissues_issues_dailyreport.csv")
+        with open(filename, 'w', encoding='utf-8') as csvfile:
+            #csvfile.write('Running start date\tLab PI\tType\tUser Name\tYouTrack\tProject Name (YouTrack)\t# samples\tMS_Injections_Per_Sample\trun length (hours)\ttotal running time (hours)\tMass_Spectrometer\tCreated_DateH\tArrival_DateH\tMS_RunStateH\tMS_RunStatesH\tMS_RunStatesnrH\tre-runs/problems\tMS_RunStartH\tMS_RunStartsH\tMS_RunStartsnrH\tresolvedH\tResolvedDateH\tCleatedDate\n')
+            csvfile.write('Mass_Spectrometer,Status,Status_description\n')
+                # name of fields in issue
+            indices = list()
+            for attr_name, attr_type in issue._attribute_types.items():
+                indices.append(attr_name)
+            for (i in range(4)):
+                # Mass Spectrometer
+                issueMS=issue['Mass_Spectrometer']
+                # MassSpec status
+                issueStatus=lower(issue['Status'])
+                # Status description
+                if 'Status_description' in indices:
+                    issueStatusdescription=lower(str(issue['Status_description']))
+                elif issueStatus == "On":
+                    issueStatusdescription='running'
+                else:
+                    issueStatusdescription='under maintenance'
+                row = issueMS + ',' + issueStatus + "," + issueStatusdescription
+                row = row + '\n'
+                csvfile.write(row,)
+                #i = i+1
+            csvfile.close()

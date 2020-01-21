@@ -56,7 +56,7 @@ class CustomerForm(forms.ModelForm):
 		#user = User.objects.filter(pk=request.user)
 		Project_ID=None
 		Email = None
-		fields = ['Project_ID','Name','Email', 'Group_leader','Affiliation','Other_institution', 'Address']
+		fields = ['Project_ID','Name','Email', 'Group_leader','Affiliation','Other_institution', 'Phone','Address']
 		labels={'Group_leader':'Name of group leader',
 		}
 		widgets = {'Project_ID': forms.TextInput(),
@@ -64,6 +64,7 @@ class CustomerForm(forms.ModelForm):
 					'Email': forms.TextInput(),
 					'Group_leader': forms.TextInput(attrs={'placeholder':'e.g. Claudia Berts'}),
 					#'Affiliation': forms.TextInput(attrs={'placeholder':'Institution/Organization'}),
+					'Phone': forms.TextInput(attrs={'placeholder':'e.g. +32 (0)92649274'}),
 					'Address': forms.Textarea(attrs={'placeholder':'Institutional address','rows':3, 'cols':1}),}
 	def __init__(self, *args, **kwargs):
 		super(CustomerForm, self).__init__(*args, **kwargs)
