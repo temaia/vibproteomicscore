@@ -227,7 +227,7 @@ class Command(BaseCommand):
                 else:
                     issueStatusdescription='under maintenance'
                 row = issueMS + ',' + issueStatus + "," + issueStatusdescription
-                #row = row + '\n'
+                row = row + '\n'
                 csvfile.write(row,)
                 #i = i+1
             csvfile.close()
