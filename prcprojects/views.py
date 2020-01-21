@@ -1208,7 +1208,7 @@ class ProjectInfoView(TemplateView):
             #print(type(data_loaded["Waiting"]))
             #return render(request, 'chartjs.html',data_loaded)
         #print(context["Project_ID"])
-        ms_lst =['lumos','qehf', 'qehfb', 'qe', 'elite']
+        ms_lst =['qehf','qe','elite', 'lumos','qehfb']
 
         with open(filepath2, "r", encoding='utf-8') as csvfile:
             #csvfile_reader=csv.DictReader(csvfile)
