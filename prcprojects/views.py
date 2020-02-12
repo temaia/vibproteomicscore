@@ -367,6 +367,7 @@ class ContactWizardSG(SessionWizardView):
               Other_institution = analysis[0]['Other_institution']
             else:
               Other_institution = ''
+            print(analysis[0]['Phone'])
             if analysis[2]['Sequence_database_name'] is not None:
               Sequence_database_name = analysis[2]['Sequence_database_name']
             else:

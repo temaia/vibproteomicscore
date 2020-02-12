@@ -87,7 +87,7 @@ def WriteToExcel4(arguments_dict):
     worksheet_s.write(3, 2, ugettext("Replicate"), header) # pre filled 123 123 if total/3 = 0 else,jjjjj
     worksheet_s.write(3, 3, ugettext("Estimated MW"), header) #add Sample type value and leave free for editing
     worksheet_s.write(3, 4, ugettext("Buffer composition"), header) #add Buffer composition value and leave free for editing (space dows not matter)
-    worksheet_s.write(3, 5, ugettext("Amount/Concentration of protein (μg or μg/μl)"), header) #format digits (2 decimals) leave for edit
+    worksheet_s.write(3, 5, ugettext("Concentration of protein (μg/μl)"), header) #format digits (2 decimals) leave for edit
     #worksheet_s.write(3, 5, ugettext("Sample amount (protein mass (or estimation of) (μg)"), header) #format digits (2 decimals) leave for edit
     worksheet_s.write(3, 6, ugettext("Volume (μl)"), header) #  #format digits (2 decimals) leave for edit
     worksheet_s.write(3, 7, ugettext("Other relevant information"), header) # leave free
