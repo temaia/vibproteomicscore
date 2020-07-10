@@ -164,12 +164,34 @@ div.dubble-indent-boldsm {
      margin-bottom: 0.5rem;
 }
 
+div.dubble-indent-italic {
+
+    margin-left: 45px;
+    font-style: italic;
+    padding-bottom: 5px; /* Some padding */
+}
+
+
 /*.padded-multi-line{
     display:inline;
     background:orange;
     box-shadow:20px 0 0 pranga, -20px 0 0 orange;
 }
 */
+
+
+img.thumb {
+  border: 1px solid #ddd; /* Gray border */
+  border-radius: 4px;  /* Rounded border */
+  padding: .5px; /* Some padding */
+  width: 500px; /* Set a small width */
+
+/* Add a hover effect (blue shadow) */
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+}
+
 label {
     display: inline-block;
     margin-bottom: .25rem;
@@ -183,8 +205,14 @@ label {
 .medind {
     margin-left:11px;
 }
+
 .meddind {
     margin-left:2px;
+}
+
+.responsive {
+    width:100%;
+    height: auto;
 }
 
 
@@ -536,13 +564,6 @@ ul.nav.navbar-nav.navbar-right.bg-grey {
   }
 
 }
-@font-face {
-  font-family: 'Dense'; 
-  src: url('../../../static/fonts/Dense-Bold.otf') format("opentype");
-  src: local('../../../static/fonts/Dense-Bold.otf') format("opentype");
-  font-weight: bold;
-  font-style: normal;
-  }
 
 
 @font-face {
@@ -601,6 +622,14 @@ ul.nav.navbar-nav.navbar-right.bg-grey {
       font-weight: bold;
   font-style: normal;
 }
+@font-face {
+  font-family: 'Dense'; 
+  src: url('../../../static/fonts/Dense-Bold.otf') format("opentype");
+  src: local('../../../static/fonts/Dense-Bold.otf') format("opentype");
+  font-weight: bold;
+  font-style: normal;
+  }
+
 
 .card-home{
     min-height: 150px;

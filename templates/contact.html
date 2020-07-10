@@ -1,6 +1,6 @@
 <!-- contact-->
 {% extends "base.html" %}
-
+{% load static %}
 {% block head_title %}Contact || {{ block.super }}{% endblock head_title %}
 
 {% block content2 %}
@@ -22,14 +22,18 @@
     <div class="indent-bold"><a href="https://twitter.com/VIB_PRC"><span><i class="fa fa-twitter fa-2x"></i></span> Twitter</a></div>
     <div class="indent-bold">Shipping</div>
     <br>
-    <div class="dubble-indent-bold">Shipping Address:</div>
+    <div class="dubble-indent-italic">Shipping Address:</div>
     <div class="dubble-indent">VIB Proteomics Core</div>
     <div class="dubble-indent">Technologiepark-Zwijnaarde 75</div>
     <div class="dubble-indent">9052 Gent - Belgium</div>
     <br> 
-    <div class="dubble-indent"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2510.376542150185!2d3.7038376513360283!3d51.009192154727415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c373bc35001053%3A0xb83de54213050aad!2sTechnologiepark-Zwijnaarde%2075%2C%209052%20Gent!5e0!3m2!1sen!2sbe!4v1590478404367!5m2!1sen!2sbe" width="300" height="225" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe></div>
+    <div class="dubble-indent responsive"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2510.376542150185!2d3.7038376513360283!3d51.009192154727415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c373bc35001053%3A0xb83de54213050aad!2sTechnologiepark-Zwijnaarde%2075%2C%209052%20Gent!5e0!3m2!1sen!2sbe!4v1590478404367!5m2!1sen!2sbe" width="400" height="275" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe></div>
 <br>
-
+ <div class="dubble-indent-bold">When delivering the samples in person: </div> 
+ <br>
+    <div class="dubble-indent">Use the instructions below to access the entrance for visitors.</div>
+    <br>
+   <div class="dubble-indent"><a target="_blank" href='{% static "./mapaFSVMII.jpg" %}'><img class="thumb" src='{% static "./mapaFSVMII_2.jpg" %}' frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></img></a></div>
   </div>
 </div>
 
