@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block head_title %}Sample delivery || {{ block.super }}{% endblock head_title %}
 
 {% block content2 %}
@@ -93,12 +93,7 @@
           <div id="collapseFour" class="collapse" data-parent="#accordion">
             <div class="card-body">
               <p class = "indent">
-                <span class = "fond-weight-bold">Label</span> the shipping container with:
-                <ul class = "ab">
-                  <li>The name of the lab</li>
-                  <li>The name of the person sending the samples</li>
-                  <li>The PRC number</li>
-                </ul>
+                <span class = "fond-weight-bold">Label</span> the shipping container with all the necessary information (name of the lab, your name and the PRC project ID, by attaching a filled-in version of the <i><a href="{% static 'documents/Sender_Receiver_information.docx' %}" download="Sender_Receiver_information.docx">Sender_Receiver_information</a></i> document.
               </p>
             </div>
           </div>
@@ -110,6 +105,5 @@
 </div>
 
 {% endblock %}
-
 
 

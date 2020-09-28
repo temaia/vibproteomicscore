@@ -31,10 +31,10 @@ class Command(BaseCommand):
             config = json.load(config_file)
         yt = Connection(url='https://youtrack.ugent.be', token=config['YTTOKR']) #@
         # get CMB issues
-        PRCissues = yt.get_all_issues("PRC",0,450)
-        CMBissues = yt.get_all_issues("CMB",0,450)
-        PSBissues = yt.get_all_issues("PSB",0,450)
-        MSSissues = yt.get_all_issues("MSStatus-",0,45)
+        PRCissues = yt.get_all_issues("PRC",0,650)
+        CMBissues = yt.get_all_issues("CMB",0,650)
+        PSBissues = yt.get_all_issues("PSB",0,650)
+        MSSissues = yt.get_all_issues("MSStatus-",0,100)
 
         # issue IDs per project
 

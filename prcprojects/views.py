@@ -524,6 +524,7 @@ class ContactWizardPMD(SessionWizardView):
             yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
             yt.execute_command(Project_ID, "SamplePrep_Responsible Hans")
             yt.execute_command(Project_ID, "DataAnalysis_Responsible Hans")
+            yt.execute_command(Project_ID, "Mass_Spectrometer LTQ Orbitrap XL")
             yt.execute_command(Project_ID, "Run_Length_h 15_min")
             # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
             if analysis[0]['Affiliation'] == 'Industry':
