@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import io
 import os
+import random
 from django.conf import settings
 import xlsxwriter
 from django.utils.translation import ugettext
@@ -106,26 +107,68 @@ def WriteToExcel(arguments_dict):
 
         # generate values to prepopulate table
         #idx = 1
-        # experimental conditions
+        # experimental conditions into list
         ec = arguments_dict["3-Experimental_conditions"][0].replace(' ','').split(',')
         print(ec)
         no_ec = len(ec)
         #parsimonious list for replicates
-        no_replicates = int(arguments_dict["3-Nb_replicates_per_condition"][0].replace(' ',''))
+        no_replicates = arguments_dict["3-Nb_replicates_per_condition"][0].replace(' ','').split(',')
+        # fill in no_replicates list in case it does not match the number of ec
+        if len(no_replicates)<no_ec:
+            no_replicates = no_replicates+no_replicates*(no_ec-len(no_replicates))
+        # convert to list
+        no_replicates = [int(x) for x in no_replicates]    
         no_samples = int(arguments_dict["3-Nb_samples"][0].replace(' ',''))
         print('nosa'+str(no_samples))
         # predicted no_ec
-        pno_ec = no_samples//no_replicates + no_samples%no_replicates
-        plist = list(range(1,no_replicates+1,1))*pno_ec
-        eclist = []
-        for ec0 in ec:
-            for rep in range(1,no_replicates+1,1):
-                eclist.append(ec0)
-        eclist =eclist + [""]*(no_samples-len(eclist))
+        #pno_ec = no_samples//no_replicates + no_samples%no_replicates
+        #replicates = list(range(1,no_replicates+1))
+        # dictionary with ecs as keys and as values the sample names
+        samples_dict = dict()
+        #counter = 1
+        for i in range(len(ec)):
+            #replicates_temp = random.sample(replicates, len(replicates))
+            #expcond_temp = random.sample(expcond, len(expcond))
+            #for j in range(nb_replicates):
+                #ec_order.append(expcond[i] + str(replicates_temp[j]))
+                #sn_order.append(("_").join([project, str(counter)]))
+                #counter+=1
+            #ec=random.sample(ec, len(ec))
+            samplestemp = list()
+            #for j in no_replicates
+            for j in range(1,no_replicates[i]+1):
+                samplestemp.append(ec[i]+"_"+str(j))
+                #samplestemp.append(ec[i]+str(replicates[j]))
+            samples_dict[ec[i]] = samplestemp
+        eclist = list()
+        replicatelist = list()
+        maxno_replicates = max(no_replicates)
+        #lentemp = no_replicates
+        for j in range(maxno_replicates):
+            #for i in range(no_replicates*len(ec)):
+            # nb samples left per condition
+            nbsamplesperectemp = [len(s) for s in samples_dict.values()]
+            # condition indexes with samples left
+            c2samplefrom = [i for i, x in enumerate(nbsamplesperectemp) if x!=0]
+            # order of experimental conditions to sample from which still have samples left
+            ectempindexes = random.sample(range(len(ec)), len(ec))
+            ectemp = [ec[ix] for ix in ectempindexes]
+            #ectemp2 = [ectemp[i] for i in c2samplefrom]
+            for i in range(len(ec)):
+                if len(samples_dict[ectemp[i]])>0:
+                    # index defining which sample from each condition ec[i] will be chosen
+                    samplelistindexestemp = random.sample(range(nbsamplesperectemp[ectempindexes[i]]),1)
+                    sampletemp = samples_dict[ectemp[i]].pop(samplelistindexestemp[0]).split("_")
+                    eclist.append(sampletemp[0])
+                    replicatelist.append(sampletemp[1])
+        no_samplesleft = no_samples-len(eclist)
+        eclist = eclist + ['']*no_samplesleft
+        replicatelist = replicatelist + ['']*no_samplesleft
         #for rep in range(1,no_replicates+1,1):
         #    eclist.append('')
         # buffer
         #print(eclist)
+        #print(replicatelist)
         # add data to the table
         for idx in range(0,no_samples,1):
             row = idx+5
@@ -139,7 +182,10 @@ def WriteToExcel(arguments_dict):
             # isotopic labels
             #worksheet_s.write_string(row, 2, "labels", celledit) # make remark at the end
             # replicate
-            worksheet_s.write_string(row, 2, "rep_" + str(plist[idx]), celledit)
+            if str(replicatelist[idx])!="":
+                worksheet_s.write_string(row, 2, "rep_" + str(replicatelist[idx]), celledit)
+            else:
+                worksheet_s.write_string(row, 2, "", celledit)
             # sample type delivered
             worksheet_s.write_string(row, 3, arguments_dict['2-Sample_Type'][0], celledit)
             # buffer composition

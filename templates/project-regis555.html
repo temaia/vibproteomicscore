@@ -21,7 +21,11 @@
  <div class="form-row col-12 mb-0">
     <div class="form-group col-12 mb-0">
     </br>
-        <p >Please find below a file template <u>for download</u>, where to enter your experimental design and sample details.</p>
+        <p >Please find below a file template <u>for download</u>, where to enter your experimental design and sample details.</p> 
+    <div class = "form-group col-10 mb-0">
+    <a href= "{{ user.username|addstr }}" download>Experimental design and Sample details template</a>
+   </div>-
+
     <div>
         <p>We kindly ask you to complete it and submit the finalized version.</p>
     </div>
@@ -31,10 +35,7 @@
     <div> 
       <p>In case you prefer to use your own sample names, please take care to provide them in this template as an additional <i>"Custom Sample Name"</i> column.</p>
     </div>  
-   </div></div>
-<div class="form-row col-10 mb-0">
-    <div class = "form-group col-10 mb-0">
-    <a href= "{{ user.username|addstr }}" download>Experimental design and Sample details template</a>
+    <div>Also, importantly, the numbering order of the <i>"Sample Name"</i> column indicates the order by which samples will be analysed by LC-MS/MS. If you would prefer another ordering scheme, please specify it by rearranging the <i>"Experimental Condition"</i> column accordingly.</div>
    </div></div>
 
 <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}

@@ -516,16 +516,17 @@ class TOUForm(forms.Form):
 #examples/one_to_one
 class ExperimentForm(forms.Form):
 
-	Experimental_conditions = forms.CharField(label = "Experimental conditions (separated with commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. p53KO, p53WT, p53OE',
+	Experimental_conditions = forms.CharField(label = "Experimental conditions (separated by commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. p53KO, p53WT, p53OE',
 		'rows':2, 'cols':1}))
 	Conditions_to_compare = forms.CharField(label = "Experimental conditions to compare", widget=forms.Textarea(attrs={'placeholder':'e.g. p53KO vs p53WT, p53OE vs p53WT, p53KO vs p53OE',
-		 'rows':3, 'cols':1}))
-
+		'rows':3, 'cols':1}))
 	#Nb_Experimental_conditions = models.IntegerField()
 	# maybe instantiate another model called efactor (experimental factor) n times, n (Nb_factors)
 	#Factor_name_lst = models.CharField(max_length=120, null=True)
 	#Conditions_list = models.CharField(max_length=120, null=True)
-	Nb_replicates_per_condition = forms.IntegerField(label = "Number of replicate samples per condition",widget=forms.NumberInput(attrs={'placeholder':'e.g. 3'}))
+	###Nb_replicates_per_condition = forms.IntegerField(label = "Number of replicate samples per condition",widget=forms.NumberInput(attrs={'placeholder':'e.g. 3'}))
+	Nb_replicates_per_condition = forms.CharField(label = "Number of replicate samples per condition (usually a single number, but if different for each experimental condition please provide numbers separated by commas)",
+		widget=forms.Textarea(attrs={'placeholder':'e.g. 4', 'rows':1, 'cols':1}))
 	Nb_samples = forms.IntegerField(label = "Total number of MS samples submitted", widget=forms.NumberInput(attrs={'placeholder':'e.g. 9'}))
 	#Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
 	Isotopic_labeling = forms.ChoiceField(choices=DATAANALYSIS , label="Is any isotopic labeling procedure used?", required=True, widget=forms.RadioSelect)
@@ -535,7 +536,7 @@ class ExperimentForm(forms.Form):
 
 class ExperimentPMDForm(forms.Form):
 
-	Experimental_conditions = forms.CharField(label = "Sample type (separated with commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. proteinA, proteinB, proteinC',
+	Experimental_conditions = forms.CharField(label = "Sample type (separated by commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. proteinA, proteinB, proteinC',
 		'rows':2, 'cols':1}))
 	#Conditions_to_compare = forms.CharField(label = "Experimental conditions to compare", widget=forms.Textarea(attrs={'placeholder':'e.g. p53KO vs p53WT, p53OE vs p53WT, p53KO vs p53OE',
 	#	 'rows':3, 'cols':1}))
@@ -544,7 +545,8 @@ class ExperimentPMDForm(forms.Form):
 	# maybe instantiate another model called efactor (experimental factor) n times, n (Nb_factors)
 	#Factor_name_lst = models.CharField(max_length=120, null=True)
 	#Conditions_list = models.CharField(max_length=120, null=True)
-	Nb_replicates_per_condition = forms.IntegerField(label = "Number of replicates per sample type",widget=forms.NumberInput(attrs={'placeholder':'e.g. 3'}))
+	Nb_replicates_per_condition = forms.CharField(label = "Number of replicate samples per condition (usually a single number, but if different for each experimental condition please provide numbers separated by commas)",
+		widget=forms.Textarea(attrs={'placeholder':'e.g. 4', 'rows':1, 'cols':1}))
 	Nb_samples = forms.IntegerField(label = "Total number of samples submitted", widget=forms.NumberInput(attrs={'placeholder':'e.g. 9'}))
 	#Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
 	#Isotopic_labeling = forms.ChoiceField(choices=DATAANALYSIS , label="Is any isotopic labeling procedure used?", required=True, widget=forms.RadioSelect)
@@ -556,7 +558,7 @@ class ExperimentPMDForm(forms.Form):
 
 class ExperimentPTMForm(forms.Form):
 
-	Experimental_conditions = forms.CharField(label = "Experimental conditions (separated with commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. p53KO, p53WT, p53OE',
+	Experimental_conditions = forms.CharField(label = "Experimental conditions (separated by commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. p53KO, p53WT, p53OE',
 		'rows':2, 'cols':1}))
 	Conditions_to_compare = forms.CharField(label = "Experimental conditions to compare", widget=forms.Textarea(attrs={'placeholder':'e.g. kinase inhibitor treatment vs control',
 		 'rows':3, 'cols':1}))
@@ -565,7 +567,9 @@ class ExperimentPTMForm(forms.Form):
 	# maybe instantiate another model called efactor (experimental factor) n times, n (Nb_factors)
 	#Factor_name_lst = models.CharField(max_length=120, null=True)
 	#Conditions_list = models.CharField(max_length=120, null=True)
-	Nb_replicates_per_condition = forms.IntegerField(label = "Number of replicate samples per condition",widget=forms.NumberInput(attrs={'placeholder':'e.g. 3'}))
+	Nb_replicates_per_condition = forms.CharField(label = "Number of replicate samples per condition (usually a single number, but if different for each experimental condition please provide numbers separated by commas)",
+		widget=forms.Textarea(attrs={'placeholder':'e.g. 4', 'rows':1, 'cols':1}))
+	###Nb_replicates_per_condition = forms.IntegerField(label = "Number of replicate samples per condition",widget=forms.NumberInput(attrs={'placeholder':'e.g. 3'}))
 	Nb_samples = forms.IntegerField(label = "Total number of MS samples submitted", widget=forms.NumberInput(attrs={'placeholder':'e.g. 9'}))
 	#Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
 	Isotopic_labeling = forms.ChoiceField(choices=DATAANALYSIS , label="Is any isotopic labeling procedure used?", required=True, widget=forms.RadioSelect)
@@ -575,7 +579,7 @@ class ExperimentPTMForm(forms.Form):
 
 class ExperimentAPMSForm(forms.Form):
 
-	Experimental_conditions = forms.CharField(label = "Experimental conditions (separated with commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. WT IP, neg. control IP',
+	Experimental_conditions = forms.CharField(label = "Experimental conditions (separated by commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. WT IP, neg. control IP',
 		'rows':2, 'cols':1}))
 	Conditions_to_compare = forms.CharField(label = "Experimental conditions to compare", widget=forms.Textarea(attrs={'placeholder':'e.g. IP with wild type bait vs IP with deletion mutant as negative control',
 		 'rows':3, 'cols':1}))
@@ -583,7 +587,10 @@ class ExperimentAPMSForm(forms.Form):
 	# maybe instantiate another model called efactor (experimental factor) n times, n (Nb_factors)
 	#Factor_name_lst = models.CharField(max_length=120, null=True)
 	#Conditions_list = models.CharField(max_length=120, null=True)
-	Nb_replicates_per_condition = forms.IntegerField(label = "Number of replicate samples per condition",widget=forms.NumberInput(attrs={'placeholder':'e.g. 3'}))
+	###Nb_replicates_per_condition = forms.IntegerField(label = "Number of replicate samples per condition",widget=forms.NumberInput(attrs={'placeholder':'e.g. 3'}))
+	Nb_replicates_per_condition = forms.CharField(label = "Number of replicate samples per condition (usually a single number, but if different for each experimental condition please provide numbers separated by commas)",
+		widget=forms.Textarea(attrs={'placeholder':'e.g. 4', 'rows':1, 'cols':1}))
+
 	Nb_samples = forms.IntegerField(label = "Total number of MS samples submitted", widget=forms.NumberInput(attrs={'placeholder':'e.g. 9'}))
 	#Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
 	#Isotopic_labeling = forms.ChoiceField(choices=DATAANALYSIS , label="Is any isotopic labeling procedure used?", required=False, widget=forms.RadioSelect)
@@ -594,7 +601,7 @@ class ExperimentAPMSForm(forms.Form):
 
 class ExperimentGBForm(forms.Form):
 
-	Experimental_conditions = forms.CharField(label = "Experimental conditions (separated with commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. WT protein, mutant protein',
+	Experimental_conditions = forms.CharField(label = "Experimental conditions (separated by commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. WT protein, mutant protein',
 		'rows':2, 'cols':1}))
 	Conditions_to_compare = forms.CharField(label = "Experimental conditions to compare", widget=forms.Textarea(attrs={'placeholder':'e.g.WT protein vs mutant protein',
 		 'rows':3, 'cols':1}), required=False)

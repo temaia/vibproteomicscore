@@ -400,7 +400,7 @@ class ContactWizardSG(SessionWizardView):
 "Sonicator: water bath\nDTT concentration: 15 mM\nAlkylating agent: IAA\n"\
 "Working alkylating agent concentration: 30 mM\nLysC concentration (w:w): 1:100\n"\
 "Trypsin: 1:100\nPeptide purification: OMIX tip\nOther notes:\n"\
-"\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " +'gjgjg'+ analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
+"\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
                   + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
                   + "\nSequence_Database_Name: " + Sequence_database_name+"\nSequence_database_file: " + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
                   + Other_information
@@ -438,6 +438,7 @@ class ContactWizardSG(SessionWizardView):
             msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
+            msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
             msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
@@ -552,6 +553,7 @@ class ContactWizardPMD(SessionWizardView):
             msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
+            msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
             msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
@@ -705,6 +707,7 @@ class ContactWizardPTM(SessionWizardView):
             msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
+            msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
             msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
@@ -891,6 +894,7 @@ class ContactWizardAPMS(SessionWizardView):
             msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
+            msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
             msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
@@ -1064,6 +1068,7 @@ class ContactWizardGB(SessionWizardView):
             msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
+            msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
             msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
@@ -1232,7 +1237,8 @@ class ProjectInfoView(TemplateView):
                 print(context["Mass_Spectrometer"])
                 print(temp[0])
                 if temp[0]==context["Mass_Spectrometer"]:
-                    print("yes")
+                    #print("yes")
+                    #print(temp[3])
                     context["projectmsstatusdescription"] = temp[3]
                 temp[1] = "Gauge" + str(temp[1])
                 #print(temp[2])
