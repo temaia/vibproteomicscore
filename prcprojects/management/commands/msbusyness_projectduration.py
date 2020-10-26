@@ -29,57 +29,57 @@ class Command(BaseCommand):
         with open(inputfile, 'r', encoding='utf-8') as csvfile:
             csvfile_reader = csv.DictReader(csvfile)
             line_count = 0
-            MS1Busyness=int()
+            MS1Busyness=int() 
             MS2Busyness=int()
             MS3Busyness=int()
             MS4Busyness=int()
             MS5Busyness=int()
             # 2d SP + 2d DA (per issue)
             MinWaitingTimes = list()
-            i=0
+            i=0 
             for row in csvfile_reader:
                 MinWaitingTime = int(4) # weeks
                 #print(row['total_running_time'])
-                if row["Mass_Spectrometer"]=='Q-Exactive HF' and row["State"] in ["Arrived","Sample_Prep","MS_Run"]:
+                if row["Mass_Spectrometer"]=='Q-Exactive' and row["State"] in ["Arrived","Sample_Prep","MS_Run"]:
                     if row['total_running_time']!='None':
                         if row['total_running_time']!=0:
                             #print(int(math.ceil(row['total_running_time']/24)))
-                            MS1Busyness += int(row['total_running_time'])
+                            MS4Busyness += int(row['total_running_time'])
                             #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
                         else:
-                            MS1Busyness += int(row['total_running_time'])
-                            #MinWaitingTime += int(row['total_running_time'])
-                elif row["Mass_Spectrometer"]=='Q-Exactive' and row["State"] in ["Arrived","Sample_Prep","MS_Run"]:
-                    if row['total_running_time']!='None':
-                        if row['total_running_time']!=0:
-                            MS2Busyness += int(row['total_running_time'])
-                            #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
-                        else:
-                            MS2Busyness += int(row['total_running_time'])
-                            #MinWaitingTime += int(row['total_running_time'])
-                elif row["Mass_Spectrometer"]=='LTQ Orbitrap Elite' and row["State"] in ["Arrived","Sample_Prep","MS_Run"]:
-                    if row['total_running_time']!='None':
-                        if row['total_running_time']!=0:
-                            MS3Busyness += int(row['total_running_time'])
-                            #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
-                        else:
-                            MS3Busyness += int(row['total_running_time'])
+                            MS4Busyness += int(row['total_running_time'])
                             #MinWaitingTime += int(row['total_running_time'])
                 elif row["Mass_Spectrometer"]=='Orbitrap Fusion Lumos' and row["State"] in ["Arrived","Sample_Prep","MS_Run"]:
                     if row['total_running_time']!='None':
                         if row['total_running_time']!=0:
-                            MS4Busyness += int(row['total_running_time'])
+                            MS1Busyness += int(row['total_running_time'])
                             #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
                         else:
-                            MS4Busyness += int(row['total_running_time'])
+                            MS1Busyness += int(row['total_running_time'])
                             #MinWaitingTime += int(row['total_running_time'])
                 elif row["Mass_Spectrometer"]=='Q-Exactive HF Biopharma' and row["State"] in ["Arrived","Sample_Prep","MS_Run"]:
+                    if row['total_running_time']!='None':
+                        if row['total_running_time']!=0:
+                            MS3Busyness += int(row['total_running_time'])
+                            #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
+                        else:
+                            MS3Busyness += int(row['total_running_time'])
+                            #MinWaitingTime += int(row['total_running_time'])
+                elif row["Mass_Spectrometer"]=='LTQ Orbitrap Elite' and row["State"] in ["Arrived","Sample_Prep","MS_Run"]:
                     if row['total_running_time']!='None':
                         if row['total_running_time']!=0:
                             MS5Busyness += int(row['total_running_time'])
                             #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
                         else:
                             MS5Busyness += int(row['total_running_time'])
+                            #MinWaitingTime += int(row['total_running_time'])
+                elif row["Mass_Spectrometer"]=='Q-Exactive HF' and row["State"] in ["Arrived","Sample_Prep","MS_Run"]:
+                    if row['total_running_time']!='None':
+                        if row['total_running_time']!=0:
+                            MS2Busyness += int(row['total_running_time'])
+                            #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
+                        else:
+                            MS2Busyness += int(row['total_running_time'])
                             #MinWaitingTime += int(row['total_running_time'])
                 else:
                     pass
@@ -90,11 +90,11 @@ class Command(BaseCommand):
         # read file with status per instrument
         with open(inputfileMS, 'r', encoding='utf-8') as csvfile:
             lines = csvfile.readlines()
-            print(lines)
+            #print(lines)
             Status_lst = []
             Status_description_lst = []
             for line in lines[1:6]:
-                #print(line.split(","))
+                print(line)
                 Status_lst.append(line.split(",")[1])
                 Status_description_lst.append(line.split(",")[2])
                 
@@ -107,11 +107,11 @@ class Command(BaseCommand):
             #print(len(Status_lst))
             #print(len(Status_description_lst))
             csvfile.write('Mass_Spectrometer,total_running_time_days,Status,Status_description\n')
-            csvfile.write('Q-Exactive HF,' + str(round(MS1Busyness/(24*5)))+','+Status_lst[0]+','+Status_description_lst[0])
-            csvfile.write('Q-Exactive,' + str(round(MS2Busyness/(24*5)))+','+Status_lst[1]+','+Status_description_lst[1])
-            csvfile.write('LTQ Orbitrap Elite,' + str(round(MS3Busyness/(24*5)))+','+Status_lst[2]+','+Status_description_lst[2])
-            csvfile.write('Orbitrap Fusion Lumos,' + str(round(MS4Busyness/(24*5)))+','+Status_lst[3]+','+Status_description_lst[3])
-            csvfile.write('Q-Exactive HF Biopharma,' + str(round(MS5Busyness/(24*5)))+','+Status_lst[4]+','+Status_description_lst[4])
+            csvfile.write('Orbitrap Fusion Lumos,' + str(round(MS1Busyness/(24*5)))+','+Status_lst[0]+','+Status_description_lst[0])
+            csvfile.write('Q-Exactive HF,' + str(round(MS2Busyness/(24*5)))+','+Status_lst[1]+','+Status_description_lst[1])
+            csvfile.write('Q-Exactive HF Biopharma,' + str(round(MS3Busyness/(24*5)))+','+Status_lst[2]+','+Status_description_lst[2])
+            csvfile.write('Q-Exactive,' + str(round(MS4Busyness/(24*5)))+','+Status_lst[3]+','+Status_description_lst[3])
+            csvfile.write('LTQ Orbitrap Elite,' + str(round(MS5Busyness/(24*5)))+','+Status_lst[4]+','+Status_description_lst[4])
             csvfile.close() 
 
         with open(inputfile, 'r', encoding='utf-8') as csvfile:

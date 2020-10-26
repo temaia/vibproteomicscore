@@ -208,6 +208,8 @@ class Command(BaseCommand):
             csvfile.write('Mass_Spectrometer,Status,Status_description\n')
                 # name of fields in issue
             indices = list()
+            rowlist=[None]*5
+            MSindexed_lst = ['Orbitrap Fusion Lumos','Q-Exactive HF','Q-Exactive HF Biopharma', 'Q-Exactive','LTQ Orbitrap Elite']
             for attr_name, attr_type in issue._attribute_types.items():
                 indices.append(attr_name)
             for i in range(5):
@@ -228,6 +230,8 @@ class Command(BaseCommand):
                     issueStatusdescription='under maintenance'
                 row = issueMS + ',' + issueStatus + "," + issueStatusdescription
                 row = row + '\n'
-                csvfile.write(row,)
+                rowlist[MSindexed_lst.index(issueMS)]=row
                 #i = i+1
+            for i in range(5):
+                csvfile.write(rowlist[i])
             csvfile.close()
