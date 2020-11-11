@@ -88,7 +88,9 @@ class Command(BaseCommand):
                 MinWaitingTimes.append(i)
 
         # read file with status per instrument
+        #outputfileMS
         with open(msoutfile, 'r', encoding='utf-8') as csvfile:
+        #with open(outputfileMS, 'r', encoding='utf-8') as csvfile:
             lines = csvfile.readlines()
             Status_lst = []
             Status_description_lst = []

@@ -1190,18 +1190,8 @@ class ProjectInfoView(TemplateView):
         with open(filepath, "r", encoding='utf-8') as csvfile:
             csvfile_reader=csv.DictReader(csvfile)
             for row in csvfile_reader:
-                #print(row["YouTrack_id"])
-                #print(row["Median_wTime"])
-                #print(self.request.user.username)
-                context["Project_ID"] = row["YouTrack_id"]
-                context["State"] = "Closed"
-                context["Scheduling_State"] = 'NotScheduled'
-                context["Mass_Spectrometer"] = "__ "
-                context["Scheduling_StateName"] = '.'
-                context["Median_wTime"] = row["Median_wTime"]
-                #context["Min_wTime"] = row["Min_wTime"]
-                context["today"] = datetime.datetime.now().strftime("%A, %b, %d, %Y")
                 if row["YouTrack_id"]==self.request.user.username:
+                    print("yes")
                 #if row["YouTrack_id"]=="PRC-4495":
                     context["Project_ID"] = row["YouTrack_id"]
                     context["State"] = row["State"]
