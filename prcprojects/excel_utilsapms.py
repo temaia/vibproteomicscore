@@ -165,7 +165,7 @@ def WriteToExcel2(arguments_dict):
                     replicatelist.append(sampletemp[1])
         no_samplesleft = no_samples-len(eclist)
         eclist = eclist + ['']*no_samplesleft
-        print("eclist"+eclist)
+        #print("eclist"+eclist)
         replicatelist = replicatelist + ['']*no_samplesleft
         # add data to the table
         for idx in range(0,no_samples,1):
