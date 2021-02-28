@@ -531,7 +531,7 @@ class ExperimentForm(forms.Form):
 	#Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
 	Isotopic_labeling = forms.ChoiceField(choices=DATAANALYSIS , label="Is any isotopic labeling procedure used?", required=True, widget=forms.RadioSelect)
 	Isotopic_labeling_details = forms.CharField(label="If 'Yes', which labeling procedure was used?", required=False,
-	 widget=forms.Textarea(attrs={'placeholder':'e.g. SILAC; heavy(Arg6,Lys4), light()','rows':3, 'cols':1}))
+	 widget=forms.Textarea(attrs={'placeholder':'e.g. TMT; SILAC; heavy(Arg6,Lys4), light()','rows':3, 'cols':1}))
 	Other_information = forms.CharField(label = "Other relevant information about the samples", required=False, widget=forms.TextInput(attrs={'placeholder':'e.g. presence of PTMs'}))
 
 class ExperimentPMDForm(forms.Form):
@@ -574,7 +574,7 @@ class ExperimentPTMForm(forms.Form):
 	#Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
 	Isotopic_labeling = forms.ChoiceField(choices=DATAANALYSIS , label="Is any isotopic labeling procedure used?", required=True, widget=forms.RadioSelect)
 	Isotopic_labeling_details = forms.CharField(label="If 'Yes', which labeling procedure was used?", required=False,
-	 widget=forms.Textarea(attrs={'placeholder':'e.g. SILAC; heavy(Arg6,Lys4), light()','rows':3, 'cols':1}))
+	 widget=forms.Textarea(attrs={'placeholder':'e.g. TMT; SILAC; heavy(Arg6,Lys4), light()','rows':3, 'cols':1}))
 	Other_information = forms.CharField(label = "Other relevant information about the samples", required=False)
 
 class ExperimentAPMSForm(forms.Form):
@@ -614,7 +614,7 @@ class ExperimentGBForm(forms.Form):
 	#Sample_Name = forms.CharField(widget=forms.HiddenInput, required=False)
 	Isotopic_labeling = forms.ChoiceField(choices=DATAANALYSIS , label="Is any isotopic labeling procedure used?", required=True, widget=forms.RadioSelect)
 	Isotopic_labeling_details = forms.CharField(label="If 'Yes', which labeling procedure was used?", required=False,
-	 widget=forms.Textarea(attrs={'placeholder':'e.g. SILAC; heavy(Arg6,Lys4), light()','rows':3, 'cols':1}))	
+	 widget=forms.Textarea(attrs={'placeholder':'e.g. TMT; SILAC; heavy(Arg6,Lys4), light()','rows':3, 'cols':1}))	
 	Other_information = forms.CharField(label = "Other relevant information about the samples", required=False, widget=forms.TextInput(attrs={'placeholder':'e.g. presence of PTMs, isotopic labeling procedures'}))
 
 
