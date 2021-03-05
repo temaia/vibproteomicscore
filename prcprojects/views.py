@@ -384,6 +384,8 @@ class ContactWizardSG(SessionWizardView):
               Buffer_composition = ''
             if analysis[3]['Isotopic_labeling_details'] is not None:
               Isotopic_labeling_details = analysis[3]['Isotopic_labeling_details']
+              if 'tmt' in Isotopic_labeling_details.lower():
+                yt.execute_command(Project_ID, "tag TMT")
             else:
               Isotopic_labeling_details = ''
 
@@ -391,16 +393,8 @@ class ContactWizardSG(SessionWizardView):
               Other_information = analysis[3]['Other_information']
             else:
               Other_information = ''
-            description = "# Sample Preparation notes\n* [x] Standard Urea\nUrea concentration: 8 M\nResuspension volume: 1 mL\n"\
-"Sample type: cell pellet\nSonicator: water bath\nProtein amount extracted: \nProtein amount used for sample prep: \nDTT concentration: 5 mM\nAlkylating agent: IAA\n"\
-"Working alkylating agent concentration: 10 mM\nLysC concentration (w:w): 1:100\n"\
-"Trypsin: 1:100\nPeptide purification: SampliQ 100 mg (OR 500 mg)\nOther notes:\n"\
-"\n* [ ] Mini Urea\nUrea concentration: 8 M\n"\
-"Sample type: cell pellet/dried protein extract (PR protein extract in solution)\nResuspension volume: 50 µL\n"\
-"Sonicator: water bath\nDTT concentration: 15 mM\nAlkylating agent: IAA\n"\
-"Working alkylating agent concentration: 30 mM\nLysC concentration (w:w): 1:100\n"\
-"Trypsin: 1:100\nPeptide purification: OMIX tip\nOther notes:\n"\
-"\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
+            description = "# Sample Preparation notes\nProtocol: \nOther notes:\n"\
+ + "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
                   + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
                   + "\nSequence_Database_Name: " + Sequence_database_name+"\nSequence_database_file: " + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
                   + Other_information
@@ -652,18 +646,15 @@ class ContactWizardPTM(SessionWizardView):
               Buffer_composition = ''
             if analysis[3]['Isotopic_labeling_details'] is not None:
               Isotopic_labeling_details = analysis[3]['Isotopic_labeling_details']
+              if 'tmt' in Isotopic_labeling_details.lower():
+                yt.execute_command(Project_ID, "tag TMT")
             else:
               Isotopic_labeling_details = ''
             if analysis[3]['Other_information'] is not None:
               Other_information = analysis[3]['Other_information']
             else:
               Other_information = ''
-            description = "# Sample Preparation notes\nProtocol: Standard Urea with phosphopeptide enrichment\nUrea concentration: 9 M\n"\
-"Urea solution volume: 1 ml\nProtein amount extracted: \nProtein amount used for sample prep: \nDTT concentration: 5 mM\nAlkylating agent: IAA\n"\
-"Working alkylating agent concentration: 10 mM\nLysC concentration (w:w): 1:100\n"\
-"Trypsin: 1:100\nPeptide purification: SampliQ 100 mg (OR 500 mg)\n"\
-"Peptide enrichment reagent: MagReSyn Ti-IMAC beads\n"\
-"Peptide enrichment reagent volume: 100 µl\nOther notes:\n"\
+            description = "# Sample Preparation notes\nProtocol: \nOther notes:\n"\
                   + "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
                   +  "\nPTM(s) under study: "+ analysis[2]['PTM'] + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
                   + "\nSequence_Database_Name:" + Sequence_database_name+"\nSequence_database_file:" + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
@@ -851,6 +842,8 @@ class ContactWizardAPMS(SessionWizardView):
              AbAmount = ''  
             if analysis[3]['Other_information'] is not None:
               Other_information = analysis[3]['Other_information']
+              if 'tmt' in Other_information.lower():
+                yt.execute_command(Project_ID, "tag TMT")
             else:
               Other_information = ''
             description = "# Sample Preparation notes\nProtocol: OnBead Digest\n"\
@@ -1205,7 +1198,21 @@ class ProjectInfoView(TemplateView):
                     #context["Min_wTime"] = row["Min_wTime"]
                     context["today"] = datetime.datetime.now().strftime("%A, %b, %d, %Y")
                     #today = context["today"]
-                    pass
+                    #pass
+                else:
+                    print("no")
+                #if row["YouTrack_id"]=="PRC-4495":
+                    context["Project_ID"] = self.request.user.username
+                    context["State"] = "Closed"
+                    context["Scheduling_State"] = "NotScheduled"
+                    context["Mass_Spectrometer"] = "Undefined"
+                    if row["Scheduling_State"]=='NotScheduled':
+                        context["Scheduling_StateName"] = ' and has already been processed.'
+
+                    context["Median_wTime"] = "45"
+                    #context["Min_wTime"] = row["Min_wTime"]
+                    context["today"] = datetime.datetime.now().strftime("%A, %b, %d, %Y")
+
 
 
 
