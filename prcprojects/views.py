@@ -1182,9 +1182,11 @@ class ProjectInfoView(TemplateView):
         filepath2 = os.path.join(settings.BASE_DIR,"static/PRC_MassSpecs.csv")
         with open(filepath, "r", encoding='utf-8') as csvfile:
             csvfile_reader=csv.DictReader(csvfile)
+            issuefound = False
             for row in csvfile_reader:
                 if row["YouTrack_id"]==self.request.user.username:
                     print("yes")
+                    issuefound = True
                 #if row["YouTrack_id"]=="PRC-4495":
                     context["Project_ID"] = row["YouTrack_id"]
                     context["State"] = row["State"]
@@ -1199,7 +1201,7 @@ class ProjectInfoView(TemplateView):
                     context["today"] = datetime.datetime.now().strftime("%A, %b, %d, %Y")
                     #today = context["today"]
                     #pass
-                else:
+            if not issuefound:
                     print("no")
                 #if row["YouTrack_id"]=="PRC-4495":
                     context["Project_ID"] = self.request.user.username
