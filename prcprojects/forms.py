@@ -56,14 +56,15 @@ class CustomerForm(forms.ModelForm):
 		#user = User.objects.filter(pk=request.user)
 		Project_ID=None
 		Email = None
-		fields = ['Project_ID','Name','Email', 'Group_leader','Affiliation','Other_institution', 'Phone','Address']
-		labels={'Group_leader':'Name of group leader',
+		fields = ['Project_ID','Name','Email', 'Group_leader','Affiliation','VIBAffiliation','Other_institution', 'Phone','Address']
+		labels={'Group_leader':'Name of group leader','VIBAffiliation':'VIB Affiliation'
 		}
 		widgets = {'Project_ID': forms.TextInput(),
 					'Name': forms.TextInput(attrs={'placeholder':'e.g. Anne Breituch'}),
 					'Email': forms.TextInput(),
 					'Group_leader': forms.TextInput(attrs={'placeholder':'e.g. Claudia Berts'}),
 					#'Affiliation': forms.TextInput(attrs={'placeholder':'Institution/Organization'}),
+					#'VIBAffiliation': forms.TextInput(),
 					'Phone': forms.TextInput(attrs={'placeholder':'e.g. +32 (0)92649274'}),
 					'Address': forms.Textarea(attrs={'placeholder':'Institutional address','rows':3, 'cols':1}),}
 	def __init__(self, *args, **kwargs):
@@ -278,6 +279,7 @@ CUNITS = (
 	('umol/ul','μg/μl'),
 	('mmol/ul','mg/μl'),
 	)
+
 class Specimen_SGForm(forms.Form):
 	Species = forms.CharField(max_length=120, label="Sample species and taxonomy ID", widget=forms.TextInput(attrs={'placeholder': 'e.g. Homo sapiens, taxid: 9606'}))
 	#Taxon_id = forms.CharField(max_length=120, required=True)
@@ -580,6 +582,8 @@ class ExperimentPTMForm(forms.Form):
 class ExperimentAPMSForm(forms.Form):
 
 	Experimental_conditions = forms.CharField(label = "Experimental conditions (separated by commas)", widget=forms.Textarea(attrs={'placeholder':'e.g. WT IP, neg. control IP',
+		'rows':2, 'cols':1}))
+	NegativeControl_conditions = forms.CharField(label = "Negative control experimental conditions (separated by commas if >1)", widget=forms.Textarea(attrs={'placeholder':'e.g. neg. control IP',
 		'rows':2, 'cols':1}))
 	Conditions_to_compare = forms.CharField(label = "Experimental conditions to compare", widget=forms.Textarea(attrs={'placeholder':'e.g. IP with wild type bait vs IP with deletion mutant as negative control',
 		 'rows':3, 'cols':1}))

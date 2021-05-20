@@ -22,9 +22,6 @@
 {% load crispy_forms_tags %}
 {{ wizard.management_form }}
 
-{{ wizard.form.non_field_errors }}
-{{ wizard.form.errors }}
-
     <div class="form-row col-12 ">
     <div class="form-group col-2 mb-0">
        {{ form.Project_ID|as_crispy_field }}
@@ -47,44 +44,25 @@
             <label for="id_0-Affiliation" class="col-form-label  requiredField">
                 Affiliation<span class="asteriskField">*</span>
             </label>
-                <div class="">
+              <div class="">
                 <select name="0-Affiliation" class="select form-control" required="" id="id_0-Affiliation" onchange="DDSelectCheck(this);">
                   <option value="" selected="">---------</option>
-                  <option id="VDOption" value="VIB">VIB</option>
-                  <option value="UGent">UGent</option>
+                  <option value="UGent-VIB">UGent-VIB</option>
                   <option value="UGent-CRIG">UGent-CRIG</option>
+                  <option value="UGent">UGent</option>
+                  <option value="KULeuven-VIB">KULeuven-VIB</option>
                   <option value="KULeuven">KULeuven</option>
+                  <option value="UAntwerpen-VIB">UAntwerpen-VIB</option>
                   <option value="UAntwerpen">UAntwerpen</option>
+                  <option value="VUB-VIB">VUB-VIB</option>
                   <option value="VUB">VUB</option>
+                  <option value="UHasselt-VIB">UHasselt-VIB</option>
                   <option value="UHasselt">UHasselt</option>
                   <option id="IDOption" value="Industry">Industry</option>
                   <option id="DDOption" value="Other">Other</option>
                 </select>
-                </div>     
-      </div>
-    </div>
-    </div>
-    <div class="form-row col-12 ">
-    <div class="form-group col-4 mb-0 formsub" id="VIBDivCheck" style="display:none;">
-        <div id="div_id_0-VIBAffiliation" class="form-group">
-            <label for="id_0-VIBAffiliation" class="col-form-label">
-               VIB Affiliation (please specify)
-            </label>
-                <div class="">
-                <select name="0-VIBAffiliation" class="select form-control" id="id_0-VIBAffiliation">
-                  <option value="" selected="">---------</option>
-                  <option value="PSB Ghent">PSB Ghent</option>
-                  <option value="IRC, Ghent">IRC, Ghent</option>
-                  <option value="HQ &amp CFs">HQ &amp CFs</option>
-                  <option value="BDR, Leuven">BDR, Leuven</option>
-                  <option value="CCB, Leuven">CCB, Leuven</option>
-                  <option value="CM, Leuven">CM, Leuven</option>
-                  <option value="SB, Brussels">SB, Brussels</option>
-                  <option value="CMN, Antwerp">CMN, Antwerp</option>
-                  <option value="Discovery Sciences">Discovery Sciences</option>
-                </select>
-                </div>     
-      </div>
+              </div>        
+        </div>
     </div>
     </div>
 
@@ -149,12 +127,10 @@ function DDSelectCheck(nameSelect)
 {
     console.log(nameSelect);
     if(nameSelect){
-        VDOptionValue = document.getElementById("VDOption").value;
         DDOptionValue = document.getElementById("DDOption").value;
         IDOptionValue = document.getElementById("IDOption").value;
         if(DDOptionValue == nameSelect.value){
             document.getElementById("OIDivCheck").style.display = "block";
-            document.getElementById("VIBDivCheck").style.display = "none";
             document.getElementsByName("0-Group_leader")[0].placeholder = "e.g. Claudia Berts";
             document.querySelector("label[for=id_0-Group_leader]").innerHTML = "Name of group leader";
         }
@@ -162,25 +138,18 @@ function DDSelectCheck(nameSelect)
             if(IDOptionValue == nameSelect.value){
                 document.querySelector("label[for=id_0-Group_leader]").innerHTML = "Company name";
                 document.getElementsByName("0-Group_leader")[0].placeholder = "";
-                document.getElementById("VIBDivCheck").style.display = "none";
                 document.getElementById("OIDivCheck").style.display = "none";
-              }
+  
+            }
             else {
-              if(VDOptionValue == nameSelect.value){
-                document.getElementById("OIDivCheck").style.display = "none";
-                document.getElementById("VIBDivCheck").style.display = "block";
-                document.getElementsByName("0-Group_leader")[0].placeholder = "e.g. Claudia Berts";
                 document.querySelector("label[for=id_0-Group_leader]").innerHTML = "Name of group leader";
-              } else {
-                document.querySelector("label[for=id_0-Group_leader]").innerHTML = "Name of group leader";
-                document.getElementById("VIBDivCheck").style.display = "none";
                 document.getElementsByName("0-Group_leader")[0].placeholder = "e.g. Claudia Berts";
                 document.getElementById("OIDivCheck").style.display = "none";
             }
         }
     }
                 document.getElementById("IIDivCheck").style.display = "block";
-    }
+
 }
 </script>
 

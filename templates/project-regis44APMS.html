@@ -28,6 +28,8 @@
     
        {{ form.Experimental_conditions|as_crispy_field }}
 
+       {{ form.NegativeControl_conditions|as_crispy_field }}
+
        {{ form.Conditions_to_compare|as_crispy_field }}
 
        {{ form.Nb_replicates_per_condition|as_crispy_field }}
@@ -49,6 +51,11 @@
        {{ form.Experimental_conditions|as_crispy_field }}
             </div>
             </div>
+  <div class="form-row col-10 mb-0 formsub">
+    <div class="form-group col-7 mb-0">
+       {{ form.NegativeControl_conditions|as_crispy_field }}
+     </div>
+    </div>
        <div class="form-row col-12 mb-0">
     <div class="form-group col-7 mb-0">
        {{ form.Conditions_to_compare|as_crispy_field }}
@@ -65,7 +72,7 @@
             </div>
             </div>
                    <div class="form-row col-12 mb-0">
-    <div class="form-group col-12 mb-0">
+    <div class="form-group col-10 mb-0">
        {{ form.Other_information|as_crispy_field }}
             </div>
             </div>

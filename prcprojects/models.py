@@ -15,7 +15,7 @@ from django.dispatch import receiver
 from multiselectfield import MultiSelectField
 # Create your models here.
 # Create your models here.
-from multiselectfield import MultiSelectField
+#from multiselectfield import MultiSelectField
 
 # ...
 
@@ -78,22 +78,45 @@ ANALYSISTYPES2= (
 # 	('Industry','Industry'),
 # 	)
 
-
 AFFILIATIONTYPES= (
-	('UGent-VIB','UGent-VIB'),
+	('VIB', 'VIB'),
 	('UGent-CRIG','UGent-CRIG'),
 	('UGent','UGent'),
-	('KULeuven-VIB','KULeuven-VIB'),
 	('KULeuven','KULeuven'),
-	('UAntwerpen-VIB', 'UAntwerpen-VIB'),
 	('UAntwerpen','UAntwerpen'),
-	('VUB-VIB','VUB-VIB'),
 	('VUB','VUB'),
-	('UHasselt-VIB','UHasselt-VIB'),
 	('UHasselt','UHasselt'),
 	('Industry','Industry'),
 	('Other','Other'),
 	)
+
+VIBAFFILIATIONTYPES= (
+	('PSB Ghent', 'PSB Ghent'),
+	('IRC, Ghent', 'IRC, Ghent'),
+	('HQ & CFs', 'HQ & CFs'),
+	('BDR, Leuven', 'BDR, Leuven'),
+	('CCB, Leuven', 'CCB, Leuven'),
+	('CM, Leuven', 'CM, Leuven'),
+	('SB, Brussels', 'SB, Brussels'),
+	('CMN, Antwerp', 'CMN, Antwerp'),
+	('Discovery Sciences', 'Discovery Sciences'),
+	)
+
+# AFFILIATIONTYPES= (
+# 	('UGent-VIB','UGent-VIB'),
+# 	('UGent-CRIG','UGent-CRIG'),
+# 	('UGent','UGent'),
+# 	('KULeuven-VIB','KULeuven-VIB'),
+# 	('KULeuven','KULeuven'),
+# 	('UAntwerpen-VIB', 'UAntwerpen-VIB'),
+# 	('UAntwerpen','UAntwerpen'),
+# 	('VUB-VIB','VUB-VIB'),
+# 	('VUB','VUB'),
+# 	('UHasselt-VIB','UHasselt-VIB'),
+# 	('UHasselt','UHasselt'),
+# 	('Industry','Industry'),
+# 	('Other','Other'),
+# 	)
 
 DATAANALYSIS = (
 	(True,'Yes'),
@@ -236,6 +259,7 @@ class Profile(models.Model):
 	Name = models.CharField(max_length=120, null=True)
 	Group_leader = models.CharField(max_length=120, null=True)
 	Affiliation = models.CharField(max_length=50, choices=AFFILIATIONTYPES, null=True)
+	VIBAffiliation = models.CharField(max_length=60, choices=VIBAFFILIATIONTYPES, null=True, blank=True)
 	Other_institution = models.CharField(max_length=60, null=True, blank=True)
 	Phone = models.CharField(max_length=30, null=True)
 	Address = models.CharField(max_length=300, null=True)

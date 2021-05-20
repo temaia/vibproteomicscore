@@ -118,6 +118,8 @@ def WriteToExcel(arguments_dict):
             no_replicates = no_replicates+no_replicates*(no_ec-len(no_replicates))
         # convert to list
         no_replicates = [int(x) for x in no_replicates]    
+        # convert to list
+        print(no_replicates)
         no_samples = int(arguments_dict["3-Nb_samples"][0].replace(' ',''))
         print('nosa'+str(no_samples))
         # predicted no_ec
@@ -426,6 +428,7 @@ def WriteToExcel(arguments_dict):
         print(ec)
         no_ec = len(ec)
         #parsimonious list for replicates
+        print(int(arguments_dict["3-Nb_replicates_per_condition"][0].replace(' ','')))
         no_replicates = int(arguments_dict["3-Nb_replicates_per_condition"][0].replace(' ',''))
         no_samples = int(arguments_dict["3-Nb_samples"][0].replace(' ',''))
         print('nosa'+str(no_samples))
