@@ -363,6 +363,10 @@ class ContactWizardSG(SessionWizardView):
             summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
             #Project_ID = "PRC-321" #@
             #try:
+            if analysis[0]['VIBAffiliation'] is not None:
+              VIBAffiliation = analysis[0]['VIBAffiliation']
+            else:
+              VIBAffiliation = ''
             if analysis[0]['Other_institution'] is not None:
               Other_institution = analysis[0]['Other_institution']
             else:
@@ -394,7 +398,7 @@ class ContactWizardSG(SessionWizardView):
             else:
               Other_information = ''
             description = "# Sample Preparation notes\nProtocol: \nOther notes:\n"\
- + "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
+ + "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nVIB Affiliation" +VIBAffiliation + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
                   + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
                   + "\nSequence_Database_Name: " + Sequence_database_name+"\nSequence_database_file: " + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
                   + Other_information
@@ -504,6 +508,10 @@ class ContactWizardPMD(SessionWizardView):
             ProjectTitle = 'noprojecttitle'
         if ProjectTitle == 'noprojecttitle' or currentissue['OverwriteRegistration'] == 'Yes': 
             summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
+            if analysis[0]['VIBAffiliation'] is not None:
+              VIBAffiliation = analysis[0]['VIBAffiliation']
+            else:
+              VIBAffiliation = ''
             #try:
             if analysis[0]['Other_institution'] is not None:
               Other_institution = analysis[0]['Other_institution']
@@ -511,7 +519,7 @@ class ContactWizardPMD(SessionWizardView):
               Other_institution = ''
 
             description = "# Sample Preparation notes\nProtocol: \nOther notes:\n"\
-            "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) 
+            "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nVIB Affiliation" +VIBAffiliation + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) 
             yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
                     description=description)
 
@@ -626,6 +634,10 @@ class ContactWizardPTM(SessionWizardView):
             summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
             #Project_ID = "PRC-321" #@
             #try:
+            if analysis[0]['VIBAffiliation'] is not None:
+              VIBAffiliation = analysis[0]['VIBAffiliation']
+            else:
+              VIBAffiliation = ''
             if analysis[0]['Other_institution'] is not None:
               Other_institution = analysis[0]['Other_institution']
             else:
@@ -655,7 +667,7 @@ class ContactWizardPTM(SessionWizardView):
             else:
               Other_information = ''
             description = "# Sample Preparation notes\nProtocol: \nOther notes:\n"\
-                  + "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
+                  + "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nVIB Affiliation" +VIBAffiliation + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
                   +  "\nPTM(s) under study: "+ analysis[2]['PTM'] + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
                   + "\nSequence_Database_Name:" + Sequence_database_name+"\nSequence_database_file:" + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
                   + Other_information
@@ -802,6 +814,10 @@ class ContactWizardAPMS(SessionWizardView):
             summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
             #Project_ID = "PRC-321" #@
             #try:
+            if analysis[0]['VIBAffiliation'] is not None:
+              VIBAffiliation = analysis[0]['VIBAffiliation']
+            else:
+              VIBAffiliation = ''
             if analysis[0]['Other_institution'] is not None:
               Other_institution = analysis[0]['Other_institution']
             else:
@@ -848,7 +864,7 @@ class ContactWizardAPMS(SessionWizardView):
               Other_information = ''
             description = "# Sample Preparation notes\nProtocol: OnBead Digest\n"\
 "Sample type: washed beads\nTrypsin: 1 µg \nOther notes:\n"\
-            "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
+            "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nVIB Affiliation" +VIBAffiliation + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
                   + "\nSample_Species: "+ analysis[2]['Species'] + "\nSample_Type: " + analysis[2]['Sample_Type'] + "\nBuffer_composition: " + Buffer_composition + "\nBait_Molecule: "+ Bait_Molecule + "\nBait_Molecule_Protein: "+ Bait_Molecule_Protein + "\nBait_sequence_file: "+ Bait_sequence_file + "\nBait_Molecule_other: "+ Bait_Molecule_other \
                   + "\nAntibodies: "+Antibodies + "\nAbSource: "+ AbSource + "\nAbAmount: "+ AbAmount \
                   + "\nBeads: "+ analysis[2]['Beads'] + "\nBeadsSource: "+ analysis[2]['BeadsSource'] + "\nBeadsAmount: "+ analysis[2]['BeadsAmount'] \
@@ -981,6 +997,10 @@ class ContactWizardGB(SessionWizardView):
         if ProjectTitle == 'noprojecttitle' or currentissue['OverwriteRegistration'] == 'Yes': 
             summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
             #try:
+            if analysis[0]['VIBAffiliation'] is not None:
+              VIBAffiliation = analysis[0]['VIBAffiliation']
+            else:
+              VIBAffiliation = ''
             if analysis[0]['Other_institution'] is not None:
               Other_institution = analysis[0]['Other_institution']
             else:
@@ -1012,7 +1032,7 @@ class ContactWizardGB(SessionWizardView):
 
             description =  "# Sample Preparation notes\nProtocol: In Gel Digestion\nACN wash: 50 %\n"\
 "Trypsin solution volume: 15 µl\nOther notes:\n"\
-            "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
+            "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) +"\nVIB Affiliation" +VIBAffiliation + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
                   + "\nSetup: "+ analysis[2]['Setup'] + '\nGel_file: ' + str(analysis[2]['Gel_file']) \
                   + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
                   + "\nSequence_Database_Name: " + Sequence_database_name+"\nSequence_database_file: " + str(Sequence_database_file) \
