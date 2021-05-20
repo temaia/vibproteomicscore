@@ -187,7 +187,7 @@ def WriteToExcel2(arguments_dict):
             #samplelistindexestemp = random.sample(samplestemp, len(samplestemp))
             #print("samplelistindexestemp "+str(samplelistindexestemp))
             replicatelisttemp = random.sample(list(range(1,no_replicatesrunordered[j]+1)), no_replicatesrunordered[j])
-            eclist=eclist+list(ecrunordered[j])*no_replicatesrunordered[j]
+            eclist=eclist+[ecrunordered[j]]*no_replicatesrunordered[j]
             replicatelist=replicatelist+replicatelisttemp 
             if ecrunordered[j] in refec:
                 negctrllist=negctrllist+['Yes']*no_replicatesrunordered[j]
@@ -204,9 +204,9 @@ def WriteToExcel2(arguments_dict):
             print("replicatelist"+str(replicatelist))
             print("negctrllist"+str(negctrllist))
         #replicatelist = replicatelist + ['']*no_samplesleft
-        eclist = eclist+list(' ')*(no_samples-len(eclist))
-        replicatelist = replicatelist+list(' ')*(no_samples-len(replicatelist))
-        negctrllist = negctrllist+list(' ')*(no_samples-len(negctrllist))
+        eclist = eclist+[' ']*(no_samples-len(eclist))
+        replicatelist = replicatelist+[' ']*(no_samples-len(replicatelist))
+        negctrllist = negctrllist+[' ']*(no_samples-len(negctrllist))
         # add data to the table
         for idx in range(0,no_samples,1):
             row = idx+5
@@ -373,7 +373,7 @@ def WriteToExcel2(arguments_dict):
         for j in range(len(ecrunordered)):
             #for i in range(no_replicates*len(ec)):
             replicatelisttemp = random.sample(list(range(1,no_replicatesrunordered[j]+1)), no_replicatesrunordered[j])
-            eclist=eclist+list(ecrunordered[j])*no_replicatesrunordered[j]
+            eclist=eclist+[ecrunordered[j]]*no_replicatesrunordered[j]
             replicatelist=replicatelist+replicatelisttemp 
             if ecrunordered[j] in refec:
                 negctrllist=negctrllist+['Yes']*no_replicatesrunordered[j]
@@ -390,9 +390,9 @@ def WriteToExcel2(arguments_dict):
             print("replicatelist"+str(replicatelist))
             print("negctrllist"+str(negctrllist))
         #replicatelist = replicatelist + ['']*no_samplesleft
-        eclist = eclist+list(' ')*(no_samples-len(eclist))
-        replicatelist = replicatelist+list(' ')*(no_samples-len(replicatelist))
-        negctrllist = negctrllist+list(' ')*(no_samples-len(negctrllist))
+        eclist = eclist+[' ']*(no_samples-len(eclist))
+        replicatelist = replicatelist+[' ']*(no_samples-len(replicatelist))
+        negctrllist = negctrllist+[' ']*(no_samples-len(negctrllist))
         # add data to the table
         for idx in range(0,no_samples,1):
             row = idx+5
