@@ -432,7 +432,7 @@ class ContactWizardSG(SessionWizardView):
             to_list = [self.request.user.email]
             #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
             #message = render_to_string(template1, {'user': user})
-            bcc = [settings.ADMINS[0][1]]
+            bcc = [settings.ADMINS[0][1],settings.ADMINS[1][1]]
             msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
@@ -551,7 +551,7 @@ class ContactWizardPMD(SessionWizardView):
             to_list = [self.request.user.email]
             #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
             #message = render_to_string(template1, {'user': user})
-            bcc = [settings.ADMINS[0][1]]
+            bcc = [settings.ADMINS[0][1],settings.ADMINS[1][1]]
             msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
@@ -706,7 +706,7 @@ class ContactWizardPTM(SessionWizardView):
             to_list = [self.request.user.email]
             #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
             #message = render_to_string(template1, {'user': user})
-            bcc = [settings.ADMINS[0][1]]
+            bcc = [settings.ADMINS[0][1],settings.ADMINS[1][1]]
             msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
@@ -899,7 +899,7 @@ class ContactWizardAPMS(SessionWizardView):
             to_list = [self.request.user.email]
             #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
             #message = render_to_string(template1, {'user': user})
-            bcc = [settings.ADMINS[0][1]]
+            bcc = [settings.ADMINS[0][1],settings.ADMINS[1][1]]
             msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
@@ -1077,7 +1077,7 @@ class ContactWizardGB(SessionWizardView):
             to_list = [self.request.user.email]
             #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
             #message = render_to_string(template1, {'user': user})
-            bcc = [settings.ADMINS[0][1]]
+            bcc = [settings.ADMINS[0][1],settings.ADMINS[1][1]]
             msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))

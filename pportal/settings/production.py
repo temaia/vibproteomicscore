@@ -182,8 +182,8 @@ EMAIL_HOST_USER = 'noreply-prc@vib-ugent.be'
 #EMAIL_HOST_PASSWORD = get_env_variable('EM_PW')
 
 # DEFAULT_FROM_EMAIL = 'teresa.maia@vib-ugent.be' #'noreply-prc@vib-ugent.be'
-ADMINS = [('T Maia', 'teresa.maia@vib-ugent.be')]#,
-#     ('S Dufour', 'sara.dufour@vib-ugent.be')]
+ADMINS = [('T Maia', 'teresa.maia@vib-ugent.be'),
+     ('S Dufour', 'sara.dufour@vib-ugent.be')]
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
