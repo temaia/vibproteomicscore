@@ -45,7 +45,7 @@ class Command(BaseCommand):
 					html_message = render_to_string(template2, {'user': user,'pw': password})
 					from_email=settings.EMAIL_HOST_USER
 					to_list = [user.email]
-					bcc = [settings.ADMINS[0][1]]
+					bcc = [settings.ADMINS[0][1],settings.ADMINS[1][1]]
 					msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
 					msg.content_subtype = "html"
 					msg.send()
