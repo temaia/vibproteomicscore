@@ -83,7 +83,7 @@ class Command(BaseCommand):
         filename =os.path.join(settings.BASE_DIR, "static/PRCCMBPSB_issues_dailyreport.csv")
         with open(filename, 'w', encoding='utf-8') as csvfile:
             #csvfile.write('Running start date\tLab PI\tType\tUser Name\tYouTrack\tProject Name (YouTrack)\t# samples\tMS_Injections_Per_Sample\trun length (hours)\ttotal running time (hours)\tMass_Spectrometer\tCreated_DateH\tArrival_DateH\tMS_RunStateH\tMS_RunStatesH\tMS_RunStatesnrH\tre-runs/problems\tMS_RunStartH\tMS_RunStartsH\tMS_RunStartsnrH\tresolvedH\tResolvedDateH\tCleatedDate\n')
-            csvfile.write('YouTrack_id,Project_Name,No_Samples,total_running_time,Mass_Spectrometer,State,Scheduling_State\n')
+            csvfile.write('YouTrack_id,No_Samples,total_running_time,Mass_Spectrometer,State,Scheduling_State,Project_Name\n')
             i=0 
             for issue in PRCissues:
                 # name of fields in issue
@@ -119,7 +119,7 @@ class Command(BaseCommand):
                     issueSchedulingState=issue['Scheduling_State']
                 else:
                     issueSchedulingState='None'        
-                row = issueid+',' + issuesummary + ',' + issueNoSamples+ ',' + issueMS_Total_Time_h + ',' + issueMassSpectrometer + "," + issueState + "," + issueSchedulingState
+                row = issueid+','  + issueNoSamples+ ',' + issueMS_Total_Time_h + ',' + issueMassSpectrometer + "," + issueState + "," + issueSchedulingState + ',' + issuesummary
                 row = row + '\n'
                 csvfile.write(row,)
                 i = i+1
@@ -157,7 +157,7 @@ class Command(BaseCommand):
                     issueSchedulingState=issue['Scheduling_State']
                 else:
                     issueSchedulingState='None'        
-                row = issueid+',' + issuesummary + ',' + issueNoSamples+ ',' + issueMS_Total_Time_h + ',' + issueMassSpectrometer + "," + issueState + "," + issueSchedulingState
+                row = issueid + ',' + issueNoSamples+ ',' + issueMS_Total_Time_h + ',' + issueMassSpectrometer + "," + issueState + "," + issueSchedulingState+',' + issuesummary
                 row = row + '\n'
                 csvfile.write(row,)
                 i = i+1
@@ -195,7 +195,7 @@ class Command(BaseCommand):
                     issueSchedulingState=issue['Scheduling_State']
                 else:
                     issueSchedulingState='None'        
-                row = issueid+',' + issuesummary + ',' + issueNoSamples+ ',' + issueMS_Total_Time_h + ',' + issueMassSpectrometer + "," + issueState + "," + issueSchedulingState
+                row = issueid + ',' + issueNoSamples+ ',' + issueMS_Total_Time_h + ',' + issueMassSpectrometer + "," + issueState + "," + issueSchedulingState+',' + issuesummary
                 row = row + '\n'
                 csvfile.write(row,)
                 i = i+1
