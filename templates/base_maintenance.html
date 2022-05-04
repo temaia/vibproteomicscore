@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load bootstrap4 %}
+{% load staticfiles %}
+{% load static %}
+
+<html lang="en">
+
+<head>
+
+
+<style class="cp-pen-styles">.chart-gauge {
+  width: 400px;
+  margin: 10px auto;
+}
+
+.chart-color1 {
+  fill: #69b41f;
+}
+
+.chart-color2 {
+  fill: #b5e61d;
+}
+
+.chart-color3 {
+  fill: #DEA82C;
+}
+
+.chart-color4 {
+  fill: #E9621A;
+}
+
+.chart-color5 {
+  fill: #e92213;
+}
+
+.needle,
+.needle-center {
+  fill: #464A4F;
+}
+
+.prose {
+  text-align: center;
+  font-family: sans-serif;
+  color: #ababab;
+}
+</style>
+    <meta charset="utf-8" />
+
+  
+    <title>
+{% block head_title %}VIB Proteomics Core{% endblock head_title %} 
+</title>
+{% include 'snippets/css.html' %}
+
+</head>
+
+<body font-family:"OpS">
+
+{% block jquery %}
+{% endblock %} 
+     	  
+{% block content %}
+{% endblock %} 
+
+
+{% block content2 %}
+
+
+{% endblock %}
+
+{% include 'snippets/js.html' %}
+
+{% block extra_js %}
+
+
+{% endblock %}
+
+<br>
+{% block content3 %}
+ {% include 'snippets/foot.html' %} 
+ {% endblock %}
+
+
+</html>
+
+

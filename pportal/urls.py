@@ -72,6 +72,7 @@ urlpatterns = static(settings.MEDIA_URL,document_root =
   #   #url(r'^profile/(?P<email>\w+)/$', views.get_user_profile, name='profile'),
   #   url(r'^about/$', AboutView.as_view(template_name='about.html'),name='about'),
   #   url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html'),name='bootstrap'),
+  path('maintenance/', views.maintenance, name='maintenance'),
    url(r'^login/$', LoginView.as_view(template_name='login.html'),name='login'),
    #url(r'^logout/$', auth_views.LogoutView.as_view(next_page=reverse_lazy('login')),name='logout'),
    url(r'^logout/$', auth_views.LogoutView.as_view(template_name='logout.html'),name='logout'),

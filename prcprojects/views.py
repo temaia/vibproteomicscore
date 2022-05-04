@@ -185,6 +185,13 @@ class LogoutView(TemplateView):
 # INTERNAL_RESET_SESSION_TOKEN = '_password_reset_token'
 
 
+def index(request):
+    return HttpResponse('Index page')
+
+
+def maintenance(request):
+    return render(request, 'maintenance.html')
+
 
 #cleaned_data = wizard.get_cleaned_data_for_step('paytype') or {'method': 'none'}
 def youtrack_get():
