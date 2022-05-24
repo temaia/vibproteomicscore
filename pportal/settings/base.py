@@ -76,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'prcprojects.middleware.MaintenanceModeMiddleware',
 ]
 
 ROOT_URLCONF = 'pportal.urls'
@@ -213,3 +214,5 @@ ADMINS = [
     ('Te M', 'mtpmmaia@gmail.com'),
      ('S Dufour', 'sara.dufour@vib-ugent.be')]
 MANAGERS = ADMINS
+
+MAINTENANCE_MODE = int(os.environ.get("MAINTENANCE_MODE", 1))
