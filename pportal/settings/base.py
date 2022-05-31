@@ -215,4 +215,4 @@ ADMINS = [
      ('S Dufour', 'sara.dufour@vib-ugent.be')]
 MANAGERS = ADMINS
 
-MAINTENANCE_MODE = int(os.environ.get("MAINTENANCE_MODE", 1))
+MAINTENANCE_MODE = int(os.environ.get("MAINTENANCE_MODE", 0))
