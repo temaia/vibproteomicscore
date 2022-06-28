@@ -75,7 +75,7 @@ class Command(BaseCommand):
                     issuesendregistrationemail='Yes'
                 # No_Samples
                 if 'Analysis_Type' in indices:
-                    issueAnalysisType=str(issue['Analysis_Type'][0])
+                    issueAnalysisType=str(issue['Analysis_Type'])
                 else:
                     issueAnalysisType='None'      
                 row = issueid+',' + issuecontactemail + ',' + issueAnalysisType + ',' + issuesendregistrationemail     
