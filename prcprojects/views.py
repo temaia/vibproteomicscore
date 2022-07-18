@@ -6,6 +6,12 @@
 import json
 from django.urls import reverse
 from django.conf import settings
+from utils.utils import ytclient,prepareProjectIssuesDict,getissue,updateissuemainSG,updateissuetagsSG,updateissueattachmentsSG,updateissuemainPMD,updateissuetagsPMD,updateissueattachmentsPMD
+import httpx
+import urllib
+import json
+import pandas as pd
+import os
 from youtrack.connection import Connection
 from .acessorio import *
 
@@ -198,6 +204,11 @@ def youtrack_get():
     with open(os.path.join(settings.BASE_DIR, "static/acessorio.json")) as config_file:
         config = json.load(config_file)
         return(config["YTTOKR"])
+def youtrackurl_get():
+    with open(os.path.join(settings.BASE_DIR, "static/acessorio.json")) as config_file:
+        config = json.load(config_file)
+        return(config["YTURLREST"])
+
 
 
 FORMS = [("0", CustomerForm),
@@ -306,19 +317,19 @@ class ContactWizard(SessionWizardView):
     #form_list = 
     def get_template_names(self):
         return [TEMPLATES[self.steps.current]]
-    def done(self, form_list,form_dict, **kwargs):
-        analysis = [form.cleaned_data for form in form_list]
-        # file field
-        print(type(form_list))
-        #form_list=
-        upload_file = form_list[2].cleaned_data['Nb_samples']
-        yt = connection.Connection(url='https://youtrack.ugent.be', api_key='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
-        yt.execute_command("PRC-321", "No_Samples 19", group="PRC-website")
-        return render(self.request,'done.html',{
-            'form_data': analysis[0],
-            'analysisd':form_dict,
-            'upload_file' : upload_file,
-            })
+    # def done(self, form_list,form_dict, **kwargs):
+    #     analysis = [form.cleaned_data for form in form_list]
+    #     # file field
+    #     print(type(form_list))
+    #     upload_file = form_list[2].cleaned_data['Nb_samples']
+    #     yt = Connection(url=youtrackurl_get(), token=youtrack_get()) #@
+    #     #yt = connection.Connection(url='https://youtrack.ugent.be', api_key='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
+    #     yt.execute_command("PRC-321", "No_Samples 19", group="PRC-website")
+    #     return render(self.request,'done.html',{
+    #         'form_data': analysis[0],
+    #         'analysisd':form_dict,
+    #         'upload_file' : upload_file,
+    #         })
     def get_form_initial(self, step):
         """
         Set projet id and email for step1
@@ -341,7 +352,6 @@ class ContactWizardSG(SessionWizardView):
     instance=None
     file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT,'seqdbs'))
     def get_template_names(self):
-        #return [TEMPLATESSG[self.steps.current]]
         return [TEMPLATESSG[self.steps.current]]
 
     def done(self, form_list,form_dict, **kwargs):
@@ -358,18 +368,26 @@ class ContactWizardSG(SessionWizardView):
         print('formdict' + str(formdict))
         Project_ID = analysis[0]['Project_ID']
         Contact_Person = analysis[0]['Name'].split(',')[0]
-        #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
-        yt = Connection(url='https://youtrack.ugent.be', token=youtrack_get()) #@
-        # check whether to go ahead or to return a page saying the project has already been registered
-        currentissue = yt.get_issue(Project_ID)
-        try:
-            ProjectTitle = currentissue['Project_Title']
-        except KeyError:
+        # #### BLOCKSG1 ##### to be commented
+        # yt = Connection(url=youtrackurl_get(), token=youtrack_get()) #@
+        # # check whether to go ahead or to return a page saying the project has already been registered
+        # currentissue = yt.get_issue(Project_ID)
+        ##### BLOCKSG1 ######
+        # NEW BLOCK 1
+
+        YTTOKR = youtrack_get()
+        client = ytclient(youtrackurl_get())
+        currentissue = getissue(client,Project_ID,str(client.base_url),YTTOKR)
+        print(currentissue.keys())
+        ProjectTitle = currentissue['Project_Title']
+        if ProjectTitle is None:
             ProjectTitle = 'noprojecttitle'
+        # try:
+        #     ProjectTitle = currentissue['Project_Title']
+        # except KeyError:
+            # ProjectTitle = 'noprojecttitle'
         if ProjectTitle == 'noprojecttitle' or currentissue['OverwriteRegistration'] == 'Yes': 
             summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
-            #Project_ID = "PRC-321" #@
-            #try:
             if analysis[0]['VIBAffiliation'] is not None:
               VIBAffiliation = analysis[0]['VIBAffiliation']
             else:
@@ -378,7 +396,7 @@ class ContactWizardSG(SessionWizardView):
               Other_institution = analysis[0]['Other_institution']
             else:
               Other_institution = ''
-            print(analysis[0]['Phone'])
+            sdbfg = False
             if analysis[2]['Sequence_database_name'] is not None:
               Sequence_database_name = analysis[2]['Sequence_database_name']
             else:
@@ -395,11 +413,8 @@ class ContactWizardSG(SessionWizardView):
               Buffer_composition = ''
             if analysis[3]['Isotopic_labeling_details'] is not None:
               Isotopic_labeling_details = analysis[3]['Isotopic_labeling_details']
-              if 'tmt' in Isotopic_labeling_details.lower():
-                yt.execute_command(Project_ID, "tag TMT")
             else:
               Isotopic_labeling_details = ''
-
             if analysis[3]['Other_information'] is not None:
               Other_information = analysis[3]['Other_information']
             else:
@@ -409,42 +424,85 @@ class ContactWizardSG(SessionWizardView):
                   + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
                   + "\nSequence_Database_Name: " + Sequence_database_name+"\nSequence_database_file: " + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
                   + Other_information
-            yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
-                    description=description)
-
-            yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
-            yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
-            # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
-            if analysis[0]['Affiliation'] == 'Industry':
-                yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
-            elif analysis[0]['Affiliation'].find("VIB") != -1:
-                yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
-            else:
-                yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
-            yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
-            yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
-            if analysis[1]['Sample_preparation']:
-                 yt.execute_command(Project_ID, "tag nSP")
-            if analysis[1]['Data_analysis']:
-                 yt.execute_command(Project_ID, "tag nDA")
-
-            if sdbf:
-                yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="root", group="PRC-team") 
-            yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team" ) 
+            ### BLOCKSG2 to be commented #######################
+            # yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
+            #         description=description)
+            # yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
+            # yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
+            # if analysis[0]['Affiliation'] == 'Industry':
+            #     yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            # elif analysis[0]['Affiliation'].find("VIB") != -1:
+            #     yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
+            # else:
+            #     yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            # yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
+            # yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
+            # NEW BLOCK2
+            # set main fields
+            responsemain = updateissuemainSG(client,Project_ID,str(client.base_url),YTTOKR,description,analysis)
+            print(responsemain.status_code)
+            # NEW BLOCK3
+            # if analysis[1]['Sample_preparation']:
+            #      yt.execute_command(Project_ID, "tag nSP")
+            # if analysis[1]['Data_analysis']:
+            #      yt.execute_command(Project_ID, "tag nDA")
+            # if 'tmt' in Isotopic_labeling_details.lower():
+            #     yt.execute_command(Project_ID, "tag TMT")
+            #base_url=str(client.base_url)
+            #url = base_url+"commands"
+            #accesstok=YTTOKR
+            # print(url)
+            # params = {'fields':'tags(id,name)'}
+            # headers = {'Authorization': 'Bearer {}'.format(accesstok),
+            #        'content-type': 'application/json;charset=utf-8',
+            #        'Accept': 'application/json;charset=utf-8'}
+            # issueid = Project_ID
+            # if analysis[1]['Sample_preparation']:
+            #     print("sp")
+            #     data = {
+            #     'query':'tag nSP', 
+            #     'issues':[{'idReadable': Project_ID}]
+            #     }
+            #     responseSP = client.post(url, data= json.dumps(data), params = params,
+            #                     headers = headers)
+            #      #yt.execute_command(Project_ID, "tag nSP")
+            # if analysis[1]['Data_analysis']:
+            #     print("da")
+            #     data = {
+            #     'query':'tag nDA', 
+            #     'issues':[{'idReadable': Project_ID}]
+            #     }
+            #     responseDA = client.post(url, data= json.dumps(data), params = params,
+            #                     headers = headers)
+            # if analysis[3]['Isotopic_labeling_details'] is not None:
+            #     Isotopic_labeling_details = analysis[3]['Isotopic_labeling_details']
+            #     if 'tmt' in Isotopic_labeling_details.lower():
+            #         print("tmt")
+            #         tagTMT=True
+            #     data = {
+            #     'query':'tag tmt', 
+            #     'issues':[{'idReadable': Project_ID}]
+            #     }
+            responsetags = updateissuetagsSG(client,Project_ID,str(client.base_url),YTTOKR,analysis)
+            #print(responsetags.status_code)
+            # NEW BLOCK4
+            # if sdbf:
+            #     yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="root", group="PRC-team") 
+            # yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team" ) 
+            attachmentsrequest = updateissueattachmentsSG(client,Project_ID,str(client.base_url),YTTOKR, analysis, sdbf, sdbfg)
+            print(attachmentsrequest.status_code)
+            ### BLOCKSG2 ######################################
             # send project registration confirmation email
             subject = 'VIB Proteomics Core, Project registration confirmation - Read carefully'
-            #message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
             html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
             from_email=settings.EMAIL_HOST_USER
             to_list = [self.request.user.email]
-            #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
-            #message = render_to_string(template1, {'user': user})
             bcc = [settings.ADMINS[0][1],settings.ADMINS[1][1]]
             msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
-            msg.send()
+            ##########msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
 
@@ -465,7 +523,6 @@ class ContactWizardSG(SessionWizardView):
             form_class=self.form_list[step]
             Project_ID = self.request.user.username
             Email = self.request.user.email
-            #Analysis_Type = self.request.user.profile.Main_Analysis_Type
             initial.update({'Project_ID':Project_ID, 'Email':Email})
             return initial
         if step=='1':
@@ -504,14 +561,31 @@ class ContactWizardPMD(SessionWizardView):
         print('formdict' + str(formdict))
         Project_ID = analysis[0]['Project_ID']
         Contact_Person = analysis[0]['Name'].split(',')[0]
-        #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
-        yt = Connection(url='https://youtrack.ugent.be', token=youtrack_get()) #@
-        # check whether to go ahead or to return a page saying the project has already been registered
-        currentissue = yt.get_issue(Project_ID)
-##        currentissue = yt.get_issue(Project_ID)
-        try:
-            ProjectTitle = currentissue['Project_Title']
-        except KeyError:
+        # yt = Connection(url=youtrackurl_get(), token=youtrack_get()) #@
+        # # check whether to go ahead or to return a page saying the project has already been registered
+        # currentissue = yt.get_issue(Project_ID)
+        # try:
+        #     ProjectTitle = currentissue['Project_Title']
+        # except KeyError:
+        #     ProjectTitle = 'noprojecttitle'
+        # if ProjectTitle == 'noprojecttitle' or currentissue['OverwriteRegistration'] == 'Yes': 
+        #     summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
+        #     if analysis[0]['VIBAffiliation'] is not None:
+        #       VIBAffiliation = analysis[0]['VIBAffiliation']
+        #     else:
+        #       VIBAffiliation = ''
+        #     #try:
+        #     if analysis[0]['Other_institution'] is not None:
+        #       Other_institution = analysis[0]['Other_institution']
+        #     else:
+        #       Other_institution = ''
+        # NEW BLOCK 1
+        YTTOKR = youtrack_get()
+        client = ytclient(youtrackurl_get())
+        currentissue = getissue(client,Project_ID,str(client.base_url),YTTOKR)
+        print(currentissue.keys())
+        ProjectTitle = currentissue['Project_Title']
+        if ProjectTitle is None:
             ProjectTitle = 'noprojecttitle'
         if ProjectTitle == 'noprojecttitle' or currentissue['OverwriteRegistration'] == 'Yes': 
             summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
@@ -524,32 +598,40 @@ class ContactWizardPMD(SessionWizardView):
               Other_institution = analysis[0]['Other_institution']
             else:
               Other_institution = ''
-
+            sdbf=False
+            sdbfg=False
             description = "# Sample Preparation notes\nProtocol: \nOther notes:\n"\
             "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nVIB Affiliation: " +VIBAffiliation + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) 
-            yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
-                    description=description)
+            # yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
+            #         description=description)
 
-            yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
-            yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
-            yt.execute_command(Project_ID, "SamplePrep_Responsible Hans")
-            yt.execute_command(Project_ID, "DataAnalysis_Responsible Hans")
-            yt.execute_command(Project_ID, "Mass_Spectrometer LTQ Orbitrap XL")
-            yt.execute_command(Project_ID, "Run_Length_h 15_min")
-            # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
-            if analysis[0]['Affiliation'] == 'Industry':
-                yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
-            elif analysis[0]['Affiliation'].find("VIB") != -1:
-                yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
-            else:
-                yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
-            yt.execute_command(Project_ID, "No_Samples "+ str(analysis[2]['Nb_samples']))
-            yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
-            if analysis[1]['Sample_preparation']:
-                 yt.execute_command(Project_ID, "tag nSP")
-            if analysis[1]['Data_analysis']:
-                  yt.execute_command(Project_ID, "tag nDA")
-            yt.create_attachment(Project_ID,name=str(analysis[3]['EDfile']),content=analysis[3]['EDfile'],author_login ="root", group="PRC-team" ) 
+            # yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
+            # yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
+            # yt.execute_command(Project_ID, "SamplePrep_Responsible Hans")
+            # yt.execute_command(Project_ID, "DataAnalysis_Responsible Hans")
+            # yt.execute_command(Project_ID, "Mass_Spectrometer LTQ Orbitrap XL")
+            # yt.execute_command(Project_ID, "Run_Length_h 15_min")
+            # # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
+            # if analysis[0]['Affiliation'] == 'Industry':
+            #     yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            # elif analysis[0]['Affiliation'].find("VIB") != -1:
+            #     yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
+            # else:
+            #     yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            # yt.execute_command(Project_ID, "No_Samples "+ str(analysis[2]['Nb_samples']))
+            # yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
+            # NEW BLOCK2
+            # set main fields
+            responsemain = updateissuemainPMD(client,Project_ID,str(client.base_url),YTTOKR,description,analysis)
+            print(responsemain.status_code)
+            # if analysis[1]['Sample_preparation']:
+            #      yt.execute_command(Project_ID, "tag nSP")
+            # if analysis[1]['Data_analysis']:
+            #       yt.execute_command(Project_ID, "tag nDA")
+            responsetags = updateissuetagsPMD(client,Project_ID,str(client.base_url),YTTOKR,analysis)
+            #yt.create_attachment(Project_ID,name=str(analysis[3]['EDfile']),content=analysis[3]['EDfile'],author_login ="root", group="PRC-team" ) 
+            attachmentsrequest = updateissueattachmentsPMD(client,Project_ID,str(client.base_url),YTTOKR, analysis, sdbf,sdbfg)
+            print(attachmentsrequest.status_code)
             # send project registration confirmation email
             subject = 'VIB Proteomics Core, Project registration confirmation - Read carefully'
             #message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
@@ -563,7 +645,7 @@ class ContactWizardPMD(SessionWizardView):
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
-            msg.send()
+            ##########msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
 
@@ -614,6 +696,7 @@ class ContactWizardPTM(SessionWizardView):
         #logr.debug(form_data[1])['sender']
         #logr.debug(form_data[2])['message']
     def done(self, form_list,form_dict, **kwargs):
+        #############################    
        # list of dictionaries of results
         analysis = [form.cleaned_data for form in form_list]
         userid = get_user(self.request)
@@ -628,19 +711,16 @@ class ContactWizardPTM(SessionWizardView):
         print('formdict' + str(formdict))
         Project_ID = analysis[0]['Project_ID']
         Contact_Person = analysis[0]['Name'].split(',')[0]
-        #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
-        yt = Connection(url='https://youtrack.ugent.be', token=youtrack_get()) #@
-        # check whether to go ahead or to return a page saying the project has already been registered
-        currentissue = yt.get_issue(Project_ID)
-##        currentissue = yt.get_issue(Project_ID)
-        try:
-            ProjectTitle = currentissue['Project_Title']
-        except KeyError:
+        # new block1
+        YTTOKR = youtrack_get()
+        client = ytclient(youtrackurl_get())
+        currentissue = getissue(client,Project_ID,str(client.base_url),YTTOKR)
+        #print(currentissue.keys())
+        ProjectTitle = currentissue['Project_Title']
+        if ProjectTitle is None:
             ProjectTitle = 'noprojecttitle'
         if ProjectTitle == 'noprojecttitle' or currentissue['OverwriteRegistration'] == 'Yes': 
             summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
-            #Project_ID = "PRC-321" #@
-            #try:
             if analysis[0]['VIBAffiliation'] is not None:
               VIBAffiliation = analysis[0]['VIBAffiliation']
             else:
@@ -649,6 +729,7 @@ class ContactWizardPTM(SessionWizardView):
               Other_institution = analysis[0]['Other_institution']
             else:
               Other_institution = ''
+            sdbfg = False
             if analysis[2]['Sequence_database_name'] is not None:
               Sequence_database_name = analysis[2]['Sequence_database_name']
             else:
@@ -665,8 +746,6 @@ class ContactWizardPTM(SessionWizardView):
               Buffer_composition = ''
             if analysis[3]['Isotopic_labeling_details'] is not None:
               Isotopic_labeling_details = analysis[3]['Isotopic_labeling_details']
-              if 'tmt' in Isotopic_labeling_details.lower():
-                yt.execute_command(Project_ID, "tag TMT")
             else:
               Isotopic_labeling_details = ''
             if analysis[3]['Other_information'] is not None:
@@ -678,47 +757,44 @@ class ContactWizardPTM(SessionWizardView):
                   +  "\nPTM(s) under study: "+ analysis[2]['PTM'] + "\nSample_Species: "+ analysis[2]['Species'] + '\nSequence_Database_Public_Availability: ' + str(analysis[2]['Sequence_Database_Public_Availability']) \
                   + "\nSequence_Database_Name:" + Sequence_database_name+"\nSequence_database_file:" + str(Sequence_database_file) + "\nSample_Type:" + analysis[2]['Sample_Type']  + "\nBuffer_composition:" + Buffer_composition + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
                   + Other_information
-            yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
-                    description=description)
+            responsemain = updateissuemainSG(client,Project_ID,str(client.base_url),YTTOKR,description,analysis)
+            print(responsemain.status_code)
+            # yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
+            #         description=description)
 
-            yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
-            yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
-            # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
-            if analysis[0]['Affiliation'] == 'Industry':
-                yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
-            elif analysis[0]['Affiliation'].find("VIB") != -1:
-                yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
-            else:
-                yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
-            yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
-            yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
-            if analysis[1]['Sample_preparation']:
-                 yt.execute_command(Project_ID, "tag nSP")
-            if analysis[1]['Data_analysis']:
-                 yt.execute_command(Project_ID, "tag nDA")
-            yt.execute_command(Project_ID, "tag PTM")
-            #upload_file = form_list[2].cleaned_data['Sequence_database_file']
-            #upload_file = "media/Cumulative2.png"
-            #if sdbf:
-            #    yt.create_attachment("PRC-321",name=Sequence_database_file,content='../media/ED/'+upload_file,author_login ="prcsite")
-            #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
-            if sdbf:
-                yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="root", group="PRC-team") 
-            yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team") 
+            # yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
+            # yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
+            # if analysis[0]['Affiliation'] == 'Industry':
+            #     yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            # elif analysis[0]['Affiliation'].find("VIB") != -1:
+            #     yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
+            # else:
+            #     yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            # yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
+            # yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
+            # if analysis[1]['Sample_preparation']:
+            #      yt.execute_command(Project_ID, "tag nSP")
+            # if analysis[1]['Data_analysis']:
+            #      yt.execute_command(Project_ID, "tag nDA")
+            # yt.execute_command(Project_ID, "tag PTM")
+            responsetags = updateissuetagsSG(client,Project_ID,str(client.base_url),YTTOKR,analysis)
+            #print(responsetags.status_code)
+            # if sdbf:
+            #     yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="root", group="PRC-team") 
+            # yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team") 
+            attachmentsrequest = updateissueattachmentsSG(client,Project_ID,str(client.base_url),YTTOKR, analysis, sdbf, sdbfg)
+            print(attachmentsrequest.status_code)
             # send project registration confirmation email
             subject = 'VIB Proteomics Core, Project registration confirmation - Read carefully'
-            #message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
             html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
             from_email=settings.EMAIL_HOST_USER
             to_list = [self.request.user.email]
-            #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
-            #message = render_to_string(template1, {'user': user})
             bcc = [settings.ADMINS[0][1],settings.ADMINS[1][1]]
             msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
-            msg.send()
+            ##########msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
                 })
@@ -796,7 +872,6 @@ class ContactWizardAPMS(SessionWizardView):
        # list of dictionaries of results
         analysis = [form.cleaned_data for form in form_list]
         userid = get_user(self.request)
-        #print("F0" + str(form_dict['0']))
         customer,created = Profile.objects.update_or_create(user_id=self.request.user, defaults=analysis[0])
         analise,created = Analysis.objects.update_or_create(user_id=userid.id, defaults=analysis[1])
         # file field
@@ -808,19 +883,16 @@ class ContactWizardAPMS(SessionWizardView):
         print('formdict' + str(formdict))
         Project_ID = analysis[0]['Project_ID']
         Contact_Person = analysis[0]['Name'].split(',')[0]
-        #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
-        
-        yt = Connection(url='https://youtrack.ugent.be', token=youtrack_get()) #@
-        # check whether to go ahead or to return a page saying the project has already been registered
-        currentissue = yt.get_issue(Project_ID)
-        try:
-            ProjectTitle = currentissue['Project_Title']
-        except KeyError:
+        # block1
+        YTTOKR = youtrack_get()
+        client = ytclient(youtrackurl_get())
+        currentissue = getissue(client,Project_ID,str(client.base_url),YTTOKR)
+        print(currentissue.keys())
+        ProjectTitle = currentissue['Project_Title']
+        if ProjectTitle is None:
             ProjectTitle = 'noprojecttitle'
         if ProjectTitle == 'noprojecttitle' or currentissue['OverwriteRegistration'] == 'Yes': 
             summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
-            #Project_ID = "PRC-321" #@
-            #try:
             if analysis[0]['VIBAffiliation'] is not None:
               VIBAffiliation = analysis[0]['VIBAffiliation']
             else:
@@ -829,6 +901,7 @@ class ContactWizardAPMS(SessionWizardView):
               Other_institution = analysis[0]['Other_institution']
             else:
               Other_institution = ''
+            sdbfg = False
             if analysis[2]['Buffer_composition'] is not None:
               Buffer_composition= analysis[2]['Buffer_composition']
             else:
@@ -843,32 +916,32 @@ class ContactWizardAPMS(SessionWizardView):
               Bait_Molecule = 'Other type of bait'
             sdbf = False
             if analysis[2]['Bait_sequence_file'] is not None:
-             Bait_sequence_file= str(analysis[2]['Bait_sequence_file'])
-             sdbf=True
+                Bait_sequence_file= str(analysis[2]['Bait_sequence_file'])
+                sdbf=True
             else:
-             Bait_sequence_file = ''
+                Bait_sequence_file = ''
             if analysis[2]['Bait_Molecule_other'] is not None:
-             Bait_Molecule_other= analysis[2]['Bait_Molecule_other']
+                Bait_Molecule_other= analysis[2]['Bait_Molecule_other']
             else:
-             Bait_Molecule_other = ''
+                Bait_Molecule_other = ''
             if analysis[2]['Antibodies'] is not None:
-             Antibodies= analysis[2]['Antibodies']
+                Antibodies= analysis[2]['Antibodies']
             else:
-             Antibodies = ''         
+                Antibodies = ''         
             if analysis[2]['AbSource'] is not None:
-             AbSource= analysis[2]['AbSource']
+                AbSource= analysis[2]['AbSource']
             else:
-             AbSource = ''         
+                AbSource = ''         
             if analysis[2]['AbAmount'] is not None:
-             AbAmount= analysis[2]['AbAmount']
+                AbAmount= analysis[2]['AbAmount']
             else:
-             AbAmount = ''  
+                AbAmount = ''  
             if analysis[3]['Other_information'] is not None:
-              Other_information = analysis[3]['Other_information']
-              if 'tmt' in Other_information.lower():
-                yt.execute_command(Project_ID, "tag TMT")
+                Other_information = analysis[3]['Other_information']
+                if 'tmt' in Other_information.lower():
+                    Isotopic_labeling_details = 'tmt'
             else:
-              Other_information = ''
+                Other_information = ''
             description = "# Sample Preparation notes\nProtocol: OnBead Digest\n"\
 "Sample type: washed beads\nTrypsin: 1 µg \nOther notes:\n"\
             "\n# User Details\nInstitute/Organization: " + str(analysis[0]['Affiliation']) + "\nVIB Affiliation: " +VIBAffiliation + "\nOther institution" +Other_institution + "\nAddress: " + analysis[0]['Address']+ "\nPhone nr: " + analysis[0]['Phone'] + "\n\n# Analysis overview\nExperiment Summary: " + analysis[1]['Project_summary']+"\nProject_title: " + analysis[1]['Project_title'] + "\nData_Analysis: "+ str(analysis[1]['Data_analysis']) + "\n\n# Sample information" \
@@ -877,41 +950,36 @@ class ContactWizardAPMS(SessionWizardView):
                   + "\nBeads: "+ analysis[2]['Beads'] + "\nBeadsSource: "+ analysis[2]['BeadsSource'] + "\nBeadsAmount: "+ analysis[2]['BeadsAmount'] \
                   + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] + "\nOther information: " \
                   + Other_information
-            yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
-                    description=description)
-
-            yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
-            yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
-            # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
-            if analysis[0]['Affiliation'] == 'Industry':
-                yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
-            elif analysis[0]['Affiliation'].find("VIB") != -1:
-                yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
-            else:
-                yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
-            yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
-            yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
-            if analysis[1]['Sample_preparation']:
-                 yt.execute_command(Project_ID, "tag nSP")
-            if analysis[1]['Data_analysis']:
-                 yt.execute_command(Project_ID, "tag nDA")
-            if sdbf:
-                yt.create_attachment(Project_ID,name=Bait_sequence_file,content=analysis[2]['Bait_sequence_file'],author_login ="root", group="PRC-team") 
-            yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team") 
-            # send project registration confirmation email
+            #yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
+             #       description=description)
+            responsemain = updateissuemainSG(client,Project_ID,str(client.base_url),YTTOKR,description,analysis)
+            print(responsemain.status_code)
+            # yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
+            # yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
+            # if analysis[0]['Affiliation'] == 'Industry':
+            #     yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            # elif analysis[0]['Affiliation'].find("VIB") != -1:
+            #     yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
+            # else:
+            #     yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            # yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
+            # yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
+            responsetags = updateissuetagsSG(client,Project_ID,str(client.base_url),YTTOKR,analysis)
+            # if sdbf:
+            #     yt.create_attachment(Project_ID,name=Bait_sequence_file,content=analysis[2]['Bait_sequence_file'],author_login ="root", group="PRC-team") 
+            # yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team") 
+            # # send project registration confirmation email
+            attachmentsrequest = updateissueattachmentsSG(client,Project_ID,str(client.base_url),YTTOKR, analysis, sdbf,sdbfg)
             subject = 'VIB Proteomics Core, Project registration confirmation - Read carefully'
-            #message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
             html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
             from_email=settings.EMAIL_HOST_USER
             to_list = [self.request.user.email]
-            #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
-            #message = render_to_string(template1, {'user': user})
             bcc = [settings.ADMINS[0][1],settings.ADMINS[1][1]]
             msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
-            msg.send()
+            ##########msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
                 })
@@ -981,7 +1049,6 @@ class ContactWizardGB(SessionWizardView):
        # list of dictionaries of results
         analysis = [form.cleaned_data for form in form_list]
         userid = get_user(self.request)
-        #print("F0" + str(form_dict['0']))
         customer,created = Profile.objects.update_or_create(user_id=self.request.user, defaults=analysis[0])
         analise,created = Analysis.objects.update_or_create(user_id=userid.id, defaults=analysis[1])
         # file field
@@ -993,17 +1060,15 @@ class ContactWizardGB(SessionWizardView):
         print('formdict' + str(formdict))
         Project_ID = analysis[0]['Project_ID']
         Contact_Person = analysis[0]['Name'].split(',')[0]
-        #yt = Connection(url='http://127.0.0.1:8112', login='prcsite', token='perm:cHJjc2l0ZQ==.cHJjc2l0ZS10b2s=.XCNRP5yqauYkjFiFzj2VGYybpS3DJy')
-        yt = Connection(url='https://youtrack.ugent.be', token=youtrack_get()) #@
-        # check whether to go ahead or to return a page saying the project has already been registered
-        currentissue = yt.get_issue(Project_ID)
-        try:
-            ProjectTitle = currentissue['Project_Title']
-        except KeyError:
-            ProjectTitle = 'noprojecttitle'
+        YTTOKR = youtrack_get()
+        client = ytclient(youtrackurl_get())
+        currentissue = getissue(client,Project_ID,str(client.base_url),YTTOKR)
+        print(currentissue.keys())
+        ProjectTitle = currentissue['Project_Title']
+        if ProjectTitle is None:
+            ProjectTitle = 'noprojecttitle'        
         if ProjectTitle == 'noprojecttitle' or currentissue['OverwriteRegistration'] == 'Yes': 
             summary = analysis[0]['Project_ID']# + "-" +  + "-" + Analysis_Type + "-" + keywords[0]
-            #try:
             if analysis[0]['VIBAffiliation'] is not None:
               VIBAffiliation = analysis[0]['VIBAffiliation']
             else:
@@ -1014,7 +1079,7 @@ class ContactWizardGB(SessionWizardView):
               Other_institution = ''
             sdbfg = False
             if analysis[2]['Gel_file'] is not None:
-              Gel_file= analysis[2]['Gel_file']
+              #Gel_file= analysis[2]['Gel_file']
               sdbfg=True
             else:
               Gel_file = ''
@@ -1048,48 +1113,44 @@ class ContactWizardGB(SessionWizardView):
                   + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
                   + Other_information
 
-            yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
-                    description=description)
+            # yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
+            #         description=description)
 
-            yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
-            yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
-            # #yt.execute_command(Project_ID, "Analysis_Type " +  analysis[1]['Analysis_type'])
-            if analysis[0]['Affiliation'] == 'Industry':
-                yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
-            elif analysis[0]['Affiliation'].find("VIB") != -1:
-                yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
-            else:
-                yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
-            yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
-            yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
-            if analysis[1]['Sample_preparation']:
-                 yt.execute_command(Project_ID, "tag nSP")
-            if analysis[1]['Data_analysis']:
-                 yt.execute_command(Project_ID, "tag nDA")
-            #upload_file = form_list[2].cleaned_data['Sequence_database_file']
-            #upload_file = "media/Cumulative2.png"
-            #if sdbf:
-            #    yt.create_attachment("PRC-321",name=Sequence_database_file,content='../media/ED/'+upload_file,author_login ="prcsite")
-            #yt.create_attachment("PRC-321",name=Sequence_database_file,content=analysis[4]['EDfile'],author_login ="prcsite") 
-            if sdbfg:
-                yt.create_attachment(Project_ID,name=Gel_file,content=analysis[2]['Gel_file'],author_login ="root", group="PRC-team") 
-            if sdbf:
-                yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="root", group="PRC-team") 
-            yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team") 
+            # yt.execute_command(Project_ID, "Contact_Person " + analysis[0]['Name'])
+            # yt.execute_command(Project_ID, "GroupLeader "+ str(analysis[0]['Group_leader']  ))
+            # if analysis[0]['Affiliation'] == 'Industry':
+            #     yt.execute_command(Project_ID, "Study_Type Non-Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            # elif analysis[0]['Affiliation'].find("VIB") != -1:
+            #     yt.execute_command(Project_ID, "Study_Type VIB") #+ str(analysis[0]['Affiliation_Type']) )
+            # else:
+            #     yt.execute_command(Project_ID, "Study_Type Academic") #+ str(analysis[0]['Affiliation_Type']) )
+            # yt.execute_command(Project_ID, "No_Samples "+ str(analysis[3]['Nb_samples']))
+            # yt.execute_command(Project_ID, "Project_Title "+ analysis[1]['Project_title'])
+            responsemain = updateissuemainSG(client,Project_ID,str(client.base_url),YTTOKR,description,analysis)
+            print(responsemain.status_code)
+            # if analysis[1]['Sample_preparation']:
+            #      yt.execute_command(Project_ID, "tag nSP")
+            # if analysis[1]['Data_analysis']:
+            #      yt.execute_command(Project_ID, "tag nDA")
+            responsetags = updateissuetagsSG(client,Project_ID,str(client.base_url),YTTOKR,analysis)
+            # if sdbfg:
+            #     yt.create_attachment(Project_ID,name=Gel_file,content=analysis[2]['Gel_file'],author_login ="root", group="PRC-team") 
+            # if sdbf:
+            #     yt.create_attachment(Project_ID,name=Sequence_database_file,content=analysis[2]['Sequence_database_file'],author_login ="root", group="PRC-team") 
+            # yt.create_attachment(Project_ID,name=str(analysis[4]['EDfile']),content=analysis[4]['EDfile'],author_login ="root", group="PRC-team") 
+            attachmentsrequest = updateissueattachmentsSG(client,Project_ID,str(client.base_url),YTTOKR, analysis, sdbf,sdbfg)
+            print(attachmentsrequest.status_code)
             # send project registration confirmation email
             subject = 'VIB Proteomics Core, Project registration confirmation - Read carefully'
-            #message = render_to_string('confirmation_email.txt', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
             html_message = render_to_string('confirmation_email.html', {'formdict': formdict,'Project_ID': Project_ID,'Contact_Person': Contact_Person})
             from_email=settings.EMAIL_HOST_USER
             to_list = [self.request.user.email]
-            #template2 = os.path.join(settings.BASE_DIR, 'templates/confirmation_email.html')
-            #message = render_to_string(template1, {'user': user})
             bcc = [settings.ADMINS[0][1],settings.ADMINS[1][1]]
             msg=EmailMessage(subject, html_message, from_email, to_list, bcc)
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
-            msg.send()
+            ##########msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
                 #'analysisd':form_dict,
