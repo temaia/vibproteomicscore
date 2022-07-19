@@ -15,7 +15,7 @@ import re
 import time
 import pandas as pd
 import httpx
-
+from utils.utils import youtrack_get,youtrackurl_get,ytclient
 #httplib2.debuglevel=4
 #httplib.debuglevel=4
 # connection
@@ -31,8 +31,9 @@ class Command(BaseCommand):
         configfile=os.path.join(settings.BASE_DIR, "static/acessorio.json")
         with open(configfile) as config_file:
             config = json.load(config_file)
-        client = httpx.Client(base_url="http://127.0.0.1:8112/api")#,
-
+        #client = httpx.Client(base_url="http://127.0.0.1:8112/api")#,
+        #YTTOKR = youtrack_get()
+        client = ytclient(youtrackurl_get())
         url = str(client.base_url)+"issues"
         headers = {'Authorization': 'Bearer {}'.format(config['YTTOKR'])}
         #params = {'fields':'id,idReadable,name,created,summary,customFields(id,value(id, localizedName,name),name)', 'query':'in:PRC'}

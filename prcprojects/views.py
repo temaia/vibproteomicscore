@@ -6,13 +6,14 @@
 import json
 from django.urls import reverse
 from django.conf import settings
-from utils.utils import ytclient,prepareProjectIssuesDict,getissue,updateissuemainSG,updateissuetagsSG,updateissueattachmentsSG,updateissuemainPMD,updateissuetagsPMD,updateissueattachmentsPMD
+from utils.utils import prepareProjectIssuesDict,getissue,updateissuemainSG,updateissuetagsSG,updateissueattachmentsSG,updateissuemainPMD,updateissuetagsPMD,updateissueattachmentsPMD
+from utils.utils import youtrack_get,youtrackurl_get,ytclient
 import httpx
 import urllib
 import json
 import pandas as pd
 import os
-from youtrack.connection import Connection
+#from youtrack.connection import Connection
 from .acessorio import *
 
 from django.contrib.auth import get_user
@@ -59,7 +60,7 @@ import sys
 # authenticating
 import http.client, urllib.request, urllib.error
 
-from youtrack import connection
+#from youtrack import connection
 import csv
 #import logging
 ##logr=logging.getlogger(__name__)
@@ -200,15 +201,6 @@ def maintenance(request):
 
 
 #cleaned_data = wizard.get_cleaned_data_for_step('paytype') or {'method': 'none'}
-def youtrack_get():
-    with open(os.path.join(settings.BASE_DIR, "static/acessorio.json")) as config_file:
-        config = json.load(config_file)
-        return(config["YTTOKR"])
-def youtrackurl_get():
-    with open(os.path.join(settings.BASE_DIR, "static/acessorio.json")) as config_file:
-        config = json.load(config_file)
-        return(config["YTURLREST"])
-
 
 
 FORMS = [("0", CustomerForm),

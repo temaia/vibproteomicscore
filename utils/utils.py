@@ -1,5 +1,17 @@
 import httpx
 import json
+import os
+from django.conf import settings
+
+def youtrack_get():
+    with open(os.path.join(settings.BASE_DIR, "static/acessorio.json")) as config_file:
+        config = json.load(config_file)
+        return(config["YTTOKR"])
+def youtrackurl_get():
+    with open(os.path.join(settings.BASE_DIR, "static/acessorio.json")) as config_file:
+        config = json.load(config_file)
+        return(config["YTURLREST"])
+
 
 def ytclient(baseurl):
     #client = httpx.Client(base_url="https://youtrack.cmb.ugent.be/api")#,

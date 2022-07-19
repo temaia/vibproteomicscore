@@ -24,6 +24,7 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.template.loader import get_template
 from django.templatetags.static import static
+from utils.utils import youtrack_get,youtrackurl_get,ytclient
 #httplib2.debuglevel=4
 
 class Command(BaseCommand):
@@ -38,8 +39,9 @@ class Command(BaseCommand):
         configfile=os.path.join(settings.BASE_DIR, "static/acessorio.json")
         with open(configfile) as config_file:
             config = json.load(config_file)
-        client = httpx.Client(base_url="http://127.0.0.1:8112/api")#,
-
+        #client = httpx.Client(base_url="http://127.0.0.1:8112/api")#,
+        #YTTOKR = youtrack_get()
+        client = ytclient(youtrackurl_get())
         url = str(client.base_url)+"issues"
         headers = {'Authorization': 'Bearer {}'.format(config['YTTOKR'])}
         params = {'fields':'id,idReadable,name,created,summary,customFields(id,value(id, localizedName,name),name)', 'query':'in:PRC'}
@@ -79,7 +81,8 @@ class Command(BaseCommand):
                     issuesdict[cfsdict['idReadable']] = cfsdict
             return(issuesdict)
 
-        # open PRC issue IDs        
+        # open PRC issue IDs   
+        print(PRCissuefieldsjson)     
         PRCIssuesDict= prepareProjectIssuesDict(PRCissuefieldsjson)
         #filename = os.path.join("/home/pportal/Downloads", "PRC_issues_creation_hourly.csv")  
         filename=os.path.join(settings.BASE_DIR, "static/PRC_issues_creation_hourly.csv")
