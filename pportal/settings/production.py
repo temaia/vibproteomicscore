@@ -186,7 +186,7 @@ EMAIL_HOST_USER = 'noreply-prc@vib-ugent.be'
 ADMINS = [('T Maia', 'teresa.maia@vib-ugent.be'),
      ('S Dufour', 'sara.dufour@vib-ugent.be')]
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-MAINTENANCE_MODE = int(os.environ.get("MAINTENANCE_MODE", 0))
+MAINTENANCE_MODE = int(os.environ.get("MAINTENANCE_MODE",0 ))
 
 #EMAIL_HOST = 'smtp.gmail.com'
 #EMAIL_HOST_USER = 'mtpmmaia@gmail.com'
