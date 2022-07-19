@@ -1,3 +1,5 @@
+# coding=UTF-8
+
 import httpx
 import pandas as pd
 import csv
@@ -9,7 +11,6 @@ from django.utils import timezone
 from django.conf import settings
 #from django.conf.urls.static import static
 #from django.contrib.staticfiles.templatetags.staticfiles import static
-# coding=UTF-8
 
 #from youtrack.connection import Connection, httplib2
 from xml.etree.ElementTree import fromstring
