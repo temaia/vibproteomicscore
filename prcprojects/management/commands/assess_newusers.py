@@ -1,7 +1,5 @@
 # coding=UTF-8
 
-import httpx
-import pandas as pd
 import csv
 import os
 import json
@@ -9,9 +7,6 @@ from prcprojects.models import User
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from django.conf import settings
-#from django.conf.urls.static import static
-#from django.contrib.staticfiles.templatetags.staticfiles import static
-
 #from youtrack.connection import Connection, httplib2
 from xml.etree.ElementTree import fromstring
 import random
@@ -20,6 +15,8 @@ import csv
 import re
 import time
 import datetime
+import httpx
+import pandas as pd
 #from django.core.mail import send_mail
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
@@ -27,6 +24,8 @@ from django.template.loader import get_template
 from django.templatetags.static import static
 from utils.utils import youtrack_get,youtrackurl_get,ytclient
 #httplib2.debuglevel=4
+#httplib.debuglevel=4
+
 
 class Command(BaseCommand):
     help='Gets new users from YouTrack'
@@ -83,7 +82,7 @@ class Command(BaseCommand):
             return(issuesdict)
 
         # open PRC issue IDs   
-        print(PRCissuefieldsjson)     
+        #print(PRCissuefieldsjson)     
         PRCIssuesDict= prepareProjectIssuesDict(PRCissuefieldsjson)
         #filename = os.path.join("/home/pportal/Downloads", "PRC_issues_creation_hourly.csv")  
         filename=os.path.join(settings.BASE_DIR, "static/PRC_issues_creation_hourly.csv")

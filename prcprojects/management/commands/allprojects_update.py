@@ -17,7 +17,7 @@ import pandas as pd
 import httpx
 from utils.utils import youtrack_get,youtrackurl_get,ytclient
 #httplib2.debuglevel=4
-#httplib.debuglevel=4
+httplib.debuglevel=4
 # connection
 
 class Command(BaseCommand):

@@ -494,7 +494,7 @@ class ContactWizardSG(SessionWizardView):
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
-            ##########msg.send()
+            msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
 
@@ -637,7 +637,7 @@ class ContactWizardPMD(SessionWizardView):
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
-            ##########msg.send()
+            msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
 
@@ -786,7 +786,7 @@ class ContactWizardPTM(SessionWizardView):
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
-            ##########msg.send()
+            msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
                 })
@@ -971,7 +971,7 @@ class ContactWizardAPMS(SessionWizardView):
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
-            ##########msg.send()
+            msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
                 })
@@ -1142,7 +1142,7 @@ class ContactWizardGB(SessionWizardView):
             msg.content_subtype = "html"
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/TermsofUse_VIBProteomicsCore.pdf'))
             msg.attach_file(os.path.join(settings.BASE_DIR,'static/documents/Sender_Receiver_information.docx'))
-            ##########msg.send()
+            msg.send()
             return render(self.request,'done.html',{
                 'formdict': formdict,
                 #'analysisd':form_dict,
