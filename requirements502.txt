@@ -4,7 +4,7 @@ django-formtools==2.1
 django-multiselectfield==0.1.8
 dohq-youtrack==0.2.1.60
 httplib2==0.12.0
-Pillow==5.4.1
+Pillow==9.3.0
 pkg-resources==0.0.0
 pytz==2018.7
 XlsxWriter==1.1.2
