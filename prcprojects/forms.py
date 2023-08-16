@@ -292,7 +292,8 @@ class Specimen_SGForm(forms.Form):
 	Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet/tissue/protein extract in eppendorf/15 ml tube'}))
 	#Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
 	#Sample_Vial = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
-	
+	BiosafetyLevel_information = forms.CharField(label = "Samples biosafety level (i.e. any special caution while handling required?)", required=True, 
+		widget=forms.TextInput(attrs={'placeholder':'e.g. should be handled in BSL2 facility, might contain some paraformaldehyde'}))
 	Buffer_composition = forms.CharField(max_length=300, widget=forms.Textarea(attrs={'placeholder':'e.g. 0.1M Tris-HCl pH8.0', 'rows':3, 'cols':1}),
 	 label="In case of liquid samples, please provide the exact buffer composition.", 	required=False)
 
@@ -328,7 +329,8 @@ class Specimen_PTMForm(forms.Form):
 	Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet/tissue/protein extract in eppendorf/15 ml tube'}))
 	#Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
 	#Sample_Vial = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
-	
+	BiosafetyLevel_information = forms.CharField(label = "Samples biosafety level (i.e. any special caution while handling required?)", required=True, 
+		widget=forms.TextInput(attrs={'placeholder':'e.g. should be handled in BSL2 facility, might contain some paraformaldehyde'}))
 	Buffer_composition = forms.CharField(max_length=300, widget=forms.Textarea(attrs={'placeholder':'e.g. 0.1M Tris-HCl pH8.0', 'rows':3, 'cols':1}),
 	 label="In case of liquid samples, please provide the exact buffer composition.", 	required=False)
 
@@ -360,6 +362,8 @@ class Specimen_APMSForm(forms.Form):
 #		widget=forms.TextInput(attrs={'placeholder': 'e.g. TAIR, UNIPROT, SWISSPROT, REFSEQ, EMBL'}))
 	#Sequence_database_file = forms.FileField(blank=True, storage=FileSystemStorage(location=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'media')))
 	Sample_Type = forms.ChoiceField(choices=SAMPLETYPESAPMS, label="Sample_type_delivered",widget=forms.Select())
+	BiosafetyLevel_information = forms.CharField(label = "Samples biosafety level (i.e. any special caution while handling required?)", required=True, 
+		widget=forms.TextInput(attrs={'placeholder':'e.g. should be handled in BSL2 facility, might contain some paraformaldehyde'}))
 	Buffer_composition = forms.CharField(max_length=300, widget=forms.Textarea(attrs={'placeholder':'e.g. 20 mM Tris-HCl pH8.0, 2 mM CaCl2', 'rows':3, 'cols':1}),
 	 label="Please provide the exact buffer composition of the samples", required=False)
 	#Buffer_composition_El = forms.CharField(max_length=300, widget=forms.Textarea(attrs={'placeholder':'e.g. 50 mM Tris-HCl pH8.0, 2mM CaCl2, 20 μg 3X FLAG peptide', 'rows':3, 'cols':1}),
@@ -386,6 +390,8 @@ class Specimen_GBForm(forms.Form):
 	PolyAcrylPercentage = forms.CharField(max_length=120, label="Percentage polyacrylamide", widget=forms.TextInput(attrs={'placeholder': 'e.g. 4-15 %'}))
 	StainingMethod = forms.CharField(max_length=120, label="Staining Method",widget=forms.TextInput(attrs={'placeholder':'e.g. Coomassie G-250, Thermo SimplyBlue SafeStain LC6060'}))
 	PAGEType = forms.CharField(max_length=120, label="PAGE type",widget=forms.TextInput(attrs={'placeholder':'e.g. SDS-PAGE or native PAGE'}))
+	BiosafetyLevel_information = forms.CharField(label = "Samples biosafety level (i.e. any special caution while handling required?)", required=True, 
+		widget=forms.TextInput(attrs={'placeholder':'e.g. should be handled in BSL2 facility, might contain some paraformaldehyde'}))
 	#Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet/tissue/protein extract in eppendorf/15 ml tube'}))
 	#Sample_Type = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
 	#Sample_Vial = forms.CharField(max_length=50, label="Sample_type_delivered",widget=forms.TextInput(attrs={'placeholder': 'e.g. cell pellet, tissue, protein extract in eppendorf or 15 ml tube'}))
@@ -555,6 +561,8 @@ class ExperimentPMDForm(forms.Form):
 	#Isotopic_labeling_details = forms.CharField(label="If 'Yes', which labeling procedure was used?", required=False,
 	 #widget=forms.Textarea(attrs={'placeholder':'e.g. SILAC; heavy(Arg6,Lys4), light()','rows':3, 'cols':1}))
 	#Other_information = forms.CharField(label = "Other relevant information about the samples", required=False, widget=forms.TextInput(attrs={'placeholder':'e.g. presence of PTMs'}))
+	BiosafetyLevel_information = forms.CharField(label = "Samples biosafety level (i.e. any special caution while handling required?)", required=True, 
+		widget=forms.TextInput(attrs={'placeholder':'e.g. should be handled in BSL2 facility, might contain some paraformaldehyde'}))
 
 
 

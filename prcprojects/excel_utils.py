@@ -12,7 +12,7 @@ from django.db.models import Avg, Sum, Max, Min
 
 
 def WriteToExcel(arguments_dict):
-    #output = io.BytesIO()
+    #WriteToExceloutput = io.BytesIO()
     output = os.path.join(settings.MEDIA_ROOT, os.path.join("ED","Experimental_design_"+arguments_dict["PID"]+".xlsx"))
     #output = "media/ED/Experimental_design_"+arguments_dict["PID"]+".xlsx"
     workbook = xlsxwriter.Workbook(output)
@@ -89,10 +89,11 @@ def WriteToExcel(arguments_dict):
         worksheet_s.write(3, 2, ugettext("Replicate"), header) # pre filled 123 123 if total/3 = 0 else,jjjjj
         worksheet_s.write(3, 3, ugettext("Sample type delivered"), header) #add Sample type value and leave free for editing
         worksheet_s.write(3, 4, ugettext("Buffer composition"), header) #add Buffer composition value and leave free for editing (space dows not matter)
-        worksheet_s.write(3, 5, ugettext("Sample amount (μg of protein) / # of cells *"), header) #format digits (2 decimals) leave for edit
+        worksheet_s.write(3, 5, ugettext("Sample amount"), header) #format digits (2 decimals) leave for edit
+        worksheet_s.write(3, 6, ugettext("Unit (μg of protein / # of cells *)"), header) #format digits (2 decimals) leave for edit
         #worksheet_s.write(3, 5, ugettext("Sample amount (protein mass (or estimation of) (μg)"), header) #format digits (2 decimals) leave for edit
-        worksheet_s.write(3, 6, ugettext("Volume (if applicable) (μl)"), header) #  #format digits (2 decimals) leave for edit
-        worksheet_s.write(3, 7, ugettext("Other relevant information"), header) # leave free
+        worksheet_s.write(3, 7, ugettext("Volume (if applicable) (μl)"), header) #  #format digits (2 decimals) leave for edit
+        worksheet_s.write(3, 8, ugettext("Other relevant information"), header) # leave free
 
         #print(arguments_dict.keys())
 
@@ -166,6 +167,8 @@ def WriteToExcel(arguments_dict):
         no_samplesleft = no_samples-len(eclist)
         eclist = eclist + ['']*no_samplesleft
         replicatelist = replicatelist + ['']*no_samplesleft
+        # NEW
+        saunit = ['μg of protein','# of cells']
         #for rep in range(1,no_replicates+1,1):
         #    eclist.append('')
         # buffer
@@ -185,7 +188,7 @@ def WriteToExcel(arguments_dict):
             #worksheet_s.write_string(row, 2, "labels", celledit) # make remark at the end
             # replicate
             if str(replicatelist[idx])!="":
-                worksheet_s.write_string(row, 2, "rep_" + str(replicatelist[idx]), celledit)
+                worksheet_s.write_string(row, 2, "rep" + str(replicatelist[idx]), celledit)
             else:
                 worksheet_s.write_string(row, 2, "", celledit)
             # sample type delivered
@@ -193,19 +196,23 @@ def WriteToExcel(arguments_dict):
             # buffer composition
             worksheet_s.write_string(row, 4, arguments_dict['2-Buffer_composition'][0], celledit)
 
-            # protein 
+            # sample amount
             worksheet_s.write_number(row, 5, 0.00, celledit)
             worksheet_s.data_validation(row, 5,row, 5, {'validate':'decimal',
                                                   'criteria': '>',
                                                   'value':'0.00'})
+            # sample amount unit
+            worksheet_s.write_string(row, 6, "", celledit)
+            worksheet_s.data_validation(row, 6,row, 6, {'validate':'list',
+                                                  'source': saunit})
             # volume
-            worksheet_s.write_number(row, 6, 0.00, celledit)
+            worksheet_s.write_number(row, 7, 0.00, celledit)
 
-            worksheet_s.data_validation(row, 6, row, 6, {'validate':'decimal',
+            worksheet_s.data_validation(row, 7, row, 7, {'validate':'decimal',
                                                   'criteria': '>',
                                                   'value':'0.00'})
             # Other relevant information
-            worksheet_s.write_string(row, 7, '', celledit)
+            worksheet_s.write_string(row, 8, '', celledit)
 
             # if len(data.town.name) > town_col_width:
             #     town_col_width = len(data.town.name)
@@ -238,11 +245,12 @@ def WriteToExcel(arguments_dict):
         worksheet_s.set_column('B:B', 20.8)  # Experimental Condition
         #worksheet_s.set_column('C:C', 12.6)  # Isotopic label
         worksheet_s.set_column('C:C', 9.5)  # Replicate
-        worksheet_s.set_column('D:D', 30.0)  # Sample type delivered
+        worksheet_s.set_column('D:D', 22.0)  # Sample type delivered
         worksheet_s.set_column('E:E', 16.0)  # Buffer composition
-        worksheet_s.set_column('F:F', 40.0)  # Protein mass
-        worksheet_s.set_column('G:G', 25.0)  # Volume
-        worksheet_s.set_column('H:H', 30.0)  # Other relevant info
+        worksheet_s.set_column('F:F', 18.0)  # Protein mass
+        worksheet_s.set_column('G:G', 28.0)  # Protein mass unit
+        worksheet_s.set_column('H:H', 23.0)  # Volume
+        worksheet_s.set_column('I:I', 28.0)  # Other relevant info
         #worksheet_s.set_column('J:J', 25.0)  # Observations column
 
 
@@ -406,9 +414,10 @@ def WriteToExcel(arguments_dict):
         worksheet_s.write(3, 3, ugettext("Replicate"), header) # pre filled 123 123 if total/3 = 0 else,jjjjj
         worksheet_s.write(3, 4, ugettext("Sample type delivered"), header) #add Sample type value and leave free for editing
         worksheet_s.write(3, 5, ugettext("Buffer composition"), header) #add Buffer composition value and leave free for editing (space dows not matter)
-        worksheet_s.write(3, 6, ugettext("Sample amount (μg of protein) / # of cells **"), header) #format digits (2 decimals) leave for edit
-        worksheet_s.write(3, 7, ugettext("Volume (if applicable) (μl)"), header) #  #format digits (2 decimals) leave for edit
-        worksheet_s.write(3, 8, ugettext("Other relevant information"), header) # leave free
+        worksheet_s.write(3, 6, ugettext("Sample amount"), header) #format digits (2 decimals) leave for edit
+        worksheet_s.write(3, 7, ugettext("Unit (μg of protein / # of cells **)"), header) #format digits (2 decimals) leave for edit
+        worksheet_s.write(3, 8, ugettext("Volume (if applicable) (μl)"), header) #  #format digits (2 decimals) leave for edit
+        worksheet_s.write(3, 9, ugettext("Other relevant information"), header) # leave free
 
         #print(arguments_dict.keys())
 
@@ -457,7 +466,7 @@ def WriteToExcel(arguments_dict):
             # isotopic labels
             worksheet_s.write_string(row, 2, "label", celledit) # make remark at the end
             # replicate
-            worksheet_s.write_string(row, 3, "rep_" + str(plist[idx]), celledit)
+            worksheet_s.write_string(row, 3, "rep" + str(plist[idx]), celledit)
             # sample type delivered
             worksheet_s.write_string(row, 4, arguments_dict['2-Sample_Type'][0], celledit)
             # buffer composition
@@ -468,14 +477,18 @@ def WriteToExcel(arguments_dict):
             worksheet_s.data_validation(row, 6,row, 6, {'validate':'decimal',
                                                   'criteria': '>',
                                                   'value':'0.00'})
+            # sample amount unit
+            worksheet_s.write_string(row, 7, "", celledit)
+            worksheet_s.data_validation(row, 7,row, 7, {'validate':'list',
+                                                  'source': saunit})
             # volume
-            worksheet_s.write_number(row, 7, 0.00, celledit)
+            worksheet_s.write_number(row, 8, 0.00, celledit)
 
-            worksheet_s.data_validation(row, 7, row, 7, {'validate':'decimal',
+            worksheet_s.data_validation(row, 8, row, 8, {'validate':'decimal',
                                                   'criteria': '>',
                                                   'value':'0.00'})
             # Other relevant information
-            worksheet_s.write_string(row, 8, '', celledit)
+            worksheet_s.write_string(row, 9, '', celledit)
 
             # if len(data.town.name) > town_col_width:
             #     town_col_width = len(data.town.name)
@@ -512,9 +525,10 @@ def WriteToExcel(arguments_dict):
         worksheet_s.set_column('D:D', 9.5)  # Replicate
         worksheet_s.set_column('E:E', 30.0)  # Sample type delivered
         worksheet_s.set_column('F:F', 16.0)  # Buffer composition
-        worksheet_s.set_column('G:G', 40.0)  # Protein mass
-        worksheet_s.set_column('H:H', 25.0)  # Volume
-        worksheet_s.set_column('I:I', 30.0)  # Other relevant info
+        worksheet_s.set_column('G:G', 18.0)  # Protein mass
+        worksheet_s.set_column('H:H', 35.0)  # Protein mass unit
+        worksheet_s.set_column('I:I', 25.0)  # Volume
+        worksheet_s.set_column('J:J', 30.0)  # Other relevant info
 
           
     # close workbook
