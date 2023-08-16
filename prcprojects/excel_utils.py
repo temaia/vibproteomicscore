@@ -452,6 +452,8 @@ def WriteToExcel(arguments_dict):
             eclist.append('')
         eclist =eclist + [""]*(no_samples-len(eclist))
         # buffer
+        # NEW
+        saunit = ['μg of protein','# of cells']
         #print(eclist)
         # add data to the table
         for idx in range(0,no_samples,1):
@@ -523,14 +525,13 @@ def WriteToExcel(arguments_dict):
         worksheet_s.set_column('B:B', 20.8)  # Experimental Condition
         worksheet_s.set_column('C:C', 15.0)  # Isotopic label
         worksheet_s.set_column('D:D', 9.5)  # Replicate
-        worksheet_s.set_column('E:E', 30.0)  # Sample type delivered
+        worksheet_s.set_column('E:E', 22.0)  # Sample type delivered
         worksheet_s.set_column('F:F', 16.0)  # Buffer composition
         worksheet_s.set_column('G:G', 18.0)  # Protein mass
-        worksheet_s.set_column('H:H', 35.0)  # Protein mass unit
-        worksheet_s.set_column('I:I', 25.0)  # Volume
-        worksheet_s.set_column('J:J', 30.0)  # Other relevant info
-
-          
+        worksheet_s.set_column('H:H', 28.0)  # Protein mass unit
+        worksheet_s.set_column('I:I', 23.0)  # Volume
+        worksheet_s.set_column('J:J', 28.0)  # Other relevant info
+   
     # close workbook
     workbook.close()
     #xlsx_data = output
