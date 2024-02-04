@@ -34,6 +34,8 @@ class Command(BaseCommand):
             MS3Busyness=int()
             MS4Busyness=int()
             MS5Busyness=int()
+            MS6Busyness=int()
+            MS7Busyness=int()
             # 2d SP + 2d DA (per issue)
             MinWaitingTimes = list()
             i=0 
@@ -44,42 +46,58 @@ class Command(BaseCommand):
                     if row['total_running_time']!='None':
                         if row['total_running_time']!=0:
                             #print(int(math.ceil(row['total_running_time']/24)))
-                            MS4Busyness += int(row['total_running_time'])
+                            MS6Busyness += int(row['total_running_time'])
                             #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
                         else:
-                            MS4Busyness += int(row['total_running_time'])
+                            MS6Busyness += int(row['total_running_time'])
                             #MinWaitingTime += int(row['total_running_time'])
                 elif row["Mass_Spectrometer"]=='Orbitrap Fusion Lumos' and row["State"] in ["Arrived","Sample_Prep","MS_Run"]:
                     if row['total_running_time']!='None':
                         if row['total_running_time']!=0:
-                            MS1Busyness += int(row['total_running_time'])
+                            MS2Busyness += int(row['total_running_time'])
                             #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
                         else:
-                            MS1Busyness += int(row['total_running_time'])
+                            MS2Busyness += int(row['total_running_time'])
                             #MinWaitingTime += int(row['total_running_time'])
                 elif row["Mass_Spectrometer"]=='Q-Exactive HF Biopharma' and row["State"] in ["Arrived","Sample_Prep","MS_Run"]:
                     if row['total_running_time']!='None':
                         if row['total_running_time']!=0:
-                            MS3Busyness += int(row['total_running_time'])
+                            MS5Busyness += int(row['total_running_time'])
                             #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
                         else:
-                            MS3Busyness += int(row['total_running_time'])
+                            MS5Busyness += int(row['total_running_time'])
                             #MinWaitingTime += int(row['total_running_time'])
                 elif row["Mass_Spectrometer"]=='LTQ Orbitrap Elite' and row["State"] in ["Arrived","Sample_Prep","MS_Run"]:
                     if row['total_running_time']!='None':
                         if row['total_running_time']!=0:
-                            MS5Busyness += int(row['total_running_time'])
+                            MS7Busyness += int(row['total_running_time'])
                             #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
                         else:
-                            MS5Busyness += int(row['total_running_time'])
+                            MS7Busyness += int(row['total_running_time'])
                             #MinWaitingTime += int(row['total_running_time'])
                 elif row["Mass_Spectrometer"]=='Q-Exactive HF' and row["State"] in ["Arrived","Sample_Prep","MS_Run"]:
                     if row['total_running_time']!='None':
                         if row['total_running_time']!=0:
-                            MS2Busyness += int(row['total_running_time'])
+                            MS4Busyness += int(row['total_running_time'])
                             #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
                         else:
-                            MS2Busyness += int(row['total_running_time'])
+                            MS4Busyness += int(row['total_running_time'])
+                            #MinWaitingTime += int(row['total_running_time'])
+                elif row["Mass_Spectrometer"]=='Orbitrap Exploris 240' and row["State"] in ["Arrived","Sample_Prep","MS_Run"]:
+                    if row['total_running_time']!='None':
+                        if row['total_running_time']!=0:
+                            MS3Busyness += int(row['total_running_time'])
+                            #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
+                        else:
+                            MS3Busyness += int(row['total_running_time'])
+                            #MinWaitingTime += int(row['total_running_time'])
+                elif row["Mass_Spectrometer"]=='timsTOF SCP' and row["State"] in ["Arrived","Sample_Prep","MS_Run"]:
+                    if row['total_running_time']!='None':
+                        if row['total_running_time']!=0:
+                            MS1Busyness += int(row['total_running_time'])
+                            #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
+                        else:
+                            MS1Busyness += int(row['total_running_time'])
                             #MinWaitingTime += int(row['total_running_time'])
                 else:
                     pass
@@ -133,43 +151,57 @@ class Command(BaseCommand):
                     if row['total_running_time']!='None':
                         if row['total_running_time']!=0:
                             #print(int(math.ceil(row['total_running_time']/24)))
-                            MS1Busyness += int(row['total_running_time'])
+                            MS2Busyness += int(row['total_running_time'])
                             #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
                         else:
-                            MS1Busyness += int(row['total_running_time'])
+                            MS2Busyness += int(row['total_running_time'])
                             #MinWaitingTime += int(row['total_running_time'])
                 elif row["Mass_Spectrometer"]=='Q-Exactive HF' and row["State"] in ["Created","Arrived","Sample_Prep","MS_Run", "Data_Analysis", "Closed"]:
                     if row['total_running_time']!='None':
                         if row['total_running_time']!=0:
-                            MS2Busyness += int(row['total_running_time'])
+                            MS4Busyness += int(row['total_running_time'])
                             #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
                         else:
-                            MS2Busyness += int(row['total_running_time'])
+                            MS4Busyness += int(row['total_running_time'])
                             #MinWaitingTime += int(row['total_running_time'])
                 elif row["Mass_Spectrometer"]=='Q-Exactive HF Biopharma' and row["State"] in ["Created","Arrived","Sample_Prep","MS_Run", "Data_Analysis", "Closed"]:
                     if row['total_running_time']!='None':
                         if row['total_running_time']!=0:
-                            MS3Busyness += int(row['total_running_time'])
+                            MS5Busyness += int(row['total_running_time'])
                             #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
                         else:
-                            MS3Busyness += int(row['total_running_time'])
+                            MS5Busyness += int(row['total_running_time'])
                             #MinWaitingTime += int(row['total_running_time'])
                 elif row["Mass_Spectrometer"]=='Q-Exactive' and row["State"] in ["Created","Arrived","Sample_Prep","MS_Run", "Data_Analysis", "Closed"]:
                     if row['total_running_time']!='None':
                         if row['total_running_time']!=0:
-                            MS4Busyness += int(row['total_running_time'])
+                            MS6Busyness += int(row['total_running_time'])
                             #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
                         else:
-                            MS4Busyness += int(row['total_running_time'])
+                            MS6Busyness += int(row['total_running_time'])
                             #MinWaitingTime += int(row['total_running_time'])
                 elif row["Mass_Spectrometer"]=='LTQ Orbitrap Elite' and row["State"] in ["Created","Arrived","Sample_Prep","MS_Run", "Data_Analysis", "Closed"]:
                     if row['total_running_time']!='None':
                         if row['total_running_time']!=0:
-                            MS5Busyness += int(row['total_running_time'])
+                            MS7Busyness += int(row['total_running_time'])
                             #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
                         else:
-                            MS5Busyness += int(row['total_running_time'])
+                            MS7Busyness += int(row['total_running_time'])
                             #MinWaitingTime += int(row['total_running_time'])
+                elif row["Mass_Spectrometer"]=='Orbitrap Exploris 240' and row["State"] in ["Created","Arrived","Sample_Prep","MS_Run", "Data_Analysis", "Closed"]:
+                    if row['total_running_time']!='None':
+                        if row['total_running_time']!=0:
+                            MS3Busyness += int(row['total_running_time'])
+                            #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
+                        else:
+                            MS3Busyness += int(row['total_running_time'])
+                elif row["Mass_Spectrometer"]=='timsTOF SCP' and row["State"] in ["Created","Arrived","Sample_Prep","MS_Run", "Data_Analysis", "Closed"]:
+                    if row['total_running_time']!='None':
+                        if row['total_running_time']!=0:
+                            MS1Busyness += int(row['total_running_time'])
+                            #MinWaitingTime += math.ceil(int(row['total_running_time'])/24)
+                        else:
+                            MS1Busyness += int(row['total_running_time'])
                 else:
                     pass
                 i+=1
