@@ -1290,11 +1290,11 @@ class ProjectInfoView(TemplateView):
                     print("no")
                 #if row["YouTrack_id"]=="PRC-4495":
                     context["Project_ID"] = self.request.user.username
-                    context["State"] = "Closed"
+                    context["State"] = "Created"
                     context["Scheduling_State"] = "NotScheduled"
                     context["Mass_Spectrometer"] = "Undefined"
                     if row["Scheduling_State"]=='NotScheduled':
-                        context["Scheduling_StateName"] = ' and has already been processed.'
+                        context["Scheduling_StateName"] = ', waiting to be processed.'
 
                     context["Median_wTime"] = "45"
                     #context["Min_wTime"] = row["Min_wTime"]
@@ -1311,7 +1311,7 @@ class ProjectInfoView(TemplateView):
             #print(type(data_loaded["Waiting"]))
             #return render(request, 'chartjs.html',data_loaded)
         #print(context["Project_ID"])
-        ms_lst =['lumos','qehf','qehfb','qe','elite']
+        ms_lst =['timstof','lumos','oexploris','qehf','qehfb','qe','elite']
 
         with open(filepath2, "r", encoding='utf-8') as csvfile:
             #csvfile_reader=csv.DictReader(csvfile)
@@ -1324,8 +1324,8 @@ class ProjectInfoView(TemplateView):
                 temp = row
                 #status = int(row["status"])
                 #status_description = int(row["status_description"])
-                #print("temp")
-                #print(temp)
+                #print("temp")8
+                # if more than 5 time, default to max 5
                 if int(temp[1]) > 5:
                     temp[1]=5
                 print(context["Mass_Spectrometer"])
@@ -1334,11 +1334,13 @@ class ProjectInfoView(TemplateView):
                     #print("yes")
                     #print(temp[3])
                     context["projectmsstatusdescription"] = temp[3]
-
+                print("temp1"+ str(temp[1]))
                 temp[1] = "Gauge" + str(temp[1])
+                #temp[1] = "Gauge" + str(i)
+                print("temp1"+ str(temp[1]))
                 #print(temp[2])
                 #print(len(temp))
-                context[ms_lst[i]]=temp[0:4]
+                context[ms_lst[i]]=temp[0:6]
                 print(context[ms_lst[i]])
                 i+=1
         print(context)
