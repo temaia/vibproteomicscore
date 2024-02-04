@@ -206,10 +206,11 @@ from .emacessorio import *
 #    EMAIL_HOST_PASSWORD = 'mtppmaia'
 #else:
 EMAIL_HOST_PASSWORD = EM_PW
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+
+#EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # during development only
-DEFAULT_FROM_EMAIL = 'mtpmmaia@gmail.com>' #'noreply-prc@vib-ugent.be'
+#DEFAULT_FROM_EMAIL = 'mtpmmaia@gmail.com>' #'noreply-prc@vib-ugent.be'
 ADMINS = [
     ('Te M', 'mtpmmaia@gmail.com'),
      ('S Dufour', 'sara.dufour@vib-ugent.be')]

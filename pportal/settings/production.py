@@ -38,7 +38,7 @@ DEBUG = False
 #ADMINS = (
 #    ('T Maia', 'teresa.maia@vib-ugent.be'))
 
-ALLOWED_HOSTS = ['vibproteomicscore.be', 'https://prcsite.ugent.be', 'prcsite.ugent.be']
+ALLOWED_HOSTS = ['vibproteomicscore.be', 'https://prcsite.cmb.ugent.be', 'prcsite.cmb.ugent.be']
 
 # Application definition
 
@@ -175,8 +175,10 @@ def get_env_variable(name):
             'Environment variable "%s" not found.' % name)
 
 # vibmail.ugent.be settings
-EMAIL_HOST = 'cmbmail.ugent.be'
+#EMAIL_HOST = 'localhost'
+EMAIL_HOST = 'mail.cmb.ugent.be'
 DEFAULT_FROM_EMAIL = 'noreply-vib proteomics core<noreply-prc@vib-ugent.be>' #'noreply-prc@vib-ugent.be'
+#EMAIL_PORT = 2525
 EMAIL_PORT = 25
 EMAIL_USE_TLS = False
 EMAIL_HOST_USER = 'noreply-prc@vib-ugent.be'
