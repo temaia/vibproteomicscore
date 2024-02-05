@@ -125,11 +125,13 @@ class Command(BaseCommand):
             #print(len(Status_lst))
             #print(len(Status_description_lst))
             csvfile.write('Mass_Spectrometer,total_running_time_days,Status,Status_description\n')
-            csvfile.write('Orbitrap Fusion Lumos,' + str(round(MS1Busyness/(24*5)))+','+Status_lst[0]+','+Status_description_lst[0])
-            csvfile.write('Q-Exactive HF,' + str(round(MS2Busyness/(24*5)))+','+Status_lst[1]+','+Status_description_lst[1])
-            csvfile.write('Q-Exactive HF Biopharma,' + str(round(MS3Busyness/(24*5)))+','+Status_lst[2]+','+Status_description_lst[2])
-            csvfile.write('Q-Exactive,' + str(round(MS4Busyness/(24*5)))+','+Status_lst[3]+','+Status_description_lst[3])
-            csvfile.write('LTQ Orbitrap Elite,' + str(round(MS5Busyness/(24*5)))+','+Status_lst[4]+','+Status_description_lst[4])
+            csvfile.write('timsTOF SCP,' + str(round(MS1Busyness/(24*5)))+','+Status_lst[0]+','+Status_description_lst[0])
+            csvfile.write('Orbitrap Fusion Lumos,' + str(round(MS2Busyness/(24*5)))+','+Status_lst[0]+','+Status_description_lst[0])
+            csvfile.write('Orbitrap Exploris 240,' + str(round(MS3Busyness/(24*5)))+','+Status_lst[0]+','+Status_description_lst[0])
+            csvfile.write('Q-Exactive HF,' + str(round(MS4Busyness/(24*5)))+','+Status_lst[1]+','+Status_description_lst[1])
+            csvfile.write('Q-Exactive HF Biopharma,' + str(round(MS5Busyness/(24*5)))+','+Status_lst[2]+','+Status_description_lst[2])
+            csvfile.write('Q-Exactive,' + str(round(MS6Busyness/(24*5)))+','+Status_lst[3]+','+Status_description_lst[3])
+            csvfile.write('LTQ Orbitrap Elite,' + str(round(MS7Busyness/(24*5)))+','+Status_lst[4]+','+Status_description_lst[4])
             csvfile.close() 
 
         with open(inputfile, 'r', encoding='utf-8') as csvfile:
@@ -140,6 +142,8 @@ class Command(BaseCommand):
             MS3Busyness=int()
             MS4Busyness=int()
             MS5Busyness=int()
+            MS6Busyness=int()
+            MS7Busyness=int()
             # 2d SP + 2d DA (per issue)
             MinWaitingTimes = list()
             i=0

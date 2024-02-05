@@ -34,6 +34,7 @@ class Command(BaseCommand):
         #client = httpx.Client(base_url="http://127.0.0.1:8112/api")#,
         #YTTOKR = youtrack_get()
         client = ytclient(youtrackurl_get())
+        print(client.base_url)
         url = str(client.base_url)+"issues"
         headers = {'Authorization': 'Bearer {}'.format(config['YTTOKR'])}
         #params = {'fields':'id,idReadable,name,created,summary,customFields(id,value(id, localizedName,name),name)', 'query':'in:PRC'}
@@ -54,6 +55,7 @@ class Command(BaseCommand):
         PSBissuefieldsjson = PSBissuefields.json()
         CMBissuefieldsjson = CMBissuefields.json()
         MSSissuefieldsjson = MSSissuefields.json()
+        #print(MSSissuefieldsjson)
         def prepareProjectIssuesDict(jsonObj):
             '''
             # get dictionary with fields&values
@@ -175,10 +177,12 @@ class Command(BaseCommand):
         with open(filename, 'w', encoding='utf-8') as csvfile:
             csvfile.write('Mass_Spectrometer,Status,Status_description\n')
             i=0
-            MSindexed_lst = ['Orbitrap Fusion Lumos','Q-Exactive HF','Q-Exactive HF Biopharma', 'Q-Exactive','LTQ Orbitrap Elite']
-            rowlist=[None]*5
+            MSindexed_lst = ['timsTOF SCP','Orbitrap Fusion Lumos','Orbitrap Exploris 240','Q-Exactive HF','Q-Exactive HF Biopharma', 'Q-Exactive','LTQ Orbitrap Elite','ZenoTOF']
+            rowlist=[None]*8
             for issuekey in MSSIssuesDict:
                 # name of fields in issue
+                print("ss "+str(MSSIssuesDict[issuekey]))
+                #if str(MSSIssuesDict[issuekey])!='Unassigned':
                 issue = MSSIssuesDict[issuekey]
                 indices = list(issue.keys())
                 #indices = list()
@@ -189,6 +193,7 @@ class Command(BaseCommand):
                 #indices = list()
                 #for attr_name, attr_type in issue._attribute_types.items():
                 #    indices.append(attr_name)
+                print(issue['Mass_Spectrometer'])
                 issueMS=issue['Mass_Spectrometer']
                 # MassSpec status
                 issueStatus=issue['Status']
@@ -201,9 +206,10 @@ class Command(BaseCommand):
                     issueStatusdescription='under maintenance'
                 row = issueMS + ',' + issueStatus + "," + issueStatusdescription
                 row = row + '\n'
+                print(MSindexed_lst.index(issueMS))
                 rowlist[MSindexed_lst.index(issueMS)]=row
                 i = i+1
-            for i in range(5):
+            for i in range(7):
                 csvfile.write(rowlist[i])
             csvfile.close()
 
