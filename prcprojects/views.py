@@ -270,7 +270,8 @@ FORMSPTM = [("0", CustomerForm),
 TEMPLATESPTM = {"0": "project-regis111.html",
              "1": "project-regis222.html",
              "2": "project-regis333PTM.html",
-             "3": "project-regis44PTM.html",
+             #"3": "project-regis44PTM.html",
+             "3": "project-regis444.html",
              "4": "project-regis555.html",
              "5": "project-regis666.html"}
 
