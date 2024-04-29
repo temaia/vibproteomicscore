@@ -430,7 +430,7 @@ def WriteToExcel3(arguments_dict):
         worksheet_s.write(3, 3, ugettext("Replicate"), header) # pre filled 123 123 if total/3 = 0 else,jjjjj
         #worksheet_s.write(3, 4, ugettext("Sample type delivered"), header) #add Sample type value and leave free for editing
         #worksheet_s.write(3, 5, ugettext("Buffer composition"), header) #add Buffer composition value and leave free for editing (space dows not matter)
-        worksheet_s.write(3, 3, ugettext("Amount of protein (μg) loaded on gel/gel band (or estimation of)"), header) #format digits (2 decimals) leave for edit
+        worksheet_s.write(3, 4, ugettext("Amount of protein (μg) loaded on gel/gel band (or estimation of)"), header) #format digits (2 decimals) leave for edit
         #worksheet_s.write(3, 7, ugettext("Volume (if applicable) (μl)"), header) #  #format digits (2 decimals) leave for edit
         worksheet_s.write(3, 5, ugettext("Other relevant information"), header) # leave free
 

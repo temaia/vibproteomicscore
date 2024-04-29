@@ -241,7 +241,7 @@ def WriteToExcel4(arguments_dict):
      
     # change column widths
     worksheet_s.set_column('A:A', 14.3)  # Sample Name
-    worksheet_s.set_column('B:B', 15.8)  # Experimental Condition
+    worksheet_s.set_column('B:B', 20.8) # Condition
     #worksheet_s.set_column('C:C', 12.6)  # Isotopic label
     worksheet_s.set_column('C:C', 9.5)  # Replicate
     worksheet_s.set_column('D:D', 15.8)  # Molecular weight
