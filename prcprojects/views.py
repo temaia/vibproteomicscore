@@ -222,14 +222,15 @@ FORMSSG= [("0", CustomerForm),
             ("1", AnalysisForm),
          ("2", Specimen_SGForm),
          ("3",ExperimentForm),
-         ("4", EDForm),
+        ("4", EDForm),
          ("5", TOUForm)]
 
 TEMPLATESSG = {"0": "project-regis111.html",
              "1": "project-regis222.html",
              "2": "project-regis333.html",
+             #"3": "project-regis444.html",
              "3": "project-regis444.html",
-             "4": "project-regis555.html",
+            "4": "project-regis555.html",
              "5": "project-regis666.html"}
 
 FORMSPMD= [("0", CustomerForm),
@@ -297,7 +298,7 @@ FORMSGB= [("0", CustomerForm),
 TEMPLATESGB = {"0": "project-regis111.html",
              "1": "project-regis222.html",
              "2": "project-regis3333GB.html",
-             "3": "project-regis444.html",
+             "3": "project-regis444GB.html",
              "4": "project-regis555.html",
              "5": "project-regis666.html"}
 
@@ -345,6 +346,9 @@ class ContactWizardSG(SessionWizardView):
     file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT,'seqdbs'))
     def get_template_names(self):
         return [TEMPLATESSG[self.steps.current]]
+    #def get_form(self, step=None, data=None, files=None):
+     #   form = super(ContactWizardSG, self).get_form(step, data, files)
+
 
     def done(self, form_list,form_dict, **kwargs):
         analysis = [form.cleaned_data for form in form_list]

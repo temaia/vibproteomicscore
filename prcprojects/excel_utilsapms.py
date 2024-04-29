@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import io
 import os
+import re
 import random
 import xlsxwriter
 from django.utils.translation import ugettext
@@ -125,14 +126,41 @@ def WriteToExcel2(arguments_dict):
         print("ecrunordered "+str(ecrunordered))
         print("ecrunorderedindexes "+str(ecrunorderedindexes))
         no_ec = len(ec)
-        #parsimonious list for replicates
+        # #parsimonious list for replicates
+        # no_replicates = arguments_dict["3-Nb_replicates_per_condition"][0].replace(' ','').split(',')
+        # # fill in no_replicates list in case it does not match the number of ec
+        # if len(no_replicates)<no_ec:
+        #     no_replicates = no_replicates+no_replicates*(no_ec-len(no_replicates))
+        # print("noreplicates "+str(no_replicates))
+        # # convert to list
+        # no_replicates = [int(x) for x in no_replicates]    
         no_replicates = arguments_dict["3-Nb_replicates_per_condition"][0].replace(' ','').split(',')
+        print(no_replicates)
         # fill in no_replicates list in case it does not match the number of ec
+        # remove?
         if len(no_replicates)<no_ec:
             no_replicates = no_replicates+no_replicates*(no_ec-len(no_replicates))
-        print("noreplicates "+str(no_replicates))
+        print(no_replicates)
         # convert to list
-        no_replicates = [int(x) for x in no_replicates]    
+        def getrepnos(no_replicates_lst, no_samples,no_ecf):
+            no_replicates_lstnew = list()
+            #no_replicates_lst=no_replicates.replace(' ','').split(',')
+            
+            for i in range(len(no_replicates_lst)):
+                # print(no_replicates_lst[i])
+                try:
+                    no_replicates_lstnew.append(int(no_replicates_lst[i]))
+                except ValueError:
+                    try:
+                        no_replicates_lstnew.append(int(re.findall(r'\d+',no_replicates_lst[i])[0]))
+                    except IndexError:
+                        no_replicate_i = no_samples//no_ecf
+                        if i==(len(no_replicates_lst)-1):
+                            no_replicate_i+=no_samples%no_ecf
+                        print("norepi"+str(no_replicate_i))
+                        no_replicates_lstnew.append(no_replicate_i)
+            return no_replicates_lstnew
+        no_replicates = getrepnos(no_replicates, no_samples, no_ec)
         no_replicatesrunordered = [no_replicates[i] for i in ecrunorderedindexes]
         print("no_replicatesrunordered "+str(no_replicatesrunordered))
         no_samples = int(arguments_dict["3-Nb_samples"][0].replace(' ',''))
@@ -336,17 +364,47 @@ def WriteToExcel2(arguments_dict):
         print("ecrunordered "+str(ecrunordered))
         print("ecrunorderedindexes "+str(ecrunorderedindexes))
         no_ec = len(ec)
-        #parsimonious list for replicates
+        # #parsimonious list for replicates
+        # no_replicates = arguments_dict["3-Nb_replicates_per_condition"][0].replace(' ','').split(',')
+        # # fill in no_replicates list in case it does not match the number of ec
+        # if len(no_replicates)<no_ec:
+        #     no_replicates = no_replicates+no_replicates*(no_ec-len(no_replicates))
+        # print("noreplicates "+str(no_replicates))
+        # # convert to list
+        # no_replicates = [int(x) for x in no_replicates]    
+        # no_replicatesrunordered = [no_replicates[i] for i in ecrunorderedindexes]
+        # print("no_replicatesrunordered "+str(no_replicatesrunordered))
+        no_samples = int(arguments_dict["3-Nb_samples"][0].replace(' ',''))
         no_replicates = arguments_dict["3-Nb_replicates_per_condition"][0].replace(' ','').split(',')
+        print(no_replicates)
         # fill in no_replicates list in case it does not match the number of ec
+        # remove?
         if len(no_replicates)<no_ec:
             no_replicates = no_replicates+no_replicates*(no_ec-len(no_replicates))
-        print("noreplicates "+str(no_replicates))
+        print(no_replicates)
         # convert to list
-        no_replicates = [int(x) for x in no_replicates]    
+        def getrepnos(no_replicates_lst, no_samples,no_ecf):
+            no_replicates_lstnew = list()
+            #no_replicates_lst=no_replicates.replace(' ','').split(',')
+            
+            for i in range(len(no_replicates_lst)):
+                # print(no_replicates_lst[i])
+                try:
+                    no_replicates_lstnew.append(int(no_replicates_lst[i]))
+                except ValueError:
+                    try:
+                        no_replicates_lstnew.append(int(re.findall(r'\d+',no_replicates_lst[i])[0]))
+                    except IndexError:
+                        no_replicate_i = no_samples//no_ecf
+                        if i==(len(no_replicates_lst)-1):
+                            no_replicate_i+=no_samples%no_ecf
+                        print("norepi"+str(no_replicate_i))
+                        no_replicates_lstnew.append(no_replicate_i)
+            return no_replicates_lstnew
+        no_replicates = getrepnos(no_replicates, no_samples, no_ec)
         no_replicatesrunordered = [no_replicates[i] for i in ecrunorderedindexes]
         print("no_replicatesrunordered "+str(no_replicatesrunordered))
-        no_samples = int(arguments_dict["3-Nb_samples"][0].replace(' ',''))
+        #no_samples = int(arguments_dict["3-Nb_samples"][0].replace(' ',''))
         #print('nosa'+str(no_samples))
         # predicted no_ec
         #pno_ec = no_samples//no_replicates + no_samples%no_replicates

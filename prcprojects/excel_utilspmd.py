@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 import io
 import os
+import re
+import random
 from django.conf import settings
 import xlsxwriter
 from django.utils.translation import ugettext
@@ -82,7 +84,7 @@ def WriteToExcel4(arguments_dict):
     #print(type(arguments_dict["3-Isotopic_labeling"][0]))
     # write header
     worksheet_s.write(3, 0, ugettext("Sample Name"), header) # project-ID+counter
-    worksheet_s.write(3, 1, ugettext("Description"), header) # from dropdown from parsed conditions Experimental_conditions
+    worksheet_s.write(3, 1, ugettext("Experimental_condition"), header) # from dropdown from parsed conditions Experimental_conditions
     #worksheet_s.write(3, 2, ugettext("Isotopic label"), header) # from dropdown from parsed conditions Isotopic_label
     worksheet_s.write(3, 2, ugettext("Replicate"), header) # pre filled 123 123 if total/3 = 0 else,jjjjj
     worksheet_s.write(3, 3, ugettext("Estimated MW"), header) #add Sample type value and leave free for editing
@@ -92,28 +94,89 @@ def WriteToExcel4(arguments_dict):
     worksheet_s.write(3, 6, ugettext("Volume (μl)"), header) #  #format digits (2 decimals) leave for edit
     worksheet_s.write(3, 7, ugettext("Other relevant information"), header) # leave free
 
-    # generate values to prepopulate table
-    #idx = 1
-    # experimental conditions
     ec = arguments_dict["2-Experimental_conditions"][0].replace(' ','').split(',')
     print(ec)
     no_ec = len(ec)
-    #parsimonious list for replicates
-    no_replicates = int(arguments_dict["2-Nb_replicates_per_condition"][0].replace(' ',''))
+    
     no_samples = int(arguments_dict["2-Nb_samples"][0].replace(' ',''))
     print('nosa'+str(no_samples))
+    #parsimonious list for replicates
+    no_replicates = arguments_dict["2-Nb_replicates_per_condition"][0].replace(' ','').split(',')
+    print(no_replicates)
+    # fill in no_replicates list in case it does not match the number of ec
+    # remove?
+    if len(no_replicates)<no_ec:
+        no_replicates = no_replicates+no_replicates*(no_ec-len(no_replicates))
+    print(no_replicates)
+    # convert to list
+    def getrepnos(no_replicates_lst, no_samples,no_ecf):
+        no_replicates_lstnew = list()
+        #no_replicates_lst=no_replicates.replace(' ','').split(',')
+        
+        for i in range(len(no_replicates_lst)):
+            # print(no_replicates_lst[i])
+            try:
+                no_replicates_lstnew.append(int(no_replicates_lst[i]))
+            except ValueError:
+                try:
+                    no_replicates_lstnew.append(int(re.findall(r'\d+',no_replicates_lst[i])[0]))
+                except IndexError:
+                    no_replicate_i = no_samples//no_ecf
+                    if i==(len(no_replicates_lst)-1):
+                        no_replicate_i+=no_samples%no_ecf
+                    print("norepi"+str(no_replicate_i))
+                    no_replicates_lstnew.append(no_replicate_i)
+        return no_replicates_lstnew
+    no_replicates = getrepnos(no_replicates, no_samples, no_ec)
+    #no_replicates = [int(x) for x in no_replicates]    
+    # convert to list
+    print(no_replicates)
     # predicted no_ec
-    pno_ec = no_samples//no_replicates + no_samples%no_replicates
-    plist = list(range(1,no_replicates+1,1))*pno_ec
-    eclist = []
-    for ec0 in ec:
-        for rep in range(1,no_replicates+1,1):
-            eclist.append(ec0)
-    eclist =eclist + [""]*(no_samples-len(eclist))
-    #for rep in range(1,no_replicates+1,1):
-    #    eclist.append('')
-    # buffer
-    #print(eclist)
+    #pno_ec = no_samples//no_replicates + no_samples%no_replicates
+    #replicates = list(range(1,no_replicates+1))
+    # dictionary with ecs as keys and as values the sample names
+    samples_dict = dict()
+    #counter = 1
+    for i in range(len(ec)):
+        #replicates_temp = random.sample(replicates, len(replicates))
+        #expcond_temp = random.sample(expcond, len(expcond))
+        #for j in range(nb_replicates):
+            #ec_order.append(expcond[i] + str(replicates_temp[j]))
+            #sn_order.append(("_").join([project, str(counter)]))
+            #counter+=1
+        #ec=random.sample(ec, len(ec))
+        samplestemp = list()
+        #for j in no_replicates
+        for j in range(1,no_replicates[i]+1):
+            samplestemp.append(ec[i]+"_"+str(j))
+            #samplestemp.append(ec[i]+str(replicates[j]))
+        samples_dict[ec[i]] = samplestemp
+    eclist = list()
+    replicatelist = list()
+    maxno_replicates = max(no_replicates)
+    #lentemp = no_replicates
+    for j in range(maxno_replicates):
+        #for i in range(no_replicates*len(ec)):
+        # nb samples left per condition
+        nbsamplesperectemp = [len(s) for s in samples_dict.values()]
+        # condition indexes with samples left
+        c2samplefrom = [i for i, x in enumerate(nbsamplesperectemp) if x!=0]
+        # order of experimental conditions to sample from which still have samples left
+        ectempindexes = random.sample(range(len(ec)), len(ec))
+        ectemp = [ec[ix] for ix in ectempindexes]
+        #ectemp2 = [ectemp[i] for i in c2samplefrom]
+        for i in range(len(ec)):
+            if len(samples_dict[ectemp[i]])>0:
+                # index defining which sample from each condition ec[i] will be chosen
+                samplelistindexestemp = random.sample(range(nbsamplesperectemp[ectempindexes[i]]),1)
+                sampletemp = samples_dict[ectemp[i]].pop(samplelistindexestemp[0]).split("_")
+                eclist.append(sampletemp[0])
+                replicatelist.append(sampletemp[1])
+    no_samplesleft = no_samples-len(eclist)
+    eclist = eclist + ['']*no_samplesleft
+    replicatelist = replicatelist + ['']*no_samplesleft
+    # NEW
+    saunit = ['μg of protein','# of cells']
     # add data to the table
     for idx in range(0,no_samples,1):
         row = idx+5
@@ -127,7 +190,10 @@ def WriteToExcel4(arguments_dict):
         # isotopic labels
         #worksheet_s.write_string(row, 2, "labels", celledit) # make remark at the end
         # replicate
-        worksheet_s.write_string(row, 2, "rep_" + str(plist[idx]), celledit)
+        if str(replicatelist[idx])!="":
+            worksheet_s.write_string(row, 2, str(replicatelist[idx]), celledit)
+        else:
+            worksheet_s.write_string(row, 2, "", celledit)
         # sample type delivered
         worksheet_s.write_string(row, 3, '', celledit)
         # buffer composition

@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 {% load i18n %}
 
@@ -15,33 +14,13 @@
 {% block content2 %}
 
  <div class='container'>
-<div class="form-row col-8 mb-0">
+ <div class="row">
 <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
 
   <h2 class="dtitle">Experimental design information</h2>
-
 {% load crispy_forms_tags %}
 {{ wizard.management_form }}
-{% if wizard.form.forms %}
-    {{ wizard.form.management_form }}
-    {% for form in wizard.form.forms %}
-    
-       {{ form.Experimental_conditions|as_crispy_field }}
 
-       {{ form.Conditions_to_compare|as_crispy_field }}
-
-       {{ form.Nb_samples|as_crispy_field }}
-
-       {{ form.Sample_Name|as_crispy_field }}
-
-       {{ form.Isotopic_labeling|as_crispy_field }}
-
-       {{ form.Isotopic_labeling_details|as_crispy_field }}
-
-
-{% endfor %}
-{% else %}
-    {{ wizard.form.management_form }}
        <div class="form-row col-12 mb-0">
     <div class="form-group col-7 mb-0">
        {{ form.Experimental_conditions|as_crispy_field }}
@@ -49,7 +28,7 @@
             </div>
        <div class="form-row col-12 mb-0">
     <div class="form-group col-7 mb-0">
-       {{ form.Conditions_to_compare|as_crispy_field }}
+       {{ form.Nb_replicates_per_condition|as_crispy_field }}
             </div>
             </div>
        <div class="form-row col-12 mb-0">
@@ -58,11 +37,29 @@
             </div>
             </div>
        <div class="form-row col-12 mb-0">
-    <div class="form-group col-7 mb-0">
-       {{ form.Isotopic_labeling|as_crispy_field }}
+<div class="form-group col-7 mb-0">
+    <div id="div_id_3-Isotopic_labeling" class="form-group">
+            <label for="id_3-Isotopic_labeling_0" class="col-form-label ">
+                Is any isotopic labeling procedure used?
+            </label>
+<div class="">
+      <div class="form-check">
+        <label for="id_id_3-Isotopic_labeling_0_1" class="form-check-label">
+            <input type="radio" class="form-check-input" name="3-Isotopic_labeling" id="id_id_3-Isotopic_labeling_0_1" onchange="LabelCheck(this);" value="True">
+            Yes
+        </label>
+      </div>
+      <div class="form-check">
+        <label for="id_id_3-Isotopic_labeling_0_2" class="form-check-label">
+            <input type="radio" class="form-check-input" name="3-Isotopic_labeling" id="id_id_3-Isotopic_labeling_0_2" onchange="LabelCheck(this);" value="False">
+            No
+        </label>
+      </div>
+</div>
+    </div>
             </div>
             </div>
-       <div class="form-row col-12 mb-0 formsub">
+       <div class="form-row col-12 mb-0 formsub" id="SDBCheckT" style="display:none;">
     <div class="form-group col-6 mb-0">
        {{ form.Isotopic_labeling_details|as_crispy_field }}
             </div>
@@ -71,12 +68,12 @@
     <div class="form-group col-12 mb-0">
        {{ form.Other_information|as_crispy_field }}
             </div>
-            </div>
+      </div>
 
 
-{% endif %}
 <br/>
 <div class="container medind">
+
 {% if wizard.steps.prev %}
 
 <button name="wizard_goto_step" class="btn btn-sm" type="submit" value="{{ wizard.steps.first }}">{% trans "first step" %}</button>
@@ -86,7 +83,7 @@
 </div>
 </div>
 <div class="form-row col-12 center">
-    <div class="medind">
+    <div class="meddind">
 <p><i><font size="2.8">Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </font></i></p>
 </div>
 </div>
@@ -94,6 +91,22 @@
 </form>
   </div>
   </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+function LabelCheck(nameLabel)
+{
+    console.log(nameLabel);
+    if(nameLabel.value=="True"){
+          document.getElementById("SDBCheckT").style.display = "block";
+        }
+    if(nameLabel.value=="False"){
+          document.getElementById("SDBCheckT").style.display = "none";
+        }
+}
+</script>
 {% endblock %}
 
 

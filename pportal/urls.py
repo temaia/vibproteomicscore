@@ -56,7 +56,7 @@ urlpatterns = static(settings.MEDIA_URL,document_root =
     url(r'^project-registration/$', login_required(ContactWizard.as_view([CustomerForm,CustomerForm,CustomerForm,CustomerForm,CustomerForm])),name='projectregistration'),
   #   #url(r'^project-registrationsg/$', ContactWizardSG.as_view([CustomerForm, Specimen_SGForm, Specimen_SGForm]),name='projectregistrationsg'),
   #   #url(r'^project-registration-1/$', ContactWizardSG.as_view([CustomerForm,AnalysisForm, Specimen_SGForm, ExperimentForm, EDForm]),name='projectregistrationsg'),
-    url(r'^project-registration1/$', ContactWizardSG.as_view([CustomerForm,AnalysisForm, Specimen_SGForm, ExperimentForm, EDForm,TOUForm]),name='projectregistrationsg'),
+    url(r'^project-registration1/$', ContactWizardSG.as_view([CustomerForm,AnalysisForm, Specimen_SGForm,ExperimentForm, EDForm,TOUForm]),name='projectregistrationsg'),
     #url(r'^project-registration1/$', ContactWizardSG.as_view([CustomerForm,AnalysisForm, Specimen_SGForm, EDForm,TOUForm]),name='projectregistrationsg'),
     url(r'^project-registration2/$', ContactWizardAPMS.as_view([CustomerForm,AnalysisForm, Specimen_APMSForm, ExperimentAPMSForm, EDForm,TOUForm]),name='projectregistrationapms'),
     url(r'^project-registration3/$', ContactWizardPTM.as_view([CustomerForm,AnalysisForm, Specimen_PTMForm, ExperimentPTMForm, EDForm,TOUForm]),name='projectregistrationptm'),
