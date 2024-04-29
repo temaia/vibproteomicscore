@@ -133,6 +133,8 @@ def WriteToExcel2(arguments_dict):
         #     no_replicates = no_replicates+no_replicates*(no_ec-len(no_replicates))
         # print("noreplicates "+str(no_replicates))
         # # convert to list
+        no_samples = int(arguments_dict["3-Nb_samples"][0].replace(' ',''))
+        #print('nosa'+str(no_samples))
         # no_replicates = [int(x) for x in no_replicates]    
         no_replicates = arguments_dict["3-Nb_replicates_per_condition"][0].replace(' ','').split(',')
         print(no_replicates)
@@ -163,8 +165,6 @@ def WriteToExcel2(arguments_dict):
         no_replicates = getrepnos(no_replicates, no_samples, no_ec)
         no_replicatesrunordered = [no_replicates[i] for i in ecrunorderedindexes]
         print("no_replicatesrunordered "+str(no_replicatesrunordered))
-        no_samples = int(arguments_dict["3-Nb_samples"][0].replace(' ',''))
-        #print('nosa'+str(no_samples))
         # predicted no_ec
         #pno_ec = no_samples//no_replicates + no_samples%no_replicates
         #replicates = list(range(1,no_replicates+1))
