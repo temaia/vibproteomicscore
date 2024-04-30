@@ -167,6 +167,8 @@ def WriteToExcel(arguments_dict):
             for j in range(1,no_replicates[i]+1):
                 samplestemp.append(ec[i]+"_"+str(j))
                 #samplestemp.append(ec[i]+str(replicates[j]))
+            #print('samplestemp')
+            #print(samplestemp)
             samples_dict[ec[i]] = samplestemp
         eclist = list()
         replicatelist = list()
@@ -176,19 +178,26 @@ def WriteToExcel(arguments_dict):
             #for i in range(no_replicates*len(ec)):
             # nb samples left per condition
             nbsamplesperectemp = [len(s) for s in samples_dict.values()]
+            #print('nbsamples')
+            #print(nbsamplesperectemp)
             # condition indexes with samples left
             c2samplefrom = [i for i, x in enumerate(nbsamplesperectemp) if x!=0]
             # order of experimental conditions to sample from which still have samples left
             ectempindexes = random.sample(range(len(ec)), len(ec))
             ectemp = [ec[ix] for ix in ectempindexes]
+            #print("ectemp")
+            #print(ectemp)
             #ectemp2 = [ectemp[i] for i in c2samplefrom]
             for i in range(len(ec)):
                 if len(samples_dict[ectemp[i]])>0:
                     # index defining which sample from each condition ec[i] will be chosen
-                    samplelistindexestemp = random.sample(range(nbsamplesperectemp[ectempindexes[i]]),1)
-                    sampletemp = samples_dict[ectemp[i]].pop(samplelistindexestemp[0]).split("_")
-                    eclist.append(sampletemp[0])
-                    replicatelist.append(sampletemp[1])
+                    try:
+                        samplelistindexestemp = random.sample(range(nbsamplesperectemp[ectempindexes[i]]),1)
+                        sampletemp = samples_dict[ectemp[i]].pop(samplelistindexestemp[0]).split("_")
+                        eclist.append(sampletemp[0])
+                        replicatelist.append(sampletemp[1])
+                    except IndexError:
+                        replicatelist.append("")
         no_samplesleft = no_samples-len(eclist)
         eclist = eclist + ['']*no_samplesleft
         replicatelist = replicatelist + ['']*no_samplesleft
@@ -530,6 +539,13 @@ def WriteToExcel(arguments_dict):
             #ectemp2 = [ectemp[i] for i in c2samplefrom]
             for i in range(len(ec)):
                 if len(samples_dict[ectemp[i]])>0:
+                    try:
+                        samplelistindexestemp = random.sample(range(nbsamplesperectemp[ectempindexes[i]]),1)
+                        sampletemp = samples_dict[ectemp[i]].pop(samplelistindexestemp[0]).split("_")
+                        eclist.append(sampletemp[0])
+                        replicatelist.append(sampletemp[1])
+                    except IndexError:
+                        replicatelist.append("")
                     # index defining which sample from each condition ec[i] will be chosen
                     samplelistindexestemp = random.sample(range(nbsamplesperectemp[ectempindexes[i]]),1)
                     sampletemp = samples_dict[ectemp[i]].pop(samplelistindexestemp[0]).split("_")

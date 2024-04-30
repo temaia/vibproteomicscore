@@ -314,8 +314,6 @@ class Specimen_SGForm(forms.Form):
 # 	Buffer_composition = forms.CharField(max_length=300, widget=forms.Textarea(attrs={'placeholder':'e.g. 0.1M Tris-HCl pH8.0', 'rows':3, 'cols':1}),
 # 	 label="Please provide the exact buffer composition.", 	required=False)
 
-
-
 class Specimen_PTMForm(forms.Form):
 	PTM = forms.CharField(max_length=120, label="Modification(s) under investigation", widget=forms.TextInput(attrs={'placeholder': 'e.g. lysine acetylation, tyrosine phosphorylation'}))
 	Species = forms.CharField(max_length=120, label="Sample species and taxonomy ID", widget=forms.TextInput(attrs={'placeholder': 'e.g. Homo sapiens, taxid: 9606'}))

@@ -1112,7 +1112,7 @@ class ContactWizardGB(SessionWizardView):
                   + "\nSequence_Database_Name: " + Sequence_database_name+"\nSequence_database_file: " + str(Sequence_database_file) \
                   + "\nPAGE Info: "+ analysis[2]['PAGEInfo'] + '\nPA-Percentage: ' + str(analysis[2]['PolyAcrylPercentage']) \
                   + "\nStaining Method: "+ analysis[2]['StainingMethod'] + '\nPAGEType: ' + str(analysis[2]['PAGEType']) \
-                  + "\n\n# Experimental Design information\nConditions_to_compare: " + analysis[3]['Conditions_to_compare'] +"\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
+                  + "\n\n# Experimental Design information\nIsotopic labeling: " + str(analysis[3]['Isotopic_labeling'])+ "\nIsotopic labeling details: " + Isotopic_labeling_details + "\nOther information: " \
                   + Other_information + "\nBiosafety Level_information: " + BiosafetyLevel_information
 
             # yt.update_issue(Project_ID, summary = "ContactPerson-GroupLeader-analysistype-keyword1",
